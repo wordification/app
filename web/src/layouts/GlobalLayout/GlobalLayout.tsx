@@ -25,6 +25,9 @@ const MENU_ITEMS = [
   //   to: routes.home(),
   //   label: 'Sign Out',
   // },
+  {
+    type: 'signout',
+  },
 ] as const
 
 const GlobalLayout = ({ children }: GlobalLayoutProps) => {

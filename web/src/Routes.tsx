@@ -7,7 +7,7 @@
 // 'src/pages/HomePage/HomePage.js'         -> HomePage
 // 'src/pages/Admin/BooksPage/BooksPage.js' -> AdminBooksPage
 
-import { Router, Route, Set } from '@redwoodjs/router'
+import { Router, Route, Set, Private } from '@redwoodjs/router'
 
 import GlobalLayout from 'src/layouts/GlobalLayout/GlobalLayout'
 import SortingGameLayout from 'src/layouts/SortingGameLayout/SortingGameLayout'
@@ -21,15 +21,17 @@ const Routes = () => {
       <Route path="/signup" page={AuthSignupPage} name="signup" />
       <Route path="/forgot-password" page={AuthForgotPasswordPage} name="forgotPassword" />
       <Route path="/reset-password" page={AuthResetPasswordPage} name="resetPassword" />
-      <Set wrap={GlobalLayout}>
-        <Set wrap={SortingGameLayout}>
-          <Route path="/games/sorting" page={SortingGamePage} name="sortingGame" />
+      <Private unauthenticated="login">
+        <Set wrap={GlobalLayout}>
+          <Set wrap={SortingGameLayout}>
+            <Route path="/games/sorting" page={SortingGamePage} name="sortingGame" />
+          </Set>
+          <Route path="/games/matching" page={MatchingGamePage} name="matchingGame" />
+          <Route path="/games" page={GamesPage} name="games" />
+          <Route path="/about" page={AboutPage} name="about" />
+          <Route path="/" page={HomePage} name="home" />
         </Set>
-        <Route path="/games/matching" page={MatchingGamePage} name="matchingGame" />
-        <Route path="/games" page={GamesPage} name="games" />
-        <Route path="/about" page={AboutPage} name="about" />
-        <Route path="/" page={HomePage} name="home" />
-      </Set>
+      </Private>
       <Route notfound page={NotFoundPage} />
     </Router>
   )

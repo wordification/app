@@ -1,18 +1,38 @@
 import { Link, routes } from '@redwoodjs/router'
-export type MenuItem = {
-  to: string
-  label: string
-  submenu?: readonly {
-    url: string
-    label: string
-  }[]
+
+import { useAuth } from 'src/auth'
+export type MenuItem =
+  | {
+      to: string
+      label: string
+      submenu?: readonly {
+        url: string
+        label: string
+      }[]
+    }
+  | {
+      type: 'signout'
+    }
+
+const SignoutButton = () => {
+  const { logOut } = useAuth()
+
+  return (
+    <button onClick={logOut} className="font-bold normal-case">
+      Sign Out
+    </button>
+  )
 }
 
 const NavbarItem = ({ item }: { item: MenuItem }) => (
   <li>
-    <Link className="font-bold normal-case" to={item.to}>
-      {item.label}
-    </Link>
+    {'to' in item ? (
+      <Link className="font-bold normal-case" to={item.to}>
+        {item.label}
+      </Link>
+    ) : (
+      <SignoutButton />
+    )}
   </li>
 )
 
@@ -29,7 +49,7 @@ const Navbar = ({ items }: { items: readonly MenuItem[] }) => (
     <div className="navbar-end">
       <ul className="menu menu-horizontal">
         {items.map((item) => (
-          <NavbarItem item={item} key={item.to} />
+          <NavbarItem item={item} key={'to' in item ? item.to : item.type} />
         ))}
       </ul>
     </div>
