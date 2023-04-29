@@ -11,15 +11,37 @@ generator client {
 // Define your own datamodels here and run `yarn redwood prisma migrate dev`
 // to create migrations for them and apply to your dev DB.
 model Users {
+  // Basic info
   id                  Int       @id @default(autoincrement())
   email               String    @unique
   hashedPassword      String
   salt                String
   resetToken          String?
   resetTokenExpiresAt DateTime?
+
+  // Relationship info
+  games Games[]
+}
+
+model Games {
+  // Basic info
+  id     Int      @id @default(autoincrement())
+  user   Users    @relation(fields: [userId], references: [id])
+  userId Int
+  date   DateTime @default(now())
+
+  // Relationship info
+
+  // Gameplay info
+  wordsPerPhoneme  Int
+  phonemeOne       Int
+  phonemeTwo       Int
+  level            Int
+  sortingGameWords SortingGameWords[]
 }
 
 model Words {
+  // Basic info
   id         Int      @id @default(autoincrement())
   word       String   @unique
   gradeLevel Int
@@ -27,4 +49,23 @@ model Words {
   graphemes  String[]
   syllables  String[]
   sentences  String[]
+
+  // Relationship info
+  sortingGameWords SortingGameWords[]
+}
+
+model SortingGameWords {
+  // Basic info
+  id Int @id @default(autoincrement())
+
+  // Relationship info
+  wordId Int
+  word   Words @relation(fields: [wordId], references: [id])
+  gameId Int
+  game   Games @relation(fields: [gameId], references: [id])
+
+  // Gameplay info
+  completed      Boolean @default(false)
+  current        Boolean @default(false)
+  testedGrapheme String
 }
