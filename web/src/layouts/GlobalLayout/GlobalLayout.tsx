@@ -1,6 +1,8 @@
-import { routes } from '@redwoodjs/router'
+import { SkipNavLink, SkipNavContent } from '@redwoodjs/router'
 
 import Navbar from 'src/components/Navbar/Navbar'
+
+import '@reach/skip-nav/styles.css'
 
 type GlobalLayoutProps = {
   children?: React.ReactNode
@@ -8,13 +10,13 @@ type GlobalLayoutProps = {
 
 const MENU_ITEMS = [
   {
-    to: routes.about(),
+    to: '/about',
     label: 'About',
   },
-  // {
-  //   to: routes.home(),
-  //   label: 'Games',
-  // },
+  {
+    to: '/games',
+    label: 'Games',
+  },
   // {
   //   to: routes.home(),
   //   label: 'Profile',
@@ -27,10 +29,15 @@ const MENU_ITEMS = [
 
 const GlobalLayout = ({ children }: GlobalLayoutProps) => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex min-h-screen flex-col">
+      <SkipNavLink />
+
       <header className="bg-base-300">
         <Navbar items={MENU_ITEMS} />
       </header>
+
+      <SkipNavContent />
+
       <main className="container mx-auto flex-grow p-4 md:px-8">
         {children}
       </main>
