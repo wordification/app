@@ -24562,6 +24562,7 @@ __metadata:
     "@redwoodjs/web": 5.0.2
     autoprefixer: ^10.4.14
     daisyui: ^2.51.6
+    humanize-string: 2.1.0
     postcss: ^8.4.23
     postcss-loader: ^7.3.0
     prop-types: 15.8.1
