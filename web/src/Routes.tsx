@@ -17,6 +17,10 @@ import { useAuth } from './auth'
 const Routes = () => {
   return (
     <Router useAuth={useAuth}>
+      <Route path="/login" page={AuthLoginPage} name="login" />
+      <Route path="/signup" page={AuthSignupPage} name="signup" />
+      <Route path="/forgot-password" page={AuthForgotPasswordPage} name="forgotPassword" />
+      <Route path="/reset-password" page={AuthResetPasswordPage} name="resetPassword" />
       <Set wrap={GlobalLayout}>
         <Set wrap={SortingGameLayout}>
           <Route path="/games/sorting" page={SortingGamePage} name="sortingGame" />

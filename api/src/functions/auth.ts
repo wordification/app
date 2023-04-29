@@ -10,7 +10,7 @@ export const handler = async (
 ) => {
   const forgotPasswordOptions: DbAuthHandlerOptions['forgotPassword'] = {
     // handler() is invoked after verifying that a user was found with the given
-    // username. This is where you can send the user an email with a link to
+    // email. This is where you can send the user an email with a link to
     // reset their password. With the default dbAuth routes and field names, the
     // URL to reset the password will be:
     //
@@ -32,9 +32,9 @@ export const handler = async (
       // for security reasons you may want to be vague here rather than expose
       // the fact that the email address wasn't found (prevents fishing for
       // valid email addresses)
-      usernameNotFound: 'Username not found',
+      usernameNotFound: 'Email not found',
       // if the user somehow gets around client validation
-      usernameRequired: 'Username is required',
+      usernameRequired: 'Email required',
     },
   }
 
@@ -56,11 +56,11 @@ export const handler = async (
 
     errors: {
       usernameOrPasswordMissing: 'Both username and password are required',
-      usernameNotFound: 'Username ${username} not found',
+      usernameNotFound: 'Incorrect email or password',
       // For security reasons you may want to make this the same as the
       // usernameNotFound error so that a malicious user can't use the error
       // to narrow down if it's the username or password that's incorrect
-      incorrectPassword: 'Incorrect password for ${username}',
+      incorrectPassword: 'Incorrect email or password',
     },
 
     // How long a user will remain logged in, in seconds
