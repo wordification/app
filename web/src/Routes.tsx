@@ -10,11 +10,15 @@
 import { Router, Route, Set } from '@redwoodjs/router'
 
 import GlobalLayout from 'src/layouts/GlobalLayout/GlobalLayout'
+import SortingGameLayout from 'src/layouts/SortingGameLayout/SortingGameLayout'
 
 const Routes = () => {
   return (
     <Router>
       <Set wrap={GlobalLayout}>
+        <Set wrap={SortingGameLayout}>
+          <Route path="/games/sorting" page={SortingGamePage} name="sortingGame" />
+        </Set>
         <Route path="/games/matching" page={MatchingGamePage} name="matchingGame" />
         <Route path="/games" page={GamesPage} name="games" />
         <Route path="/about" page={AboutPage} name="about" />
