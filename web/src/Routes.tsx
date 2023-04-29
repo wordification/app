@@ -28,6 +28,7 @@ const Routes = () => {
           </Set>
           <Route path="/games/matching" page={MatchingGamePage} name="matchingGame" />
           <Route path="/games" page={GamesPage} name="games" />
+          <Route path="/profile" page={ProfilePage} name="profile" />
           <Route path="/about" page={AboutPage} name="about" />
           <Route path="/" page={HomePage} name="home" />
         </Set>
