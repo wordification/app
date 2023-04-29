@@ -113,7 +113,7 @@ export const handler = async (
     // If this returns anything else, it will be returned by the
     // `signUp()` function in the form of: `{ message: 'String here' }`.
     handler: ({ username, hashedPassword, salt }) => {
-      return db.user.create({
+      return db.users.create({
         data: {
           email: username,
           hashedPassword: hashedPassword,
@@ -149,7 +149,7 @@ export const handler = async (
 
     // The name of the property you'd call on `db` to access your user table.
     // i.e. if your Prisma model is named `User` this value would be `user`, as in `db.user`
-    authModelAccessor: 'user',
+    authModelAccessor: 'users',
 
     // A map of what dbAuth calls a field to what your database calls it.
     // `id` is whatever column you use to uniquely identify a user (probably
