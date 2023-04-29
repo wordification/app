@@ -24,6 +24,7 @@ const Routes = () => {
       <Private unauthenticated="login">
         <Set wrap={GlobalLayout}>
           <Set wrap={SortingGameLayout}>
+            <Route path="/games/sorting/setup" page={SortingSetupPage} name="sortingSetup" />
             <Route path="/games/sorting" page={SortingGamePage} name="sortingGame" />
           </Set>
           <Route path="/games/matching" page={MatchingGamePage} name="matchingGame" />
