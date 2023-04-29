@@ -1,3 +1,5 @@
+import { routes } from '@redwoodjs/router'
+
 import Navbar from 'src/components/Navbar/Navbar'
 
 type GlobalLayoutProps = {
@@ -5,10 +7,10 @@ type GlobalLayoutProps = {
 }
 
 const MENU_ITEMS = [
-  // {
-  //   to: routes.home(),
-  //   label: 'About',
-  // },
+  {
+    to: routes.about(),
+    label: 'About',
+  },
   // {
   //   to: routes.home(),
   //   label: 'Games',
