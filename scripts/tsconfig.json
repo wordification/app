@@ -18,7 +18,8 @@
     },
     "typeRoots": ["../node_modules/@types"],
     "jsx": "preserve",
-    "types": ["node"]
+    "types": ["node"],
+    "resolveJsonModule": true
   },
   "include": [
     ".",
