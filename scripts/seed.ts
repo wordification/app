@@ -12,7 +12,7 @@ const seedUsers = () => {
   ]
 
   const data = users.map(
-    ({ email, password }): Prisma.UsersCreateArgs['data'] => {
+    ({ email, password }): Prisma.UserCreateArgs['data'] => {
       const [hashedPassword, salt] = hashPassword(password)
       return {
         email,
@@ -22,12 +22,12 @@ const seedUsers = () => {
     }
   )
 
-  return db.users.createMany({ data, skipDuplicates: true })
+  return db.user.createMany({ data, skipDuplicates: true })
 }
 
 const seedWords = () => {
-  return db.words.createMany({
-    data: wordData.map((word): Prisma.WordsCreateArgs['data'] => {
+  return db.word.createMany({
+    data: wordData.map((word): Prisma.WordCreateArgs['data'] => {
       return {
         word: word.word,
         gradeLevel: word.gradeLevel,
