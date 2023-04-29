@@ -19,14 +19,12 @@ const NavbarItem = ({ item }: { item: MenuItem }) => (
 const Navbar = ({ items }: { items: readonly MenuItem[] }) => (
   <nav className="navbar">
     <div className="navbar-start">
-      <h1>
-        <Link
-          className="btn-ghost btn rounded-none text-xl normal-case text-primary"
-          to={routes.home()}
-        >
-          Wordification
-        </Link>
-      </h1>
+      <Link
+        className="btn-ghost btn rounded-none text-xl normal-case text-primary"
+        to={routes.home()}
+      >
+        Wordification
+      </Link>
     </div>
     <div className="navbar-end">
       <ul className="menu menu-horizontal">
