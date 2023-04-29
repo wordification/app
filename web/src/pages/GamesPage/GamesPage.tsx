@@ -1,4 +1,4 @@
-import { Link } from '@redwoodjs/router'
+import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
 const GAME_CHOICES = [
@@ -10,7 +10,7 @@ const GAME_CHOICES = [
   {
     title: 'Matching',
     content: 'Match the cards to win!',
-    to: '/games/matching',
+    to: routes.matchingGame(),
   },
 ] as const
 
