@@ -109,13 +109,12 @@ export const filterWords = async ({
   numSyllables: number
 }) => {
   const words = await db.word.findMany()
-  return words.filter((word) => {
-    return (
+  return words.filter(
+    (word) =>
       word.numSyllables === numSyllables &&
       word.phonemes.includes(phoneme) &&
       word.word in TESTED_WORD_GRAPHEMES
-    )
-  })
+  )
 }
 export const words: QueryResolvers['words'] = () => {
   return db.word.findMany()

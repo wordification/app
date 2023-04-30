@@ -4,6 +4,7 @@ import {
   sortingGameWords,
   sortingGameWord,
   createSortingGameWord,
+  createSortingGameWords,
   updateSortingGameWord,
   deleteSortingGameWord,
 } from './sortingGameWords'
@@ -51,6 +52,26 @@ describe('sortingGameWords', () => {
     expect(result.gameId).toEqual(scenario.sortingGameWord.two.gameId)
     expect(result.testedGrapheme).toEqual('String')
   })
+
+  scenario(
+    'creates multiple sortingGameWords',
+    async (scenario: StandardScenario) => {
+      const result = await Promise.all(
+        await createSortingGameWords({
+          input: {
+            gameId: scenario.sortingGameWord.two.gameId,
+            count: 2,
+            syllables: 1,
+            phoneme: 49,
+          },
+        })
+      )
+
+      expect(result.length).toEqual(2)
+      expect(result[0].gameId).toEqual(scenario.sortingGameWord.two.gameId)
+      expect(result[1].gameId).toEqual(scenario.sortingGameWord.two.gameId)
+    }
+  )
 
   scenario('updates a sortingGameWord', async (scenario: StandardScenario) => {
     const original = (await sortingGameWord({
