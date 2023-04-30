@@ -1,4 +1,5 @@
 import type { Prisma, SortingGameWord } from '@prisma/client'
+
 import type { ScenarioData } from '@redwoodjs/testing/api'
 
 export const standard = defineScenario<Prisma.SortingGameWordCreateArgs>({
@@ -19,6 +20,7 @@ export const standard = defineScenario<Prisma.SortingGameWordCreateArgs>({
         game: {
           create: {
             wordsPerPhoneme: 8380322,
+            type: 'SORTING',
             phonemeOne: 7305155,
             phonemeTwo: 4877085,
             level: 173029,
@@ -49,6 +51,7 @@ export const standard = defineScenario<Prisma.SortingGameWordCreateArgs>({
         game: {
           create: {
             wordsPerPhoneme: 8379853,
+            type: 'SORTING',
             phonemeOne: 7200173,
             phonemeTwo: 8682203,
             level: 5595501,

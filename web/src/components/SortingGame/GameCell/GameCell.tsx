@@ -9,7 +9,7 @@ export const QUERY = gql`
     game: game(id: $id) {
       id
       userId
-      date
+      createdAt
       wordsPerPhoneme
       phonemeOne
       phonemeTwo

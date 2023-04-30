@@ -56,7 +56,7 @@ const GamesList = ({ games }: FindGames) => {
             <tr key={game.id}>
               <td>{truncate(game.id)}</td>
               <td>{truncate(game.userId)}</td>
-              <td>{timeTag(game.date)}</td>
+              <td>{timeTag(game.createdAt)}</td>
               <td>{truncate(game.wordsPerPhoneme)}</td>
               <td>{truncate(game.phonemeOne)}</td>
               <td>{truncate(game.phonemeTwo)}</td>

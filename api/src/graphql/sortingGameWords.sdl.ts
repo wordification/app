@@ -18,8 +18,8 @@ export const schema = gql`
   input CreateSortingGameWordInput {
     wordId: Int!
     gameId: Int!
-    completed: Boolean!
-    current: Boolean!
+    completed: Boolean
+    current: Boolean
     testedGrapheme: String!
   }
 

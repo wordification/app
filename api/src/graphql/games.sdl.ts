@@ -3,12 +3,19 @@ export const schema = gql`
     id: Int!
     user: User!
     userId: Int!
-    date: DateTime!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    type: GameType!
     wordsPerPhoneme: Int!
     phonemeOne: Int!
     phonemeTwo: Int!
     level: Int!
     sortingGameWords: [SortingGameWord]!
+  }
+
+  enum GameType {
+    SORTING
+    MATCHING
   }
 
   type Query {
@@ -18,7 +25,7 @@ export const schema = gql`
 
   input CreateGameInput {
     userId: Int!
-    date: DateTime
+    type: GameType!
     wordsPerPhoneme: Int!
     phonemeOne: Int!
     phonemeTwo: Int!
@@ -27,7 +34,7 @@ export const schema = gql`
 
   input UpdateGameInput {
     userId: Int
-    date: DateTime
+    type: GameType
     wordsPerPhoneme: Int
     phonemeOne: Int
     phonemeTwo: Int

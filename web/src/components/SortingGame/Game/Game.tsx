@@ -55,7 +55,7 @@ const Game = ({ game }: Props) => {
             </tr>
             <tr>
               <th>Date</th>
-              <td>{timeTag(game.date)}</td>
+              <td>{timeTag(game.createdAt)}</td>
             </tr>
             <tr>
               <th>Words per phoneme</th>

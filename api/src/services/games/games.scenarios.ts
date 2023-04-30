@@ -8,6 +8,7 @@ export const standard = defineScenario<Prisma.GameCreateArgs>({
       data: {
         wordsPerPhoneme: 5034699,
         phonemeOne: 7605639,
+        type: 'SORTING',
         phonemeTwo: 4484993,
         level: 6818699,
         user: {
@@ -23,6 +24,7 @@ export const standard = defineScenario<Prisma.GameCreateArgs>({
       data: {
         wordsPerPhoneme: 3766750,
         phonemeOne: 1051697,
+        type: 'SORTING',
         phonemeTwo: 4537374,
         level: 4391041,
         user: {

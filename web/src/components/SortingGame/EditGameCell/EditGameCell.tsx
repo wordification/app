@@ -12,7 +12,7 @@ export const QUERY = gql`
     game: game(id: $id) {
       id
       userId
-      date
+      createdAt
       wordsPerPhoneme
       phonemeOne
       phonemeTwo
@@ -25,7 +25,7 @@ const UPDATE_GAME_MUTATION = gql`
     updateGame(id: $id, input: $input) {
       id
       userId
-      date
+      createdAt
       wordsPerPhoneme
       phonemeOne
       phonemeTwo

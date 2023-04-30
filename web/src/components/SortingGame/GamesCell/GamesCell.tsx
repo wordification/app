@@ -10,7 +10,7 @@ export const QUERY = gql`
     games {
       id
       userId
-      date
+      createdAt
       wordsPerPhoneme
       phonemeOne
       phonemeTwo

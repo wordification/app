@@ -23,12 +23,19 @@ model User {
   games Game[]
 }
 
+enum GameType {
+  SORTING
+  MATCHING
+}
+
 model Game {
   // Basic info
-  id     Int      @id @default(autoincrement())
-  user   User     @relation(fields: [userId], references: [id])
-  userId Int
-  date   DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  type      GameType
 
   // Relationship info
 

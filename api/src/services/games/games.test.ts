@@ -20,6 +20,7 @@ describe('games', () => {
     const result = await createGame({
       input: {
         userId: scenario.game.two.userId,
+        type: 'SORTING',
         wordsPerPhoneme: 7432704,
         phonemeOne: 2756443,
         phonemeTwo: 7908734,
