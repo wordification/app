@@ -62,7 +62,14 @@ export const Game: GameRelationResolvers = {
   user: (_obj, { root }) => {
     return db.game.findUnique({ where: { id: root?.id } }).user()
   },
-  sortingGameWords: (_obj, { root }) => {
-    return db.game.findUnique({ where: { id: root?.id } }).sortingGameWords()
+  completeWords: (_obj, { root }) => {
+    return db.game.findUnique({ where: { id: root?.id } }).sortingGameWords({
+      where: { completed: true },
+    })
+  },
+  incompleteWords: (_obj, { root }) => {
+    return db.game.findUnique({ where: { id: root?.id } }).sortingGameWords({
+      where: { completed: false },
+    })
   },
 }

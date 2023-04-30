@@ -64,6 +64,31 @@ export const createSortingGameWords = async ({
   })
 }
 
+export const selectRandomTestWord = async ({ gameId }) => {
+  const incompleteWords = await db.sortingGameWord.findMany({
+    where: {
+      gameId: gameId,
+      completed: false,
+    },
+  })
+
+  if (incompleteWords.length === 0) {
+    return null
+  }
+
+  const randomWord =
+    incompleteWords[Math.floor(Math.random() * incompleteWords.length)]
+
+  return db.sortingGameWord.update({
+    data: {
+      current: true,
+    },
+    where: {
+      id: randomWord.id,
+    },
+  })
+}
+
 export const updateSortingGameWord: MutationResolvers['updateSortingGameWord'] =
   ({ id, input }) => {
     return db.sortingGameWord.update({

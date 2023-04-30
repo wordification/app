@@ -1,11 +1,8 @@
-import type { SortingGameWord } from '@prisma/client'
-
 import {
   sortingGameWords,
   sortingGameWord,
+  selectRandomTestWord,
   createSortingGameWords,
-  updateSortingGameWord,
-  deleteSortingGameWord,
 } from './sortingGameWords'
 import type { StandardScenario } from './sortingGameWords.scenarios'
 
@@ -46,24 +43,14 @@ describe('sortingGameWords', () => {
     }
   )
 
-  scenario('updates a sortingGameWord', async (scenario: StandardScenario) => {
-    const original = (await sortingGameWord({
-      id: scenario.sortingGameWord.america.id,
-    })) as SortingGameWord
-    const result = await updateSortingGameWord({
-      id: original.id,
-      input: { testedGrapheme: 'String2' },
+  scenario('selects a random test word', async (scenario: StandardScenario) => {
+    const result = await selectRandomTestWord({
+      gameId: scenario.sortingGameWord.friday.gameId,
     })
 
-    expect(result.testedGrapheme).toEqual('String2')
-  })
-
-  scenario('deletes a sortingGameWord', async (scenario: StandardScenario) => {
-    const original = (await deleteSortingGameWord({
-      id: scenario.sortingGameWord.america.id,
-    })) as SortingGameWord
-    const result = await sortingGameWord({ id: original.id })
-
-    expect(result).toEqual(null)
+    expect(result).toEqual({
+      ...scenario.sortingGameWord.friday,
+      current: true,
+    })
   })
 })

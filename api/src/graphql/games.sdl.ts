@@ -10,7 +10,8 @@ export const schema = gql`
     phonemeOne: Int!
     phonemeTwo: Int!
     level: Int!
-    sortingGameWords: [SortingGameWord]!
+    completeWords: [SortingGameWord]!
+    incompleteWords: [SortingGameWord]!
   }
 
   enum GameType {
