@@ -37,14 +37,17 @@ model Game {
   updatedAt DateTime @updatedAt
   type      GameType
 
-  // Relationship info
-
   // Gameplay info
-  wordsPerPhoneme  Int
-  phonemeOne       Int
-  phonemeTwo       Int
-  level            Int               @default(1)
-  sortingGameWords SortingGameWord[]
+  wordsPerPhoneme Int
+  phonemeOne      Int
+  phonemeTwo      Int
+  level           Int @default(1)
+  currentWordId   Int
+
+  // Relationship info
+  currentWord   Word   @relation("currentGame", fields: [currentWordId], references: [id])
+  allWords      Word[] @relation("allGames")
+  completeWords Word[] @relation("completeGames")
 }
 
 model Word {
@@ -59,21 +62,23 @@ model Word {
   sentences    String[]
 
   // Relationship info
-  sortingGameWords SortingGameWord[]
+  games         Game[] @relation("allGames")
+  currentGames  Game[] @relation("currentGame")
+  completeGames Game[] @relation("completeGames")
+
+  //   // Relationship info
+  //   wordId Int
+  //   word   Word @relation(fields: [wordId], references: [id])
+  //   gameId Int
 }
 
-model SortingGameWord {
-  // Basic info
-  id Int @id @default(autoincrement())
+// model SortingGameWord {
+//   // Basic info
+//   id Int @id @default(autoincrement())
+//   game   Game @relation(fields: [gameId], references: [id])
 
-  // Relationship info
-  wordId Int
-  word   Word @relation(fields: [wordId], references: [id])
-  gameId Int
-  game   Game @relation(fields: [gameId], references: [id])
-
-  // Gameplay info
-  completed      Boolean @default(false)
-  current        Boolean @default(false)
-  testedGrapheme String
-}
+//   // Gameplay info
+//   completed      Boolean @default(false)
+//   current        Boolean @default(false)
+//   testedGrapheme String
+// }
