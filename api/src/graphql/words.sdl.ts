@@ -2,13 +2,15 @@ export const schema = gql`
   type Word {
     id: Int!
     word: String!
-    numSyllables: Int!
     gradeLevel: Int!
+    numSyllables: Int!
     phonemes: [Int]!
     graphemes: [String]!
     syllables: [String]!
     sentences: [String]!
-    sortingGameWords: [SortingGameWord]!
+    games: [Game]!
+    currentGames: [Game]!
+    completeGames: [Game]!
   }
 
   type Query {
@@ -18,8 +20,8 @@ export const schema = gql`
 
   input CreateWordInput {
     word: String!
-    numSyllables: Int!
     gradeLevel: Int!
+    numSyllables: Int!
     phonemes: [Int]!
     graphemes: [String]!
     syllables: [String]!
@@ -28,11 +30,17 @@ export const schema = gql`
 
   input UpdateWordInput {
     word: String
-    numSyllables: Int
     gradeLevel: Int
+    numSyllables: Int
     phonemes: [Int]!
     graphemes: [String]!
     syllables: [String]!
     sentences: [String]!
+  }
+
+  type Mutation {
+    createWord(input: CreateWordInput!): Word! @requireAuth
+    updateWord(id: Int!, input: UpdateWordInput!): Word! @requireAuth
+    deleteWord(id: Int!): Word! @requireAuth
   }
 `

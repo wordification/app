@@ -1,7 +1,12 @@
-import type { QueryResolvers, WordRelationResolvers } from 'types/graphql'
+import type {
+  QueryResolvers,
+  MutationResolvers,
+  WordRelationResolvers,
+} from 'types/graphql'
 
 import { db } from 'src/lib/db'
 
+// TODO: Move this to a database
 export const TESTED_WORD_GRAPHEMES = {
   boat: 'oa',
   coal: 'oa',
@@ -105,17 +110,51 @@ export const filterWords = async ({
   phoneme,
   numSyllables,
 }: {
-  phoneme: number
+  phoneme: number | number[]
   numSyllables: number
 }) => {
-  const words = await db.word.findMany()
-  return words.filter(
-    (word) =>
-      word.numSyllables === numSyllables &&
-      word.phonemes.includes(phoneme) &&
-      word.word in TESTED_WORD_GRAPHEMES
-  )
+  const words = await db.word.findMany({
+    where: {
+      numSyllables,
+      phonemes: {
+        hasSome: typeof phoneme === 'number' ? [phoneme] : phoneme,
+      },
+    },
+  })
+  return words.filter((word) => word.word in TESTED_WORD_GRAPHEMES)
 }
+
+export const selectGameWords = async ({
+  count,
+  syllables,
+  phoneme,
+}: {
+  count: number
+  syllables: number
+  phoneme: number | number[]
+}) => {
+  const words = await filterWords({
+    phoneme: phoneme,
+    numSyllables: syllables,
+  })
+
+  if (words.length < count) {
+    throw new Error(
+      `Not enough words for phoneme ${phoneme} and syllables ${syllables}`
+    )
+  }
+
+  const data: typeof words = []
+
+  for (let i = 0; i < count; i++) {
+    const randomWord = words[Math.floor(Math.random() * words.length)]
+
+    data.push(randomWord)
+  }
+
+  return data
+}
+
 export const words: QueryResolvers['words'] = () => {
   return db.word.findMany()
 }
@@ -126,8 +165,33 @@ export const word: QueryResolvers['word'] = ({ id }) => {
   })
 }
 
+export const createWord: MutationResolvers['createWord'] = ({ input }) => {
+  return db.word.create({
+    data: input,
+  })
+}
+
+export const updateWord: MutationResolvers['updateWord'] = ({ id, input }) => {
+  return db.word.update({
+    data: input,
+    where: { id },
+  })
+}
+
+export const deleteWord: MutationResolvers['deleteWord'] = ({ id }) => {
+  return db.word.delete({
+    where: { id },
+  })
+}
+
 export const Word: WordRelationResolvers = {
-  sortingGameWords: (_obj, { root }) => {
-    return db.word.findUnique({ where: { id: root?.id } }).sortingGameWords()
+  games: (_obj, { root }) => {
+    return db.word.findUnique({ where: { id: root?.id } }).games()
+  },
+  currentGames: (_obj, { root }) => {
+    return db.word.findUnique({ where: { id: root?.id } }).currentGames()
+  },
+  completeGames: (_obj, { root }) => {
+    return db.word.findUnique({ where: { id: root?.id } }).completeGames()
   },
 }
