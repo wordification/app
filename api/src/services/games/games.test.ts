@@ -1,4 +1,5 @@
 import type { Game } from '@prisma/client'
+import { GameType } from 'types/graphql'
 
 import { games, game, createGame, updateGame, deleteGame } from './games'
 import type { StandardScenario } from './games.scenarios'
@@ -39,6 +40,40 @@ describe('games', () => {
     expect(gameWords[0].phonemes).toContain(49)
     expect(gameWords[1].phonemes).toContain(53)
     expect(result.currentWordId).toEqual(gameWords[0].id)
+  })
+
+  scenario('rejects incorrect data', async (scenario: StandardScenario) => {
+    mockCurrentUser(scenario.user.one)
+    await expect(
+      createGame({
+        input: {
+          type: 'SORTING',
+          wordsPerPhoneme: 1,
+          phonemeOne: 49,
+          phonemeTwo: 50,
+        },
+      })
+    ).rejects.toThrowError()
+    await expect(
+      createGame({
+        input: {
+          type: 'SORTING',
+          wordsPerPhoneme: 100,
+          phonemeOne: 49,
+          phonemeTwo: 53,
+        },
+      })
+    ).rejects.toThrowError()
+    await expect(
+      createGame({
+        input: {
+          type: 'abc' as GameType,
+          wordsPerPhoneme: 1,
+          phonemeOne: 49,
+          phonemeTwo: 53,
+        },
+      })
+    ).rejects.toThrowError()
   })
 
   scenario('updates a game', async (scenario: StandardScenario) => {

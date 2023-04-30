@@ -4,6 +4,8 @@ import type {
   GameRelationResolvers,
 } from 'types/graphql'
 
+import { validate } from '@redwoodjs/api'
+
 import { db } from 'src/lib/db'
 
 import { selectGameWords } from '../words/words'
@@ -21,9 +23,31 @@ export const game: QueryResolvers['game'] = ({ id }) => {
 export const createGame: MutationResolvers['createGame'] = async ({
   input,
 }) => {
+  validate(input.wordsPerPhoneme, 'wordsPerPhoneme', {
+    numericality: { lessThanOrEqual: 10, positive: true, integer: true },
+  })
+  validate(input.type, 'type', {
+    inclusion: {
+      in: ['SORTING', 'MATCHING'],
+      message: 'must be either sorting or matching',
+    },
+  })
+  validate(input.phonemeOne, 'phonemeOne', {
+    inclusion: {
+      in: [49, 53],
+      message: 'must be either Long I or Long O',
+    },
+  })
+  validate(input.phonemeTwo, 'phonemeTwo', {
+    inclusion: {
+      in: [49, 53],
+      message: 'must be either Long I or Long O',
+    },
+  })
+
   const gameWords = await selectGameWords({
     count: input.wordsPerPhoneme,
-    syllables: 1,
+    numSyllables: 1,
     phonemes: [input.phonemeOne, input.phonemeTwo],
   })
 

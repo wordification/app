@@ -1,5 +1,7 @@
 import type { QueryResolvers, WordRelationResolvers } from 'types/graphql'
 
+import { validate } from '@redwoodjs/api'
+
 import { db } from 'src/lib/db'
 
 // TODO: Move this to a database
@@ -109,6 +111,9 @@ export const filterWords = async ({
   phonemes: number[]
   numSyllables: number
 }) => {
+  validate(numSyllables, 'numSyllables', {
+    numericality: { onlyInteger: true, positive: true },
+  })
   const words = await db.word.findMany({
     where: {
       numSyllables,
@@ -122,16 +127,23 @@ export const filterWords = async ({
 
 export const selectGameWords = async ({
   count,
-  syllables,
+  numSyllables,
   phonemes,
 }: {
   count: number
-  syllables: number
+  numSyllables: number
   phonemes: number[]
 }) => {
+  validate(count, 'count', {
+    numericality: { onlyInteger: true, positive: true },
+  })
+  validate(numSyllables, 'syllables', {
+    numericality: { onlyInteger: true, positive: true },
+  })
+
   const words = await filterWords({
     phonemes: phonemes,
-    numSyllables: syllables,
+    numSyllables: numSyllables,
   })
 
   if (words.length < count * phonemes.length) {

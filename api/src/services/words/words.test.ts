@@ -28,20 +28,24 @@ describe('words', () => {
 
   scenario('throws an error when not enough words are found', async () => {
     const phonemes = [49, 53]
-    const syllables = 1
+    const numSyllables = 1
     const count = 100
 
     await expect(
-      selectGameWords({ phonemes, syllables, count })
+      selectGameWords({ phonemes, numSyllables, count })
     ).rejects.toThrowError()
   })
 
   scenario('selects words for a game', async (_scenario: StandardScenario) => {
     const phonemes = [49, 53]
-    const syllables = 1
+    const numSyllables = 1
     const count = 2
 
-    const result = await selectGameWords({ phonemes, syllables, count })
+    const result = await selectGameWords({
+      phonemes,
+      numSyllables,
+      count,
+    })
     expect(result.length).toEqual(4)
     expect(result[0].phonemes).toContain(49)
     expect(result[1].phonemes).toContain(49)
