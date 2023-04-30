@@ -31,6 +31,7 @@ const seedWords = () => {
       return {
         word: word.word,
         gradeLevel: word.gradeLevel,
+        numSyllables: word.numSyllables,
         phonemes: word.phonemes,
         graphemes: word.graphemes,
         syllables: word.syllables,

@@ -2,6 +2,7 @@ export const schema = gql`
   type Word {
     id: Int!
     word: String!
+    numSyllables: Int!
     gradeLevel: Int!
     phonemes: [Int]!
     graphemes: [String]!
@@ -17,6 +18,7 @@ export const schema = gql`
 
   input CreateWordInput {
     word: String!
+    numSyllables: Int!
     gradeLevel: Int!
     phonemes: [Int]!
     graphemes: [String]!
@@ -26,6 +28,7 @@ export const schema = gql`
 
   input UpdateWordInput {
     word: String
+    numSyllables: Int
     gradeLevel: Int
     phonemes: [Int]!
     graphemes: [String]!
