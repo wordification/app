@@ -1,4 +1,5 @@
 import type { Prisma, SortingGameWord } from '@prisma/client'
+import { Word } from 'types/graphql'
 
 import type { ScenarioData } from '@redwoodjs/testing/api'
 
@@ -6,7 +7,7 @@ export const standard = defineScenario<
   Prisma.WordCreateArgs | Prisma.SortingGameWordCreateArgs
 >({
   word: {
-    one: {
+    sight: {
       data: {
         word: 'sight',
         gradeLevel: 3,
@@ -22,7 +23,7 @@ export const standard = defineScenario<
         ],
       },
     },
-    two: {
+    night: {
       data: {
         word: 'night',
         gradeLevel: 2,
@@ -40,7 +41,7 @@ export const standard = defineScenario<
     },
   },
   sortingGameWord: {
-    one: {
+    friday: {
       data: {
         testedGrapheme: 'String',
         word: {
@@ -77,7 +78,7 @@ export const standard = defineScenario<
         },
       },
     },
-    two: {
+    america: {
       data: {
         testedGrapheme: 'String',
         word: {
@@ -117,4 +118,9 @@ export const standard = defineScenario<
   },
 })
 
-export type StandardScenario = ScenarioData<SortingGameWord, 'sortingGameWord'>
+export type StandardScenario = ScenarioData<
+  SortingGameWord,
+  'sortingGameWord',
+  'friday' | 'america'
+> &
+  ScenarioData<Word, 'word', 'sight' | 'night'>

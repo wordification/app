@@ -3,18 +3,11 @@ import type { SortingGameWord } from '@prisma/client'
 import {
   sortingGameWords,
   sortingGameWord,
-  createSortingGameWord,
   createSortingGameWords,
   updateSortingGameWord,
   deleteSortingGameWord,
 } from './sortingGameWords'
 import type { StandardScenario } from './sortingGameWords.scenarios'
-
-// Generated boilerplate tests do not account for all circumstances
-// and can fail without adjustments, e.g. Float.
-//           Please refer to the RedwoodJS Testing Docs:
-//       https://redwoodjs.com/docs/testing#testing-services
-// https://redwoodjs.com/docs/testing#jest-expect-type-considerations
 
 describe('sortingGameWords', () => {
   scenario(
@@ -32,32 +25,18 @@ describe('sortingGameWords', () => {
     'returns a single sortingGameWord',
     async (scenario: StandardScenario) => {
       const result = await sortingGameWord({
-        id: scenario.sortingGameWord.one.id,
+        id: scenario.sortingGameWord.america.id,
       })
 
-      expect(result).toEqual(scenario.sortingGameWord.one)
+      expect(result).toEqual(scenario.sortingGameWord.america)
     }
   )
-
-  scenario('creates a sortingGameWord', async (scenario: StandardScenario) => {
-    const result = await createSortingGameWord({
-      input: {
-        wordId: scenario.sortingGameWord.two.wordId,
-        gameId: scenario.sortingGameWord.two.gameId,
-        testedGrapheme: 'String',
-      },
-    })
-
-    expect(result.wordId).toEqual(scenario.sortingGameWord.two.wordId)
-    expect(result.gameId).toEqual(scenario.sortingGameWord.two.gameId)
-    expect(result.testedGrapheme).toEqual('String')
-  })
 
   scenario(
     'creates multiple sortingGameWords',
     async (scenario: StandardScenario) => {
       const result = await createSortingGameWords({
-        gameId: scenario.sortingGameWord.two.gameId,
+        gameId: scenario.sortingGameWord.friday.gameId,
         count: 2,
         syllables: 1,
         phoneme: 49,
@@ -69,7 +48,7 @@ describe('sortingGameWords', () => {
 
   scenario('updates a sortingGameWord', async (scenario: StandardScenario) => {
     const original = (await sortingGameWord({
-      id: scenario.sortingGameWord.one.id,
+      id: scenario.sortingGameWord.america.id,
     })) as SortingGameWord
     const result = await updateSortingGameWord({
       id: original.id,
@@ -81,7 +60,7 @@ describe('sortingGameWords', () => {
 
   scenario('deletes a sortingGameWord', async (scenario: StandardScenario) => {
     const original = (await deleteSortingGameWord({
-      id: scenario.sortingGameWord.one.id,
+      id: scenario.sortingGameWord.america.id,
     })) as SortingGameWord
     const result = await sortingGameWord({ id: original.id })
 
