@@ -43,7 +43,7 @@ model Game {
   wordsPerPhoneme  Int
   phonemeOne       Int
   phonemeTwo       Int
-  level            Int
+  level            Int               @default(1)
   sortingGameWords SortingGameWord[]
 }
 
