@@ -45,11 +45,11 @@ const seedWords = () => {
 export default async () => {
   try {
     const userRecord = await seedUsers()
-    console.log(`Seeded: ${userRecord.count} user(s)`)
+    console.info(`Seeded: ${userRecord.count} user(s)`)
     const wordRecord = await seedWords()
-    console.log(`Seeded: ${wordRecord.count} word(s)`)
+    console.info(`Seeded: ${wordRecord.count} word(s)`)
   } catch (error) {
-    console.warn('Please define your seed data.')
+    console.warn('Please define seed data.')
     console.error(error)
   }
 }

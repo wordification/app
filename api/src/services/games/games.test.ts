@@ -1,7 +1,5 @@
 import type { Game } from '@prisma/client'
 
-import { db } from 'src/lib/db'
-
 import { games, game, createGame, updateGame, deleteGame } from './games'
 import type { StandardScenario } from './games.scenarios'
 
@@ -25,21 +23,22 @@ describe('games', () => {
         type: 'SORTING',
         wordsPerPhoneme: 1,
         phonemeOne: 49,
-        phonemeTwo: 49,
+        phonemeTwo: 53,
       },
     })
 
     expect(result.userId).toEqual(scenario.user.one.id)
     expect(result.wordsPerPhoneme).toEqual(1)
     expect(result.phonemeOne).toEqual(49)
-    expect(result.phonemeTwo).toEqual(49)
+    expect(result.phonemeTwo).toEqual(53)
     expect(result.level).toEqual(1)
 
-    const sortingGameWords = await db.sortingGameWord.findMany({
-      where: { gameId: result.id },
-    })
+    const gameWords = result.allWords
 
-    expect(sortingGameWords.length).toEqual(2)
+    expect(result.allWords.length).toEqual(2)
+    expect(gameWords[0].phonemes).toContain(49)
+    expect(gameWords[1].phonemes).toContain(53)
+    expect(result.currentWordId).toEqual(gameWords[0].id)
   })
 
   scenario('updates a game', async (scenario: StandardScenario) => {

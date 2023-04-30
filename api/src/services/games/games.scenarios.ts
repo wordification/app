@@ -16,7 +16,7 @@ export const standard = defineScenario<
     },
   },
   word: {
-    one: {
+    sight: {
       data: {
         word: 'sight',
         gradeLevel: 3,
@@ -32,19 +32,19 @@ export const standard = defineScenario<
         ],
       },
     },
-    two: {
+    show: {
       data: {
-        word: 'night',
+        word: 'show',
         gradeLevel: 2,
-        phonemes: [17, 49, 24],
-        graphemes: ['n', 'igh', 't'],
-        syllables: ['ons', 'nuc', 'cod'],
+        phonemes: [23, 53],
+        graphemes: ['sh', 'ow'],
+        syllables: ['ons', 'nuc'],
         numSyllables: 1,
         sentences: [
-          'I stayed up all night.',
-          'She cooked dinner last night.',
-          'We met last night.',
-          'They talk every night before bed.',
+          'I love that show.',
+          'Show me an example.',
+          'I want to show you my dolls.',
+          'She did not show up.',
         ],
       },
     },
@@ -52,14 +52,14 @@ export const standard = defineScenario<
   game: {
     one: {
       data: {
+        updatedAt: '2023-04-30T21:33:37.356Z',
+        type: 'SORTING',
         wordsPerPhoneme: 1,
         phonemeOne: 49,
-        type: 'SORTING',
         phonemeTwo: 53,
-        level: 1,
         user: {
           create: {
-            email: 'String7480309',
+            email: 'String8936105',
             hashedPassword: 'String',
             salt: 'String',
           },
@@ -68,14 +68,14 @@ export const standard = defineScenario<
     },
     two: {
       data: {
+        updatedAt: '2023-04-30T21:33:37.356Z',
+        type: 'SORTING',
         wordsPerPhoneme: 1,
         phonemeOne: 49,
-        type: 'SORTING',
         phonemeTwo: 53,
-        level: 1,
         user: {
           create: {
-            email: 'String1670264',
+            email: 'String7570650',
             hashedPassword: 'String',
             salt: 'String',
           },
