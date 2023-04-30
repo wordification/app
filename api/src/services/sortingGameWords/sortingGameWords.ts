@@ -18,45 +18,51 @@ export const sortingGameWord: QueryResolvers['sortingGameWord'] = ({ id }) => {
   })
 }
 
-export const createSortingGameWord: MutationResolvers['createSortingGameWord'] =
-  ({ input }) => {
-    return db.sortingGameWord.create({
-      data: input,
+export const createSortingGameWords = async ({
+  gameId,
+  count,
+  syllables,
+  phoneme,
+}: {
+  gameId: number
+  count: number
+  syllables: number
+  phoneme: number
+}) => {
+  const words = await filterWords({
+    phoneme: phoneme,
+    numSyllables: syllables,
+  })
+
+  const data: {
+    wordId: number
+    gameId: number
+    completed: boolean
+    current: boolean
+    testedGrapheme: string
+  }[] = []
+  if (words.length < count) {
+    throw new Error(
+      `Not enough words for phoneme ${phoneme} and syllables ${syllables}`
+    )
+  }
+
+  for (let i = 0; i < count; i++) {
+    const randomWord = words[Math.floor(Math.random() * words.length)]
+
+    data.push({
+      wordId: randomWord.id,
+      gameId: gameId,
+      completed: false,
+      current: false,
+      testedGrapheme: TESTED_WORD_GRAPHEMES[randomWord.word],
     })
   }
 
-export const createSortingGameWords: MutationResolvers['createSortingGameWords'] =
-  async ({ input }) => {
-    const words = await filterWords({
-      phoneme: input.phoneme,
-      numSyllables: input.syllables,
-    })
-
-    const data = []
-    if (words.length < input.count) {
-      throw new Error(
-        `Not enough words for phoneme ${input.phoneme} and syllables ${input.syllables}: ${words.length} < ${input.count}`
-      )
-    }
-
-    for (let i = 0; i < input.count; i++) {
-      const randomWord = words[Math.floor(Math.random() * words.length)]
-
-      data.push(
-        db.sortingGameWord.create({
-          data: {
-            wordId: randomWord.id,
-            gameId: input.gameId,
-            completed: false,
-            current: false,
-            testedGrapheme: TESTED_WORD_GRAPHEMES[randomWord.word],
-          },
-        })
-      )
-    }
-
-    return Promise.all(data)
-  }
+  return db.sortingGameWord.createMany({
+    data,
+  })
+}
 
 export const updateSortingGameWord: MutationResolvers['updateSortingGameWord'] =
   ({ id, input }) => {

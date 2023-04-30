@@ -15,21 +15,6 @@ export const schema = gql`
     sortingGameWord(id: Int!): SortingGameWord @requireAuth
   }
 
-  input CreateSortingGameWordInput {
-    wordId: Int!
-    gameId: Int!
-    completed: Boolean
-    current: Boolean
-    testedGrapheme: String!
-  }
-
-  input CreateSortingGameWordsInput {
-    gameId: Int!
-    count: Int!
-    syllables: Int!
-    phoneme: Int!
-  }
-
   input UpdateSortingGameWordInput {
     wordId: Int
     gameId: Int
@@ -39,11 +24,6 @@ export const schema = gql`
   }
 
   type Mutation {
-    createSortingGameWord(input: CreateSortingGameWordInput!): SortingGameWord!
-      @requireAuth
-    createSortingGameWords(
-      input: CreateSortingGameWordsInput!
-    ): [SortingGameWord!]!
     updateSortingGameWord(
       id: Int!
       input: UpdateSortingGameWordInput!

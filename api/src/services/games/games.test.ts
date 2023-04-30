@@ -1,5 +1,7 @@
 import type { Game } from '@prisma/client'
 
+import { db } from 'src/lib/db'
+
 import { games, game, createGame, updateGame, deleteGame } from './games'
 import type { StandardScenario } from './games.scenarios'
 
@@ -17,32 +19,37 @@ describe('games', () => {
   })
 
   scenario('creates a game', async (scenario: StandardScenario) => {
+    mockCurrentUser(scenario.user.one)
     const result = await createGame({
       input: {
-        userId: scenario.game.two.userId,
         type: 'SORTING',
-        wordsPerPhoneme: 7432704,
-        phonemeOne: 2756443,
-        phonemeTwo: 7908734,
-        level: 3786922,
+        wordsPerPhoneme: 1,
+        phonemeOne: 49,
+        phonemeTwo: 49,
       },
     })
 
-    expect(result.userId).toEqual(scenario.game.two.userId)
-    expect(result.wordsPerPhoneme).toEqual(7432704)
-    expect(result.phonemeOne).toEqual(2756443)
-    expect(result.phonemeTwo).toEqual(7908734)
-    expect(result.level).toEqual(3786922)
+    expect(result.userId).toEqual(scenario.user.one.id)
+    expect(result.wordsPerPhoneme).toEqual(1)
+    expect(result.phonemeOne).toEqual(49)
+    expect(result.phonemeTwo).toEqual(49)
+    expect(result.level).toEqual(1)
+
+    const sortingGameWords = await db.sortingGameWord.findMany({
+      where: { gameId: result.id },
+    })
+
+    expect(sortingGameWords.length).toEqual(2)
   })
 
   scenario('updates a game', async (scenario: StandardScenario) => {
     const original = (await game({ id: scenario.game.one.id })) as Game
     const result = await updateGame({
       id: original.id,
-      input: { wordsPerPhoneme: 5683524 },
+      input: { wordsPerPhoneme: 2 },
     })
 
-    expect(result.wordsPerPhoneme).toEqual(5683524)
+    expect(result.wordsPerPhoneme).toEqual(2)
   })
 
   scenario('deletes a game', async (scenario: StandardScenario) => {

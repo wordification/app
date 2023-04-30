@@ -56,20 +56,14 @@ describe('sortingGameWords', () => {
   scenario(
     'creates multiple sortingGameWords',
     async (scenario: StandardScenario) => {
-      const result = await Promise.all(
-        await createSortingGameWords({
-          input: {
-            gameId: scenario.sortingGameWord.two.gameId,
-            count: 2,
-            syllables: 1,
-            phoneme: 49,
-          },
-        })
-      )
+      const result = await createSortingGameWords({
+        gameId: scenario.sortingGameWord.two.gameId,
+        count: 2,
+        syllables: 1,
+        phoneme: 49,
+      })
 
-      expect(result.length).toEqual(2)
-      expect(result[0].gameId).toEqual(scenario.sortingGameWord.two.gameId)
-      expect(result[1].gameId).toEqual(scenario.sortingGameWord.two.gameId)
+      expect(result.count).toEqual(2)
     }
   )
 

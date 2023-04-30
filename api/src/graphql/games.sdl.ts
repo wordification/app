@@ -24,12 +24,10 @@ export const schema = gql`
   }
 
   input CreateGameInput {
-    userId: Int!
     type: GameType!
     wordsPerPhoneme: Int!
     phonemeOne: Int!
     phonemeTwo: Int!
-    level: Int!
   }
 
   input UpdateGameInput {
