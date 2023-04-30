@@ -1,14 +1,14 @@
 import { render } from '@redwoodjs/testing/web'
 
-import SortingGamePage from './SortingGamePage'
+import MenuPage from './MenuPage'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //   https://redwoodjs.com/docs/testing#testing-pages-layouts
 
-describe('SortingGamePage', () => {
+describe('SortingGameStartPage', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<SortingGamePage />)
+      render(<MenuPage />)
     }).not.toThrow()
   })
 })

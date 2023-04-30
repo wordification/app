@@ -1,24 +1,24 @@
-import { Link } from '@redwoodjs/router'
+import { Link, routes } from '@redwoodjs/router'
 
 const SORTING_MENU_ITEMS = [
   {
     title: 'New Game',
     content: 'Start a new game',
-    to: '/games/sorting/setup',
+    to: routes.sortingGameSetup(),
   },
   {
     title: 'Resume Game',
     content: 'Resume a game in progress',
-    to: '/games/sorting/unfinished',
+    to: routes.sortingGameIncomplete(),
   },
   {
     title: 'Completed Games',
     content: 'View completed games',
-    to: '/games/sorting/finished',
+    to: routes.sortingGameComplete(),
   },
 ] as const
 
-const SortingGamePage = () => {
+const SortingMenuPage = () => {
   return (
     <ul className="grid gap-4 sm:grid-cols-3">
       {SORTING_MENU_ITEMS.map((item) => (
@@ -37,4 +37,4 @@ const SortingGamePage = () => {
   )
 }
 
-export default SortingGamePage
+export default SortingMenuPage
