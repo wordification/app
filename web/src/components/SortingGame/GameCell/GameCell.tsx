@@ -11,8 +11,7 @@ export const QUERY = gql`
       userId
       createdAt
       wordsPerPhoneme
-      phonemeOne
-      phonemeTwo
+      phonemes
       level
     }
   }

@@ -45,8 +45,7 @@ const GamesList = ({ games }: FindGames) => {
             <th>User id</th>
             <th>Date</th>
             <th>Words per phoneme</th>
-            <th>Phoneme one</th>
-            <th>Phoneme two</th>
+            <th>Phonemes</th>
             <th>Level</th>
             <th>&nbsp;</th>
           </tr>
@@ -58,8 +57,7 @@ const GamesList = ({ games }: FindGames) => {
               <td>{truncate(game.userId)}</td>
               <td>{timeTag(game.createdAt)}</td>
               <td>{truncate(game.wordsPerPhoneme)}</td>
-              <td>{truncate(game.phonemeOne)}</td>
-              <td>{truncate(game.phonemeTwo)}</td>
+              <td>{truncate(game.phonemes.join(','))}</td>
               <td>{truncate(game.level)}</td>
               <td>
                 <nav className="rw-table-actions">

@@ -14,8 +14,7 @@ export const QUERY = gql`
       userId
       createdAt
       wordsPerPhoneme
-      phonemeOne
-      phonemeTwo
+      phonemes
       level
     }
   }
@@ -27,8 +26,7 @@ const UPDATE_GAME_MUTATION = gql`
       userId
       createdAt
       wordsPerPhoneme
-      phonemeOne
-      phonemeTwo
+      phonemes
       level
     }
   }

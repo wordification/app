@@ -188,13 +188,13 @@ export const word: QueryResolvers['word'] = ({ id }) => {
 }
 
 export const Word: WordRelationResolvers = {
-  games: (_obj, { root }) => {
-    return db.word.findUnique({ where: { id: root?.id } }).games()
+  allGames: (_obj, { root }) => {
+    return db.word.findUnique({ where: { id: root?.id } }).allGames()
   },
   currentGames: (_obj, { root }) => {
     return db.word.findUnique({ where: { id: root?.id } }).currentGames()
   },
-  completeGames: (_obj, { root }) => {
-    return db.word.findUnique({ where: { id: root?.id } }).completeGames()
+  completedGames: (_obj, { root }) => {
+    return db.word.findUnique({ where: { id: root?.id } }).completedGames()
   },
 }

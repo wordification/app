@@ -7,6 +7,7 @@ import {
   Label,
   NumberField,
   Submit,
+  SelectField,
 } from '@redwoodjs/forms'
 import type { RWGqlError } from '@redwoodjs/forms'
 
@@ -19,118 +20,85 @@ interface GameFormProps {
   loading: boolean
 }
 
+const PHONEME_OPTIONS = [
+  { id: 40, name: 'Short I' },
+  { id: 49, name: 'Long I' },
+  { id: 55, name: 'Short O' },
+  { id: 53, name: 'Long O' },
+] as const
+
 const GameForm = (props: GameFormProps) => {
   const onSubmit = (data: FormGame) => {
-    props.onSave(data, props?.game?.id)
+    console.log(data)
+    props.onSave(
+      { ...data, phonemes: data.phonemes.map((p) => +p) },
+      props?.game?.id
+    )
   }
 
   return (
-    <div className="rw-form-wrapper">
-      <Form<FormGame> onSubmit={onSubmit} error={props.error}>
-        <FormError
-          error={props.error}
-          wrapperClassName="rw-form-error-wrapper"
-          titleClassName="rw-form-error-title"
-          listClassName="rw-form-error-list"
-        />
+    <Form<FormGame> onSubmit={onSubmit} error={props.error}>
+      <FormError
+        error={props.error}
+        wrapperClassName="card card-body bg-base-300"
+        titleClassName="font-bold text-error"
+        listClassName="list-disc list-inside text-sm"
+      />
 
-        <Label
-          name="userId"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          User id
-        </Label>
-
-        <NumberField
-          name="userId"
-          defaultValue={props.game?.userId}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-          validation={{ required: true }}
-        />
-
-        <FieldError name="userId" className="rw-field-error" />
-
+      <div className="form-control w-full max-w-xs">
         <Label
           name="wordsPerPhoneme"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
+          className="label"
+          errorClassName="label text-error"
         >
-          Words per phoneme
+          <span className="label-text">Words per phoneme</span>
         </Label>
 
         <NumberField
           name="wordsPerPhoneme"
-          defaultValue={props.game?.wordsPerPhoneme}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
+          defaultValue={props.game?.wordsPerPhoneme ?? 1}
+          className="input-bordered input w-full max-w-xs"
+          errorClassName="input input-bordered border-error w-full max-w-xs"
           validation={{ required: true }}
         />
+      </div>
+      <FieldError name="wordsPerPhoneme" className="text-sm text-error" />
 
-        <FieldError name="wordsPerPhoneme" className="rw-field-error" />
-
+      <div className="form-control w-full max-w-xs">
         <Label
-          name="phonemeOne"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
+          name="phonemes"
+          className="label"
+          errorClassName="label text-error"
         >
-          Phoneme one
+          <span className="label-text">Phonemes</span>
         </Label>
 
-        <NumberField
-          name="phonemeOne"
-          defaultValue={props.game?.phonemeOne}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-          validation={{ required: true }}
-        />
-
-        <FieldError name="phonemeOne" className="rw-field-error" />
-
-        <Label
-          name="phonemeTwo"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
+        <SelectField
+          name="phonemes"
+          multiple
+          validation={{
+            required: true,
+            validate: {
+              exactlyTwo: (value) =>
+                value.length === 2 || 'Please select two phonemes.',
+            },
+          }}
         >
-          Phoneme two
-        </Label>
+          {PHONEME_OPTIONS.map((p) => (
+            <option key={p.id} value={p.id}>
+              {p.name}
+            </option>
+          ))}
+        </SelectField>
+      </div>
+      <FieldError name="phonemes" className="rw-field-error" />
 
-        <NumberField
-          name="phonemeTwo"
-          defaultValue={props.game?.phonemeTwo}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-          validation={{ required: true }}
-        />
-
-        <FieldError name="phonemeTwo" className="rw-field-error" />
-
-        <Label
-          name="level"
-          className="rw-label"
-          errorClassName="rw-label rw-label-error"
-        >
-          Level
-        </Label>
-
-        <NumberField
-          name="level"
-          defaultValue={props.game?.level}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-          validation={{ required: true }}
-        />
-
-        <FieldError name="level" className="rw-field-error" />
-
-        <div className="rw-button-group">
-          <Submit disabled={props.loading} className="rw-button rw-button-blue">
-            Save
-          </Submit>
-        </div>
-      </Form>
-    </div>
+      <div>
+        <Submit disabled={props.loading} className="btn-primary btn">
+          Save
+        </Submit>
+      </div>
+    </Form>
   )
 }
 

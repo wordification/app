@@ -62,12 +62,8 @@ const Game = ({ game }: Props) => {
               <td>{game.wordsPerPhoneme}</td>
             </tr>
             <tr>
-              <th>Phoneme one</th>
-              <td>{game.phonemeOne}</td>
-            </tr>
-            <tr>
-              <th>Phoneme two</th>
-              <td>{game.phonemeTwo}</td>
+              <th>Phonemes</th>
+              <td>{game.phonemes}</td>
             </tr>
             <tr>
               <th>Level</th>

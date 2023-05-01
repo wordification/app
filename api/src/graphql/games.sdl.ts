@@ -7,8 +7,7 @@ export const schema = gql`
     updatedAt: DateTime!
     type: GameType!
     wordsPerPhoneme: Int!
-    phonemeOne: Int!
-    phonemeTwo: Int!
+    phonemes: [Int]!
     level: Int!
     currentWordId: Int
     currentWord: Word
@@ -29,16 +28,14 @@ export const schema = gql`
   input CreateGameInput {
     type: GameType!
     wordsPerPhoneme: Int!
-    phonemeOne: Int!
-    phonemeTwo: Int!
+    phonemes: [Int]!
   }
 
   input UpdateGameInput {
     userId: Int
     type: GameType
     wordsPerPhoneme: Int
-    phonemeOne: Int
-    phonemeTwo: Int
+    phonemes: [Int]
     level: Int
     currentWordId: Int
   }

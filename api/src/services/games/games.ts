@@ -23,32 +23,42 @@ export const game: QueryResolvers['game'] = ({ id }) => {
 export const createGame: MutationResolvers['createGame'] = async ({
   input,
 }) => {
-  validate(input.wordsPerPhoneme, 'wordsPerPhoneme', {
-    numericality: { lessThanOrEqual: 10, positive: true, integer: true },
+  validate(input.wordsPerPhoneme, 'words per phoneme', {
+    numericality: {
+      lessThanOrEqual: 10,
+      positive: true,
+      integer: true,
+      message: 'Must be a positive number less than or equal to 10!',
+    },
   })
-  validate(input.type, 'type', {
+  validate(input.type, 'game type', {
     inclusion: {
       in: ['SORTING', 'MATCHING'],
-      message: 'must be either sorting or matching',
+      message: 'Only sorting and matching games are currently supported!',
     },
   })
-  validate(input.phonemeOne, 'phonemeOne', {
-    inclusion: {
-      in: [49, 53],
-      message: 'must be either Long I or Long O',
-    },
-  })
-  validate(input.phonemeTwo, 'phonemeTwo', {
-    inclusion: {
-      in: [49, 53],
-      message: 'must be either Long I or Long O',
+  validate(input.phonemes, 'phonemes', {
+    custom: {
+      with: () => {
+        if (input.phonemes.length !== 2) {
+          throw new Error('You must select exactly two phonemes!')
+        }
+        const allowedPhonemes = [49, 53]
+        input.phonemes.forEach((phoneme) => {
+          if (!allowedPhonemes.includes(phoneme)) {
+            throw new Error(
+              'Invalid phonemes selected! Please only select Long I and Long O.'
+            )
+          }
+        })
+      },
     },
   })
 
   const gameWords = await selectGameWords({
     count: input.wordsPerPhoneme,
     numSyllables: 1,
-    phonemes: [input.phonemeOne, input.phonemeTwo],
+    phonemes: input.phonemes,
   })
 
   const game = await db.game.create({

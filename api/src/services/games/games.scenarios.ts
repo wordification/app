@@ -55,8 +55,7 @@ export const standard = defineScenario<
         updatedAt: '2023-04-30T21:33:37.356Z',
         type: 'SORTING',
         wordsPerPhoneme: 1,
-        phonemeOne: 49,
-        phonemeTwo: 53,
+        phonemes: [49, 53],
         user: {
           create: {
             email: 'String8936105',
@@ -71,8 +70,7 @@ export const standard = defineScenario<
         updatedAt: '2023-04-30T21:33:37.356Z',
         type: 'SORTING',
         wordsPerPhoneme: 1,
-        phonemeOne: 49,
-        phonemeTwo: 53,
+        phonemes: [49, 53],
         user: {
           create: {
             email: 'String7570650',

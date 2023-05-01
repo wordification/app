@@ -16,7 +16,8 @@ const CREATE_GAME_MUTATION = gql`
 
 const NewGame = () => {
   const [createGame, { loading, error }] = useMutation(CREATE_GAME_MUTATION, {
-    onCompleted: () => {
+    onCompleted: (a) => {
+      console.log(a)
       toast.success('Game created')
       navigate(routes.games())
     },
@@ -26,15 +27,23 @@ const NewGame = () => {
   })
 
   const onSave = (input: CreateGameInput) => {
-    createGame({ variables: { input } })
+    console.log(input)
+    createGame({
+      variables: {
+        input: {
+          ...input,
+          type: 'SORTING',
+        },
+      },
+    })
   }
 
   return (
-    <div className="rw-segment">
-      <header className="rw-segment-header">
-        <h2 className="rw-heading rw-heading-secondary">New Game</h2>
-      </header>
-      <div className="rw-segment-main">
+    <div className="card bg-base-200 text-base-content">
+      <div className="card-body">
+        <header>
+          <h2 className="card-title">New Game</h2>
+        </header>
         <GameForm onSave={onSave} loading={loading} error={error} />
       </div>
     </div>

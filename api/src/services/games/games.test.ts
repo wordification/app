@@ -23,15 +23,14 @@ describe('games', () => {
       input: {
         type: 'SORTING',
         wordsPerPhoneme: 1,
-        phonemeOne: 49,
-        phonemeTwo: 53,
+        phonemes: [49, 53],
       },
     })
 
     expect(result.userId).toEqual(scenario.user.one.id)
     expect(result.wordsPerPhoneme).toEqual(1)
-    expect(result.phonemeOne).toEqual(49)
-    expect(result.phonemeTwo).toEqual(53)
+    expect(result.phonemes[0]).toEqual(49)
+    expect(result.phonemes[1]).toEqual(53)
     expect(result.level).toEqual(1)
 
     const gameWords = result.allWords
@@ -49,8 +48,7 @@ describe('games', () => {
         input: {
           type: 'SORTING',
           wordsPerPhoneme: 1,
-          phonemeOne: 49,
-          phonemeTwo: 50,
+          phonemes: [49, 50],
         },
       })
     ).rejects.toThrowError()
@@ -59,8 +57,7 @@ describe('games', () => {
         input: {
           type: 'SORTING',
           wordsPerPhoneme: 100,
-          phonemeOne: 49,
-          phonemeTwo: 53,
+          phonemes: [49, 53],
         },
       })
     ).rejects.toThrowError()
@@ -69,8 +66,7 @@ describe('games', () => {
         input: {
           type: 'abc' as GameType,
           wordsPerPhoneme: 1,
-          phonemeOne: 49,
-          phonemeTwo: 53,
+          phonemes: [49, 53],
         },
       })
     ).rejects.toThrowError()
