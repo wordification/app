@@ -74,3 +74,26 @@ export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSec
 
     return false
   }
+
+export const sortingGameGradeThirdLevel: MutationResolvers['sortingGameGradeThirdLevel'] =
+  async ({ gameId, entry }) => {
+    const game = await db.game.findUnique({
+      where: { id: gameId },
+      include: {
+        currentWord: true,
+      },
+    })
+
+    if (game.currentWord.word === entry) {
+      await db.game.update({
+        data: {
+          level: 4,
+        },
+        where: { id: gameId },
+      })
+
+      return true
+    }
+
+    return false
+  }

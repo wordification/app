@@ -24,5 +24,7 @@ export const schema = gql`
       @requireAuth
     sortingGameGradeSecondLevel(gameId: Int!, grapheme: String!): Boolean!
       @requireAuth
+    sortingGameGradeThirdLevel(gameId: Int!, entry: String!): Boolean!
+      @requireAuth
   }
 `

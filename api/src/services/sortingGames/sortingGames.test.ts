@@ -3,6 +3,7 @@ import {
   sortingGameGradeFirstLevel,
   sortingGameSecondLevel,
   sortingGameGradeSecondLevel,
+  sortingGameGradeThirdLevel,
 } from './sortingGames'
 import type { StandardScenario } from './sortingGames.scenarios'
 
@@ -57,6 +58,22 @@ describe('sortingGames', () => {
     const result2 = await sortingGameGradeSecondLevel({
       gameId: scenario.game.two.id,
       grapheme: 'ow',
+    })
+
+    expect(result2).toEqual(true)
+  })
+
+  scenario('grades the third level', async (scenario: StandardScenario) => {
+    const result1 = await sortingGameGradeThirdLevel({
+      gameId: scenario.game.two.id,
+      entry: 's',
+    })
+
+    expect(result1).toEqual(false)
+
+    const result2 = await sortingGameGradeThirdLevel({
+      gameId: scenario.game.two.id,
+      entry: 'snow',
     })
 
     expect(result2).toEqual(true)
