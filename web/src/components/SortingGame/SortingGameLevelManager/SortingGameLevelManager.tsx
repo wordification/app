@@ -1,6 +1,8 @@
 import SortingGameFirstLevelCell from 'src/components/SortingGame/Levels/SortingGameFirstLevelCell'
 import SortingGameSecondLevelCell from 'src/components/SortingGame/Levels/SortingGameSecondLevelCell'
 
+import SortingGameThirdLevel from '../Levels/SortingGameThirdLevel/SortingGameThirdLevel'
+
 const SortingGameLevelManager = ({
   gameId,
   level,
@@ -14,7 +16,7 @@ const SortingGameLevelManager = ({
     case 2:
       return <SortingGameSecondLevelCell gameId={gameId} />
     case 3:
-      return <div>Level 3</div>
+      return <SortingGameThirdLevel gameId={gameId} />
     default:
       return <div>default</div>
   }
