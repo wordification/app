@@ -1,4 +1,4 @@
-import type { EditGameById, UpdateGameInput } from 'types/graphql'
+import type { CreateGameInput, Game } from 'types/graphql'
 
 import {
   Form,
@@ -11,11 +11,10 @@ import {
 } from '@redwoodjs/forms'
 import type { RWGqlError } from '@redwoodjs/forms'
 
-type FormGame = NonNullable<EditGameById['game']>
+type FormGame = NonNullable<Game>
 
-interface GameFormProps {
-  game?: EditGameById['game']
-  onSave: (data: UpdateGameInput, id?: FormGame['id']) => void
+interface SortingGameSetupFormProps {
+  onSave: (data: CreateGameInput) => void
   error: RWGqlError
   loading: boolean
 }
@@ -27,12 +26,9 @@ const PHONEME_OPTIONS = [
   { id: 53, name: 'Long O' },
 ] as const
 
-const GameForm = (props: GameFormProps) => {
+const SortingGameSetupForm = (props: SortingGameSetupFormProps) => {
   const onSubmit = (data: FormGame) => {
-    props.onSave(
-      { ...data, phonemes: data.phonemes.map((p) => +p) },
-      props?.game?.id
-    )
+    props.onSave({ ...data, phonemes: data.phonemes.map((p) => +p) })
   }
 
   return (
@@ -55,7 +51,7 @@ const GameForm = (props: GameFormProps) => {
 
         <NumberField
           name="wordsPerPhoneme"
-          defaultValue={props.game?.wordsPerPhoneme ?? 1}
+          defaultValue={3}
           className="input-bordered input w-full max-w-xs"
           errorClassName="input input-bordered border-error w-full max-w-xs"
           validation={{ required: true }}
@@ -94,11 +90,11 @@ const GameForm = (props: GameFormProps) => {
 
       <div>
         <Submit disabled={props.loading} className="btn-primary btn">
-          Save
+          Submit
         </Submit>
       </div>
     </Form>
   )
 }
 
-export default GameForm
+export default SortingGameSetupForm

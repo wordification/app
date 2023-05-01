@@ -1,13 +1,13 @@
-import type { FindGames } from 'types/graphql'
+import type { FindSortingGames } from 'types/graphql'
 
 import { Link, routes } from '@redwoodjs/router'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
-import Games from 'src/components/SortingGame/Games'
+import SortingGamesList from 'src/components/SortingGame/SortingGamesList'
 
 export const QUERY = gql`
-  query FindGames($complete: Boolean) {
-    games(complete: $complete) {
+  query FindSortingGames($complete: Boolean) {
+    sortingGames: games(complete: $complete) {
       id
       userId
       createdAt
@@ -35,6 +35,8 @@ export const Failure = ({ error }: CellFailureProps) => (
   <div className="rw-cell-error">{error?.message}</div>
 )
 
-export const Success = ({ games }: CellSuccessProps<FindGames>) => {
-  return <Games games={games} />
+export const Success = ({
+  sortingGames,
+}: CellSuccessProps<FindSortingGames>) => {
+  return <SortingGamesList sortingGames={sortingGames} />
 }

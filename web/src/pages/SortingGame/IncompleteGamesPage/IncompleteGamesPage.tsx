@@ -1,7 +1,7 @@
-import GamesCell from 'src/components/SortingGame/GamesCell'
+import SortingGamesCell from 'src/components/SortingGame/SortingGamesCell'
 
 const IncompleteGamesPage = () => {
-  return <GamesCell complete={false} />
+  return <SortingGamesCell complete={false} />
 }
 
 export default IncompleteGamesPage

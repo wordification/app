@@ -1,5 +1,5 @@
 export const schema = gql`
-  interface Phoneme {
+  type Phoneme {
     id: Int!
     label: String!
   }

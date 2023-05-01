@@ -1,10 +1,13 @@
-import type { DeleteGameMutationVariables, FindGames } from 'types/graphql'
+import type {
+  DeleteGameMutationVariables,
+  FindSortingGames,
+} from 'types/graphql'
 
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-import { QUERY } from 'src/components/SortingGame/GamesCell'
+import { QUERY } from 'src/components/SortingGame/SortingGamesCell'
 import { timeTag, truncate } from 'src/lib/formatters'
 
 const DELETE_GAME_MUTATION = gql`
@@ -15,7 +18,7 @@ const DELETE_GAME_MUTATION = gql`
   }
 `
 
-const GamesList = ({ games }: FindGames) => {
+const GamesList = ({ sortingGames }: FindSortingGames) => {
   const [deleteGame] = useMutation(DELETE_GAME_MUTATION, {
     onCompleted: () => {
       toast.success('Game deleted')
@@ -51,7 +54,7 @@ const GamesList = ({ games }: FindGames) => {
           </tr>
         </thead>
         <tbody>
-          {games.map((game) => (
+          {sortingGames.map((game) => (
             <tr key={game.id}>
               <td>{truncate(game.id)}</td>
               <td>{truncate(game.userId)}</td>
@@ -67,13 +70,6 @@ const GamesList = ({ games }: FindGames) => {
                     className="rw-button rw-button-small"
                   >
                     Show
-                  </Link>
-                  <Link
-                    to={routes.sortingGameIndividualEdit({ id: game.id })}
-                    title={'Edit game ' + game.id}
-                    className="rw-button rw-button-small rw-button-blue"
-                  >
-                    Edit
                   </Link>
                   <button
                     type="button"
