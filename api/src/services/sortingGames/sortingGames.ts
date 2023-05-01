@@ -21,6 +21,14 @@ export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] = ({
   }
 }
 
+export const sortingGameSecondLevel: QueryResolvers['sortingGameSecondLevel'] =
+  ({ gameId }) => {
+    return {
+      gameId,
+      graphemes: ['iCe', 'igh', 'y', 'ow', 'oa', 'oCe'],
+    }
+  }
+
 export const sortingGameGradeFirstLevel: MutationResolvers['sortingGameGradeFirstLevel'] =
   async ({ gameId, phoneme }) => {
     const game = await db.game.findUnique({
@@ -34,6 +42,29 @@ export const sortingGameGradeFirstLevel: MutationResolvers['sortingGameGradeFirs
       await db.game.update({
         data: {
           level: 2,
+        },
+        where: { id: gameId },
+      })
+
+      return true
+    }
+
+    return false
+  }
+
+export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSecondLevel'] =
+  async ({ gameId, grapheme }) => {
+    const game = await db.game.findUnique({
+      where: { id: gameId },
+      include: {
+        currentWord: true,
+      },
+    })
+
+    if (game.currentWord.testedGraphemes.includes(grapheme)) {
+      await db.game.update({
+        data: {
+          level: 3,
         },
         where: { id: gameId },
       })
