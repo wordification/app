@@ -22,15 +22,15 @@ describe('sortingGames', () => {
 
   scenario('grades the first level', async (scenario: StandardScenario) => {
     const result1 = await sortingGameGradeFirstLevel({
-      id: scenario.game.two.id,
-      input: { phoneme: 22 },
+      gameId: scenario.game.two.id,
+      phoneme: 22,
     })
 
     expect(result1).toEqual(false)
 
     const result2 = await sortingGameGradeFirstLevel({
-      id: scenario.game.two.id,
-      input: { phoneme: 53 },
+      gameId: scenario.game.two.id,
+      phoneme: 53,
     })
 
     expect(result2).toEqual(true)

@@ -5,6 +5,7 @@ export const schema = gql`
   }
 
   type SortingGameFirstLevel {
+    gameId: Int!
     phonemes: [Phoneme!]!
   }
 
@@ -12,14 +13,8 @@ export const schema = gql`
     sortingGameFirstLevel(gameId: Int!): SortingGameFirstLevel! @requireAuth
   }
 
-  input SortingGameGradeFirstLevelInput {
-    phoneme: Int!
-  }
-
   type Mutation {
-    sortingGameGradeFirstLevel(
-      id: Int!
-      input: SortingGameGradeFirstLevelInput!
-    ): Boolean! @requireAuth
+    sortingGameGradeFirstLevel(gameId: Int!, phoneme: Int!): Boolean!
+      @requireAuth
   }
 `

@@ -3,9 +3,10 @@ import type { QueryResolvers, MutationResolvers } from 'types/graphql'
 import { db } from 'src/lib/db'
 
 export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] = ({
-  gameId: _gameId,
+  gameId,
 }) => {
   return {
+    gameId,
     // TODO: figure out a better way to access the phonemes
     phonemes: [
       {
@@ -21,20 +22,20 @@ export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] = ({
 }
 
 export const sortingGameGradeFirstLevel: MutationResolvers['sortingGameGradeFirstLevel'] =
-  async ({ id, input }) => {
+  async ({ gameId, phoneme }) => {
     const game = await db.game.findUnique({
-      where: { id },
+      where: { id: gameId },
       include: {
         currentWord: true,
       },
     })
 
-    if (game.currentWord.testedPhonemes.includes(input.phoneme)) {
+    if (game.currentWord.testedPhonemes.includes(phoneme)) {
       await db.game.update({
         data: {
           level: 2,
         },
-        where: { id },
+        where: { id: gameId },
       })
 
       return true
