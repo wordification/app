@@ -1,7 +1,7 @@
-// import FirstLevelCell from 'src/components/SortingGame/Levels/FirstLevelCell'
+import SortingGameFirstLevelCell from 'src/components/SortingGame/Levels/SortingGameFirstLevelCell'
 
 const SortingGameLevelManager = ({
-  gameId: _gameId,
+  gameId,
   level,
 }: {
   gameId: number
@@ -9,7 +9,7 @@ const SortingGameLevelManager = ({
 }) => {
   switch (level) {
     case 1:
-      return <div>Level 1</div>
+      return <SortingGameFirstLevelCell gameId={gameId} />
     case 2:
       return <div>Level 2</div>
     case 3:
