@@ -62,14 +62,14 @@ const GamesList = ({ games }: FindGames) => {
               <td>
                 <nav className="rw-table-actions">
                   <Link
-                    to={routes.game({ id: game.id })}
+                    to={routes.sortingGameIndividual({ id: game.id })}
                     title={'Show game ' + game.id + ' detail'}
                     className="rw-button rw-button-small"
                   >
                     Show
                   </Link>
                   <Link
-                    to={routes.editGame({ id: game.id })}
+                    to={routes.sortingGameIndividualEdit({ id: game.id })}
                     title={'Edit game ' + game.id}
                     className="rw-button rw-button-small rw-button-blue"
                   >

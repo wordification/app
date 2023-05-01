@@ -10,8 +10,15 @@ import { db } from 'src/lib/db'
 
 import { selectGameWords } from '../words/words'
 
-export const games: QueryResolvers['games'] = () => {
-  return db.game.findMany()
+export const games: QueryResolvers['games'] = ({ complete }) => {
+  if (complete === undefined) {
+    return db.game.findMany()
+  }
+  return db.game.findMany({
+    where: {
+      complete,
+    },
+  })
 }
 
 export const game: QueryResolvers['game'] = ({ id }) => {
@@ -101,7 +108,7 @@ export const Game: GameRelationResolvers = {
   allWords: (_obj, { root }) => {
     return db.game.findUnique({ where: { id: root?.id } }).allWords()
   },
-  completeWords: (_obj, { root }) => {
-    return db.game.findUnique({ where: { id: root?.id } }).completeWords()
+  completedWords: (_obj, { root }) => {
+    return db.game.findUnique({ where: { id: root?.id } }).completedWords()
   },
 }

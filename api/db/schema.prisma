@@ -40,13 +40,14 @@ model Game {
   // Gameplay info
   wordsPerPhoneme Int
   phonemes        Int[]
-  level           Int   @default(1)
+  level           Int     @default(1)
+  complete        Boolean @default(false)
   currentWordId   Int?
 
   // Relationship info
-  allWords      Word[] @relation("allGames")
-  currentWord   Word?  @relation("currentGames", fields: [currentWordId], references: [id])
-  completeWords Word[] @relation("completedGames")
+  allWords       Word[] @relation("allGames")
+  currentWord    Word?  @relation("currentGames", fields: [currentWordId], references: [id])
+  completedWords Word[] @relation("completedGames")
 }
 
 model Word {

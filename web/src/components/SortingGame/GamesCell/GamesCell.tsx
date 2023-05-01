@@ -6,8 +6,8 @@ import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import Games from 'src/components/SortingGame/Games'
 
 export const QUERY = gql`
-  query FindGames {
-    games {
+  query FindGames($complete: Boolean) {
+    games(complete: $complete) {
       id
       userId
       createdAt

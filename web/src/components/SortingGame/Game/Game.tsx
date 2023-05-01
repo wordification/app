@@ -63,7 +63,7 @@ const Game = ({ game }: Props) => {
             </tr>
             <tr>
               <th>Phonemes</th>
-              <td>{game.phonemes}</td>
+              <td>{game.phonemes.join(', ')}</td>
             </tr>
             <tr>
               <th>Level</th>
@@ -74,7 +74,7 @@ const Game = ({ game }: Props) => {
       </div>
       <nav className="rw-button-group">
         <Link
-          to={routes.editGame({ id: game.id })}
+          to={routes.sortingGameIndividualEdit({ id: game.id })}
           className="rw-button rw-button-blue"
         >
           Edit

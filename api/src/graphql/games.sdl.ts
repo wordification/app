@@ -9,10 +9,11 @@ export const schema = gql`
     wordsPerPhoneme: Int!
     phonemes: [Int]!
     level: Int!
+    complete: Boolean!
     currentWordId: Int
     currentWord: Word
     allWords: [Word]!
-    completeWords: [Word]!
+    completedWords: [Word]!
   }
 
   enum GameType {
@@ -22,6 +23,7 @@ export const schema = gql`
 
   type Query {
     games: [Game!]! @requireAuth
+    games(complete: Boolean): [Game!]! @requireAuth
     game(id: Int!): Game @requireAuth
   }
 
