@@ -29,7 +29,6 @@ const PHONEME_OPTIONS = [
 
 const GameForm = (props: GameFormProps) => {
   const onSubmit = (data: FormGame) => {
-    console.log(data)
     props.onSave(
       { ...data, phonemes: data.phonemes.map((p) => +p) },
       props?.game?.id

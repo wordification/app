@@ -1,4 +1,5 @@
 import { SkipNavLink, SkipNavContent } from '@redwoodjs/router'
+import { Toaster } from '@redwoodjs/web/toast'
 
 import Navbar from 'src/components/Navbar/Navbar'
 
@@ -17,14 +18,6 @@ const MENU_ITEMS = [
     to: '/games',
     label: 'Games',
   },
-  // {
-  //   to: routes.home(),
-  //   label: 'Profile',
-  // },
-  // {
-  //   to: routes.home(),
-  //   label: 'Sign Out',
-  // },
   {
     type: 'signout',
   },
@@ -34,6 +27,7 @@ const GlobalLayout = ({ children }: GlobalLayoutProps) => {
   return (
     <div className="flex min-h-screen flex-col">
       <SkipNavLink />
+      <Toaster />
 
       <header className="bg-base-300">
         <Navbar items={MENU_ITEMS} />
