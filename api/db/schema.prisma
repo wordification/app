@@ -52,14 +52,16 @@ model Game {
 
 model Word {
   // Basic info
-  id           Int      @id @default(autoincrement())
-  word         String   @unique
-  gradeLevel   Int
-  numSyllables Int
-  phonemes     Int[]
-  graphemes    String[]
-  syllables    String[]
-  sentences    String[]
+  id              Int      @id @default(autoincrement())
+  word            String   @unique
+  gradeLevel      Int
+  numSyllables    Int
+  phonemes        Int[]
+  testedPhonemes  Int[]
+  graphemes       String[]
+  testedGraphemes String[]
+  syllables       String[]
+  sentences       String[]
 
   // Relationship info
   allGames       Game[] @relation("allGames")

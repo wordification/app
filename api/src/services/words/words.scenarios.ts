@@ -18,6 +18,8 @@ export const standard = defineScenario<Prisma.WordCreateArgs>({
           'Do you believe in love at first sight?',
           'He lost his sight.',
         ],
+        testedGraphemes: ['igh'],
+        testedPhonemes: [49],
       },
     },
     show: {
@@ -34,6 +36,8 @@ export const standard = defineScenario<Prisma.WordCreateArgs>({
           'I want to show you my dolls.',
           'She did not show up.',
         ],
+        testedGraphemes: ['ow'],
+        testedPhonemes: [53],
       },
     },
     wife: {
@@ -50,6 +54,8 @@ export const standard = defineScenario<Prisma.WordCreateArgs>({
           'How is your wife?',
           'Your wife called while you were out.',
         ],
+        testedGraphemes: ['iCe'],
+        testedPhonemes: [49],
       },
     },
     snow: {
@@ -66,6 +72,8 @@ export const standard = defineScenario<Prisma.WordCreateArgs>({
           'Do you like to play in the snow?',
           'The snow has melted.',
         ],
+        testedGraphemes: ['ow'],
+        testedPhonemes: [53],
       },
     },
   },

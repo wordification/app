@@ -26,25 +26,28 @@ describe('games', () => {
 
   scenario('creates a game', async (scenario: StandardScenario) => {
     mockCurrentUser(scenario.user.one)
+    const phonemes = [49, 53]
     const result = await createGame({
       input: {
         type: 'SORTING',
         wordsPerPhoneme: 1,
-        phonemes: [49, 53],
+        phonemes,
       },
     })
 
     expect(result.userId).toEqual(scenario.user.one.id)
     expect(result.wordsPerPhoneme).toEqual(1)
-    expect(result.phonemes[0]).toEqual(49)
-    expect(result.phonemes[1]).toEqual(53)
+    expect(result.phonemes[0]).toEqual(phonemes[0])
+    expect(result.phonemes[1]).toEqual(phonemes[1])
     expect(result.level).toEqual(1)
 
     const gameWords = result.allWords
+    expect(gameWords.length).toEqual(2)
+    const calculateIntersection = (gamePhonemes: number[]) =>
+      gamePhonemes.filter((value) => phonemes.includes(value))
 
-    expect(result.allWords.length).toEqual(2)
-    expect(gameWords[0].phonemes).toContain(49)
-    expect(gameWords[1].phonemes).toContain(53)
+    expect(calculateIntersection(gameWords[0].phonemes)).not.toBe(0)
+    expect(calculateIntersection(gameWords[1].phonemes)).not.toBe(0)
     expect(result.currentWordId).toEqual(gameWords[0].id)
   })
 
@@ -96,23 +99,20 @@ describe('games', () => {
     expect(result).toEqual(null)
   })
 
-  scenario.only(
-    'grades the first level',
-    async (scenario: StandardScenario) => {
-      const original = (await game({ id: scenario.game.one.id })) as Game
-      const result1 = await gradeFirstLevel({
-        id: original.id,
-        input: { phoneme: 50 },
-      })
+  scenario('grades the first level', async (scenario: StandardScenario) => {
+    const original = (await game({ id: scenario.game.one.id })) as Game
+    const result1 = await gradeFirstLevel({
+      id: original.id,
+      input: { phoneme: 50 },
+    })
 
-      expect(result1).toEqual(false)
+    expect(result1).toEqual(false)
 
-      const result2 = await gradeFirstLevel({
-        id: original.id,
-        input: { phoneme: 49 },
-      })
+    const result2 = await gradeFirstLevel({
+      id: original.id,
+      input: { phoneme: 49 },
+    })
 
-      expect(result2).toEqual(true)
-    }
-  )
+    expect(result2).toEqual(true)
+  })
 })

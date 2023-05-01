@@ -3,7 +3,7 @@ import { db } from 'api/src/lib/db'
 
 import { hashPassword } from '@redwoodjs/auth-dbauth-api'
 
-import wordData from './word_data.json'
+import wordData from './words.json'
 
 const seedUsers = () => {
   const users = [
@@ -36,6 +36,8 @@ const seedWords = () => {
         graphemes: word.graphemes,
         syllables: word.syllables,
         sentences: word.sentences,
+        testedGraphemes: word.testedGraphemes,
+        testedPhonemes: word.testedPhonemes,
       }
     }),
     skipDuplicates: true,

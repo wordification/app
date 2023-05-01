@@ -10,13 +10,13 @@ import { db } from 'src/lib/db'
 
 import { selectGameWords } from '../words/words'
 
-export const games: QueryResolvers['games'] = ({ complete }) => {
-  if (complete === undefined) {
+export const games: QueryResolvers['games'] = (args) => {
+  if (args?.complete === undefined) {
     return db.game.findMany()
   }
   return db.game.findMany({
     where: {
-      complete,
+      complete: args?.complete,
     },
   })
 }
