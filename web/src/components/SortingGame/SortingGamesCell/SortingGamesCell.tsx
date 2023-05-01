@@ -25,7 +25,7 @@ export const Empty = () => {
     <div className="rw-text-center">
       {'No games yet. '}
       <Link to={routes.sortingGameSetup()} className="rw-link">
-        {'Create one?'}
+        {'Start one?'}
       </Link>
     </div>
   )

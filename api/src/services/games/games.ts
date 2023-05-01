@@ -16,7 +16,9 @@ export const games: QueryResolvers['games'] = (args) => {
   }
   return db.game.findMany({
     where: {
-      complete: args?.complete,
+      complete: {
+        equals: args?.complete,
+      },
     },
   })
 }

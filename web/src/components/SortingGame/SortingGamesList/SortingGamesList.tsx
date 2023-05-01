@@ -18,7 +18,7 @@ const DELETE_GAME_MUTATION = gql`
   }
 `
 
-const GamesList = ({ sortingGames }: FindSortingGames) => {
+const SortingGamesList = ({ sortingGames }: FindSortingGames) => {
   const [deleteGame] = useMutation(DELETE_GAME_MUTATION, {
     onCompleted: () => {
       toast.success('Game deleted')
@@ -89,4 +89,4 @@ const GamesList = ({ sortingGames }: FindSortingGames) => {
   )
 }
 
-export default GamesList
+export default SortingGamesList
