@@ -42,13 +42,7 @@ export const schema = gql`
     currentWordId: Int
   }
 
-  input GradeFirstLevelInput {
-    phoneme: Int!
-  }
-
   type Mutation {
-    gradeFirstLevel(id: Int!, input: GradeFirstLevelInput!): Boolean!
-      @requireAuth
     createGame(input: CreateGameInput!): Game! @requireAuth
     updateGame(id: Int!, input: UpdateGameInput!): Game! @requireAuth
     deleteGame(id: Int!): Game! @requireAuth

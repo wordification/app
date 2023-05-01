@@ -98,31 +98,6 @@ export const deleteGame: MutationResolvers['deleteGame'] = ({ id }) => {
   })
 }
 
-export const gradeFirstLevel: MutationResolvers['gradeFirstLevel'] = async ({
-  id,
-  input,
-}) => {
-  const game = await db.game.findUnique({
-    where: { id },
-    include: {
-      currentWord: true,
-    },
-  })
-
-  if (game.currentWord.testedPhonemes.includes(input.phoneme)) {
-    await db.game.update({
-      data: {
-        level: 2,
-      },
-      where: { id },
-    })
-
-    return true
-  }
-
-  return false
-}
-
 export const Game: GameRelationResolvers = {
   user: (_obj, { root }) => {
     return db.game.findUnique({ where: { id: root?.id } }).user()
