@@ -109,7 +109,7 @@ export const gradeFirstLevel: MutationResolvers['gradeFirstLevel'] = async ({
     },
   })
 
-  if (game.currentWord.phonemes.includes(input.phoneme)) {
+  if (game.currentWord.testedPhonemes.includes(input.phoneme)) {
     await db.game.update({
       data: {
         level: 2,
