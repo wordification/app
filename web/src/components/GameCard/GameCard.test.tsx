@@ -8,7 +8,11 @@ import GameCard from './GameCard'
 describe('GameCard', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<GameCard />)
+      render(
+        <GameCard title="" files={[]}>
+          <></>
+        </GameCard>
+      )
     }).not.toThrow()
   })
 })
