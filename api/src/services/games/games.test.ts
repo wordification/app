@@ -1,7 +1,14 @@
 import type { Game } from '@prisma/client'
 import { GameType } from 'types/graphql'
 
-import { games, game, createGame, updateGame, deleteGame } from './games'
+import {
+  games,
+  game,
+  createGame,
+  updateGame,
+  deleteGame,
+  gradeFirstLevel,
+} from './games'
 import type { StandardScenario } from './games.scenarios'
 
 describe('games', () => {
@@ -88,4 +95,24 @@ describe('games', () => {
 
     expect(result).toEqual(null)
   })
+
+  scenario.only(
+    'grades the first level',
+    async (scenario: StandardScenario) => {
+      const original = (await game({ id: scenario.game.one.id })) as Game
+      const result1 = await gradeFirstLevel({
+        id: original.id,
+        input: { phoneme: 50 },
+      })
+
+      expect(result1).toEqual(false)
+
+      const result2 = await gradeFirstLevel({
+        id: original.id,
+        input: { phoneme: 49 },
+      })
+
+      expect(result2).toEqual(true)
+    }
+  )
 })

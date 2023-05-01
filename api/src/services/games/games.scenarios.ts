@@ -54,6 +54,7 @@ export const standard = defineScenario<
       data: {
         updatedAt: '2023-04-30T21:33:37.356Z',
         type: 'SORTING',
+        level: 1,
         wordsPerPhoneme: 1,
         phonemes: [49, 53],
         user: {
@@ -61,6 +62,17 @@ export const standard = defineScenario<
             email: 'String8936105',
             hashedPassword: 'String',
             salt: 'String',
+          },
+        },
+        currentWord: {
+          create: {
+            word: 'String',
+            gradeLevel: 1,
+            phonemes: [49, 53],
+            graphemes: ['String'],
+            syllables: ['String'],
+            numSyllables: 1,
+            sentences: ['String'],
           },
         },
       },
