@@ -93,7 +93,7 @@ export const Word: WordRelationResolvers = {
   currentGames: (_obj, { root }) => {
     return db.word.findUnique({ where: { id: root?.id } }).currentGames()
   },
-  completedGames: (_obj, { root }) => {
-    return db.word.findUnique({ where: { id: root?.id } }).completedGames()
+  incompleteGames: (_obj, { root }) => {
+    return db.word.findUnique({ where: { id: root?.id } }).incompleteGames()
   },
 }

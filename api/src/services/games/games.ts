@@ -110,7 +110,7 @@ export const Game: GameRelationResolvers = {
   allWords: (_obj, { root }) => {
     return db.game.findUnique({ where: { id: root?.id } }).allWords()
   },
-  completedWords: (_obj, { root }) => {
-    return db.game.findUnique({ where: { id: root?.id } }).completedWords()
+  incompleteWords: (_obj, { root }) => {
+    return db.game.findUnique({ where: { id: root?.id } }).incompleteWords()
   },
 }

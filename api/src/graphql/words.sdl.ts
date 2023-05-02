@@ -10,7 +10,7 @@ export const schema = gql`
     sentences: [String]!
     allGames: [Game]!
     currentGames: [Game]!
-    completedGames: [Game]!
+    incompleteGames: [Game]!
   }
 
   type Query {

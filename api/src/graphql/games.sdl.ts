@@ -13,7 +13,7 @@ export const schema = gql`
     currentWordId: Int
     currentWord: Word
     allWords: [Word]!
-    completedWords: [Word]!
+    incompleteWords: [Word]!
   }
 
   enum GameType {

@@ -1,6 +1,7 @@
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 generator client {
@@ -45,9 +46,9 @@ model Game {
   currentWordId   Int?
 
   // Relationship info
-  allWords       Word[] @relation("allGames")
-  currentWord    Word?  @relation("currentGames", fields: [currentWordId], references: [id])
-  completedWords Word[] @relation("completedGames")
+  currentWord     Word?  @relation("currentGames", fields: [currentWordId], references: [id])
+  allWords        Word[] @relation("allGames")
+  incompleteWords Word[] @relation("incompleteGames")
 }
 
 model Word {
@@ -64,7 +65,7 @@ model Word {
   sentences       String[]
 
   // Relationship info
-  allGames       Game[] @relation("allGames")
-  currentGames   Game[] @relation("currentGames")
-  completedGames Game[] @relation("completedGames")
+  currentGames    Game[] @relation("currentGames")
+  allGames        Game[] @relation("allGames")
+  incompleteGames Game[] @relation("incompleteGames")
 }
