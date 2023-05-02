@@ -4,6 +4,7 @@ import {
   sortingGameSecondLevel,
   sortingGameGradeSecondLevel,
   sortingGameGradeThirdLevel,
+  advanceLevel,
 } from './sortingGames'
 import type { StandardScenario } from './sortingGames.scenarios'
 
@@ -78,4 +79,27 @@ describe('sortingGames', () => {
 
     expect(result2).toEqual(true)
   })
+
+  scenario('advances the level', async (scenario: StandardScenario) => {
+    let game = await advanceLevel(scenario.game.two.id, 1)
+
+    expect(game.level).toEqual(2)
+
+    game = await advanceLevel(scenario.game.two.id, 2)
+
+    expect(game.level).toEqual(3)
+
+    game = await advanceLevel(scenario.game.two.id, 3)
+
+    expect(game.level).toEqual(4)
+  })
+
+  scenario(
+    'does not advance the level past 4',
+    async (scenario: StandardScenario) => {
+      const game = await advanceLevel(scenario.game.two.id, 4)
+
+      expect(game.level).toEqual(4)
+    }
+  )
 })
