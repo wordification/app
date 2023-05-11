@@ -43,7 +43,9 @@ const SortingGameThirdLevel = ({ gameId }: { gameId: number }) => {
     }
   )
 
-  const handleSubmit = (input: GradeLevelThreeMutationVariables) => {
+  const handleSubmit = (
+    input: Omit<GradeLevelThreeMutationVariables, 'gameId'>
+  ) => {
     console.log(input)
     gradeLevel({
       variables: {

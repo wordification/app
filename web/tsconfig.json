@@ -27,7 +27,17 @@
     },
     "typeRoots": ["../node_modules/@types", "./node_modules/@types"],
     "types": ["jest", "@testing-library/jest-dom", "node"],
-    "jsx": "preserve"
+    "jsx": "preserve",
+    // strict stuff
+    // "strict": true,
+    "alwaysStrict": true,
+    // "strictNullChecks": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    // "strictPropertyInitialization": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "useUnknownInCatchVariables": true,
   },
   "include": [
     "src",
