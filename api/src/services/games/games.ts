@@ -70,6 +70,7 @@ export const createGame: MutationResolvers['createGame'] = async ({
     phonemes: input.phonemes,
   })
 
+  const [currentWord, ...incompleteWords] = gameWords
   const game = await db.game.create({
     data: {
       ...input,
@@ -77,7 +78,10 @@ export const createGame: MutationResolvers['createGame'] = async ({
       allWords: {
         connect: gameWords.map((word) => ({ id: word.id })),
       },
-      currentWordId: gameWords[0].id,
+      incompleteWords: {
+        connect: incompleteWords.map((word) => ({ id: word.id })),
+      },
+      currentWordId: currentWord.id,
     },
     include: {
       allWords: true,
