@@ -53,10 +53,13 @@ describe('truncate', () => {
   })
 
   it('handles arguments of invalid type', () => {
-    // @ts-expect-error - Testing JS scenario
+    // @ts-expect-error - Testing invalid types
     expect(truncate(false)).toEqual('false')
 
+    // @ts-expect-error - Testing invalid types
     expect(truncate(undefined)).toEqual('')
+
+    // @ts-expect-error - Testing invalid types
     expect(truncate(null)).toEqual('')
   })
 })

@@ -15,7 +15,7 @@ type FormGame = NonNullable<Game>
 
 interface SortingGameSetupFormProps {
   onSave: (data: CreateGameInput) => void
-  error: RWGqlError
+  error?: RWGqlError
   loading: boolean
 }
 
@@ -28,7 +28,11 @@ const PHONEME_OPTIONS = [
 
 const SortingGameSetupForm = (props: SortingGameSetupFormProps) => {
   const onSubmit = (data: FormGame) => {
-    props.onSave({ ...data, phonemes: data.phonemes.map((p) => +p) })
+    props.onSave({
+      ...data,
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      phonemes: data.phonemes.filter((p) => !!p).map((p) => +p!),
+    })
   }
 
   return (

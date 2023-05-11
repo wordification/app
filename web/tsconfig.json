@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "noEmit": true,
-    // "strict": true,
+    "strict": true,
     "esModuleInterop": true,
     "target": "esnext",
     "module": "esnext",
@@ -28,16 +28,6 @@
     "typeRoots": ["../node_modules/@types", "./node_modules/@types"],
     "types": ["jest", "@testing-library/jest-dom", "node"],
     "jsx": "preserve",
-    // strict stuff
-    // "strict": true,
-    "alwaysStrict": true,
-    // "strictNullChecks": true,
-    "strictBindCallApply": true,
-    "strictFunctionTypes": true,
-    // "strictPropertyInitialization": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "useUnknownInCatchVariables": true,
   },
   "include": [
     "src",

@@ -14,7 +14,7 @@ type FormGame = { entry: GradeLevelThreeMutationVariables['entry'] }
 
 interface SortingGameThirdLevelFormProps {
   onSubmit: (data: FormGame) => void
-  error: RWGqlError
+  error?: RWGqlError
   loading: boolean
 }
 
