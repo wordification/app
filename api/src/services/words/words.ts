@@ -1,3 +1,4 @@
+import type { Game } from '@prisma/client'
 import type { QueryResolvers, WordRelationResolvers } from 'types/graphql'
 
 import { validate } from '@redwoodjs/api'
@@ -80,20 +81,29 @@ export const words: QueryResolvers['words'] = () => {
   return db.word.findMany()
 }
 
-export const word: QueryResolvers['word'] = ({ id }) => {
+export const word: QueryResolvers['word'] = (params) => {
+  if (!params?.id) {
+    throw new Error('No word ID provided')
+  }
   return db.word.findUnique({
-    where: { id },
+    where: { id: params.id },
   })
 }
 
 export const Word: WordRelationResolvers = {
   allGames: (_obj, { root }) => {
-    return db.word.findUnique({ where: { id: root?.id } }).allGames()
+    return db.word
+      .findUnique({ where: { id: root?.id } })
+      .allGames() as Promise<Game[]>
   },
   currentGames: (_obj, { root }) => {
-    return db.word.findUnique({ where: { id: root?.id } }).currentGames()
+    return db.word
+      .findUnique({ where: { id: root?.id } })
+      .currentGames() as Promise<Game[]>
   },
   incompleteGames: (_obj, { root }) => {
-    return db.word.findUnique({ where: { id: root?.id } }).incompleteGames()
+    return db.word
+      .findUnique({ where: { id: root?.id } })
+      .incompleteGames() as Promise<Game[]>
   },
 }

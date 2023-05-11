@@ -84,27 +84,30 @@ describe('sortingGames', () => {
   })
 
   scenario('advances the level', async (scenario: StandardScenario) => {
-    let game = await getGame({ id: scenario.game.lastWord.id })
-    game = await advanceLevel(game.id, game.level)
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    let game = (await getGame({ id: scenario.game.lastWord.id }))!
 
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    game = (await advanceLevel(game.id, game.level))!
     expect(game.level).toEqual(2)
 
-    game = await advanceLevel(game.id, game.level)
-
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    game = (await advanceLevel(game.id, game.level))!
     expect(game.level).toEqual(3)
 
-    game = await advanceLevel(game.id, game.level)
-
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    game = (await advanceLevel(game.id, game.level))!
     expect(game.level).toEqual(4)
   })
 
   scenario(
     'does not advance the level past 4',
     async (scenario: StandardScenario) => {
-      const game = await advanceLevel(
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const game = (await advanceLevel(
         scenario.game.lastLevel.id,
         scenario.game.lastLevel.level
-      )
+      ))!
 
       expect(game.level).toEqual(4)
     }
@@ -119,7 +122,8 @@ describe('sortingGames', () => {
         const newGame = await selectNextWord(scenario.game.notLastWord.id)
 
         expect(newGame.currentWordId).not.toEqual(previousWordId)
-        expect(words[0].id).toEqual(newGame.currentWordId)
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        expect(words[0]!.id).toEqual(newGame.currentWordId)
       }
     )
 

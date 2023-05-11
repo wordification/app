@@ -13,12 +13,18 @@ import { game } from '../games/games'
  * @returns The updated game
  */
 export const selectNextWord = async (gameId: number) => {
-  const { incompleteWords } = await db.game.findUnique({
+  const game = await db.game.findUnique({
     where: { id: gameId },
     include: {
       incompleteWords: true,
     },
   })
+
+  if (game === null) {
+    throw new Error('Game not found')
+  }
+
+  const { incompleteWords } = game
 
   if (incompleteWords.length === 0) {
     return db.game.update({
@@ -70,9 +76,13 @@ export const advanceLevel = (gameId: number, currentLevel: number) => {
   })
 }
 
-export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] = ({
-  gameId,
-}) => {
+export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] = (
+  params
+) => {
+  if (params === undefined) {
+    throw new Error('Game ID is required')
+  }
+  const { gameId } = params
   return {
     gameId,
     // TODO: figure out a better way to access the phonemes
@@ -90,7 +100,12 @@ export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] = ({
 }
 
 export const sortingGameSecondLevel: QueryResolvers['sortingGameSecondLevel'] =
-  ({ gameId }) => {
+  (params) => {
+    if (params === undefined) {
+      throw new Error('Game ID is required')
+    }
+
+    const { gameId } = params
     return {
       gameId,
       graphemes: ['iCe', 'igh', 'y', 'ow', 'oa', 'oCe'],
@@ -98,13 +113,26 @@ export const sortingGameSecondLevel: QueryResolvers['sortingGameSecondLevel'] =
   }
 
 export const sortingGameGradeFirstLevel: MutationResolvers['sortingGameGradeFirstLevel'] =
-  async ({ gameId, phoneme }) => {
+  async (params) => {
+    if (params === undefined) {
+      throw new Error('Game ID and phoneme are required')
+    }
+
+    const { gameId, phoneme } = params
     const game = await db.game.findUnique({
       where: { id: gameId },
       include: {
         currentWord: true,
       },
     })
+
+    if (game === null) {
+      throw new Error('Game not found')
+    }
+
+    if (game.currentWord === null) {
+      throw new Error('Current word not selected')
+    }
 
     if (game.currentWord.testedPhonemes.includes(phoneme)) {
       await advanceLevel(game.id, game.level)
@@ -116,13 +144,26 @@ export const sortingGameGradeFirstLevel: MutationResolvers['sortingGameGradeFirs
   }
 
 export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSecondLevel'] =
-  async ({ gameId, grapheme }) => {
+  async (params) => {
+    if (params === undefined) {
+      throw new Error('Game ID and grapheme are required')
+    }
+
+    const { gameId, grapheme } = params
     const game = await db.game.findUnique({
       where: { id: gameId },
       include: {
         currentWord: true,
       },
     })
+
+    if (game === null) {
+      throw new Error('Game not found')
+    }
+
+    if (game.currentWord === null) {
+      throw new Error('Current word not selected')
+    }
 
     if (game.currentWord.testedGraphemes.includes(grapheme)) {
       await advanceLevel(game.id, game.level)
@@ -134,13 +175,27 @@ export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSec
   }
 
 export const sortingGameGradeThirdLevel: MutationResolvers['sortingGameGradeThirdLevel'] =
-  async ({ gameId, entry }) => {
+  async (params) => {
+    if (params === undefined) {
+      throw new Error('Game ID and entry are required')
+    }
+
+    const { gameId, entry } = params
+
     const game = await db.game.findUnique({
       where: { id: gameId },
       include: {
         currentWord: true,
       },
     })
+
+    if (game === null) {
+      throw new Error('Game not found')
+    }
+
+    if (game.currentWord === null) {
+      throw new Error('Current word not selected')
+    }
 
     if (game.currentWord.word === entry) {
       await advanceLevel(game.id, game.level)
