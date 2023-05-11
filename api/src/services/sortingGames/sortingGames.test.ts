@@ -1,3 +1,5 @@
+import { game as getGame } from '../games/games'
+
 import {
   sortingGameFirstLevel,
   sortingGameGradeFirstLevel,
@@ -5,13 +7,14 @@ import {
   sortingGameGradeSecondLevel,
   sortingGameGradeThirdLevel,
   advanceLevel,
+  selectNextWord,
 } from './sortingGames'
 import type { StandardScenario } from './sortingGames.scenarios'
 
 describe('sortingGames', () => {
   scenario('returns the first level', async (scenario: StandardScenario) => {
     const result = await sortingGameFirstLevel({
-      gameId: scenario.game.two.id,
+      gameId: scenario.game.lastWord.id,
     })
 
     expect(result.phonemes).toContainEqual({
@@ -26,14 +29,14 @@ describe('sortingGames', () => {
 
   scenario('grades the first level', async (scenario: StandardScenario) => {
     const result1 = await sortingGameGradeFirstLevel({
-      gameId: scenario.game.two.id,
+      gameId: scenario.game.lastWord.id,
       phoneme: 22,
     })
 
     expect(result1).toEqual(false)
 
     const result2 = await sortingGameGradeFirstLevel({
-      gameId: scenario.game.two.id,
+      gameId: scenario.game.lastWord.id,
       phoneme: 53,
     })
 
@@ -42,7 +45,7 @@ describe('sortingGames', () => {
 
   scenario('returns the second level', async (scenario: StandardScenario) => {
     const result = await sortingGameSecondLevel({
-      gameId: scenario.game.two.id,
+      gameId: scenario.game.lastWord.id,
     })
 
     expect(result.graphemes).toEqual(['iCe', 'igh', 'y', 'ow', 'oa', 'oCe'])
@@ -50,14 +53,14 @@ describe('sortingGames', () => {
 
   scenario('grades the second level', async (scenario: StandardScenario) => {
     const result1 = await sortingGameGradeSecondLevel({
-      gameId: scenario.game.two.id,
+      gameId: scenario.game.lastWord.id,
       grapheme: 's',
     })
 
     expect(result1).toEqual(false)
 
     const result2 = await sortingGameGradeSecondLevel({
-      gameId: scenario.game.two.id,
+      gameId: scenario.game.lastWord.id,
       grapheme: 'ow',
     })
 
@@ -66,14 +69,14 @@ describe('sortingGames', () => {
 
   scenario('grades the third level', async (scenario: StandardScenario) => {
     const result1 = await sortingGameGradeThirdLevel({
-      gameId: scenario.game.two.id,
+      gameId: scenario.game.lastWord.id,
       entry: 's',
     })
 
     expect(result1).toEqual(false)
 
     const result2 = await sortingGameGradeThirdLevel({
-      gameId: scenario.game.two.id,
+      gameId: scenario.game.lastWord.id,
       entry: 'snow',
     })
 
@@ -81,15 +84,16 @@ describe('sortingGames', () => {
   })
 
   scenario('advances the level', async (scenario: StandardScenario) => {
-    let game = await advanceLevel(scenario.game.two.id, 1)
+    let game = await getGame({ id: scenario.game.lastWord.id })
+    game = await advanceLevel(game.id, game.level)
 
     expect(game.level).toEqual(2)
 
-    game = await advanceLevel(scenario.game.two.id, 2)
+    game = await advanceLevel(game.id, game.level)
 
     expect(game.level).toEqual(3)
 
-    game = await advanceLevel(scenario.game.two.id, 3)
+    game = await advanceLevel(game.id, game.level)
 
     expect(game.level).toEqual(4)
   })
@@ -97,9 +101,36 @@ describe('sortingGames', () => {
   scenario(
     'does not advance the level past 4',
     async (scenario: StandardScenario) => {
-      const game = await advanceLevel(scenario.game.two.id, 4)
+      const game = await advanceLevel(
+        scenario.game.lastLevel.id,
+        scenario.game.lastLevel.level
+      )
 
       expect(game.level).toEqual(4)
     }
   )
+
+  describe('selectNextWord()', () => {
+    scenario(
+      'selects the next available word to test',
+      async (scenario: StandardScenario) => {
+        const previousWordId = scenario.game.notLastWord.currentWordId
+        const words = scenario.game.notLastWord.incompleteWords
+        const newGame = await selectNextWord(scenario.game.notLastWord.id)
+
+        expect(newGame.currentWordId).not.toEqual(previousWordId)
+        expect(words[0].id).toEqual(newGame.currentWordId)
+      }
+    )
+
+    scenario(
+      'clears the selected word when the game finishes',
+      async (scenario: StandardScenario) => {
+        const previousWordId = scenario.game.lastWord.currentWordId
+        const newGame = await selectNextWord(scenario.game.lastWord.id)
+        expect(newGame.currentWordId).toEqual(null)
+        expect(newGame.currentWordId).not.toEqual(previousWordId)
+      }
+    )
+  })
 })

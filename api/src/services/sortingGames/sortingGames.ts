@@ -5,6 +5,46 @@ import { db } from 'src/lib/db'
 import { game } from '../games/games'
 
 /**
+ * Updates a sorting game to select a new word to test. If there are no more
+ * words to test, the game is marked as complete. Otherwise, the game is
+ * reset to level 1 and the next word is selected.
+ *
+ * @param gameId The ID of the game to advance
+ * @returns The updated game
+ */
+export const selectNextWord = async (gameId: number) => {
+  const { incompleteWords } = await db.game.findUnique({
+    where: { id: gameId },
+    include: {
+      incompleteWords: true,
+    },
+  })
+
+  if (incompleteWords.length === 0) {
+    return db.game.update({
+      data: {
+        level: 4,
+        complete: true,
+        currentWordId: null,
+      },
+      where: { id: gameId },
+    })
+  }
+
+  const newWord = incompleteWords[0]
+  return db.game.update({
+    data: {
+      level: 1,
+      currentWordId: newWord.id,
+      incompleteWords: {
+        disconnect: [{ id: newWord.id }],
+      },
+    },
+    where: { id: gameId },
+  })
+}
+
+/**
  * Advances to the next level of a sorting game. These are the levels:
  * 0. Initial level (not currently used)
  * 1. Phoneme level (click long I or long O, etc)
@@ -20,12 +60,7 @@ export const advanceLevel = (gameId: number, currentLevel: number) => {
     return game({ id: gameId })
   }
   if (currentLevel === 3) {
-    return db.game.update({
-      data: {
-        level: 4,
-      },
-      where: { id: gameId },
-    })
+    return selectNextWord(gameId)
   }
   return db.game.update({
     data: {

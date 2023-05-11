@@ -1,4 +1,5 @@
-import type { Prisma, Game, User } from '@prisma/client'
+import type { Prisma } from '@prisma/client'
+import { Game, User, Word } from 'types/graphql'
 
 import type { ScenarioData } from '@redwoodjs/testing/api'
 
@@ -52,13 +53,52 @@ export const standard = defineScenario<
         testedPhonemes: [53],
       },
     },
+    wife: {
+      data: {
+        word: 'wife',
+        gradeLevel: 3,
+        phonemes: [30, 49, 6],
+        graphemes: ['w', 'iCe', 'f'],
+        syllables: ['ons', 'nuc', 'cod'],
+        numSyllables: 1,
+        sentences: [
+          'He loves his wife.',
+          'Please bring your wife to the party.',
+          'How is your wife?',
+          'Your wife called while you were out.',
+        ],
+        testedGraphemes: ['iCe'],
+        testedPhonemes: [49],
+      },
+    },
+    snow: {
+      data: {
+        word: 'snow',
+        gradeLevel: 2,
+        phonemes: [22, 17, 53],
+        graphemes: ['s', 'n', 'ow'],
+        syllables: ['ons', 'ons', 'nuc'],
+        numSyllables: 1,
+        sentences: [
+          'It is going to snow.',
+          'We had a lot of snow this winter.',
+          'Do you like to play in the snow?',
+          'The snow has melted.',
+        ],
+        testedGraphemes: ['ow'],
+        testedPhonemes: [53],
+      },
+    },
   },
   game: {
-    one: {
+    notLastWord: (scenario: StandardScenario) => ({
+      include: {
+        incompleteWords: true,
+      },
       data: {
         updatedAt: '2023-04-30T21:33:37.356Z',
         type: 'SORTING',
-        level: 1,
+        level: 3,
         wordsPerPhoneme: 1,
         phonemes: [49, 53],
         user: {
@@ -68,49 +108,28 @@ export const standard = defineScenario<
             salt: 'String',
           },
         },
-        currentWord: {
-          create: {
-            word: 'wife',
-            gradeLevel: 3,
-            phonemes: [30, 49, 6],
-            graphemes: ['w', 'iCe', 'f'],
-            syllables: ['ons', 'nuc', 'cod'],
-            numSyllables: 1,
-            sentences: [
-              'He loves his wife.',
-              'Please bring your wife to the party.',
-              'How is your wife?',
-              'Your wife called while you were out.',
-            ],
-            testedGraphemes: ['iCe'],
-            testedPhonemes: [49],
-          },
+        currentWord: { connect: { id: scenario.word.wife.id } },
+        incompleteWords: {
+          connect: [
+            { id: scenario.word.sight.id },
+            { id: scenario.word.show.id },
+          ],
         },
       },
-    },
-    two: {
+    }),
+    lastWord: (scenario: StandardScenario) => ({
       data: {
         updatedAt: '2023-04-30T21:33:37.356Z',
         type: 'SORTING',
         wordsPerPhoneme: 1,
         phonemes: [49, 53],
         currentWord: {
-          create: {
-            word: 'snow',
-            gradeLevel: 2,
-            phonemes: [22, 17, 53],
-            graphemes: ['s', 'n', 'ow'],
-            syllables: ['ons', 'ons', 'nuc'],
-            numSyllables: 1,
-            sentences: [
-              'It is going to snow.',
-              'We had a lot of snow this winter.',
-              'Do you like to play in the snow?',
-              'The snow has melted.',
-            ],
-            testedGraphemes: ['ow'],
-            testedPhonemes: [53],
+          connect: {
+            id: scenario.word.snow.id,
           },
+        },
+        incompleteWords: {
+          connect: [],
         },
         user: {
           create: {
@@ -120,9 +139,34 @@ export const standard = defineScenario<
           },
         },
       },
-    },
+    }),
+    lastLevel: (scenario: StandardScenario) => ({
+      data: {
+        updatedAt: '2023-04-30T21:33:37.356Z',
+        type: 'SORTING',
+        level: 4,
+        wordsPerPhoneme: 1,
+        phonemes: [49, 53],
+        currentWord: {
+          connect: {
+            id: scenario.word.snow.id,
+          },
+        },
+        incompleteWords: {
+          connect: [],
+        },
+        user: {
+          connect: { id: scenario.user.one.id },
+        },
+      },
+    }),
   },
 })
 
-export type StandardScenario = ScenarioData<Game, 'game'> &
-  ScenarioData<User, 'user'>
+export type StandardScenario = ScenarioData<
+  Game,
+  'game',
+  'lastWord' | 'notLastWord' | 'lastLevel'
+> &
+  ScenarioData<User, 'user'> &
+  ScenarioData<Word, 'word', 'sight' | 'snow' | 'show' | 'wife'>
