@@ -2,8 +2,6 @@ import type { QueryResolvers, MutationResolvers } from 'types/graphql'
 
 import { db } from 'src/lib/db'
 
-import { game } from '../games/games'
-
 /**
  * Updates a sorting game to select a new word to test. If there are no more
  * words to test, the game is marked as complete. Otherwise, the game is
@@ -63,7 +61,9 @@ export const selectNextWord = async (gameId: number) => {
  */
 export const advanceLevel = (gameId: number, currentLevel: number) => {
   if (currentLevel >= 4) {
-    return game({ id: gameId })
+    return db.game.findUnique({
+      where: { id: gameId },
+    })
   }
   if (currentLevel === 3) {
     return selectNextWord(gameId)
@@ -76,24 +76,37 @@ export const advanceLevel = (gameId: number, currentLevel: number) => {
   })
 }
 
-export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] = ({
-  gameId,
-}) => {
-  return {
-    gameId,
-    // TODO: figure out a better way to access the phonemes
-    phonemes: [
-      {
-        id: 49,
-        label: 'Long I',
+export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] =
+  async ({ gameId }) => {
+    const game = await db.game.findUnique({
+      where: { id: gameId },
+      include: {
+        currentWord: true,
       },
-      {
-        id: 53,
-        label: 'Long O',
-      },
-    ],
+    })
+
+    const currentWord = game?.currentWord
+
+    if (!currentWord) {
+      throw new Error('Current word not selected')
+    }
+
+    return {
+      gameId,
+      // TODO: figure out a better way to access the phonemes
+      phonemes: [
+        {
+          id: 49,
+          label: 'Long I',
+        },
+        {
+          id: 53,
+          label: 'Long O',
+        },
+      ],
+      audio: [currentWord.word],
+    }
   }
-}
 
 export const sortingGameSecondLevel: QueryResolvers['sortingGameSecondLevel'] =
   ({ gameId }) => {

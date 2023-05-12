@@ -7,6 +7,7 @@ export const schema = gql`
   type SortingGameFirstLevel {
     gameId: Int!
     phonemes: [Phoneme!]!
+    audio: [String!]
   }
 
   type SortingGameSecondLevel {
