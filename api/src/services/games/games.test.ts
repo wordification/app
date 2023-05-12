@@ -6,7 +6,7 @@ import type { StandardScenario } from './games.scenarios'
 
 describe('games', () => {
   scenario('returns all games', async (scenario: StandardScenario) => {
-    const result = await games()
+    const result = await games({})
 
     expect(result.length).toEqual(Object.keys(scenario.game).length)
   })
@@ -34,14 +34,17 @@ describe('games', () => {
     expect(result.phonemes[1]).toEqual(phonemes[1])
     expect(result.level).toEqual(1)
 
-    const gameWords = result.allWords
-    expect(gameWords.length).toEqual(2)
-    const calculateIntersection = (gamePhonemes: number[]) =>
-      gamePhonemes.filter((value) => phonemes.includes(value))
+    const { allWords } = result
+    if (!allWords) {
+      throw new Error('No game words')
+    }
+    expect(allWords.length).toEqual(2)
+    const calculateIntersection = (gamePhonemes?: number[]) =>
+      gamePhonemes?.filter((value) => phonemes.includes(value))
 
-    expect(calculateIntersection(gameWords[0].phonemes)).not.toBe(0)
-    expect(calculateIntersection(gameWords[1].phonemes)).not.toBe(0)
-    expect(result.currentWordId).toEqual(gameWords[0].id)
+    expect(calculateIntersection(allWords[0]?.phonemes)).not.toBe(0)
+    expect(calculateIntersection(allWords[1]?.phonemes)).not.toBe(0)
+    expect(result.currentWordId).toEqual(allWords[0]?.id)
   })
 
   scenario('rejects incorrect data', async (scenario: StandardScenario) => {
