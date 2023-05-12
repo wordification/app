@@ -130,7 +130,7 @@ export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] =
     ]
 
     return {
-      gameId,
+      game,
       audio,
       // TODO: figure out a better way to access the phonemes
       phonemes: [
@@ -169,7 +169,7 @@ export const sortingGameSecondLevel: QueryResolvers['sortingGameSecondLevel'] =
     ]
 
     return {
-      gameId,
+      game,
       graphemes: ['iCe', 'igh', 'y', 'ow', 'oa', 'oCe'],
       audio,
     }
@@ -196,7 +196,7 @@ export const sortingGameThirdLevel: QueryResolvers['sortingGameThirdLevel'] =
     ]
 
     return {
-      gameId,
+      game,
       audio,
     }
   }

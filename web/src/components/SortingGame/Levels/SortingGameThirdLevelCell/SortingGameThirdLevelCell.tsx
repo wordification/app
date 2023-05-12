@@ -13,12 +13,14 @@ import { toast } from '@redwoodjs/web/toast'
 import GameCard from 'src/components/GameCard/GameCard'
 import { QUERY as LEVEL_QUERY } from 'src/components/SortingGame/SortingGameCell'
 
-import SortingGameThirdLevelForm from '../SortingGameThirdLevel/SortingGameThirdLevelForm/SortingGameThirdLevelForm'
+import SortingGameThirdLevelForm from './SortingGameThirdLevelForm'
 
 export const QUERY = gql`
   query FindSortingGameThirdLevelQuery($gameId: Int!) {
     sortingGameThirdLevel: sortingGameThirdLevel(gameId: $gameId) {
-      gameId
+      game {
+        id
+      }
       audio
     }
   }
@@ -72,7 +74,7 @@ export const Success = ({
       refetchQueries: [
         {
           query: LEVEL_QUERY,
-          variables: { id: sortingGameThirdLevel.gameId },
+          variables: { id: sortingGameThirdLevel.game.id },
         },
       ],
       awaitRefetchQueries: true,
@@ -85,7 +87,7 @@ export const Success = ({
     console.log(input)
     gradeLevel({
       variables: {
-        gameId: sortingGameThirdLevel.gameId,
+        gameId: sortingGameThirdLevel.game.id,
         entry: input.entry,
       },
     })

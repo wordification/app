@@ -15,7 +15,9 @@ import { QUERY as LEVEL_QUERY } from 'src/components/SortingGame/SortingGameCell
 export const QUERY = gql`
   query FindSortingGameFirstLevelQuery($gameId: Int!) {
     sortingGameFirstLevel: sortingGameFirstLevel(gameId: $gameId) {
-      gameId
+      game {
+        id
+      }
       audio
       phonemes {
         id
@@ -71,7 +73,10 @@ export const Success = ({
       // update the cache over here:
       // https://www.apollographql.com/docs/react/data/mutations/#making-all-other-cache-updates
       refetchQueries: [
-        { query: LEVEL_QUERY, variables: { id: sortingGameFirstLevel.gameId } },
+        {
+          query: LEVEL_QUERY,
+          variables: { id: sortingGameFirstLevel.game.id },
+        },
       ],
       awaitRefetchQueries: true,
     }
@@ -81,7 +86,7 @@ export const Success = ({
     return gradeLevel({
       variables: {
         phoneme: selectedPhoneme,
-        gameId: sortingGameFirstLevel.gameId,
+        gameId: sortingGameFirstLevel.game.id,
       },
     })
   }

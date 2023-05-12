@@ -15,7 +15,9 @@ import { QUERY as LEVEL_QUERY } from 'src/components/SortingGame/SortingGameCell
 export const QUERY = gql`
   query FindSortingGameSecondLevelQuery($gameId: Int!) {
     sortingGameSecondLevel: sortingGameSecondLevel(gameId: $gameId) {
-      gameId
+      game {
+        id
+      }
       graphemes
       audio
     }
@@ -70,7 +72,7 @@ export const Success = ({
       refetchQueries: [
         {
           query: LEVEL_QUERY,
-          variables: { id: sortingGameSecondLevel.gameId },
+          variables: { id: sortingGameSecondLevel.game.id },
         },
       ],
       awaitRefetchQueries: true,
@@ -81,7 +83,7 @@ export const Success = ({
     return gradeLevel({
       variables: {
         grapheme: selectedGrapheme,
-        gameId: sortingGameSecondLevel.gameId,
+        gameId: sortingGameSecondLevel.game.id,
       },
     })
   }

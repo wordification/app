@@ -8,19 +8,19 @@ export const schema = gql`
   }
 
   type SortingGameFirstLevel implements Audio {
-    gameId: Int!
+    game: Game!
     phonemes: [Phoneme!]!
     audio: [String!]
   }
 
   type SortingGameSecondLevel implements Audio {
-    gameId: Int!
+    game: Game!
     graphemes: [String!]!
     audio: [String!]
   }
 
   type SortingGameThirdLevel implements Audio {
-    gameId: Int!
+    game: Game!
     audio: [String!]
   }
 
