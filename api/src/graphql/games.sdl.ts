@@ -12,8 +12,8 @@ export const schema = gql`
     complete: Boolean!
     currentWordId: Int
     currentWord: Word
-    allWords: [Word!]!
-    incompleteWords: [Word!]!
+    allWords: [Word!]
+    incompleteWords: [Word!]
   }
 
   enum GameType {

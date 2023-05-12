@@ -31,7 +31,6 @@ export const game: QueryResolvers['game'] = ({ id }) => {
   })
 }
 
-// @ts-expect-error This is throwing an error because of including allWords.
 export const createGame: MutationResolvers['createGame'] = async ({
   input,
 }) => {
@@ -123,13 +122,11 @@ export const Game: GameRelationResolvers = {
   allWords: (_obj, { root }) => {
     return db.game
       .findUnique({ where: { id: root?.id } })
-      .allWords() as Promise<MakeRelationsOptional<Word[], AllMappedModels>>
+      .allWords() as Promise<Word[]>
   },
   incompleteWords: (_obj, { root }) => {
     return db.game
       .findUnique({ where: { id: root?.id } })
-      .incompleteWords() as Promise<
-      MakeRelationsOptional<Word[], AllMappedModels>
-    >
+      .incompleteWords() as Promise<Word[]>
   },
 }

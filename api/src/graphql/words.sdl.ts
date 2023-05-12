@@ -10,9 +10,9 @@ export const schema = gql`
     testedGraphemes: [String!]!
     syllables: [String!]!
     sentences: [String!]!
-    currentGames: [Game!]!
-    allGames: [Game!]!
-    incompleteGames: [Game!]!
+    currentGames: [Game!]
+    allGames: [Game!]
+    incompleteGames: [Game!]
   }
 
   type Query {
