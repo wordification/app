@@ -19,7 +19,7 @@ export const getSortingGameWord = (word: string) => {
 }
 
 export const getSortingGameSentence = (sentence: string) => {
-  return `${STATIC_PATH}/sorting/sentences/${sentence}.mp3`
+  return `${STATIC_PATH}/sorting/sentences/${sentence}_sentence.mp3`
 }
 
 export const getSortingGamePhrase = (phrase: string) => {
