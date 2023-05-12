@@ -81,12 +81,9 @@ export const words: QueryResolvers['words'] = () => {
   return db.word.findMany()
 }
 
-export const word: QueryResolvers['word'] = (params) => {
-  if (!params?.id) {
-    throw new Error('No word ID provided')
-  }
+export const word: QueryResolvers['word'] = ({ id }) => {
   return db.word.findUnique({
-    where: { id: params.id },
+    where: { id: id },
   })
 }
 

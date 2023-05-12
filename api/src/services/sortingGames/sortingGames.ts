@@ -76,13 +76,9 @@ export const advanceLevel = (gameId: number, currentLevel: number) => {
   })
 }
 
-export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] = (
-  params
-) => {
-  if (params === undefined) {
-    throw new Error('Game ID is required')
-  }
-  const { gameId } = params
+export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] = ({
+  gameId,
+}) => {
   return {
     gameId,
     // TODO: figure out a better way to access the phonemes
@@ -100,12 +96,7 @@ export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] = (
 }
 
 export const sortingGameSecondLevel: QueryResolvers['sortingGameSecondLevel'] =
-  (params) => {
-    if (params === undefined) {
-      throw new Error('Game ID is required')
-    }
-
-    const { gameId } = params
+  ({ gameId }) => {
     return {
       gameId,
       graphemes: ['iCe', 'igh', 'y', 'ow', 'oa', 'oCe'],
@@ -113,12 +104,7 @@ export const sortingGameSecondLevel: QueryResolvers['sortingGameSecondLevel'] =
   }
 
 export const sortingGameGradeFirstLevel: MutationResolvers['sortingGameGradeFirstLevel'] =
-  async (params) => {
-    if (params === undefined) {
-      throw new Error('Game ID and phoneme are required')
-    }
-
-    const { gameId, phoneme } = params
+  async ({ gameId, phoneme }) => {
     const game = await db.game.findUnique({
       where: { id: gameId },
       include: {
@@ -144,12 +130,7 @@ export const sortingGameGradeFirstLevel: MutationResolvers['sortingGameGradeFirs
   }
 
 export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSecondLevel'] =
-  async (params) => {
-    if (params === undefined) {
-      throw new Error('Game ID and grapheme are required')
-    }
-
-    const { gameId, grapheme } = params
+  async ({ gameId, grapheme }) => {
     const game = await db.game.findUnique({
       where: { id: gameId },
       include: {
@@ -175,13 +156,7 @@ export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSec
   }
 
 export const sortingGameGradeThirdLevel: MutationResolvers['sortingGameGradeThirdLevel'] =
-  async (params) => {
-    if (params === undefined) {
-      throw new Error('Game ID and entry are required')
-    }
-
-    const { gameId, entry } = params
-
+  async ({ gameId, entry }) => {
     const game = await db.game.findUnique({
       where: { id: gameId },
       include: {

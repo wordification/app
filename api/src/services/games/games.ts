@@ -1,23 +1,25 @@
+import type { User, Word } from '@prisma/client'
 import type {
   QueryResolvers,
   MutationResolvers,
   GameRelationResolvers,
+  AllMappedModels,
 } from 'types/graphql'
 
-import { validate } from '@redwoodjs/api'
+import { MakeRelationsOptional, removeNulls, validate } from '@redwoodjs/api'
 
 import { db } from 'src/lib/db'
 
 import { selectGameWords } from '../words/words'
 
-export const games: QueryResolvers['games'] = (args) => {
-  if (args?.complete === undefined) {
+export const games: QueryResolvers['games'] = ({ complete }) => {
+  if (typeof complete !== 'boolean') {
     return db.game.findMany()
   }
   return db.game.findMany({
     where: {
       complete: {
-        equals: args?.complete,
+        equals: complete,
       },
     },
   })
@@ -29,9 +31,13 @@ export const game: QueryResolvers['game'] = ({ id }) => {
   })
 }
 
+// @ts-expect-error This is throwing an error because of including allWords.
 export const createGame: MutationResolvers['createGame'] = async ({
   input,
 }) => {
+  if (!context.currentUser) {
+    throw new Error('You must be logged in to create a game!')
+  }
   validate(input.wordsPerPhoneme, 'words per phoneme', {
     numericality: {
       lessThanOrEqual: 10,
@@ -46,14 +52,16 @@ export const createGame: MutationResolvers['createGame'] = async ({
       message: 'Only sorting and matching games are currently supported!',
     },
   })
-  validate(input.phonemes, 'phonemes', {
+  const phonemes = input.phonemes.filter((phoneme) => !!phoneme) as number[]
+
+  validate(phonemes, 'phonemes', {
     custom: {
       with: () => {
-        if (input.phonemes.length !== 2) {
+        if (phonemes.length !== 2) {
           throw new Error('You must select exactly two phonemes!')
         }
         const allowedPhonemes = [49, 53]
-        input.phonemes.forEach((phoneme) => {
+        phonemes.forEach((phoneme) => {
           if (!allowedPhonemes.includes(phoneme)) {
             throw new Error(
               'Invalid phonemes selected! Please only select Long I and Long O.'
@@ -67,13 +75,14 @@ export const createGame: MutationResolvers['createGame'] = async ({
   const gameWords = await selectGameWords({
     count: input.wordsPerPhoneme,
     numSyllables: 1,
-    phonemes: input.phonemes,
+    phonemes: phonemes,
   })
 
   const [currentWord, ...incompleteWords] = gameWords
-  const game = await db.game.create({
+  return db.game.create({
     data: {
       ...input,
+      phonemes,
       userId: context.currentUser.id,
       allWords: {
         connect: gameWords.map((word) => ({ id: word.id })),
@@ -87,13 +96,11 @@ export const createGame: MutationResolvers['createGame'] = async ({
       allWords: true,
     },
   })
-
-  return game
 }
 
 export const updateGame: MutationResolvers['updateGame'] = ({ id, input }) => {
   return db.game.update({
-    data: input,
+    data: removeNulls(input),
     where: { id },
   })
 }
@@ -106,15 +113,23 @@ export const deleteGame: MutationResolvers['deleteGame'] = ({ id }) => {
 
 export const Game: GameRelationResolvers = {
   user: (_obj, { root }) => {
-    return db.game.findUnique({ where: { id: root?.id } }).user()
+    return db.game.findUnique({ where: { id: root?.id } }).user() as Promise<
+      MakeRelationsOptional<User, AllMappedModels>
+    >
   },
   currentWord: (_obj, { root }) => {
     return db.game.findUnique({ where: { id: root?.id } }).currentWord()
   },
   allWords: (_obj, { root }) => {
-    return db.game.findUnique({ where: { id: root?.id } }).allWords()
+    return db.game
+      .findUnique({ where: { id: root?.id } })
+      .allWords() as Promise<MakeRelationsOptional<Word[], AllMappedModels>>
   },
   incompleteWords: (_obj, { root }) => {
-    return db.game.findUnique({ where: { id: root?.id } }).incompleteWords()
+    return db.game
+      .findUnique({ where: { id: root?.id } })
+      .incompleteWords() as Promise<
+      MakeRelationsOptional<Word[], AllMappedModels>
+    >
   },
 }

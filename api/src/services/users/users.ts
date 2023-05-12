@@ -13,47 +13,26 @@ export const users: QueryResolvers['users'] = () => {
   return db.user.findMany()
 }
 
-export const user: QueryResolvers['user'] = (params) => {
-  if (params === undefined) {
-    throw new Error('User ID is required')
-  }
-
-  const { id } = params
-
+export const user: QueryResolvers['user'] = ({ id }) => {
   return db.user.findUnique({
     where: { id },
   })
 }
 
-export const createUser: MutationResolvers['createUser'] = (params) => {
-  if (params === undefined) {
-    throw new Error('User input is required')
-  }
-
-  const { input } = params
+export const createUser: MutationResolvers['createUser'] = ({ input }) => {
   return db.user.create({
     data: input,
   })
 }
 
-export const updateUser: MutationResolvers['updateUser'] = (params) => {
-  if (params === undefined) {
-    throw new Error('User input is required')
-  }
-
-  const { id, input } = params
+export const updateUser: MutationResolvers['updateUser'] = ({ id, input }) => {
   return db.user.update({
     data: removeNulls(input),
     where: { id },
   })
 }
 
-export const deleteUser: MutationResolvers['deleteUser'] = (params) => {
-  if (params === undefined) {
-    throw new Error('User ID is required')
-  }
-
-  const { id } = params
+export const deleteUser: MutationResolvers['deleteUser'] = ({ id }) => {
   return db.user.delete({
     where: { id },
   })
