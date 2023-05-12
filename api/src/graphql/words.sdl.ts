@@ -5,11 +5,13 @@ export const schema = gql`
     gradeLevel: Int!
     numSyllables: Int!
     phonemes: [Int!]!
+    testedPhonemes: [Int!]!
     graphemes: [String!]!
+    testedGraphemes: [String!]!
     syllables: [String!]!
     sentences: [String!]!
-    allGames: [Game!]!
     currentGames: [Game!]!
+    allGames: [Game!]!
     incompleteGames: [Game!]!
   }
 
