@@ -123,10 +123,10 @@ export const sortingGameGradeFirstLevel: MutationResolvers['sortingGameGradeFirs
     if (game.currentWord.testedPhonemes.includes(phoneme)) {
       await advanceLevel(game.id, game.level)
 
-      return true
+      return { correct: true }
     }
 
-    return false
+    return { correct: false }
   }
 
 export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSecondLevel'] =
@@ -149,10 +149,10 @@ export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSec
     if (game.currentWord.testedGraphemes.includes(grapheme)) {
       await advanceLevel(game.id, game.level)
 
-      return true
+      return { correct: true }
     }
 
-    return false
+    return { correct: false }
   }
 
 export const sortingGameGradeThirdLevel: MutationResolvers['sortingGameGradeThirdLevel'] =
@@ -175,8 +175,8 @@ export const sortingGameGradeThirdLevel: MutationResolvers['sortingGameGradeThir
     if (game.currentWord.word === entry) {
       await advanceLevel(game.id, game.level)
 
-      return true
+      return { correct: true }
     }
 
-    return false
+    return { correct: false }
   }

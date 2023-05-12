@@ -12,7 +12,9 @@ import { QUERY as LEVEL_QUERY } from 'src/components/SortingGame/SortingGameCell
 
 const GRADE_LEVEL_THREE_MUTATION = gql`
   mutation GradeLevelThreeMutation($gameId: Int!, $entry: String!) {
-    sortingGameGradeThirdLevel(gameId: $gameId, entry: $entry)
+    sortingGameGradeThirdLevel(gameId: $gameId, entry: $entry) {
+      correct
+    }
   }
 `
 
@@ -21,7 +23,7 @@ const SortingGameThirdLevel = ({ gameId }: { gameId: number }) => {
     GRADE_LEVEL_THREE_MUTATION,
     {
       onCompleted: ({ sortingGameGradeThirdLevel }) => {
-        if (sortingGameGradeThirdLevel) {
+        if (sortingGameGradeThirdLevel.correct) {
           toast.success('Correct!')
         } else {
           toast.error('Incorrect!')

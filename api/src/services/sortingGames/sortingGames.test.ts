@@ -33,14 +33,14 @@ describe('sortingGames', () => {
       phoneme: 22,
     })
 
-    expect(result1).toEqual(false)
+    expect(result1).toEqual({ correct: false })
 
     const result2 = await sortingGameGradeFirstLevel({
       gameId: scenario.game.lastWord.id,
       phoneme: 53,
     })
 
-    expect(result2).toEqual(true)
+    expect(result2).toEqual({ correct: true })
   })
 
   scenario('returns the second level', async (scenario: StandardScenario) => {
@@ -57,14 +57,14 @@ describe('sortingGames', () => {
       grapheme: 's',
     })
 
-    expect(result1).toEqual(false)
+    expect(result1).toEqual({ correct: false })
 
     const result2 = await sortingGameGradeSecondLevel({
       gameId: scenario.game.lastWord.id,
       grapheme: 'ow',
     })
 
-    expect(result2).toEqual(true)
+    expect(result2).toEqual({ correct: true })
   })
 
   scenario('grades the third level', async (scenario: StandardScenario) => {
@@ -73,14 +73,14 @@ describe('sortingGames', () => {
       entry: 's',
     })
 
-    expect(result1).toEqual(false)
+    expect(result1).toEqual({ correct: false })
 
     const result2 = await sortingGameGradeThirdLevel({
       gameId: scenario.game.lastWord.id,
       entry: 'snow',
     })
 
-    expect(result2).toEqual(true)
+    expect(result2).toEqual({ correct: true })
   })
 
   scenario('advances the level', async (scenario: StandardScenario) => {

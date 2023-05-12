@@ -34,7 +34,9 @@ export const Failure = ({
 
 const GRADE_LEVEL_ONE_MUTATION = gql`
   mutation GradeLevelOneMutation($gameId: Int!, $phoneme: Int!) {
-    sortingGameGradeFirstLevel(gameId: $gameId, phoneme: $phoneme)
+    sortingGameGradeFirstLevel(gameId: $gameId, phoneme: $phoneme) {
+      correct
+    }
   }
 `
 
@@ -48,7 +50,7 @@ export const Success = ({
     GRADE_LEVEL_ONE_MUTATION,
     {
       onCompleted: ({ sortingGameGradeFirstLevel }) => {
-        if (sortingGameGradeFirstLevel) {
+        if (sortingGameGradeFirstLevel.correct) {
           toast.success('Correct!')
         } else {
           toast.error('Incorrect!')

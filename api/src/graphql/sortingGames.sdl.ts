@@ -19,12 +19,23 @@ export const schema = gql`
     sortingGameSecondLevel(gameId: Int!): SortingGameSecondLevel! @requireAuth
   }
 
+  type SortingGameGradeResponse {
+    correct: Boolean!
+    audio: [String!]
+  }
+
   type Mutation {
-    sortingGameGradeFirstLevel(gameId: Int!, phoneme: Int!): Boolean!
-      @requireAuth
-    sortingGameGradeSecondLevel(gameId: Int!, grapheme: String!): Boolean!
-      @requireAuth
-    sortingGameGradeThirdLevel(gameId: Int!, entry: String!): Boolean!
-      @requireAuth
+    sortingGameGradeFirstLevel(
+      gameId: Int!
+      phoneme: Int!
+    ): SortingGameGradeResponse! @requireAuth
+    sortingGameGradeSecondLevel(
+      gameId: Int!
+      grapheme: String!
+    ): SortingGameGradeResponse! @requireAuth
+    sortingGameGradeThirdLevel(
+      gameId: Int!
+      entry: String!
+    ): SortingGameGradeResponse! @requireAuth
   }
 `

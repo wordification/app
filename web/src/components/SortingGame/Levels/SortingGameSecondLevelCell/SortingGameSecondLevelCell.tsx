@@ -31,7 +31,9 @@ export const Failure = ({
 
 const GRADE_LEVEL_TWO_MUTATION = gql`
   mutation GradeLevelTwoMutation($gameId: Int!, $grapheme: String!) {
-    sortingGameGradeSecondLevel(gameId: $gameId, grapheme: $grapheme)
+    sortingGameGradeSecondLevel(gameId: $gameId, grapheme: $grapheme) {
+      correct
+    }
   }
 `
 
@@ -45,7 +47,7 @@ export const Success = ({
     GRADE_LEVEL_TWO_MUTATION,
     {
       onCompleted: ({ sortingGameGradeSecondLevel }) => {
-        if (sortingGameGradeSecondLevel) {
+        if (sortingGameGradeSecondLevel.correct) {
           toast.success('Correct!')
         } else {
           toast.error('Incorrect!')
