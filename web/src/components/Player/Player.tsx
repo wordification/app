@@ -1,38 +1,51 @@
-import { useState } from 'react'
+import { useState, useMemo, useEffect } from 'react'
+
+import { Howl } from 'howler'
 
 const Player = ({
   files,
   buttonLabel,
 }: {
-  files: string[]
+  files: readonly string[]
   buttonLabel?: string
 }) => {
   const [currentFileIndex, setCurrentFileIndex] = useState(0)
-
-  const handleFinish = () => {
-    if (currentFileIndex < files.length - 1) {
-      setCurrentFileIndex(currentFileIndex + 1)
-    }
-  }
+  const sound = useMemo(
+    () =>
+      new Howl({
+        src: [files[currentFileIndex]],
+        onend: () => {
+          if (currentFileIndex < files.length - 1) {
+            setCurrentFileIndex(currentFileIndex + 1)
+          }
+        },
+      }),
+    [currentFileIndex, files]
+  )
 
   const handleRestart = () => {
-    setCurrentFileIndex(0)
+    if (currentFileIndex === 0) {
+      sound?.stop()
+    } else {
+      sound?.unload()
+      setCurrentFileIndex(0)
+    }
+
+    sound?.play()
   }
 
+  useEffect(() => {
+    sound?.play()
+    return () => {
+      sound?.stop()
+    }
+  }, [sound])
+
+  if (!buttonLabel) return null
   return (
-    <>
-      {buttonLabel && (
-        <button
-          className="btn-accent btn"
-          type="button"
-          onClick={handleRestart}
-        >
-          {buttonLabel}
-        </button>
-      )}
-      {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-      <audio src={files[currentFileIndex]} onEnded={handleFinish} autoPlay />
-    </>
+    <button className="btn-accent btn" type="button" onClick={handleRestart}>
+      {buttonLabel}
+    </button>
   )
 }
 
