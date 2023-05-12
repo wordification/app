@@ -15,6 +15,13 @@ import { QUERY as LEVEL_QUERY } from 'src/components/SortingGame/SortingGameCell
 
 import SortingGameThirdLevelForm from './SortingGameThirdLevelForm'
 
+export const beforeQuery = (props: FindSortingGameThirdLevelQueryVariables) => {
+  return {
+    variables: props,
+    fetchPolicy: 'no-cache',
+  }
+}
+
 export const QUERY = gql`
   query FindSortingGameThirdLevelQuery($gameId: Int!) {
     sortingGameThirdLevel: sortingGameThirdLevel(gameId: $gameId) {

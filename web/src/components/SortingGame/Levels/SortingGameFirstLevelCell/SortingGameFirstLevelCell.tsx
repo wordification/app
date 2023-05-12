@@ -12,6 +12,13 @@ import { toast } from '@redwoodjs/web/toast'
 import GameCard from 'src/components/GameCard/GameCard'
 import { QUERY as LEVEL_QUERY } from 'src/components/SortingGame/SortingGameCell'
 
+export const beforeQuery = (props: FindSortingGameFirstLevelQueryVariables) => {
+  return {
+    variables: props,
+    fetchPolicy: 'no-cache',
+  }
+}
+
 export const QUERY = gql`
   query FindSortingGameFirstLevelQuery($gameId: Int!) {
     sortingGameFirstLevel: sortingGameFirstLevel(gameId: $gameId) {
