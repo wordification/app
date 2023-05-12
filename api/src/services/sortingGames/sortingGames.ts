@@ -288,5 +288,15 @@ export const sortingGameGradeThirdLevel: MutationResolvers['sortingGameGradeThir
       return { correct: true }
     }
 
-    return { correct: false }
+    const audio = [
+      getSortingGamePhrase('incorrect'),
+      getSortingGameWord(game.currentWord.word),
+      getSortingGamePhrase('has_sound'),
+      getPhoneme(game.currentWord.testedPhonemes[0]),
+      getSortingGamePhrase('and_spelled_with'),
+      getGrapheme(game.currentWord.testedGraphemes[0]),
+      getSortingGamePhrase('tryagain'),
+    ]
+
+    return { correct: false, audio }
   }

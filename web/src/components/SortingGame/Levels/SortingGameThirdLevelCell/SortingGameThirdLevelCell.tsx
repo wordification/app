@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import type {
   FindSortingGameThirdLevelQuery,
   FindSortingGameThirdLevelQueryVariables,
@@ -36,6 +38,7 @@ const GRADE_LEVEL_THREE_MUTATION = gql`
   mutation GradeLevelThreeMutation($gameId: Int!, $entry: String!) {
     sortingGameGradeThirdLevel(gameId: $gameId, entry: $entry) {
       correct
+      audio
     }
   }
 `
@@ -46,6 +49,7 @@ export const Success = ({
   FindSortingGameThirdLevelQuery,
   FindSortingGameThirdLevelQueryVariables
 >) => {
+  const [files, setFiles] = useState(sortingGameThirdLevel.audio)
   const [gradeLevel, { loading, error }] = useMutation<GradeLevelThreeMutation>(
     GRADE_LEVEL_THREE_MUTATION,
     {
@@ -54,6 +58,9 @@ export const Success = ({
           toast.success('Correct!')
         } else {
           toast.error('Incorrect!')
+        }
+        if (sortingGameGradeThirdLevel.audio) {
+          setFiles(sortingGameGradeThirdLevel.audio)
         }
       },
       onError: (error) => {
@@ -85,7 +92,7 @@ export const Success = ({
   }
 
   return (
-    <GameCard title="Spell the word." files={sortingGameThirdLevel.audio}>
+    <GameCard title="Spell the word." files={files}>
       <SortingGameThirdLevelForm
         onSubmit={handleSubmit}
         loading={loading}
