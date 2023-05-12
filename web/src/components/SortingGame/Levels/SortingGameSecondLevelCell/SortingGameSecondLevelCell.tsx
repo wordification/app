@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import type {
   FindSortingGameSecondLevelQuery,
   FindSortingGameSecondLevelQueryVariables,
@@ -34,6 +36,7 @@ const GRADE_LEVEL_TWO_MUTATION = gql`
   mutation GradeLevelTwoMutation($gameId: Int!, $grapheme: String!) {
     sortingGameGradeSecondLevel(gameId: $gameId, grapheme: $grapheme) {
       correct
+      audio
     }
   }
 `
@@ -44,6 +47,7 @@ export const Success = ({
   FindSortingGameSecondLevelQuery,
   FindSortingGameSecondLevelQueryVariables
 >) => {
+  const [files, setFiles] = useState(sortingGameSecondLevel.audio)
   const [gradeLevel, { loading }] = useMutation<GradeLevelTwoMutation>(
     GRADE_LEVEL_TWO_MUTATION,
     {
@@ -52,6 +56,9 @@ export const Success = ({
           toast.success('Correct!')
         } else {
           toast.error('Incorrect!')
+        }
+        if (sortingGameGradeSecondLevel.audio) {
+          setFiles(sortingGameGradeSecondLevel.audio)
         }
       },
       onError: (error) => {
@@ -80,10 +87,7 @@ export const Success = ({
   }
 
   return (
-    <GameCard
-      title="Click on the correct vowel sound."
-      files={sortingGameSecondLevel.audio}
-    >
+    <GameCard title="Click on the correct vowel sound." files={files}>
       <div className="grid grid-cols-2 gap-4">
         {sortingGameSecondLevel.graphemes.map((grapheme) => (
           <button

@@ -3,6 +3,7 @@ import type { QueryResolvers, MutationResolvers } from 'types/graphql'
 import { db } from 'src/lib/db'
 
 import {
+  getGrapheme,
   getPhoneme,
   getSortingGamePhrase,
   getSortingGameSentence,
@@ -253,7 +254,15 @@ export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSec
       return { correct: true }
     }
 
-    return { correct: false }
+    const audio = [
+      getSortingGamePhrase('incorrect'),
+      getGrapheme(grapheme),
+      getSortingGamePhrase('not_spelling_pattern'),
+      getSortingGameWord(game.currentWord.word),
+      getSortingGamePhrase('tryagain'),
+    ]
+
+    return { correct: false, audio }
   }
 
 export const sortingGameGradeThirdLevel: MutationResolvers['sortingGameGradeThirdLevel'] =
