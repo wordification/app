@@ -13,6 +13,7 @@ export const schema = gql`
   type SortingGameSecondLevel {
     gameId: Int!
     graphemes: [String!]!
+    audio: [String!]
   }
 
   type Query {

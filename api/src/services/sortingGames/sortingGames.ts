@@ -146,10 +146,31 @@ export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] =
   }
 
 export const sortingGameSecondLevel: QueryResolvers['sortingGameSecondLevel'] =
-  ({ gameId }) => {
+  async ({ gameId }) => {
+    const game = await db.game.findUnique({
+      where: { id: gameId },
+      include: {
+        currentWord: true,
+      },
+    })
+
+    const currentWord = game?.currentWord
+
+    if (!currentWord) {
+      throw new Error('Current word not selected')
+    }
+
+    const audio = [
+      getSortingGamePhrase('spelling_pattern'),
+      getPhoneme(currentWord.testedPhonemes[0]),
+      getSortingGamePhrase('in'),
+      getSortingGameWord(currentWord.word),
+    ]
+
     return {
       gameId,
       graphemes: ['iCe', 'igh', 'y', 'ow', 'oa', 'oCe'],
+      audio,
     }
   }
 

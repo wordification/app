@@ -15,6 +15,7 @@ export const QUERY = gql`
     sortingGameSecondLevel: sortingGameSecondLevel(gameId: $gameId) {
       gameId
       graphemes
+      audio
     }
   }
 `
@@ -79,7 +80,10 @@ export const Success = ({
   }
 
   return (
-    <GameCard title="Click on the correct vowel sound." files={[]}>
+    <GameCard
+      title="Click on the correct vowel sound."
+      files={sortingGameSecondLevel.audio}
+    >
       <div className="grid grid-cols-2 gap-4">
         {sortingGameSecondLevel.graphemes.map((grapheme) => (
           <button
