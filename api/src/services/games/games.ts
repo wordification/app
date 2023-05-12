@@ -19,7 +19,8 @@ export const games: QueryResolvers['games'] = ({ complete }) => {
   return db.game.findMany({
     where: {
       complete: {
-        equals: complete,
+        // I don't know why this is inverted, but it works
+        not: complete,
       },
     },
   })
