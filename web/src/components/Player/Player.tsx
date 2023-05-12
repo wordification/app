@@ -23,6 +23,19 @@ const Player = ({
     [currentFileIndex, files]
   )
 
+  // handle autoplay
+  useEffect(() => {
+    sound?.play()
+    return () => {
+      sound?.stop()
+    }
+  }, [sound])
+
+  // handle reset when files change
+  useEffect(() => {
+    setCurrentFileIndex(0)
+  }, [files])
+
   const handleRestart = () => {
     if (currentFileIndex === 0) {
       sound?.stop()
@@ -33,13 +46,6 @@ const Player = ({
 
     sound?.play()
   }
-
-  useEffect(() => {
-    sound?.play()
-    return () => {
-      sound?.stop()
-    }
-  }, [sound])
 
   if (!buttonLabel) return null
   return (

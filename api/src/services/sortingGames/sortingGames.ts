@@ -209,11 +209,7 @@ export const sortingGameGradeFirstLevel: MutationResolvers['sortingGameGradeFirs
       },
     })
 
-    if (game === null) {
-      throw new Error('Game not found')
-    }
-
-    if (game.currentWord === null) {
+    if (!game?.currentWord) {
       throw new Error('Current word not selected')
     }
 
@@ -223,7 +219,15 @@ export const sortingGameGradeFirstLevel: MutationResolvers['sortingGameGradeFirs
       return { correct: true }
     }
 
-    return { correct: false }
+    const audio = [
+      getSortingGamePhrase('incorrect'),
+      getPhoneme(phoneme),
+      getSortingGamePhrase('not_spelling_pattern'),
+      getSortingGameWord(game.currentWord.word),
+      getSortingGamePhrase('incorrect_try'),
+    ]
+
+    return { correct: false, audio }
   }
 
 export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSecondLevel'] =

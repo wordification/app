@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import type {
   FindSortingGameFirstLevelQuery,
   FindSortingGameFirstLevelQueryVariables,
@@ -37,6 +39,7 @@ const GRADE_LEVEL_ONE_MUTATION = gql`
   mutation GradeLevelOneMutation($gameId: Int!, $phoneme: Int!) {
     sortingGameGradeFirstLevel(gameId: $gameId, phoneme: $phoneme) {
       correct
+      audio
     }
   }
 `
@@ -47,6 +50,7 @@ export const Success = ({
   FindSortingGameFirstLevelQuery,
   FindSortingGameFirstLevelQueryVariables
 >) => {
+  const [files, setFiles] = useState(sortingGameFirstLevel.audio)
   const [gradeLevel, { loading }] = useMutation<GradeLevelOneMutation>(
     GRADE_LEVEL_ONE_MUTATION,
     {
@@ -55,6 +59,9 @@ export const Success = ({
           toast.success('Correct!')
         } else {
           toast.error('Incorrect!')
+        }
+        if (sortingGameGradeFirstLevel.audio) {
+          setFiles(sortingGameGradeFirstLevel.audio)
         }
       },
       onError: (error) => {
@@ -80,10 +87,7 @@ export const Success = ({
   }
 
   return (
-    <GameCard
-      title="Click on the correct vowel sound."
-      files={sortingGameFirstLevel.audio}
-    >
+    <GameCard title="Click on the correct vowel sound." files={files}>
       <div className="grid grid-cols-2 gap-4">
         {sortingGameFirstLevel.phonemes.map((option) => (
           <button
