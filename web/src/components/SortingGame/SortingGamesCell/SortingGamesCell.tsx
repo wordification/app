@@ -9,7 +9,9 @@ export const QUERY = gql`
   query FindSortingGames($complete: Boolean) {
     sortingGames: games(complete: $complete) {
       id
-      userId
+      user {
+        email
+      }
       createdAt
       wordsPerPhoneme
       phonemes

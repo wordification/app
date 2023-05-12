@@ -44,10 +44,10 @@ const SortingGamesList = ({ sortingGames }: FindSortingGames) => {
       <table className="rw-table">
         <thead>
           <tr>
-            <th>Id</th>
-            <th>User id</th>
+            <th>ID</th>
+            <th>User</th>
             <th>Date</th>
-            <th>Words per phoneme</th>
+            <th># of Words</th>
             <th>Phonemes</th>
             <th>Level</th>
             <th>&nbsp;</th>
@@ -57,19 +57,19 @@ const SortingGamesList = ({ sortingGames }: FindSortingGames) => {
           {sortingGames.map((game) => (
             <tr key={game.id}>
               <td>{truncate(game.id)}</td>
-              <td>{truncate(game.userId)}</td>
+              <td>{truncate(game.user.email)}</td>
               <td>{timeTag(game.createdAt)}</td>
-              <td>{truncate(game.wordsPerPhoneme)}</td>
-              <td>{truncate(game.phonemes.join(','))}</td>
+              <td>{truncate(game.wordsPerPhoneme * game.phonemes.length)}</td>
+              <td>{truncate(game.phonemes.join(' & '))}</td>
               <td>{truncate(game.level)}</td>
               <td>
                 <nav className="rw-table-actions">
                   <Link
                     to={routes.sortingGameIndividual({ id: game.id })}
-                    title={'Show game ' + game.id + ' detail'}
+                    title={'Resume game ' + game.id}
                     className="rw-button rw-button-small"
                   >
-                    Show
+                    Resume
                   </Link>
                   <button
                     type="button"
