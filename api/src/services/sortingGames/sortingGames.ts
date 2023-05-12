@@ -174,6 +174,32 @@ export const sortingGameSecondLevel: QueryResolvers['sortingGameSecondLevel'] =
     }
   }
 
+export const sortingGameThirdLevel: QueryResolvers['sortingGameThirdLevel'] =
+  async ({ gameId }) => {
+    const game = await db.game.findUnique({
+      where: { id: gameId },
+      include: {
+        currentWord: true,
+      },
+    })
+
+    const currentWord = game?.currentWord
+
+    if (!currentWord) {
+      throw new Error('Current word not selected')
+    }
+
+    const audio = [
+      getSortingGamePhrase('box_prompt'),
+      getSortingGameWord(currentWord.word),
+    ]
+
+    return {
+      gameId,
+      audio,
+    }
+  }
+
 export const sortingGameGradeFirstLevel: MutationResolvers['sortingGameGradeFirstLevel'] =
   async ({ gameId, phoneme }) => {
     const game = await db.game.findUnique({
