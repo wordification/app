@@ -7,13 +7,13 @@ export const schema = gql`
     updatedAt: DateTime!
     type: GameType!
     wordsPerPhoneme: Int!
-    phonemes: [Int]!
+    phonemes: [Int!]!
     level: Int!
     complete: Boolean!
     currentWordId: Int
     currentWord: Word
-    allWords: [Word]!
-    incompleteWords: [Word]!
+    allWords: [Word!]!
+    incompleteWords: [Word!]!
   }
 
   enum GameType {
@@ -22,7 +22,6 @@ export const schema = gql`
   }
 
   type Query {
-    games: [Game!]! @requireAuth
     games(complete: Boolean): [Game!]! @requireAuth
     game(id: Int!): Game @requireAuth
   }
@@ -30,15 +29,17 @@ export const schema = gql`
   input CreateGameInput {
     type: GameType!
     wordsPerPhoneme: Int!
-    phonemes: [Int]!
+    phonemes: [Int!]!
+    currentWordId: Int
   }
 
   input UpdateGameInput {
     userId: Int
     type: GameType
     wordsPerPhoneme: Int
-    phonemes: [Int]
+    phonemes: [Int!]
     level: Int
+    complete: Boolean
     currentWordId: Int
   }
 

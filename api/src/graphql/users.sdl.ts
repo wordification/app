@@ -6,7 +6,7 @@ export const schema = gql`
     salt: String!
     resetToken: String
     resetTokenExpiresAt: DateTime
-    games: [Game]!
+    games: [Game!]!
   }
 
   type Query {

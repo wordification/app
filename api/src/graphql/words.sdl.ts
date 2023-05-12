@@ -4,13 +4,13 @@ export const schema = gql`
     word: String!
     gradeLevel: Int!
     numSyllables: Int!
-    phonemes: [Int]!
-    graphemes: [String]!
-    syllables: [String]!
-    sentences: [String]!
-    allGames: [Game]!
-    currentGames: [Game]!
-    incompleteGames: [Game]!
+    phonemes: [Int!]!
+    graphemes: [String!]!
+    syllables: [String!]!
+    sentences: [String!]!
+    allGames: [Game!]!
+    currentGames: [Game!]!
+    incompleteGames: [Game!]!
   }
 
   type Query {
