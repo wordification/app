@@ -5,6 +5,8 @@ import type {
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
+import ProgressBar from 'src/components/ProgressBar/ProgressBar/ProgressBar'
+
 import SortingGameLevelManager from '../SortingGameLevelManager/SortingGameLevelManager'
 
 export const QUERY = gql`
@@ -12,6 +14,12 @@ export const QUERY = gql`
     sortingGame: game(id: $id) {
       id
       level
+      allWords {
+        id
+      }
+      incompleteWords {
+        id
+      }
     }
   }
 `
@@ -30,9 +38,15 @@ export const Success = ({
   sortingGame,
 }: CellSuccessProps<FindSortingGameById, FindSortingGameByIdVariables>) => {
   return (
-    <SortingGameLevelManager
-      gameId={sortingGame.id}
-      level={sortingGame.level}
-    />
+    <>
+      <ProgressBar
+        value={sortingGame.allWords.length - sortingGame.incompleteWords.length}
+        max={sortingGame.allWords.length}
+      />
+      <SortingGameLevelManager
+        gameId={sortingGame.id}
+        level={sortingGame.level}
+      />
+    </>
   )
 }
