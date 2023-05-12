@@ -6,7 +6,7 @@ const GameCard = ({
   children,
 }: {
   title: string
-  files: string[]
+  files: string[] | null | undefined
   children: React.ReactNode
 }) => (
   <div className="card w-full bg-base-300 shadow-xl">
@@ -14,9 +14,11 @@ const GameCard = ({
       <h3 className="card-title">{title}</h3>
       {children}
     </div>
-    <div className="card-actions justify-end p-4">
-      <Player files={files} buttonLabel="Play audio again" />
-    </div>
+    {files && (
+      <div className="card-actions justify-end p-4">
+        <Player files={files} buttonLabel="Play audio again" />
+      </div>
+    )}
   </div>
 )
 

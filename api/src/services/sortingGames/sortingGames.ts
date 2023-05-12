@@ -2,6 +2,13 @@ import type { QueryResolvers, MutationResolvers } from 'types/graphql'
 
 import { db } from 'src/lib/db'
 
+import {
+  getPhoneme,
+  getSortingGamePhrase,
+  getSortingGameSentence,
+  getSortingGameWord,
+} from '../audio'
+
 /**
  * Updates a sorting game to select a new word to test. If there are no more
  * words to test, the game is marked as complete. Otherwise, the game is
@@ -91,8 +98,39 @@ export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] =
       throw new Error('Current word not selected')
     }
 
+    // loop thru sounds
+    const phonemeAudios = currentWord.phonemes.map((phoneme) =>
+      getPhoneme(phoneme)
+    )
+
+    const audio = [
+      // figure out vowel sound in
+      getSortingGamePhrase('introvsound'),
+      // [ WORD ]
+      getSortingGameWord(currentWord.word),
+      // a sentence that has
+      getSortingGamePhrase('intro_sentence'),
+      // [ WORD ]
+      getSortingGameWord(currentWord.word),
+      // [ SENTENCE ]
+      getSortingGameSentence(currentWord.word),
+      // the sounds that make
+      getSortingGamePhrase('intro_sounds'),
+      // [ WORD ]
+      getSortingGameWord(currentWord.word),
+      // are
+      getSortingGamePhrase('are'),
+      // [ SOUNDs ]
+      ...phonemeAudios,
+      // which is the vowel sound in
+      getSortingGamePhrase('intro_vsound_select'),
+      // [ WORD ]
+      getSortingGameWord(currentWord.word),
+    ]
+
     return {
       gameId,
+      audio,
       // TODO: figure out a better way to access the phonemes
       phonemes: [
         {
@@ -104,7 +142,6 @@ export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] =
           label: 'Long O',
         },
       ],
-      audio: [currentWord.word],
     }
   }
 

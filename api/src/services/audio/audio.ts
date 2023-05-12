@@ -1,7 +1,7 @@
 const STATIC_PATH = '/audio'
 
 // Common files
-export const getPhoneme = (phoneme: string) => {
+export const getPhoneme = (phoneme: string | number) => {
   return `${STATIC_PATH}/common/phonemes/${phoneme}.mp3`
 }
 

@@ -14,6 +14,7 @@ export const QUERY = gql`
   query FindSortingGameFirstLevelQuery($gameId: Int!) {
     sortingGameFirstLevel: sortingGameFirstLevel(gameId: $gameId) {
       gameId
+      audio
       phonemes {
         id
         label
@@ -79,7 +80,10 @@ export const Success = ({
   }
 
   return (
-    <GameCard title="Click on the correct vowel sound." files={[]}>
+    <GameCard
+      title="Click on the correct vowel sound."
+      files={sortingGameFirstLevel.audio}
+    >
       <div className="grid grid-cols-2 gap-4">
         {sortingGameFirstLevel.phonemes.map((option) => (
           <button
