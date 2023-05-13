@@ -24,9 +24,14 @@ export const QUERY = gql`
   }
 `
 
-export const Loading = () => <div>Loading...</div>
+export const Loading = () => (
+  <>
+    <ProgressBar value={undefined} max={undefined} />
+    <div>Loading...</div>
+  </>
+)
 
-export const Empty = () => <div>Empty</div>
+export const Empty = () => <div>No game details found!</div>
 
 export const Failure = ({
   error,
