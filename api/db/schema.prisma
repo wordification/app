@@ -16,6 +16,10 @@ model User {
   id                  Int       @id @default(autoincrement())
   /// The user's email address (must be unique).
   email               String    @unique
+  /// The user's first name.
+  firstName           String
+  /// The user's last name.
+  lastName            String
   /// The user's hashed password.
   hashedPassword      String
   /// The salt used to hash the user's password.

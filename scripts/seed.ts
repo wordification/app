@@ -7,14 +7,31 @@ import wordData from './words.json'
 
 const seedUsers = () => {
   const users = [
-    { name: 'john', email: 'john@example.com', password: 'secret1' },
-    { name: 'jane', email: 'jane@example.com', password: 'secret2' },
-  ]
+    {
+      firstName: 'John',
+      lastName: 'Smith',
+      email: 'john@example.com',
+      password: 'secret1',
+    },
+    {
+      firstName: 'Jane',
+      lastName: 'Doe',
+      email: 'jane@example.com',
+      password: 'secret2',
+    },
+  ] as const
 
   const data = users.map(
-    ({ email, password }): Prisma.UserCreateArgs['data'] => {
+    ({
+      firstName,
+      lastName,
+      email,
+      password,
+    }): Prisma.UserCreateArgs['data'] => {
       const [hashedPassword, salt] = hashPassword(password)
       return {
+        firstName,
+        lastName,
         email,
         hashedPassword,
         salt,

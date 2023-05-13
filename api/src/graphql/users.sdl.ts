@@ -9,6 +9,12 @@ export const schema = gql`
     "The user's email address (must be unique)."
     email: String!
 
+    "The user's first name."
+    firstName: String!
+
+    "The user's last name."
+    lastName: String!
+
     "The user's hashed password."
     hashedPassword: String!
 
@@ -74,19 +80,5 @@ export const schema = gql`
 
     "The time at which the reset token expires."
     resetTokenExpiresAt: DateTime
-  }
-
-  """
-  Mutations for users.
-  """
-  type Mutation {
-    "Creates a new user."
-    createUser(input: CreateUserInput!): User! @requireAuth
-
-    "Updates an existing user."
-    updateUser(id: Int!, input: UpdateUserInput!): User! @requireAuth
-
-    "Deletes an existing user."
-    deleteUser(id: Int!): User! @requireAuth
   }
 `

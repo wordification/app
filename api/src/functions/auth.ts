@@ -1,3 +1,4 @@
+import type { User as PrismaUser } from '@prisma/client'
 import type { APIGatewayProxyEvent, Context } from 'aws-lambda'
 
 import {
@@ -12,37 +13,38 @@ export const handler = async (
   event: APIGatewayProxyEvent,
   context: Context
 ) => {
-  const forgotPasswordOptions: DbAuthHandlerOptions['forgotPassword'] = {
-    // handler() is invoked after verifying that a user was found with the given
-    // email. This is where you can send the user an email with a link to
-    // reset their password. With the default dbAuth routes and field names, the
-    // URL to reset the password will be:
-    //
-    // https://example.com/reset-password?resetToken=${user.resetToken}
-    //
-    // Whatever is returned from this function will be returned from
-    // the `forgotPassword()` function that is destructured from `useAuth()`
-    // You could use this return value to, for example, show the email
-    // address in a toast message so the user will know it worked and where
-    // to look for the email.
-    handler: (user) => {
-      return user
-    },
+  const forgotPasswordOptions: DbAuthHandlerOptions<PrismaUser>['forgotPassword'] =
+    {
+      // handler() is invoked after verifying that a user was found with the given
+      // email. This is where you can send the user an email with a link to
+      // reset their password. With the default dbAuth routes and field names, the
+      // URL to reset the password will be:
+      //
+      // https://example.com/reset-password?resetToken=${user.resetToken}
+      //
+      // Whatever is returned from this function will be returned from
+      // the `forgotPassword()` function that is destructured from `useAuth()`
+      // You could use this return value to, for example, show the email
+      // address in a toast message so the user will know it worked and where
+      // to look for the email.
+      handler: (user) => {
+        return user
+      },
 
-    // How long the resetToken is valid for, in seconds (default is 24 hours)
-    expires: 60 * 60 * 24,
+      // How long the resetToken is valid for, in seconds (default is 24 hours)
+      expires: 60 * 60 * 24,
 
-    errors: {
-      // for security reasons you may want to be vague here rather than expose
-      // the fact that the email address wasn't found (prevents fishing for
-      // valid email addresses)
-      usernameNotFound: 'Email not found',
-      // if the user somehow gets around client validation
-      usernameRequired: 'Email required',
-    },
-  }
+      errors: {
+        // for security reasons you may want to be vague here rather than expose
+        // the fact that the email address wasn't found (prevents fishing for
+        // valid email addresses)
+        usernameNotFound: 'Email not found',
+        // if the user somehow gets around client validation
+        usernameRequired: 'Email required',
+      },
+    }
 
-  const loginOptions: DbAuthHandlerOptions['login'] = {
+  const loginOptions: DbAuthHandlerOptions<PrismaUser>['login'] = {
     // handler() is called after finding the user that matches the
     // username/password provided at login, but before actually considering them
     // logged in. The `user` argument will be the user in the database that
@@ -71,31 +73,32 @@ export const handler = async (
     expires: 60 * 60 * 24 * 365 * 10,
   }
 
-  const resetPasswordOptions: DbAuthHandlerOptions['resetPassword'] = {
-    // handler() is invoked after the password has been successfully updated in
-    // the database. Returning anything truthy will automatically log the user
-    // in. Return `false` otherwise, and in the Reset Password page redirect the
-    // user to the login page.
-    handler: (_user) => {
-      return true
-    },
+  const resetPasswordOptions: DbAuthHandlerOptions<PrismaUser>['resetPassword'] =
+    {
+      // handler() is invoked after the password has been successfully updated in
+      // the database. Returning anything truthy will automatically log the user
+      // in. Return `false` otherwise, and in the Reset Password page redirect the
+      // user to the login page.
+      handler: (_user) => {
+        return true
+      },
 
-    // If `false` then the new password MUST be different from the current one
-    allowReusedPassword: true,
+      // If `false` then the new password MUST be different from the current one
+      allowReusedPassword: true,
 
-    errors: {
-      // the resetToken is valid, but expired
-      resetTokenExpired: 'resetToken is expired',
-      // no user was found with the given resetToken
-      resetTokenInvalid: 'resetToken is invalid',
-      // the resetToken was not present in the URL
-      resetTokenRequired: 'resetToken is required',
-      // new password is the same as the old password (apparently they did not forget it)
-      reusedPassword: 'Must choose a new password',
-    },
-  }
+      errors: {
+        // the resetToken is valid, but expired
+        resetTokenExpired: 'resetToken is expired',
+        // no user was found with the given resetToken
+        resetTokenInvalid: 'resetToken is invalid',
+        // the resetToken was not present in the URL
+        resetTokenRequired: 'resetToken is required',
+        // new password is the same as the old password (apparently they did not forget it)
+        reusedPassword: 'Must choose a new password',
+      },
+    }
 
-  const signupOptions: DbAuthHandlerOptions['signup'] = {
+  const signupOptions: DbAuthHandlerOptions<PrismaUser>['signup'] = {
     enabled: false,
     // Whatever you want to happen to your data on new user signup. Redwood will
     // check for duplicate usernames before calling this handler. At a minimum
@@ -112,16 +115,19 @@ export const handler = async (
     //
     // If this returns anything else, it will be returned by the
     // `signUp()` function in the form of: `{ message: 'String here' }`.
-    handler: ({ username, hashedPassword, salt }) => {
-      return db.user.create({
-        data: {
-          email: username,
-          hashedPassword: hashedPassword,
-          salt: salt,
-          // name: userAttributes.name
-        },
-      })
+    handler: () => {
+      throw new Error('Registraion is currently closed.')
     },
+    // handler: ({ username, hashedPassword, salt }) => {
+    //   return db.user.create({
+    //     data: {
+    //       email: username,
+    //       hashedPassword: hashedPassword,
+    //       salt: salt,
+    //       // name: userAttributes.name
+    //     },
+    //   })
+    // },
 
     // Include any format checks for password here. Return `true` if the
     // password is valid, otherwise throw a `PasswordValidationError`.
@@ -143,7 +149,7 @@ export const handler = async (
     },
   }
 
-  const authHandler = new DbAuthHandler(event, context, {
+  const authHandler = new DbAuthHandler<PrismaUser, number>(event, context, {
     // Provide prisma db client
     db: db,
 
