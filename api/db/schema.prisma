@@ -9,63 +9,101 @@ generator client {
   binaryTargets = "native"
 }
 
-// Define your own datamodels here and run `yarn redwood prisma migrate dev`
-// to create migrations for them and apply to your dev DB.
+/// A user.
 model User {
-  // Basic info
+  // BASIC INFO
+  /// The unique identifier of a user.
   id                  Int       @id @default(autoincrement())
+  /// The user's email address (must be unique).
   email               String    @unique
+  /// The user's hashed password.
   hashedPassword      String
+  /// The salt used to hash the user's password.
   salt                String
+  /// A reset token for the user's password if generated.
   resetToken          String?
+  /// The time at which the reset token expires.
   resetTokenExpiresAt DateTime?
 
-  // Relationship info
+  // RELATIONSHIP INFO
+  /// All of the user's games.
   games Game[]
 }
 
+/// Possible game types.
 enum GameType {
+  /// A game where a user is given a word and must select the correct category.
   SORTING
+  /// A game where a user must match two words with the same phoneme.
   MATCHING
 }
 
+/// A base game. Can be used for any game type.
 model Game {
-  // Basic info
+  // BASIC INFO
+  /// The unique identifier of a game.
   id        Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [id])
+  /// The ID of the user who is playing the game.
   userId    Int
+  /// The time at which the game was created.
   createdAt DateTime @default(now())
+  /// The time at which the game was last updated.
   updatedAt DateTime @updatedAt
+  /// The type of game.
   type      GameType
 
-  // Gameplay info
+  // GAMEPLAY INFO
+  /// The number of words played per phoneme. The actual number of words played will be this number times the number of phonemes, or less if there are not enough words.
   wordsPerPhoneme Int
+  /// The phonemes to test the user on.
   phonemes        Int[]
+  /// The current level of the game. Levels are unique to each game type, but all start at 1.
   level           Int     @default(1)
+  /// If the game is complete.
   complete        Boolean @default(false)
+  /// The current word being played.
   currentWordId   Int?
 
-  // Relationship info
+  // RELATIONSHIP INFO
+  /// The user who is playing the game.
+  user            User   @relation(fields: [userId], references: [id])
+  /// The current word being played. Can be null if the game is complete.
   currentWord     Word?  @relation("currentGames", fields: [currentWordId], references: [id])
+  /// All of the words played in the game.
   allWords        Word[] @relation("allGames")
+  /// All of the words that have not been played in the game.
   incompleteWords Word[] @relation("incompleteGames")
 }
 
+/// A word.
 model Word {
-  // Basic info
+  // BASIC INFO
+  /// The unique identifier of a word.
   id              Int      @id @default(autoincrement())
+  /// The word itself. Must be unique.
   word            String   @unique
+  /// The grade level of the word.
   gradeLevel      Int
+  /// The number of syllables in the word.
   numSyllables    Int
+  /// The phonemes in the word, ordered in the way they are pronounced.
   phonemes        Int[]
+  /// The phonemes being tested in the word. Currently, only one phoneme can be tested at a time.
   testedPhonemes  Int[]
+  /// The graphemes in the word, ordered in the way they are pronounced.
   graphemes       String[]
+  /// The graphemes being tested in the word. Currently, only one grapheme can be tested at a time.
   testedGraphemes String[]
+  /// The syllables in the word, ordered in the way they are pronounced. Broken down by nucleus, coda, etc.
   syllables       String[]
+  /// Example sentences for the word.
   sentences       String[]
 
-  // Relationship info
+  // RELATIONSHIP INFO
+  /// Games that are currently playing this word.
   currentGames    Game[] @relation("currentGames")
+  /// All of the games that have played this word.
   allGames        Game[] @relation("allGames")
+  /// All of the games that have played this word but have not completed it.
   incompleteGames Game[] @relation("incompleteGames")
 }
