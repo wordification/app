@@ -26,6 +26,8 @@ model User {
   email               String    @unique
   /// The user's role.
   roles               Role      @default(STUDENT)
+  /// The ID of the user's teacher if they are a student.
+  teacherId           Int?      @unique
   /// The user's first name.
   firstName           String
   /// The user's last name.
@@ -41,7 +43,11 @@ model User {
 
   // RELATIONSHIP INFO
   /// All of the user's games.
-  games Game[]
+  games    Game[]
+  // The user's teacher if they are a student.
+  teacher  User?  @relation("teacher", fields: [teacherId], references: [id])
+  /// All of the user's students if they are a teacher.
+  students User[] @relation("teacher")
 }
 
 /// Possible game types.

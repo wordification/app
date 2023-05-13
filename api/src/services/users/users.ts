@@ -19,4 +19,10 @@ export const User: UserRelationResolvers = {
       Game[]
     >
   },
+  teacher: (_obj, { root }) => {
+    return db.user.findUnique({ where: { id: root?.id } }).teacher()
+  },
+  students: (_obj, { root }) => {
+    return db.user.findUnique({ where: { id: root?.id } }).students()
+  },
 }

@@ -22,6 +22,9 @@ export const schema = gql`
     "The user's role."
     roles: Role!
 
+    "The ID of the user's teacher if they are a student."
+    teacherId: Int
+
     "The user's first name."
     firstName: String!
 
@@ -42,6 +45,12 @@ export const schema = gql`
 
     "All of the user's games."
     games: [Game!]!
+
+    "The user's teacher if they are a student."
+    teacher: User
+
+    "All of the user's students if they are a teacher."
+    students: [User!]
   }
 
   """
