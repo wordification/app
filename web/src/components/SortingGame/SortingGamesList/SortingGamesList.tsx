@@ -40,13 +40,13 @@ const SortingGamesList = ({ sortingGames }: FindSortingGames) => {
   }
 
   return (
-    <div className="rw-segment rw-table-wrapper-responsive">
-      <table className="rw-table">
+    <div className="overflow-x-auto">
+      <table className="table-zebra table w-full">
         <thead>
           <tr>
             <th>ID</th>
             <th>User</th>
-            <th>Date</th>
+            <th>Last Played</th>
             <th># of Words</th>
             <th>Phonemes</th>
             <th>Level</th>
@@ -58,23 +58,23 @@ const SortingGamesList = ({ sortingGames }: FindSortingGames) => {
             <tr key={game.id}>
               <td>{truncate(game.id)}</td>
               <td>{truncate(game.user.email)}</td>
-              <td>{timeTag(game.createdAt)}</td>
+              <td>{timeTag(game.updatedAt)}</td>
               <td>{truncate(game.wordsPerPhoneme * game.phonemes.length)}</td>
               <td>{truncate(game.phonemes.join(' & '))}</td>
               <td>{truncate(game.level)}</td>
               <td>
-                <nav className="rw-table-actions">
+                <nav className="btn-group">
                   <Link
                     to={routes.sortingGameIndividual({ id: game.id })}
                     title={'Resume game ' + game.id}
-                    className="rw-button rw-button-small"
+                    className="btn-outline btn-primary btn-xs btn"
                   >
                     Resume
                   </Link>
                   <button
                     type="button"
                     title={'Delete game ' + game.id}
-                    className="rw-button rw-button-small rw-button-red"
+                    className="btn-outline btn-error btn-xs btn"
                     onClick={() => onDeleteClick(game.id)}
                   >
                     Delete

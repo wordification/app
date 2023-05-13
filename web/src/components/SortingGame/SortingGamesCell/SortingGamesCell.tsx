@@ -12,7 +12,7 @@ export const QUERY = gql`
       user {
         email
       }
-      createdAt
+      updatedAt
       wordsPerPhoneme
       phonemes
       level

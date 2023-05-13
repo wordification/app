@@ -14,9 +14,16 @@ import { selectGameWords } from '../words/words'
 
 export const games: QueryResolvers['games'] = ({ complete }) => {
   if (typeof complete !== 'boolean') {
-    return db.game.findMany()
+    return db.game.findMany({
+      orderBy: {
+        updatedAt: 'desc',
+      },
+    })
   }
   return db.game.findMany({
+    orderBy: {
+      updatedAt: 'desc',
+    },
     where: {
       complete: {
         // I don't know why this is inverted, but it works
