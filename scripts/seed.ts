@@ -12,12 +12,14 @@ const seedUsers = () => {
       lastName: 'Smith',
       email: 'john@example.com',
       password: 'secret1',
+      role: 'STUDENT',
     },
     {
       firstName: 'Jane',
       lastName: 'Doe',
       email: 'jane@example.com',
       password: 'secret2',
+      role: 'TEACHER',
     },
   ] as const
 
@@ -27,11 +29,13 @@ const seedUsers = () => {
       lastName,
       email,
       password,
+      role,
     }): Prisma.UserCreateArgs['data'] => {
       const [hashedPassword, salt] = hashPassword(password)
       return {
         firstName,
         lastName,
+        role,
         email,
         hashedPassword,
         salt,
