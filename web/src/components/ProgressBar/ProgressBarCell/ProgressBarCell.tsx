@@ -33,13 +33,6 @@ export const Failure = ({
 export const Success = ({
   progressBar,
 }: CellSuccessProps<FindProgressBarQuery, FindProgressBarQueryVariables>) => {
-  if (
-    !progressBar.allWords ||
-    !progressBar.incompleteWords ||
-    progressBar.allWords.length === 0
-  ) {
-    return <Empty />
-  }
   return (
     <ProgressBar
       value={progressBar.allWords.length - progressBar.incompleteWords.length}
