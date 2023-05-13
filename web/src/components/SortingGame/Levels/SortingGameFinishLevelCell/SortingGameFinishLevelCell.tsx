@@ -39,11 +39,11 @@ export const Success = ({
       <div className="card-body">
         <h2 className="card-title">Game complete!</h2>
         <p>Here are the words you practiced:</p>
-        <ol className="list-inside list-decimal">
+        <ul className="list-inside list-disc">
           {sortingGameFinishLevel.allWords.map((word) => (
             <li key={word.id}>{word.word}</li>
           ))}
-        </ol>
+        </ul>
         <div className="card-actions justify-end">
           <Link className="btn-primary btn" to={routes.sortingGameSetup()}>
             Play again
