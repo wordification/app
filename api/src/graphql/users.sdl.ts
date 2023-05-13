@@ -1,5 +1,15 @@
 export const schema = gql`
   """
+  Possible roles for a user.
+  """
+  enum Role {
+    "A user who can only view their own data."
+    STUDENT
+    "A user who can manage students' data."
+    TEACHER
+  }
+
+  """
   A user.
   """
   type User {
@@ -8,6 +18,9 @@ export const schema = gql`
 
     "The user's email address (must be unique)."
     email: String!
+
+    "The user's role."
+    role: Role!
 
     "The user's first name."
     firstName: String!
