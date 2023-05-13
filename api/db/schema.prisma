@@ -75,21 +75,35 @@ model Game {
   incompleteWords Word[] @relation("incompleteGames")
 }
 
+/// A word.
 model Word {
-  // Basic info
+  // BASIC INFO
+  /// The unique identifier of a word.
   id              Int      @id @default(autoincrement())
+  /// The word itself. Must be unique.
   word            String   @unique
+  /// The grade level of the word.
   gradeLevel      Int
+  /// The number of syllables in the word.
   numSyllables    Int
+  /// The phonemes in the word, ordered in the way they are pronounced.
   phonemes        Int[]
+  /// The phonemes being tested in the word. Currently, only one phoneme can be tested at a time.
   testedPhonemes  Int[]
+  /// The graphemes in the word, ordered in the way they are pronounced.
   graphemes       String[]
+  /// The graphemes being tested in the word. Currently, only one grapheme can be tested at a time.
   testedGraphemes String[]
+  /// The syllables in the word, ordered in the way they are pronounced. Broken down by nucleus, coda, etc.
   syllables       String[]
+  /// Example sentences for the word.
   sentences       String[]
 
-  // Relationship info
+  // RELATIONSHIP INFO
+  /// Games that are currently playing this word.
   currentGames    Game[] @relation("currentGames")
+  /// All of the games that have played this word.
   allGames        Game[] @relation("allGames")
+  /// All of the games that have played this word but have not completed it.
   incompleteGames Game[] @relation("incompleteGames")
 }
