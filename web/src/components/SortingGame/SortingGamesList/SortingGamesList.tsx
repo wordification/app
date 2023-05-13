@@ -7,6 +7,7 @@ import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
+import { useAuth } from 'src/auth'
 import { QUERY } from 'src/components/SortingGame/SortingGamesCell'
 import { timeTag, truncate } from 'src/lib/formatters'
 
@@ -19,6 +20,7 @@ const DELETE_GAME_MUTATION = gql`
 `
 
 const SortingGamesList = ({ sortingGames }: FindSortingGames) => {
+  const { hasRole } = useAuth()
   const [deleteGame] = useMutation(DELETE_GAME_MUTATION, {
     onCompleted: () => {
       toast.success('Game deleted')
@@ -57,7 +59,7 @@ const SortingGamesList = ({ sortingGames }: FindSortingGames) => {
           {sortingGames.map((game) => (
             <tr key={game.id}>
               <td>{truncate(game.id)}</td>
-              <td>{truncate(game.user.email)}</td>
+              <td>{truncate(game.user?.email)}</td>
               <td>{timeTag(game.updatedAt)}</td>
               <td>{truncate(game.wordsPerPhoneme * game.phonemes.length)}</td>
               <td>{truncate(game.phonemes.join(' & '))}</td>
@@ -71,14 +73,16 @@ const SortingGamesList = ({ sortingGames }: FindSortingGames) => {
                   >
                     Resume
                   </Link>
-                  <button
-                    type="button"
-                    title={'Delete game ' + game.id}
-                    className="btn-outline btn-error btn-xs btn"
-                    onClick={() => onDeleteClick(game.id)}
-                  >
-                    Delete
-                  </button>
+                  {hasRole('TEACHER') && (
+                    <button
+                      type="button"
+                      title={'Delete game ' + game.id}
+                      className="btn-outline btn-error btn-xs btn"
+                      onClick={() => onDeleteClick(game.id)}
+                    >
+                      Delete
+                    </button>
+                  )}
                 </nav>
               </td>
             </tr>

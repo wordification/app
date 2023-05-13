@@ -1,4 +1,5 @@
 import type { Prisma } from '@prisma/client'
+import { Role } from '@prisma/client'
 import { db } from 'api/src/lib/db'
 
 import { hashPassword } from '@redwoodjs/auth-dbauth-api'
@@ -12,14 +13,14 @@ const seedUsers = () => {
       lastName: 'Smith',
       email: 'john@example.com',
       password: 'secret1',
-      role: 'STUDENT',
+      roles: Role.STUDENT,
     },
     {
       firstName: 'Jane',
       lastName: 'Doe',
       email: 'jane@example.com',
       password: 'secret2',
-      role: 'TEACHER',
+      roles: Role.TEACHER,
     },
   ] as const
 
@@ -29,13 +30,13 @@ const seedUsers = () => {
       lastName,
       email,
       password,
-      role,
+      roles,
     }): Prisma.UserCreateArgs['data'] => {
       const [hashedPassword, salt] = hashPassword(password)
       return {
         firstName,
         lastName,
-        role,
+        roles,
         email,
         hashedPassword,
         salt,

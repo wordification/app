@@ -20,7 +20,7 @@ export const schema = gql`
     email: String!
 
     "The user's role."
-    role: Role!
+    roles: Role!
 
     "The user's first name."
     firstName: String!

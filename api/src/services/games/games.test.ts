@@ -1,7 +1,10 @@
 import type { Game } from '@prisma/client'
-import { GameType } from 'types/graphql'
+import { Role } from '@prisma/client'
+import type { GameType } from 'types/graphql'
 
-import { games, game, createGame, updateGame, deleteGame } from './games'
+import { ForbiddenError } from '@redwoodjs/graphql-server'
+
+import { games, game, createGame, deleteGame } from './games'
 import type { StandardScenario } from './games.scenarios'
 
 describe('games', () => {
@@ -78,20 +81,36 @@ describe('games', () => {
     ).rejects.toThrowError()
   })
 
-  scenario('updates a game', async (scenario: StandardScenario) => {
-    const original = (await game({ id: scenario.game.one.id })) as Game
-    const result = await updateGame({
-      id: original.id,
-      input: { wordsPerPhoneme: 2 },
-    })
+  scenario(
+    'allows a teacher to delete a game',
+    async (scenario: StandardScenario) => {
+      mockCurrentUser({
+        roles: Role.TEACHER,
+        id: 1,
+        email: 'teacher@teacher.com',
+        firstName: 'teacher',
+        lastName: 'teacher',
+      })
+      const original = (await deleteGame({ id: scenario.game.one.id })) as Game
+      const result = await game({ id: original.id })
 
-    expect(result.wordsPerPhoneme).toEqual(2)
-  })
+      expect(result).toEqual(null)
+    }
+  )
 
-  scenario('deletes a game', async (scenario: StandardScenario) => {
-    const original = (await deleteGame({ id: scenario.game.one.id })) as Game
-    const result = await game({ id: original.id })
-
-    expect(result).toEqual(null)
-  })
+  scenario(
+    'does not allow a student to delete a game',
+    async (scenario: StandardScenario) => {
+      mockCurrentUser({
+        roles: Role.STUDENT,
+        id: 1,
+        email: 'student@student.com',
+        firstName: 'student',
+        lastName: 'student',
+      })
+      expect(() => deleteGame({ id: scenario.game.one.id })).toThrow(
+        ForbiddenError
+      )
+    }
+  )
 })

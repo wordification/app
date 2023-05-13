@@ -34,7 +34,7 @@ export const getCurrentUser = async (session: Decoded) => {
       email: true,
       firstName: true,
       lastName: true,
-      role: true,
+      roles: true,
     },
   })
 }
@@ -68,14 +68,15 @@ export const hasRole = (roles: AllowedRoles) => {
   if (!roles) {
     return true
   }
-
-  const currentUserRole = context.currentUser?.role
+  const currentUserRole = context.currentUser?.roles
 
   if (typeof roles === 'string') {
     return currentUserRole === roles
-  } else {
-    return roles.some((allowedRole) => currentUserRole === allowedRole)
   }
+  if (roles.length === 0) {
+    return true
+  }
+  return roles.some((allowedRole) => currentUserRole === allowedRole)
 }
 
 /**

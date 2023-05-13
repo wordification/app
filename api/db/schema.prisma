@@ -25,7 +25,7 @@ model User {
   /// The user's email address (must be unique).
   email               String    @unique
   /// The user's role.
-  role                Role      @default(STUDENT)
+  roles               Role      @default(STUDENT)
   /// The user's first name.
   firstName           String
   /// The user's last name.
