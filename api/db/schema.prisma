@@ -9,6 +9,14 @@ generator client {
   binaryTargets = "native"
 }
 
+/// Possible roles for a user.
+enum Role {
+  /// A user who can only view their own data.
+  STUDENT
+  /// A user who can manage students' data.
+  TEACHER
+}
+
 /// A user.
 model User {
   // BASIC INFO
@@ -16,6 +24,8 @@ model User {
   id                  Int       @id @default(autoincrement())
   /// The user's email address (must be unique).
   email               String    @unique
+  /// The user's role.
+  role                Role      @default(STUDENT)
   /// The user's first name.
   firstName           String
   /// The user's last name.
