@@ -9,18 +9,24 @@ generator client {
   binaryTargets = "native"
 }
 
-// Define your own datamodels here and run `yarn redwood prisma migrate dev`
-// to create migrations for them and apply to your dev DB.
+/// A user.
 model User {
-  // Basic info
+  // BASIC INFO
+  /// The unique identifier of a user.
   id                  Int       @id @default(autoincrement())
+  /// The user's email address (must be unique).
   email               String    @unique
+  /// The user's hashed password.
   hashedPassword      String
+  /// The salt used to hash the user's password.
   salt                String
+  /// A reset token for the user's password if generated.
   resetToken          String?
+  /// The time at which the reset token expires.
   resetTokenExpiresAt DateTime?
 
-  // Relationship info
+  // RELATIONSHIP INFO
+  /// All of the user's games.
   games Game[]
 }
 
