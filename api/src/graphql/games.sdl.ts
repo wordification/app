@@ -103,40 +103,11 @@ export const schema = gql`
   }
 
   """
-  Input for updating a game.
-  """
-  input UpdateGameInput {
-    "The ID of the user who is playing the game."
-    userId: Int
-
-    "The type of game."
-    type: GameType
-
-    "The number of words played per phoneme. The actual number of words played will be this number times the number of phonemes, or less if there are not enough words."
-    wordsPerPhoneme: Int
-
-    "The phonemes to test the user on."
-    phonemes: [Int!]
-
-    "The current level of the game. Levels are unique to each game type, but all start at 1."
-    level: Int
-
-    "If the game is complete."
-    complete: Boolean
-
-    "The current word being played."
-    currentWordId: Int
-  }
-
-  """
   Mutations for games.
   """
   type Mutation {
     "Creates a new game."
     createGame(input: CreateGameInput!): Game! @requireAuth
-
-    "Updates an existing game."
-    updateGame(id: Int!, input: UpdateGameInput!): Game! @requireAuth
 
     "Deletes an existing game."
     deleteGame(id: Int!): Game! @requireAuth

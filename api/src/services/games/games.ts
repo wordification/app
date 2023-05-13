@@ -6,7 +6,7 @@ import type {
   AllMappedModels,
 } from 'types/graphql'
 
-import { MakeRelationsOptional, removeNulls, validate } from '@redwoodjs/api'
+import { MakeRelationsOptional, validate } from '@redwoodjs/api'
 
 import { db } from 'src/lib/db'
 
@@ -102,13 +102,6 @@ export const createGame: MutationResolvers['createGame'] = async ({
     include: {
       allWords: true,
     },
-  })
-}
-
-export const updateGame: MutationResolvers['updateGame'] = ({ id, input }) => {
-  return db.game.update({
-    data: removeNulls(input),
-    where: { id },
   })
 }
 
