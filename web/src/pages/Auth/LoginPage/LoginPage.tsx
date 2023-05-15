@@ -11,7 +11,7 @@ import {
 } from '@redwoodjs/forms'
 import { Link, navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
-import { toast, Toaster } from '@redwoodjs/web/toast'
+import { toast } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
 
@@ -47,64 +47,54 @@ const LoginPage = () => {
   return (
     <>
       <MetaTags title="Login" />
-      <Toaster toastOptions={{ duration: 6000 }} />
 
-      <div className="hero h-screen bg-gradient-to-bl from-secondary from-25% via-primary to-accent shadow-inner">
-        <div className="card w-full max-w-xl bg-base-100 text-base-content">
-          <div className="card-body">
-            <h1 className="card-title">Login</h1>
-            <Form onSubmit={onSubmit}>
-              <div className="form-control">
-                <Label className="label" name="email">
-                  <span className="label-text">Email</span>
-                </Label>
-                <EmailField
-                  name="email"
-                  className="input-bordered input"
-                  errorClassName="input-bordered input input-error"
-                  placeholder="email@email.com"
-                  ref={emailRef}
-                  validation={{
-                    required: {
-                      value: true,
-                      message: 'Email is required.',
-                    },
-                  }}
-                />
-                <FieldError name="email" className="text-sm text-error" />
-              </div>
-              <div className="form-control">
-                <Label name="password" className="label">
-                  <span className="label-text">Password</span>
-                </Label>
-                <PasswordField
-                  name="password"
-                  className="input-bordered input"
-                  errorClassName="input-bordered input input-error"
-                  autoComplete="current-password"
-                  placeholder="********"
-                  validation={{
-                    required: {
-                      value: true,
-                      message: 'Password is required.',
-                    },
-                  }}
-                />
-
-                <FieldError name="password" className="text-sm text-error" />
-              </div>
-
-              <Submit className="btn-primary btn my-2 block">Login</Submit>
-              <Link
-                to={routes.forgotPassword()}
-                className="link-hover link text-sm"
-              >
-                Forgot Password?
-              </Link>
-            </Form>
-          </div>
+      <Form onSubmit={onSubmit} className="card-body">
+        <h1 className="card-title">Login</h1>
+        <div className="form-control">
+          <Label className="label" name="email">
+            <span className="label-text">Email</span>
+          </Label>
+          <EmailField
+            name="email"
+            className="input-bordered input"
+            errorClassName="input-bordered input input-error"
+            placeholder="email@email.com"
+            ref={emailRef}
+            validation={{
+              required: {
+                value: true,
+                message: 'Email is required.',
+              },
+            }}
+          />
+          <FieldError name="email" className="text-sm text-error" />
         </div>
-      </div>
+        <div className="form-control">
+          <Label name="password" className="label">
+            <span className="label-text">Password</span>
+          </Label>
+          <PasswordField
+            name="password"
+            className="input-bordered input"
+            errorClassName="input-bordered input input-error"
+            autoComplete="current-password"
+            placeholder="********"
+            validation={{
+              required: {
+                value: true,
+                message: 'Password is required.',
+              },
+            }}
+          />
+
+          <FieldError name="password" className="text-sm text-error" />
+        </div>
+
+        <Submit className="btn-primary btn my-2 block">Login</Submit>
+        <Link to={routes.forgotPassword()} className="link-hover link text-sm">
+          Forgot Password?
+        </Link>
+      </Form>
     </>
   )
 }
