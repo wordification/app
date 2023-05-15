@@ -1,45 +1,66 @@
 import type { Prisma } from '@prisma/client'
+import { Role } from '@prisma/client'
 import { db } from 'api/src/lib/db'
 
 import { hashPassword } from '@redwoodjs/auth-dbauth-api'
 
 import wordData from './words.json'
 
-const seedUsers = () => {
-  const users = [
-    {
-      firstName: 'John',
-      lastName: 'Smith',
-      email: 'john@example.com',
-      password: 'secret1',
-    },
-    {
-      firstName: 'Jane',
-      lastName: 'Doe',
-      email: 'jane@example.com',
-      password: 'secret2',
-    },
-  ] as const
+const seedTeacher = () => {
+  const teacher = {
+    firstName: 'Jane',
+    lastName: 'Doe',
+    email: 'jane@example.com',
+    password: 'secret2',
+    roles: Role.TEACHER,
+  }
 
-  const data = users.map(
-    ({
-      firstName,
-      lastName,
-      email,
-      password,
-    }): Prisma.UserCreateArgs['data'] => {
-      const [hashedPassword, salt] = hashPassword(password)
-      return {
-        firstName,
-        lastName,
-        email,
-        hashedPassword,
-        salt,
-      }
-    }
-  )
+  const [hashedPassword, salt] = hashPassword(teacher.password)
 
-  return db.user.createMany({ data, skipDuplicates: true })
+  const teacherData: Prisma.UserCreateInput = {
+    firstName: teacher.firstName,
+    lastName: teacher.lastName,
+    email: teacher.email,
+    hashedPassword,
+    salt,
+    roles: teacher.roles,
+  }
+
+  return db.user.upsert({
+    where: { email: teacherData.email },
+    create: teacherData,
+    update: {},
+  })
+}
+
+const seedStudent = (teacherId: number) => {
+  const student = {
+    firstName: 'John',
+    lastName: 'Smith',
+    email: 'john@example.com',
+    password: 'secret1',
+    roles: Role.STUDENT,
+  }
+
+  const [hashedPassword, salt] = hashPassword(student.password)
+
+  const studentData: Prisma.UserCreateInput = {
+    firstName: student.firstName,
+    lastName: student.lastName,
+    email: student.email,
+    hashedPassword,
+    salt,
+    roles: student.roles,
+    teacher: {
+      connect: { id: teacherId },
+    },
+  }
+
+  return db.user.upsert({
+    where: { email: studentData.email },
+    create: studentData,
+    update: {},
+  })
 }
 
 const seedWords = () => {
@@ -63,8 +84,10 @@ const seedWords = () => {
 
 export default async () => {
   try {
-    const userRecord = await seedUsers()
-    console.info(`Seeded: ${userRecord.count} user(s)`)
+    const teacher = await seedTeacher()
+    console.info(`Seeded: 1 teacher`)
+    await seedStudent(teacher.id)
+    console.info(`Seeded: 1 student`)
     const wordRecord = await seedWords()
     console.info(`Seeded: ${wordRecord.count} word(s)`)
   } catch (error) {

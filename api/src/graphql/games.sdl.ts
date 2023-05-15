@@ -72,7 +72,7 @@ export const schema = gql`
   Queries for games.
   """
   type Query {
-    "Fetch all games."
+    "Fetch all games belonging to the current user."
     games(
       """
       Fetch only complete or only incomplete games.
@@ -110,6 +110,6 @@ export const schema = gql`
     createGame(input: CreateGameInput!): Game! @requireAuth
 
     "Deletes an existing game."
-    deleteGame(id: Int!): Game! @requireAuth
+    deleteGame(id: Int!): Game! @requireAuth(roles: ["TEACHER"])
   }
 `

@@ -8,6 +8,7 @@ import type {
 
 import { MakeRelationsOptional, validate } from '@redwoodjs/api'
 
+import { requireAuth } from 'src/lib/auth'
 import { db } from 'src/lib/db'
 
 import { selectGameWords } from '../words/words'
@@ -15,6 +16,7 @@ import { selectGameWords } from '../words/words'
 export const games: QueryResolvers['games'] = ({ complete }) => {
   if (typeof complete !== 'boolean') {
     return db.game.findMany({
+      where: { userId: context.currentUser?.id },
       orderBy: {
         updatedAt: 'desc',
       },
@@ -25,6 +27,7 @@ export const games: QueryResolvers['games'] = ({ complete }) => {
       updatedAt: 'desc',
     },
     where: {
+      userId: context.currentUser?.id,
       complete: {
         // I don't know why this is inverted, but it works
         not: complete,
@@ -34,8 +37,8 @@ export const games: QueryResolvers['games'] = ({ complete }) => {
 }
 
 export const game: QueryResolvers['game'] = ({ id }) => {
-  return db.game.findUnique({
-    where: { id },
+  return db.game.findFirst({
+    where: { id, userId: context.currentUser?.id },
   })
 }
 
@@ -106,6 +109,9 @@ export const createGame: MutationResolvers['createGame'] = async ({
 }
 
 export const deleteGame: MutationResolvers['deleteGame'] = ({ id }) => {
+  requireAuth({
+    roles: 'TEACHER',
+  })
   return db.game.delete({
     where: { id },
   })
