@@ -1,5 +1,3 @@
-import type { CreateGameInput, Game } from 'types/graphql'
-
 import {
   Form,
   FormError,
@@ -9,7 +7,9 @@ import {
   Submit,
   SelectField,
 } from '@redwoodjs/forms'
+
 import type { RWGqlError } from '@redwoodjs/forms'
+import type { CreateGameInput, Game } from 'types/graphql'
 
 type FormGame = NonNullable<Game>
 

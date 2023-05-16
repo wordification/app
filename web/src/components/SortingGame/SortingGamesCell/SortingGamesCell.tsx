@@ -1,9 +1,9 @@
-import type { FindSortingGames } from 'types/graphql'
-
 import { Link, routes } from '@redwoodjs/router'
-import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
 import SortingGamesList from 'src/components/SortingGame/SortingGamesList'
+
+import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
+import type { FindSortingGames } from 'types/graphql'
 
 export const QUERY = gql`
   query FindSortingGames($complete: Boolean) {

@@ -1,4 +1,5 @@
 import { words, word, filterWords, selectGameWords } from './words'
+
 import type { StandardScenario } from './words.scenarios'
 
 describe('words', () => {

@@ -1,5 +1,3 @@
-import type { QueryResolvers, MutationResolvers } from 'types/graphql'
-
 import { db } from 'src/lib/db'
 
 import {
@@ -9,6 +7,8 @@ import {
   getSortingGameSentence,
   getSortingGameWord,
 } from '../audio'
+
+import type { QueryResolvers, MutationResolvers } from 'types/graphql'
 
 /**
  * Updates a sorting game to select a new word to test. If there are no more

@@ -11,9 +11,9 @@
 //
 // See https://storybook.js.org/docs/react/writing-stories/args.
 
-import type { ComponentMeta } from '@storybook/react'
-
 import Player from './Player'
+
+import type { ComponentMeta } from '@storybook/react'
 
 export const generated = () => {
   return <Player files={[]} />

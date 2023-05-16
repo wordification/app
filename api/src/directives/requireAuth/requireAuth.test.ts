@@ -1,6 +1,7 @@
 import { mockRedwoodDirective, getDirectiveName } from '@redwoodjs/testing/api'
 
 import requireAuth from './requireAuth'
+
 import type { StandardScenario } from './requireAuth.scenarios'
 
 describe('requireAuth directive', () => {

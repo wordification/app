@@ -1,6 +1,6 @@
-import type { ComponentMeta, ComponentStory } from '@storybook/react'
-
 import AuthLayout from './AuthLayout'
+
+import type { ComponentMeta, ComponentStory } from '@storybook/react'
 
 export const isolated: ComponentStory<typeof AuthLayout> = (args) => {
   return <AuthLayout {...args} />

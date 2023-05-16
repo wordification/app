@@ -1,6 +1,6 @@
-import type { ComponentMeta, StoryObj } from '@storybook/react'
-
 import ProgressBar from './ProgressBar'
+
+import type { ComponentMeta, StoryObj } from '@storybook/react'
 
 export default {
   title: 'Components/ProgressBar',

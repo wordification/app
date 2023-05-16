@@ -1,7 +1,6 @@
 import type { Prisma } from '@prisma/client'
-import type { Game, User, Word } from 'types/graphql'
-
 import type { ScenarioData } from '@redwoodjs/testing/api'
+import type { Game, User, Word } from 'types/graphql'
 
 export const standard = defineScenario<
   Prisma.WordCreateArgs | Prisma.GameCreateArgs | Prisma.UserCreateArgs,

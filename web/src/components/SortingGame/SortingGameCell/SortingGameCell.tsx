@@ -1,13 +1,12 @@
+import ProgressBar from 'src/components/ProgressBar/ProgressBar/ProgressBar'
+
+import SortingGameLevelManager from '../SortingGameLevelManager/SortingGameLevelManager'
+
+import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import type {
   FindSortingGameById,
   FindSortingGameByIdVariables,
 } from 'types/graphql'
-
-import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
-
-import ProgressBar from 'src/components/ProgressBar/ProgressBar/ProgressBar'
-
-import SortingGameLevelManager from '../SortingGameLevelManager/SortingGameLevelManager'
 
 export const QUERY = gql`
   query FindSortingGameById($id: Int!) {

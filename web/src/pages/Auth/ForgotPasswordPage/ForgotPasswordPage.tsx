@@ -1,9 +1,8 @@
-import { useEffect, useRef } from 'react'
-
 import { Form, Label, Submit, FieldError, EmailField } from '@redwoodjs/forms'
 import { Link, navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
+import { useEffect, useRef } from 'react'
 
 import { useAuth } from 'src/auth'
 
