@@ -1,4 +1,6 @@
-import type { CreateGameInput, Game } from 'types/graphql'
+import { useState } from 'react'
+
+import type { CreateGameInput, Game, Scalars } from 'types/graphql'
 
 import {
   Form,
@@ -11,12 +13,21 @@ import {
 } from '@redwoodjs/forms'
 import type { RWGqlError } from '@redwoodjs/forms'
 
-type FormGame = NonNullable<Game>
+type FormGame = NonNullable<Game> & {
+  /** Input fields to form the phonemes to test the user on. */
+  first_phoneme?: Array<Scalars['Int']>
+  second_phoneme?: Array<Scalars['Int']>
+}
 
 interface SortingGameSetupFormProps {
   onSave: (data: CreateGameInput) => void
   error?: RWGqlError
   loading: boolean
+}
+
+interface Phoneme {
+  id: number
+  name: string
 }
 
 const PHONEME_OPTIONS = [
@@ -27,16 +38,39 @@ const PHONEME_OPTIONS = [
 ] as const
 
 const SortingGameSetupForm = (props: SortingGameSetupFormProps) => {
+  const [selectedPhonemesOne, setSelectedPhonemesOne] = useState<number[]>([])
+  const [selectedPhonemesTwo, setSelectedPhonemesTwo] = useState<number[]>([])
+  const [availableOptions, setAvailableOptions] =
+    useState<readonly Phoneme[]>(PHONEME_OPTIONS)
+
+  const handlePhonemeOneChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValue = parseInt(e.target.value)
+    setSelectedPhonemesOne([selectedValue])
+
+    const filteredOptions = PHONEME_OPTIONS.filter(
+      (p) => p.id !== selectedValue
+    )
+    setAvailableOptions(filteredOptions)
+  }
+
+  const handlePhonemeTwoChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValue = parseInt(e.target.value)
+    setSelectedPhonemesTwo([selectedValue])
+  }
+
   const onSubmit = (data: FormGame) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { first_phoneme, second_phoneme, ...restData } = data
+    const phonemes = [...selectedPhonemesOne, ...selectedPhonemesTwo]
+
     props.onSave({
-      ...data,
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      phonemes: data.phonemes.filter((p) => !!p).map((p) => +p!),
+      ...restData,
+      phonemes: phonemes.filter((p) => !!p),
     })
   }
 
   return (
-    <Form<FormGame> onSubmit={onSubmit} error={props.error}>
+    <Form<FormGame> onSubmit={onSubmit}>
       <FormError
         error={props.error}
         wrapperClassName="card card-body bg-base-300"
@@ -72,27 +106,58 @@ const SortingGameSetupForm = (props: SortingGameSetupFormProps) => {
           <span className="label-text">Phonemes</span>
         </Label>
 
-        <SelectField
-          name="phonemes"
-          multiple
-          validation={{
-            required: true,
-            validate: {
-              exactlyTwo: (value) =>
-                value.length === 2 || 'Please select two phonemes.',
-            },
-          }}
-        >
-          {PHONEME_OPTIONS.map((p) => (
-            <option key={p.id} value={p.id}>
-              {p.name}
-            </option>
-          ))}
-        </SelectField>
-      </div>
-      <FieldError name="phonemes" className="rw-field-error" />
+        <div className="flex">
+          <SelectField
+            name="first_phoneme"
+            className={`mr-2 ${
+              selectedPhonemesOne.length !== 0 ? 'w-full' : 'w-1/2'
+            }`}
+            multiple={true}
+            validation={{
+              required: true,
+              validate: {
+                exactlyOne: (value) =>
+                  value.length === 1 ||
+                  'Please select only one phoneme per box.',
+              },
+            }}
+            onChange={handlePhonemeOneChange}
+          >
+            {PHONEME_OPTIONS.map((p) => (
+              <option key={p.id} value={p.id}>
+                {p.name}
+              </option>
+            ))}
+          </SelectField>
 
-      <div>
+          {selectedPhonemesOne.length !== 0 && (
+            <SelectField
+              name="second_phoneme"
+              className="ml-2 w-full"
+              multiple
+              validation={{
+                required: true,
+                validate: {
+                  exactlyOne: (value) =>
+                    value.length === 1 ||
+                    'Please select only one phoneme per box.',
+                },
+              }}
+              onChange={handlePhonemeTwoChange}
+            >
+              {availableOptions.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.name}
+                </option>
+              ))}
+            </SelectField>
+          )}
+        </div>
+      </div>
+      <FieldError name="first_phoneme" className="rw-field-error" />
+      <FieldError name="second_phoneme" className="rw-field-error" />
+
+      <div className="mt-5">
         <Submit disabled={props.loading} className="btn-primary btn">
           Submit
         </Submit>
