@@ -1,6 +1,6 @@
-import type { ComponentMeta } from '@storybook/react'
-
 import ProfilePage from './ProfilePage'
+
+import type { ComponentMeta } from '@storybook/react'
 
 export const generated = () => {
   return <ProfilePage />

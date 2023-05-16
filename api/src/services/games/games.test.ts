@@ -1,11 +1,11 @@
-import type { Game } from '@prisma/client'
 import { Role } from '@prisma/client'
-import type { GameType } from 'types/graphql'
-
 import { ForbiddenError } from '@redwoodjs/graphql-server'
 
 import { games, game, createGame, deleteGame } from './games'
+
 import type { StandardScenario } from './games.scenarios'
+import type { Game } from '@prisma/client'
+import type { GameType } from 'types/graphql'
 
 describe('games', () => {
   scenario('returns all games', async (scenario: StandardScenario) => {

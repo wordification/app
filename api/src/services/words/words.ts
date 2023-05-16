@@ -1,9 +1,9 @@
-import type { Game } from '@prisma/client'
-import type { QueryResolvers, WordRelationResolvers } from 'types/graphql'
-
 import { validate } from '@redwoodjs/api'
 
 import { db } from 'src/lib/db'
+
+import type { Game } from '@prisma/client'
+import type { QueryResolvers, WordRelationResolvers } from 'types/graphql'
 
 export const filterWords = async ({
   phonemes,

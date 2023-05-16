@@ -1,5 +1,3 @@
-import { useEffect, useRef, useState } from 'react'
-
 import {
   Form,
   Label,
@@ -10,6 +8,7 @@ import {
 import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
+import { useEffect, useRef, useState } from 'react'
 
 import { useAuth } from 'src/auth'
 

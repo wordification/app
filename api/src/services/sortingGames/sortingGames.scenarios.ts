@@ -1,7 +1,6 @@
 import type { Prisma } from '@prisma/client'
-import { Game, User, Word } from 'types/graphql'
-
 import type { ScenarioData } from '@redwoodjs/testing/api'
+import type { Game, User, Word } from 'types/graphql'
 
 export const standard = defineScenario<
   Prisma.WordCreateArgs | Prisma.GameCreateArgs | Prisma.UserCreateArgs,
@@ -10,6 +9,9 @@ export const standard = defineScenario<
   user: {
     one: {
       data: {
+        firstName: 'String',
+        lastName: 'String',
+        roles: 'STUDENT' as const,
         email: 'String',
         hashedPassword: 'String',
         salt: 'String',
@@ -103,6 +105,9 @@ export const standard = defineScenario<
         phonemes: [49, 53],
         user: {
           create: {
+            firstName: 'String',
+            lastName: 'String',
+            roles: 'STUDENT' as const,
             email: 'String8936105',
             hashedPassword: 'String',
             salt: 'String',
@@ -133,6 +138,9 @@ export const standard = defineScenario<
         },
         user: {
           create: {
+            firstName: 'String',
+            lastName: 'String',
+            roles: 'STUDENT' as const,
             email: 'String7570650',
             hashedPassword: 'String',
             salt: 'String',

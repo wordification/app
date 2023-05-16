@@ -1,5 +1,3 @@
-import type { CreateGameInput, Game } from 'types/graphql'
-
 import {
   Form,
   FormError,
@@ -9,11 +7,13 @@ import {
   Submit,
   SelectField,
 } from '@redwoodjs/forms'
+
 import type { RWGqlError } from '@redwoodjs/forms'
+import type { CreateGameInput, Game } from 'types/graphql'
 
 type FormGame = NonNullable<Game>
 
-interface SortingGameSetupFormProps {
+type SortingGameSetupFormProps = {
   onSave: (data: CreateGameInput) => void
   error?: RWGqlError
   loading: boolean
@@ -90,7 +90,7 @@ const SortingGameSetupForm = (props: SortingGameSetupFormProps) => {
           ))}
         </SelectField>
       </div>
-      <FieldError name="phonemes" className="rw-field-error" />
+      <FieldError name="phonemes" className="text-error" />
 
       <div>
         <Submit disabled={props.loading} className="btn-primary btn">

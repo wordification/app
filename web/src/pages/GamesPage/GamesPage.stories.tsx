@@ -1,6 +1,6 @@
-import type { ComponentMeta } from '@storybook/react'
-
 import GamesPage from './GamesPage'
+
+import type { ComponentMeta } from '@storybook/react'
 
 export const generated = () => {
   return <GamesPage />

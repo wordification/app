@@ -1,8 +1,8 @@
-import type { ComponentMeta } from '@storybook/react'
-
 import AuthLayout from 'src/layouts/AuthLayout/AuthLayout'
 
 import LoginPage from './LoginPage'
+
+import type { ComponentMeta } from '@storybook/react'
 
 export const isolated = () => {
   return <LoginPage />
