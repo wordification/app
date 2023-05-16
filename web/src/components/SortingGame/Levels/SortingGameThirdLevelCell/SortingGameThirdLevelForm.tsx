@@ -1,5 +1,3 @@
-import type { GradeLevelThreeMutationVariables } from 'types/graphql'
-
 import {
   Form,
   FormError,
@@ -8,11 +6,13 @@ import {
   Submit,
   TextField,
 } from '@redwoodjs/forms'
+
 import type { RWGqlError } from '@redwoodjs/forms'
+import type { GradeLevelThreeMutationVariables } from 'types/graphql'
 
 type FormGame = { entry: GradeLevelThreeMutationVariables['entry'] }
 
-interface SortingGameThirdLevelFormProps {
+type SortingGameThirdLevelFormProps = {
   onSubmit: (data: FormGame) => void
   error?: RWGqlError
   loading: boolean

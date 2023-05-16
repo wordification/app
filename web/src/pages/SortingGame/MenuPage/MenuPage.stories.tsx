@@ -1,6 +1,6 @@
-import type { ComponentMeta } from '@storybook/react'
-
 import MenuPage from './MenuPage'
+
+import type { ComponentMeta } from '@storybook/react'
 
 export const generated = () => {
   return <MenuPage />

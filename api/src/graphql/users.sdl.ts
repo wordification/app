@@ -19,6 +19,12 @@ export const schema = gql`
     "The user's email address (must be unique)."
     email: String!
 
+    "The time at which the user was created."
+    createdAt: DateTime!
+
+    "The time at which the user was last updated."
+    updatedAt: DateTime!
+
     "The user's role."
     roles: Role!
 

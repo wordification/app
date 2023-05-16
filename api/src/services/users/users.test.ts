@@ -1,4 +1,5 @@
 import { users, user } from './users'
+
 import type { StandardScenario } from './users.scenarios'
 
 describe('users', () => {

@@ -1,12 +1,10 @@
-import type { Role } from '@prisma/client'
+import { createValidatorDirective } from '@redwoodjs/graphql-server'
 import gql from 'graphql-tag'
 
-import {
-  createValidatorDirective,
-  ValidatorDirectiveFunc,
-} from '@redwoodjs/graphql-server'
-
 import { requireAuth as applicationRequireAuth } from 'src/lib/auth'
+
+import type { Role } from '@prisma/client'
+import type { ValidatorDirectiveFunc } from '@redwoodjs/graphql-server'
 
 export const schema = gql`
   """

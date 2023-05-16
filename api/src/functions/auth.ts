@@ -1,13 +1,13 @@
-import type { User as PrismaUser } from '@prisma/client'
-import type { APIGatewayProxyEvent, Context } from 'aws-lambda'
-
 import {
   DbAuthHandler,
-  DbAuthHandlerOptions,
   PasswordValidationError,
 } from '@redwoodjs/auth-dbauth-api'
 
 import { db } from 'src/lib/db'
+
+import type { User as PrismaUser } from '@prisma/client'
+import type { DbAuthHandlerOptions } from '@redwoodjs/auth-dbauth-api'
+import type { APIGatewayProxyEvent, Context } from 'aws-lambda'
 
 export const handler = async (
   event: APIGatewayProxyEvent,

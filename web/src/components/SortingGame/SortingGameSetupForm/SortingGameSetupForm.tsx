@@ -1,7 +1,3 @@
-import { useState } from 'react'
-
-import type { CreateGameInput, Game, Scalars } from 'types/graphql'
-
 import {
   Form,
   FormError,
@@ -11,7 +7,10 @@ import {
   Submit,
   SelectField,
 } from '@redwoodjs/forms'
+import { useState } from 'react'
+
 import type { RWGqlError } from '@redwoodjs/forms'
+import type { CreateGameInput, Game, Scalars } from 'types/graphql'
 
 type FormGame = NonNullable<Game> & {
   /** Input fields to form the phonemes to test the user on. */
@@ -19,13 +18,13 @@ type FormGame = NonNullable<Game> & {
   second_phoneme?: Array<Scalars['Int']>
 }
 
-interface SortingGameSetupFormProps {
+type SortingGameSetupFormProps = {
   onSave: (data: CreateGameInput) => void
   error?: RWGqlError
   loading: boolean
 }
 
-interface Phoneme {
+type Phoneme = {
   id: number
   name: string
 }
@@ -118,7 +117,7 @@ const SortingGameSetupForm = (props: SortingGameSetupFormProps) => {
               validate: {
                 exactlyOne: (value) =>
                   value.length === 1 ||
-                  'Please select only one phoneme per box.',
+                  'Please select only one phoneme per box',
               },
             }}
             onChange={handlePhonemeOneChange}
@@ -140,7 +139,7 @@ const SortingGameSetupForm = (props: SortingGameSetupFormProps) => {
                 validate: {
                   exactlyOne: (value) =>
                     value.length === 1 ||
-                    'Please select only one phoneme per box.',
+                    'Please select only one phoneme per box',
                 },
               }}
               onChange={handlePhonemeTwoChange}
@@ -154,10 +153,11 @@ const SortingGameSetupForm = (props: SortingGameSetupFormProps) => {
           )}
         </div>
       </div>
-      <FieldError name="first_phoneme" className="rw-field-error" />
-      <FieldError name="second_phoneme" className="rw-field-error" />
-
-      <div className="mt-5">
+      <div className="flex flex-col">
+        <FieldError name="first_phoneme" className="text-error" />
+        <FieldError name="second_phoneme" className="text-error" />
+      </div>
+      <div className="mt-2">
         <Submit disabled={props.loading} className="btn-primary btn">
           Submit
         </Submit>

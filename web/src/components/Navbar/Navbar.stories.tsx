@@ -11,9 +11,9 @@
 //
 // See https://storybook.js.org/docs/react/writing-stories/args.
 
-import type { ComponentMeta } from '@storybook/react'
-
 import Navbar from './Navbar'
+
+import type { ComponentMeta } from '@storybook/react'
 
 export const generated = () => {
   return <Navbar items={[]} />

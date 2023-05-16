@@ -1,9 +1,9 @@
-import type { Role } from '@prisma/client'
-
-import type { Decoded } from '@redwoodjs/api'
 import { AuthenticationError, ForbiddenError } from '@redwoodjs/graphql-server'
 
 import { db } from './db'
+
+import type { Role } from '@prisma/client'
+import type { Decoded } from '@redwoodjs/api'
 
 /**
  * The session object sent in as the first argument to getCurrentUser() will

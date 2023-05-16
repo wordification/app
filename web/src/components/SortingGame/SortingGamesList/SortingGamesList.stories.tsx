@@ -12,9 +12,10 @@
 // See https://storybook.js.org/docs/react/writing-stories/args.
 
 import { Role } from '@prisma/client'
-import type { ComponentMeta, ComponentStory } from '@storybook/react'
 
 import SortingGamesList from './SortingGamesList'
+
+import type { ComponentMeta, ComponentStory } from '@storybook/react'
 
 export const studentView: ComponentStory<typeof SortingGamesList> = (args) => {
   return <SortingGamesList {...args} />

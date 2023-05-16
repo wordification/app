@@ -1,10 +1,10 @@
+import { Link, routes } from '@redwoodjs/router'
+
+import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import type {
   FindSortingGameFinishLevelQuery,
   FindSortingGameFinishLevelQueryVariables,
 } from 'types/graphql'
-
-import { Link, routes } from '@redwoodjs/router'
-import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
 export const QUERY = gql`
   query FindSortingGameFinishLevelQuery($gameId: Int!) {

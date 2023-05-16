@@ -1,7 +1,7 @@
+import { db } from 'src/lib/db'
+
 import type { Game } from '@prisma/client'
 import type { QueryResolvers, UserRelationResolvers } from 'types/graphql'
-
-import { db } from 'src/lib/db'
 
 export const users: QueryResolvers['users'] = () => {
   return db.user.findMany()

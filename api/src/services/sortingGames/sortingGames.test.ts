@@ -9,6 +9,7 @@ import {
   advanceLevel,
   selectNextWord,
 } from './sortingGames'
+
 import type { StandardScenario } from './sortingGames.scenarios'
 
 describe('sortingGames', () => {

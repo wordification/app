@@ -1,5 +1,3 @@
-import { useEffect, useRef, useState } from 'react'
-
 import {
   Form,
   Label,
@@ -9,7 +7,8 @@ import {
 } from '@redwoodjs/forms'
 import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
-import { toast, Toaster } from '@redwoodjs/web/toast'
+import { toast } from '@redwoodjs/web/toast'
+import { useEffect, useRef, useState } from 'react'
 
 import { useAuth } from 'src/auth'
 
@@ -61,59 +60,33 @@ const ResetPasswordPage = ({ resetToken }: { resetToken: string }) => {
     <>
       <MetaTags title="Reset Password" />
 
-      <main className="rw-main">
-        <Toaster toastOptions={{ className: 'rw-toast', duration: 6000 }} />
-        <div className="rw-scaffold rw-login-container">
-          <div className="rw-segment">
-            <header className="rw-segment-header">
-              <h2 className="rw-heading rw-heading-secondary">
-                Reset Password
-              </h2>
-            </header>
+      <Form onSubmit={onSubmit} className="card-body">
+        <h1 className="card-title">Reset Password</h1>
+        <div className="form-control">
+          <Label name="password" className="label">
+            <span className="label-text">New Password</span>
+          </Label>
+          <PasswordField
+            name="password"
+            className="input-bordered input"
+            errorClassName="input-bordered input input-error"
+            autoComplete="new-password"
+            placeholder="********"
+            disabled={!enabled}
+            ref={passwordRef}
+            validation={{
+              required: {
+                value: true,
+                message: 'New Password is required',
+              },
+            }}
+          />
 
-            <div className="rw-segment-main">
-              <div className="rw-form-wrapper">
-                <Form onSubmit={onSubmit} className="rw-form-wrapper">
-                  <div className="text-left">
-                    <Label
-                      name="password"
-                      className="rw-label"
-                      errorClassName="rw-label rw-label-error"
-                    >
-                      New Password
-                    </Label>
-                    <PasswordField
-                      name="password"
-                      autoComplete="new-password"
-                      className="rw-input"
-                      errorClassName="rw-input rw-input-error"
-                      disabled={!enabled}
-                      ref={passwordRef}
-                      validation={{
-                        required: {
-                          value: true,
-                          message: 'New Password is required',
-                        },
-                      }}
-                    />
-
-                    <FieldError name="password" className="rw-field-error" />
-                  </div>
-
-                  <div className="rw-button-group">
-                    <Submit
-                      className="rw-button rw-button-blue"
-                      disabled={!enabled}
-                    >
-                      Submit
-                    </Submit>
-                  </div>
-                </Form>
-              </div>
-            </div>
-          </div>
+          <FieldError name="password" className="text-sm text-error" />
         </div>
-      </main>
+
+        <Submit className="btn-primary btn my-2 block">Submit</Submit>
+      </Form>
     </>
   )
 }
