@@ -10,6 +10,9 @@ export const standard = defineScenario<
   user: {
     one: {
       data: {
+        firstName: 'String',
+        lastName: 'String',
+        roles: 'STUDENT' as const,
         email: 'String',
         hashedPassword: 'String',
         salt: 'String',
@@ -103,6 +106,9 @@ export const standard = defineScenario<
         phonemes: [49, 53],
         user: {
           create: {
+            firstName: 'String',
+            lastName: 'String',
+            roles: 'STUDENT' as const,
             email: 'String8936105',
             hashedPassword: 'String',
             salt: 'String',
@@ -133,6 +139,9 @@ export const standard = defineScenario<
         },
         user: {
           create: {
+            firstName: 'String',
+            lastName: 'String',
+            roles: 'STUDENT' as const,
             email: 'String7570650',
             hashedPassword: 'String',
             salt: 'String',
