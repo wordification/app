@@ -22,7 +22,7 @@ describe('requireAuth directive', () => {
     async (scenario: StandardScenario) => {
       const mockExecution = mockRedwoodDirective(requireAuth, {
         context: {
-          currentUser: scenario.user.one,
+          currentUser: scenario.user.test,
         },
       })
 

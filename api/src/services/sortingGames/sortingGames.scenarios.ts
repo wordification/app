@@ -1,5 +1,5 @@
 import type { Prisma } from '@prisma/client'
-import { Game, User, Word } from 'types/graphql'
+import type { Game, User, Word } from 'types/graphql'
 
 import type { ScenarioData } from '@redwoodjs/testing/api'
 

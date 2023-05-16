@@ -13,7 +13,7 @@ import type { RWGqlError } from '@redwoodjs/forms'
 
 type FormGame = NonNullable<Game>
 
-interface SortingGameSetupFormProps {
+type SortingGameSetupFormProps = {
   onSave: (data: CreateGameInput) => void
   error?: RWGqlError
   loading: boolean

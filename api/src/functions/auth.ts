@@ -1,9 +1,9 @@
 import type { User as PrismaUser } from '@prisma/client'
 import type { APIGatewayProxyEvent, Context } from 'aws-lambda'
 
+import type { DbAuthHandlerOptions } from '@redwoodjs/auth-dbauth-api'
 import {
   DbAuthHandler,
-  DbAuthHandlerOptions,
   PasswordValidationError,
 } from '@redwoodjs/auth-dbauth-api'
 

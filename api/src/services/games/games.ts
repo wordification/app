@@ -6,7 +6,8 @@ import type {
   AllMappedModels,
 } from 'types/graphql'
 
-import { MakeRelationsOptional, validate } from '@redwoodjs/api'
+import type { MakeRelationsOptional } from '@redwoodjs/api'
+import { validate } from '@redwoodjs/api'
 
 import { requireAuth } from 'src/lib/auth'
 import { db } from 'src/lib/db'

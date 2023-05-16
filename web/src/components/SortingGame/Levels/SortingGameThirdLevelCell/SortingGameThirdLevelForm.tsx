@@ -12,7 +12,7 @@ import type { RWGqlError } from '@redwoodjs/forms'
 
 type FormGame = { entry: GradeLevelThreeMutationVariables['entry'] }
 
-interface SortingGameThirdLevelFormProps {
+type SortingGameThirdLevelFormProps = {
   onSubmit: (data: FormGame) => void
   error?: RWGqlError
   loading: boolean
