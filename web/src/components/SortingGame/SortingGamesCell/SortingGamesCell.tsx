@@ -24,9 +24,9 @@ export const Loading = () => <div>Loading...</div>
 
 export const Empty = () => {
   return (
-    <div className="rw-text-center">
+    <div className="text-center">
       {'No games yet. '}
-      <Link to={routes.sortingGameSetup()} className="rw-link">
+      <Link to={routes.sortingGameSetup()} className="link-hover link">
         {'Start one?'}
       </Link>
     </div>
@@ -34,7 +34,7 @@ export const Empty = () => {
 }
 
 export const Failure = ({ error }: CellFailureProps) => (
-  <div className="rw-cell-error">{error?.message}</div>
+  <div className="text-error">{error?.message}</div>
 )
 
 export const Success = ({

@@ -90,7 +90,7 @@ const SortingGameSetupForm = (props: SortingGameSetupFormProps) => {
           ))}
         </SelectField>
       </div>
-      <FieldError name="phonemes" className="rw-field-error" />
+      <FieldError name="phonemes" className="text-error" />
 
       <div>
         <Submit disabled={props.loading} className="btn-primary btn">
