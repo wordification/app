@@ -2,10 +2,11 @@
 import { stdin as input, stdout as output } from 'node:process'
 import { createInterface } from 'node:readline/promises'
 
-import { Prisma, Role } from '@prisma/client'
+import { Role } from '@prisma/client'
+import { hashPassword } from '@redwoodjs/auth-dbauth-api'
 import { db } from 'api/src/lib/db'
 
-import { hashPassword } from '@redwoodjs/auth-dbauth-api'
+import type { Prisma } from '@prisma/client'
 
 type BaseUserInput = {
   password: string

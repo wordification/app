@@ -11,9 +11,9 @@
 //
 // See https://storybook.js.org/docs/react/writing-stories/args.
 
-import type { ComponentMeta, ComponentStory } from '@storybook/react'
-
 import GameCard from './GameCard'
+
+import type { ComponentMeta, ComponentStory } from '@storybook/react'
 
 export const generated: ComponentStory<typeof GameCard> = (args) => {
   return <GameCard {...args} />

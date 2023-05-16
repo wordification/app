@@ -1,7 +1,6 @@
+import { Toaster } from '@redwoodjs/web/toast'
 import { useRef } from 'react'
 import { useEffect } from 'react'
-
-import { Toaster } from '@redwoodjs/web/toast'
 
 const AuthLayout = ({ children }: { children?: React.ReactNode }) => {
   const emailRef = useRef<HTMLInputElement>(null)

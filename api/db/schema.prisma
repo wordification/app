@@ -25,6 +25,10 @@ model User {
   id                  Int       @id @default(autoincrement())
   /// The user's email address (must be unique).
   email               String    @unique
+  /// The time at which the user was created.
+  createdAt           DateTime  @default(now())
+  /// The time at which the user was last updated.
+  updatedAt           DateTime  @default(now()) @updatedAt
   /// The user's role.
   roles               Role      @default(STUDENT)
   /// The ID of the user's teacher if they are a student.
@@ -69,7 +73,7 @@ model Game {
   /// The time at which the game was created.
   createdAt DateTime @default(now())
   /// The time at which the game was last updated.
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
   /// The type of game.
   type      GameType
 
@@ -103,6 +107,10 @@ model Word {
   id              Int      @id @default(autoincrement())
   /// The word itself. Must be unique.
   word            String   @unique
+  /// The time at which the word was created.
+  createdAt       DateTime @default(now())
+  /// The time at which the word was last updated.
+  updatedAt       DateTime @default(now()) @updatedAt
   /// The grade level of the word.
   gradeLevel      Int
   /// The number of syllables in the word.

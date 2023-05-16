@@ -1,9 +1,8 @@
+import '@reach/skip-nav/styles.css'
 import { SkipNavLink, SkipNavContent } from '@redwoodjs/router'
 import { Toaster } from '@redwoodjs/web/toast'
 
 import Navbar from 'src/components/Navbar/Navbar'
-
-import '@reach/skip-nav/styles.css'
 
 type GlobalLayoutProps = {
   children?: React.ReactNode

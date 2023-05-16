@@ -1,19 +1,19 @@
+import { useMutation } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
 import { useState } from 'react'
 
+import GameCard from 'src/components/GameCard/GameCard'
+import { QUERY as LEVEL_QUERY } from 'src/components/SortingGame/SortingGameCell'
+
+import SortingGameThirdLevelForm from './SortingGameThirdLevelForm'
+
+import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import type {
   FindSortingGameThirdLevelQuery,
   FindSortingGameThirdLevelQueryVariables,
   GradeLevelThreeMutation,
   GradeLevelThreeMutationVariables,
 } from 'types/graphql'
-
-import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
-import { toast } from '@redwoodjs/web/toast'
-
-import GameCard from 'src/components/GameCard/GameCard'
-import { QUERY as LEVEL_QUERY } from 'src/components/SortingGame/SortingGameCell'
-
-import SortingGameThirdLevelForm from './SortingGameThirdLevelForm'
 
 export const beforeQuery = (props: FindSortingGameThirdLevelQueryVariables) => {
   return {

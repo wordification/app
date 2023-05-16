@@ -1,7 +1,8 @@
-import type { Prisma } from '@prisma/client'
 import { db } from 'api/src/lib/db'
 
 import wordData from './words.json'
+
+import type { Prisma } from '@prisma/client'
 
 const seedWords = () => {
   return db.word.createMany({

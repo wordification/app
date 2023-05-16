@@ -1,6 +1,5 @@
-import { useState, useMemo, useEffect } from 'react'
-
 import { Howl } from 'howler'
+import { useState, useMemo, useEffect } from 'react'
 
 const Player = ({
   files,

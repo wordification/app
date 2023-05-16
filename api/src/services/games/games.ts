@@ -1,17 +1,18 @@
+import { validate } from '@redwoodjs/api'
+
+import { requireAuth } from 'src/lib/auth'
+import { db } from 'src/lib/db'
+
+import { selectGameWords } from '../words/words'
+
 import type { User, Word } from '@prisma/client'
+import type { MakeRelationsOptional } from '@redwoodjs/api'
 import type {
   QueryResolvers,
   MutationResolvers,
   GameRelationResolvers,
   AllMappedModels,
 } from 'types/graphql'
-
-import { MakeRelationsOptional, validate } from '@redwoodjs/api'
-
-import { requireAuth } from 'src/lib/auth'
-import { db } from 'src/lib/db'
-
-import { selectGameWords } from '../words/words'
 
 export const games: QueryResolvers['games'] = ({ complete }) => {
   if (typeof complete !== 'boolean') {
