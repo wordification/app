@@ -9,6 +9,12 @@ export const schema = gql`
     "The word itself. Must be unique."
     word: String!
 
+    "The time at which the word was created."
+    createdAt: DateTime!
+
+    "The time at which the word was last updated."
+    updatedAt: DateTime!
+
     "The grade level of the word."
     gradeLevel: Int!
 
