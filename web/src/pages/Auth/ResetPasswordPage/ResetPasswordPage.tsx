@@ -13,8 +13,13 @@ import { useEffect, useRef, useState } from 'react'
 import { useAuth } from 'src/auth'
 
 const ResetPasswordPage = ({ resetToken }: { resetToken: string }) => {
-  const { isAuthenticated, reauthenticate, validateResetToken, resetPassword } =
-    useAuth()
+  const {
+    isAuthenticated,
+    reauthenticate,
+    validateResetToken,
+    resetPassword,
+    loading,
+  } = useAuth()
   const [enabled, setEnabled] = useState(true)
 
   useEffect(() => {
@@ -85,7 +90,9 @@ const ResetPasswordPage = ({ resetToken }: { resetToken: string }) => {
           <FieldError name="password" className="text-sm text-error" />
         </div>
 
-        <Submit className="btn-primary btn my-2 block">Submit</Submit>
+        <Submit className={`btn-primary btn my-2 ${loading ? 'loading' : ''}`}>
+          Submit
+        </Submit>
       </Form>
     </>
   )

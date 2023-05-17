@@ -15,7 +15,7 @@ import { useRef } from 'react'
 import { useAuth } from 'src/auth'
 
 const LoginPage = () => {
-  const { isAuthenticated, logIn } = useAuth()
+  const { isAuthenticated, logIn, loading } = useAuth()
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -89,7 +89,12 @@ const LoginPage = () => {
           <FieldError name="password" className="text-sm text-error" />
         </div>
 
-        <Submit className="btn-primary btn my-2 block">Login</Submit>
+        <Submit
+          className={`btn-primary btn my-2 ${loading ? 'loading' : ''}`}
+          disabled={loading}
+        >
+          Login
+        </Submit>
         <Link to={routes.forgotPassword()} className="link-hover link text-sm">
           Forgot Password?
         </Link>
