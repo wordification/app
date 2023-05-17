@@ -108,20 +108,18 @@ const SortingGameSetupForm = (props: SortingGameSetupFormProps) => {
         <div className="flex">
           <SelectField
             name="first_phoneme"
-            className={`mr-2 ${
-              selectedPhonemesOne.length !== 0 ? 'w-full' : 'w-1/2'
-            }`}
-            multiple={true}
+            className="select-bordered select mr-2 w-full"
             validation={{
               required: true,
               validate: {
-                exactlyOne: (value) =>
-                  value.length === 1 ||
-                  'Please select only one phoneme per box',
+                matchesInitialValue: (value) => {
+                  return value !== 'Select a Phoneme'
+                },
               },
             }}
             onChange={handlePhonemeOneChange}
           >
+            <option>Select a Phoneme</option>
             {PHONEME_OPTIONS.map((p) => (
               <option key={p.id} value={p.id}>
                 {p.name}
@@ -132,18 +130,18 @@ const SortingGameSetupForm = (props: SortingGameSetupFormProps) => {
           {selectedPhonemesOne.length !== 0 && (
             <SelectField
               name="second_phoneme"
-              className="ml-2 w-full"
-              multiple
+              className="select-bordered select ml-2 w-full"
               validation={{
                 required: true,
                 validate: {
-                  exactlyOne: (value) =>
-                    value.length === 1 ||
-                    'Please select only one phoneme per box',
+                  matchesInitialValue: (value) => {
+                    return value !== 'Select a Phoneme'
+                  },
                 },
               }}
               onChange={handlePhonemeTwoChange}
             >
+              <option>Select a Phoneme</option>
               {availableOptions.map((p) => (
                 <option key={p.id} value={p.id}>
                   {p.name}
