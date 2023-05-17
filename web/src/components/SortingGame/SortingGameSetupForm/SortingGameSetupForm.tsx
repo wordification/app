@@ -37,34 +37,27 @@ const PHONEME_OPTIONS = [
 ] as const
 
 const SortingGameSetupForm = (props: SortingGameSetupFormProps) => {
-  const [selectedPhonemesOne, setSelectedPhonemesOne] = useState<number[]>([])
-  const [selectedPhonemesTwo, setSelectedPhonemesTwo] = useState<number[]>([])
   const [availableOptions, setAvailableOptions] =
     useState<readonly Phoneme[]>(PHONEME_OPTIONS)
 
   const handlePhonemeOneChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = parseInt(e.target.value)
-    setSelectedPhonemesOne([selectedValue])
-
     const filteredOptions = PHONEME_OPTIONS.filter(
       (p) => p.id !== selectedValue
     )
     setAvailableOptions(filteredOptions)
   }
 
-  const handlePhonemeTwoChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedValue = parseInt(e.target.value)
-    setSelectedPhonemesTwo([selectedValue])
-  }
-
   const onSubmit = (data: FormGame) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { first_phoneme, second_phoneme, ...restData } = data
-    const phonemes = [...selectedPhonemesOne, ...selectedPhonemesTwo]
+    const { first_phoneme = 0, second_phoneme = 0, ...restData } = data
+    const phonemes: number[] = [
+      ...(Array.isArray(first_phoneme) ? first_phoneme : [first_phoneme]),
+      ...(Array.isArray(second_phoneme) ? second_phoneme : [second_phoneme]),
+    ].filter((p) => !!p)
 
     props.onSave({
       ...restData,
-      phonemes: phonemes.filter((p) => !!p),
+      phonemes,
     })
   }
 
@@ -111,6 +104,7 @@ const SortingGameSetupForm = (props: SortingGameSetupFormProps) => {
             className="select-bordered select mr-2 w-full"
             validation={{
               required: true,
+              valueAsNumber: true,
               validate: {
                 matchesInitialValue: (value) => {
                   return value !== 'Select a Phoneme'
@@ -119,36 +113,37 @@ const SortingGameSetupForm = (props: SortingGameSetupFormProps) => {
             }}
             onChange={handlePhonemeOneChange}
           >
-            <option>Select a Phoneme</option>
+            <option disabled selected>
+              Select a Phoneme
+            </option>
             {PHONEME_OPTIONS.map((p) => (
               <option key={p.id} value={p.id}>
                 {p.name}
               </option>
             ))}
           </SelectField>
-
-          {selectedPhonemesOne.length !== 0 && (
-            <SelectField
-              name="second_phoneme"
-              className="select-bordered select ml-2 w-full"
-              validation={{
-                required: true,
-                validate: {
-                  matchesInitialValue: (value) => {
-                    return value !== 'Select a Phoneme'
-                  },
+          <SelectField
+            name="second_phoneme"
+            className="select-bordered select ml-2 w-full"
+            validation={{
+              required: true,
+              valueAsNumber: true,
+              validate: {
+                matchesInitialValue: (value) => {
+                  return value !== 'Select a Phoneme'
                 },
-              }}
-              onChange={handlePhonemeTwoChange}
-            >
-              <option>Select a Phoneme</option>
-              {availableOptions.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.name}
-                </option>
-              ))}
-            </SelectField>
-          )}
+              },
+            }}
+          >
+            <option disabled selected>
+              Select a Phoneme
+            </option>
+            {availableOptions.map((p) => (
+              <option key={p.id} value={p.id}>
+                {p.name}
+              </option>
+            ))}
+          </SelectField>
         </div>
       </div>
       <div className="flex flex-col">
