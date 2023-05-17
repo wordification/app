@@ -12,7 +12,7 @@ import { useState } from 'react'
 import type { RWGqlError } from '@redwoodjs/forms'
 import type { CreateGameInput, Game, Scalars } from 'types/graphql'
 
-type FormGame = NonNullable<Game> & {
+type FormGame = NonNullable<Omit<Game, 'phonemes'>> & {
   /** Input fields to form the phonemes to test the user on. */
   first_phoneme?: Array<Scalars['Int']>
   second_phoneme?: Array<Scalars['Int']>
