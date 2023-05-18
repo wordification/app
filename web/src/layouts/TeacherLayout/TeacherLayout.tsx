@@ -14,6 +14,10 @@ const MENU_ITEMS = [
     label: 'Dashboard',
   },
   {
+    to: '/students',
+    label: 'My Class',
+  },
+  {
     type: 'signout',
   },
 ] as const

@@ -42,6 +42,7 @@ const Routes = () => {
       <Private unauthenticated="login" roles="TEACHER">
         <Set wrap={TeacherLayout}>
           <Route path="/dashboard" page={DashboardPage} name="dashboard" />
+          <Route path="/students" page={StudentsPage} name="students" />
         </Set>
       </Private>
       <Route notfound page={NotFoundPage} />

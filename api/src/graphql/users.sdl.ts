@@ -68,6 +68,9 @@ export const schema = gql`
 
     "Fetch a user by ID. Can return null if the user doesn't exist."
     user(id: Int!): User @requireAuth
+
+    "Fetch the currently logged in teacher."
+    teacher: User @requireAuth(roles: ["TEACHER"])
   }
 
   """
