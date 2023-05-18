@@ -14,14 +14,6 @@ const MENU_ITEMS = [
     label: 'Dashboard',
   },
   {
-    to: '/about',
-    label: 'About',
-  },
-  {
-    to: '/games',
-    label: 'Games',
-  },
-  {
     type: 'signout',
   },
 ] as const

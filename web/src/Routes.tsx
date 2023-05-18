@@ -23,13 +23,7 @@ const Routes = () => {
         <Route path="/forgot-password" page={AuthForgotPasswordPage} name="forgotPassword" />
         <Route path="/reset-password" page={AuthResetPasswordPage} name="resetPassword" />
       </Set>
-      <Private unauthenticated="login" roles="TEACHER">
-        <Set wrap={TeacherLayout}>
-          <Route path="/dashboard" page={DashboardPage} name="dashboard" />
-          <Route path="/" page={HomePage} name="home" />
-        </Set>
-      </Private>
-      <Private unauthenticated="login" roles="STUDENT">
+      <Private unauthenticated="login">
         <Set wrap={GlobalLayout}>
           <Set>
             <Route path="/games/sorting/{id:Int}" page={SortingGameIndividualGamePage} name="sortingGameIndividual" />
@@ -43,6 +37,11 @@ const Routes = () => {
           <Route path="/profile" page={ProfilePage} name="profile" />
           <Route path="/about" page={AboutPage} name="about" />
           <Route path="/" page={HomePage} name="home" />
+        </Set>
+      </Private>
+      <Private unauthenticated="login" roles="TEACHER">
+        <Set wrap={TeacherLayout}>
+          <Route path="/dashboard" page={DashboardPage} name="dashboard" />
         </Set>
       </Private>
       <Route notfound page={NotFoundPage} />
