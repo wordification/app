@@ -61,14 +61,16 @@ export const selectNextWord = async (gameId: number) => {
 
 /**
  * Advances to the next level of a sorting game. These are the levels:
+ *
  * 0. Initial level (not currently used)
  * 1. Phoneme level (click long I or long O, etc)
  * 2. Grapheme level (click iCe, igh, y, etc)
  * 3. Word level (type the word)
  * 4. Complete (game is over)
+ *
  * @param gameId The ID of the game to advance
  * @param currentLevel The current level of the game
- * @returns The updated game or undefined if the game is already complete
+ * @returns The updated game or the current game if the game is already complete
  */
 export const advanceLevel = (gameId: number, currentLevel: number) => {
   if (currentLevel >= 4) {
