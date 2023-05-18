@@ -176,5 +176,5 @@ export type StandardScenario = ScenarioData<
   'game',
   'lastWord' | 'notLastWord' | 'lastLevel'
 > &
-  ScenarioData<User, 'user'> &
+  ScenarioData<User, 'user', 'one'> &
   ScenarioData<Word, 'word', 'sight' | 'snow' | 'show' | 'wife'>
