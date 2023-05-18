@@ -13,6 +13,8 @@ import { useAuth } from 'src/auth'
 import AuthLayout from 'src/layouts/AuthLayout/AuthLayout'
 import GlobalLayout from 'src/layouts/GlobalLayout/GlobalLayout'
 
+import TeacherLayout from './layouts/TeacherLayout/TeacherLayout'
+
 const Routes = () => {
   return (
     <Router useAuth={useAuth}>
@@ -21,7 +23,13 @@ const Routes = () => {
         <Route path="/forgot-password" page={AuthForgotPasswordPage} name="forgotPassword" />
         <Route path="/reset-password" page={AuthResetPasswordPage} name="resetPassword" />
       </Set>
-      <Private unauthenticated="login">
+      <Private unauthenticated="login" roles="TEACHER">
+        <Set wrap={TeacherLayout}>
+          <Route path="/dashboard" page={DashboardPage} name="dashboard" />
+          <Route path="/" page={HomePage} name="home" />
+        </Set>
+      </Private>
+      <Private unauthenticated="login" roles="STUDENT">
         <Set wrap={GlobalLayout}>
           <Set>
             <Route path="/games/sorting/{id:Int}" page={SortingGameIndividualGamePage} name="sortingGameIndividual" />
