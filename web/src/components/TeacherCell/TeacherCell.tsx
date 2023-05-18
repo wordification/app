@@ -25,9 +25,8 @@ export const Failure = ({ error }: CellFailureProps) => (
 export const Success = ({ teacher }: CellSuccessProps<GetTeacher>) => {
   return (
     <>
-      {teacher.students?.map((student, index) => (
-        <tr key={index}>
-          <th>{index + 1}</th>
+      {teacher.students?.map((student) => (
+        <tr key={student.id}>
           <td>{student.id}</td>
           <td>{student.firstName}</td>
           <td>{student.lastName}</td>

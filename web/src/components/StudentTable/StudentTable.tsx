@@ -7,7 +7,6 @@ const StudentTable = () => {
         {/* head */}
         <thead>
           <tr>
-            <th></th>
             <th>ID#</th>
             <th>First Name</th>
             <th>Last Name</th>
