@@ -34,6 +34,7 @@ describe('matchingGames', () => {
         )
 
         expect(updatedGame.level).toEqual(2)
+        expect(updatedGame.complete).toEqual(true)
 
         expect(updatedGame.incompleteWords).toHaveLength(0)
       }
