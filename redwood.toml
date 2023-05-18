@@ -16,3 +16,9 @@
   open = false
 [notifications]
   versionUpdates = ["latest"]
+
+[experimental.studio]
+  enabled = true
+[experimental.studio.graphiql.authImpersonation]
+  authProvider = "dbAuth"
+  userId = "1"
