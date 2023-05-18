@@ -1,3 +1,5 @@
+import { GameType } from '@prisma/client'
+
 import { db } from 'src/lib/db'
 
 import {
@@ -86,14 +88,37 @@ export const advanceLevel = (gameId: number, currentLevel: number) => {
   })
 }
 
+/**
+ * Finds a sorting game by ID and validates that it exists and is a sorting
+ * game.
+ *
+ * @param gameId The ID of the game to find
+ * @returns The game if it exists and is a sorting game, and its current word
+ * @throws An error if the game is not found
+ * @throws An error if the game is not a sorting game
+ */
+const findSortingGame = async (gameId: number) => {
+  const game = await db.game.findUnique({
+    where: { id: gameId },
+    include: {
+      currentWord: true,
+    },
+  })
+
+  if (!game) {
+    throw new Error('Game not found')
+  }
+
+  if (game.type !== GameType.SORTING) {
+    throw new Error('Game is not a sorting game')
+  }
+
+  return game
+}
+
 export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] =
   async ({ gameId }) => {
-    const game = await db.game.findUnique({
-      where: { id: gameId },
-      include: {
-        currentWord: true,
-      },
-    })
+    const game = await findSortingGame(gameId)
 
     const currentWord = game?.currentWord
 
@@ -150,12 +175,7 @@ export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] =
 
 export const sortingGameSecondLevel: QueryResolvers['sortingGameSecondLevel'] =
   async ({ gameId }) => {
-    const game = await db.game.findUnique({
-      where: { id: gameId },
-      include: {
-        currentWord: true,
-      },
-    })
+    const game = await findSortingGame(gameId)
 
     const currentWord = game?.currentWord
 
@@ -179,12 +199,7 @@ export const sortingGameSecondLevel: QueryResolvers['sortingGameSecondLevel'] =
 
 export const sortingGameThirdLevel: QueryResolvers['sortingGameThirdLevel'] =
   async ({ gameId }) => {
-    const game = await db.game.findUnique({
-      where: { id: gameId },
-      include: {
-        currentWord: true,
-      },
-    })
+    const game = await findSortingGame(gameId)
 
     const currentWord = game?.currentWord
 
@@ -205,12 +220,7 @@ export const sortingGameThirdLevel: QueryResolvers['sortingGameThirdLevel'] =
 
 export const sortingGameGradeFirstLevel: MutationResolvers['sortingGameGradeFirstLevel'] =
   async ({ gameId, phoneme }) => {
-    const game = await db.game.findUnique({
-      where: { id: gameId },
-      include: {
-        currentWord: true,
-      },
-    })
+    const game = await findSortingGame(gameId)
 
     if (!game?.currentWord) {
       throw new Error('Current word not selected')
@@ -235,18 +245,9 @@ export const sortingGameGradeFirstLevel: MutationResolvers['sortingGameGradeFirs
 
 export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSecondLevel'] =
   async ({ gameId, grapheme }) => {
-    const game = await db.game.findUnique({
-      where: { id: gameId },
-      include: {
-        currentWord: true,
-      },
-    })
+    const game = await findSortingGame(gameId)
 
-    if (game === null) {
-      throw new Error('Game not found')
-    }
-
-    if (game.currentWord === null) {
+    if (!game?.currentWord) {
       throw new Error('Current word not selected')
     }
 
@@ -269,18 +270,9 @@ export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSec
 
 export const sortingGameGradeThirdLevel: MutationResolvers['sortingGameGradeThirdLevel'] =
   async ({ gameId, entry }) => {
-    const game = await db.game.findUnique({
-      where: { id: gameId },
-      include: {
-        currentWord: true,
-      },
-    })
+    const game = await findSortingGame(gameId)
 
-    if (game === null) {
-      throw new Error('Game not found')
-    }
-
-    if (game.currentWord === null) {
+    if (!game?.currentWord) {
       throw new Error('Current word not selected')
     }
 
