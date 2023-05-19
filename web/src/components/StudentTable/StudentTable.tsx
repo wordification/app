@@ -7,11 +7,12 @@ const StudentTable = () => {
         {/* head */}
         <thead>
           <tr>
+            <th></th>
             <th>ID#</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
-            <th>View Games</th>
+            <th>&nbsp;</th>
           </tr>
         </thead>
         <tbody>
