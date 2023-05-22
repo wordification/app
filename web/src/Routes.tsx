@@ -13,6 +13,8 @@ import { useAuth } from 'src/auth'
 import AuthLayout from 'src/layouts/AuthLayout/AuthLayout'
 import GlobalLayout from 'src/layouts/GlobalLayout/GlobalLayout'
 
+import AdministratorLayout from './layouts/AdministratorLayout/AdministratorLayout'
+
 const Routes = () => {
   return (
     <Router useAuth={useAuth}>
@@ -35,6 +37,11 @@ const Routes = () => {
           <Route path="/profile" page={ProfilePage} name="profile" />
           <Route path="/about" page={AboutPage} name="about" />
           <Route path="/" page={HomePage} name="home" />
+        </Set>
+      </Private>
+      <Private unauthenticated="login" roles="ADMINISTRATOR">
+        <Set wrap={AdministratorLayout}>
+          <Route path="/admin-dashboard" page={AdminDashboardPage} name="adminDashboard" />
         </Set>
       </Private>
       <Route notfound page={NotFoundPage} />
