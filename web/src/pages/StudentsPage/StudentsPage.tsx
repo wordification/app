@@ -1,6 +1,6 @@
 import { MetaTags } from '@redwoodjs/web'
 
-import StudentTable from 'src/components/StudentTable/StudentTable'
+import TeacherCell from 'src/components/TeacherCell'
 
 const StudentsPage = () => {
   return (
@@ -9,7 +9,7 @@ const StudentsPage = () => {
 
       <h1 className="text-2xl font-bold">My Class</h1>
 
-      <StudentTable />
+      <TeacherCell />
     </>
   )
 }

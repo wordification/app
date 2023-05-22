@@ -27,32 +27,39 @@ export const Failure = ({ error }: CellFailureProps) => (
 export const Success = ({ teacher }: CellSuccessProps<GetTeacher>) => {
   return (
     <>
-      {teacher.students?.map((student) => (
-        <tr key={student.id}>
-          <td>
-            <Link
-              to={routes.studentProfile({ id: student.id })}
-              title={'Student Profile ' + student.id}
-              className="btn-outline btn-primary btn-xs btn"
-            >
-              View Student
-            </Link>
-          </td>
-          <td>{student.id}</td>
-          <td>{student.firstName}</td>
-          <td>{student.lastName}</td>
-          <td>{student.email}</td>
-          <td>
-            {/* <Link
-              to={routes.sortingGameIndividual({ id: student.id })}
-              title={'View games ' + student.id}
-              className="btn-outline btn-primary btn-xs btn"
-            >
-              View Games
-            </Link> */}
-          </td>
-        </tr>
-      ))}
+      <div className="overflow-x-auto">
+        <table className="table-zebra table w-full">
+          {/* head */}
+          <thead>
+            <tr>
+              <th></th>
+              <th>ID#</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            {teacher.students?.map((student) => (
+              <tr key={student.id}>
+                <td>
+                  <Link
+                    to={routes.studentProfile({ id: student.id })}
+                    title={'Student Profile ' + student.id}
+                    className="btn-outline btn-primary btn-xs btn"
+                  >
+                    View Student
+                  </Link>
+                </td>
+                <td>{student.id}</td>
+                <td>{student.firstName}</td>
+                <td>{student.lastName}</td>
+                <td>{student.email}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </>
   )
 }
