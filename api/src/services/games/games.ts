@@ -43,6 +43,15 @@ export const game: QueryResolvers['game'] = ({ id }) => {
   })
 }
 
+export const userGames: QueryResolvers['userGames'] = ({ userId }) => {
+  return db.game.findMany({
+    where: { userId },
+    orderBy: {
+      updatedAt: 'desc',
+    },
+  })
+}
+
 export const createGame: MutationResolvers['createGame'] = async ({
   input,
 }) => {

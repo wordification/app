@@ -43,6 +43,7 @@ const Routes = () => {
         <Set wrap={TeacherLayout}>
           <Route path="/dashboard" page={DashboardPage} name="dashboard" />
           <Set>
+            <Route path="/students/{id:Int}/games" page={StudentGamesPage} name="studentGames" />
             <Route path="/students/{id:Int}" page={StudentProfilePage} name="studentProfile" />
             <Route path="/students" page={StudentsPage} name="students" />
           </Set>
