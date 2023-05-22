@@ -19,12 +19,6 @@ export const schema = gql`
     "The user's email address (must be unique)."
     email: String!
 
-    "The time at which the user was created."
-    createdAt: DateTime!
-
-    "The time at which the user was last updated."
-    updatedAt: DateTime!
-
     "The user's role."
     roles: Role!
 
@@ -37,18 +31,6 @@ export const schema = gql`
     "The user's last name."
     lastName: String!
 
-    "The user's hashed password."
-    hashedPassword: String!
-
-    "The salt used to hash the user's password."
-    salt: String!
-
-    "A reset token for the user's password if generated."
-    resetToken: String
-
-    "The time at which the reset token expires."
-    resetTokenExpiresAt: DateTime
-
     "All of the user's games."
     games: [Game!]!
 
@@ -57,6 +39,26 @@ export const schema = gql`
 
     "All of the user's students if they are a teacher."
     students: [User!]
+
+    # Avoid exposing sensitive information like passwords or tokens.
+
+    # "The time at which the user was created."
+    # createdAt: DateTime!
+
+    # "The time at which the user was last updated."
+    # updatedAt: DateTime!
+
+    # "The user's hashed password."
+    # hashedPassword: String!
+
+    # "The salt used to hash the user's password."
+    # salt: String!
+
+    # "A reset token for the user's password if generated."
+    # resetToken: String
+
+    # "The time at which the reset token expires."
+    # resetTokenExpiresAt: DateTime
   }
 
   """
@@ -65,6 +67,9 @@ export const schema = gql`
   type Query {
     "Fetch all users."
     users: [User!]! @requireAuth
+
+    "Fetch the students of the current teacher."
+    students: [User!]! @requireAuth(roles: ["TEACHER"])
 
     "Fetch a user by ID. Can return null if the user doesn't exist."
     user(id: Int!): User @requireAuth
