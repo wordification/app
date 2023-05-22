@@ -14,6 +14,8 @@ enum Role {
   STUDENT
   /// A user who can manage students' data.
   TEACHER
+  /// A user who can create users and manage users' data.
+  ADMINISTRATOR
 }
 
 /// A user.
@@ -30,7 +32,7 @@ model User {
   /// The user's role.
   roles               Role      @default(STUDENT)
   /// The ID of the user's teacher if they are a student.
-  teacherId           Int?      @unique
+  teacherId           Int?
   /// The user's first name.
   firstName           String
   /// The user's last name.
