@@ -23,9 +23,9 @@ export const QUERY = gql`
   }
 `
 
-export const Loading = () => <div>Loading...</div>
+export const Loading = () => <div>Loading student&apos;s games...</div>
 
-export const Empty = () => <div>Empty</div>
+export const Empty = () => <div>This student has no games.</div>
 
 export const Failure = ({
   error,
