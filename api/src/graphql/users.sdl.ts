@@ -136,6 +136,18 @@ export const schema = gql`
   Input for updating a user.
   """
   input UpdateUserInput {
+    "The user's first name."
+    firstName: String
+
+    "The user's last name."
+    lastName: String
+
+    "The user's role."
+    roles: Role
+
+    "The ID of the user's teacher if they are a student."
+    teacherId: Int
+
     "The user's email address (must be unique)."
     email: String
 
@@ -162,5 +174,8 @@ export const schema = gql`
 
     "Deletes an existing user."
     deleteUser(id: Int!): User! @requireAuth(roles: ["ADMINISTRATOR"])
+
+    updateUser(id: Int!, input: UpdateUserInput!): User!
+      @requireAuth(roles: ["ADMINISTRATOR"])
   }
 `
