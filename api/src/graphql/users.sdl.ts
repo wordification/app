@@ -68,14 +68,11 @@ export const schema = gql`
     "Fetch all users."
     users: [User!]! @requireAuth
 
-    "Fetch the students of the current teacher."
-    students: [User!]! @requireAuth(roles: ["TEACHER"])
-
     "Fetch a user by ID. Can return null if the user doesn't exist."
     user(id: Int!): User @requireAuth
 
-    "Fetch the currently logged in teacher."
-    teacher: User @requireAuth(roles: ["TEACHER"])
+    "Fetch the currently logged in teacher's students."
+    currentStudents: [User!] @requireAuth(roles: ["TEACHER"])
   }
 
   """

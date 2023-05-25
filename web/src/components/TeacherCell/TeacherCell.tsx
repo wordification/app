@@ -1,17 +1,15 @@
 import { Link, routes } from '@redwoodjs/router'
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
-import type { GetTeacher } from 'types/graphql'
+import type { GetCurrentStudents } from 'types/graphql'
 
 export const QUERY = gql`
-  query GetTeacher {
-    teacher {
-      students {
-        id
-        firstName
-        lastName
-        email
-      }
+  query GetCurrentStudents {
+    currentStudents {
+      id
+      firstName
+      lastName
+      email
     }
   }
 `
@@ -24,7 +22,9 @@ export const Failure = ({ error }: CellFailureProps) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ teacher }: CellSuccessProps<GetTeacher>) => {
+export const Success = ({
+  currentStudents,
+}: CellSuccessProps<GetCurrentStudents>) => {
   return (
     <>
       <div className="overflow-x-auto">
@@ -40,7 +40,7 @@ export const Success = ({ teacher }: CellSuccessProps<GetTeacher>) => {
             </tr>
           </thead>
           <tbody>
-            {teacher.students?.map((student) => (
+            {currentStudents?.map((student) => (
               <tr key={student.id}>
                 <td>
                   <Link
