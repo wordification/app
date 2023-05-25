@@ -1,7 +1,14 @@
+import { validate } from '@redwoodjs/api'
+import { hashPassword } from '@redwoodjs/auth-dbauth-api'
+
 import { db } from 'src/lib/db'
 
 import type { Game } from '@prisma/client'
-import type { QueryResolvers, UserRelationResolvers } from 'types/graphql'
+import type {
+  MutationResolvers,
+  QueryResolvers,
+  UserRelationResolvers,
+} from 'types/graphql'
 
 export const users: QueryResolvers['users'] = () => {
   return db.user.findMany()
@@ -10,6 +17,50 @@ export const users: QueryResolvers['users'] = () => {
 export const user: QueryResolvers['user'] = ({ id }) => {
   return db.user.findUnique({
     where: { id },
+  })
+}
+
+export const createUser: MutationResolvers['createUser'] = async ({
+  input,
+}) => {
+  const { password, ...rest } = input
+  const [hashedPassword, salt] = hashPassword(password)
+  const userData = { ...rest, hashedPassword, salt }
+
+  validate(userData.firstName, 'first name', {
+    length: { min: 1, max: 255 },
+  })
+
+  validate(input.lastName, 'last name', {
+    length: { min: 1, max: 255 },
+  })
+
+  validate(input.roles, 'user role', {
+    inclusion: {
+      in: ['STUDENT', 'TEACHER', 'ADMINISTRATOR'],
+      message: 'Role of new user must be student, teacher, or administrator.',
+    },
+  })
+
+  validate(input.teacherId, 'teacher id', {
+    numericality: {
+      positive: true,
+      integer: true,
+      message: 'Teacher ID must be a positive integer',
+    },
+  })
+
+  const findUser = await db.user.findUnique({
+    where: { id: userData.teacherId?.valueOf() },
+  })
+  if (findUser === null || findUser?.roles !== 'TEACHER') {
+    throw new Error(
+      'Please select a valid teacher ID. This teacher does not exist.'
+    )
+  }
+
+  return db.user.create({
+    data: userData,
   })
 }
 

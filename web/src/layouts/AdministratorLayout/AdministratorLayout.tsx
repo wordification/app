@@ -9,8 +9,12 @@ type AdministratorLayoutProps = {
 
 const MENU_ITEMS = [
   {
-    to: '/admin-dashboard',
+    to: '/admin',
     label: 'Dashboard',
+  },
+  {
+    to: '/admin/create-user',
+    label: 'Add User',
   },
   {
     type: 'signout',

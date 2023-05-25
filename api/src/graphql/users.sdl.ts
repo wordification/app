@@ -7,6 +7,8 @@ export const schema = gql`
     STUDENT
     "A user who can manage students' data."
     TEACHER
+    "A user who can create users and manage users' data."
+    ADMINISTRATOR
   }
 
   """
@@ -79,6 +81,18 @@ export const schema = gql`
   Input for creating a new user.
   """
   input CreateUserInput {
+    "The user's first name."
+    firstName: String!
+
+    "The user's last name."
+    lastName: String!
+
+    "The user's role."
+    roles: Role!
+
+    "The ID of the user's teacher if they are a student."
+    teacherId: Int
+
     "The user's email address (must be unique)."
     email: String!
 
@@ -93,6 +107,29 @@ export const schema = gql`
 
     "The time at which the reset token expires."
     resetTokenExpiresAt: DateTime
+  }
+
+  """
+  Base input for creating a new user.
+  """
+  input BaseUserInput {
+    "The user's first name."
+    firstName: String!
+
+    "The user's last name."
+    lastName: String!
+
+    "The user's role."
+    roles: Role!
+
+    "The ID of the user's teacher if they are a student."
+    teacherId: Int
+
+    "The user's email address (must be unique)."
+    email: String!
+
+    "The user's password."
+    password: String!
   }
 
   """
@@ -113,5 +150,10 @@ export const schema = gql`
 
     "The time at which the reset token expires."
     resetTokenExpiresAt: DateTime
+  }
+
+  type Mutation {
+    createUser(input: BaseUserInput!): User!
+      @requireAuth(roles: ["ADMINISTRATOR"])
   }
 `
