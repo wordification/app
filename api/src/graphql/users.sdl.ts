@@ -152,8 +152,15 @@ export const schema = gql`
     resetTokenExpiresAt: DateTime
   }
 
+  """
+  Mutations for users.
+  """
   type Mutation {
+    "Creates a new user."
     createUser(input: BaseUserInput!): User!
       @requireAuth(roles: ["ADMINISTRATOR"])
+
+    "Deletes an existing user."
+    deleteUser(id: Int!): User! @requireAuth(roles: ["ADMINISTRATOR"])
   }
 `

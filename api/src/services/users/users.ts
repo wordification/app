@@ -1,6 +1,7 @@
 import { validate } from '@redwoodjs/api'
 import { hashPassword } from '@redwoodjs/auth-dbauth-api'
 
+import { requireAuth } from 'src/lib/auth'
 import { db } from 'src/lib/db'
 
 import type { Game } from '@prisma/client'
@@ -61,6 +62,15 @@ export const createUser: MutationResolvers['createUser'] = async ({
 
   return db.user.create({
     data: userData,
+  })
+}
+
+export const deleteUser: MutationResolvers['deleteUser'] = ({ id }) => {
+  requireAuth({
+    roles: 'ADMINISTRATOR',
+  })
+  return db.user.delete({
+    where: { id },
   })
 }
 
