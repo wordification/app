@@ -2,7 +2,7 @@ import { MetaTags } from '@redwoodjs/web'
 
 import TeacherCell from 'src/components/TeacherCell'
 
-const StudentsPage = () => {
+const DashboardStudentsPage = () => {
   return (
     <>
       <MetaTags title="Students" description="Students page" />
@@ -14,4 +14,4 @@ const StudentsPage = () => {
   )
 }
 
-export default StudentsPage
+export default DashboardStudentsPage

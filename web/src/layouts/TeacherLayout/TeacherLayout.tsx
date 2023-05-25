@@ -14,7 +14,7 @@ const MENU_ITEMS = [
     label: 'Dashboard',
   },
   {
-    to: '/students',
+    to: '/dashboard/students',
     label: 'My Class',
   },
   {

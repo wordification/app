@@ -7,7 +7,7 @@ type StudentGamesPageProps = {
   complete?: string
 }
 
-const StudentGamesPage = ({ id, complete }: StudentGamesPageProps) => {
+const DashboardStudentGamesPage = ({ id, complete }: StudentGamesPageProps) => {
   const passComplete =
     complete === 'true' ? true : complete === 'false' ? false : undefined
   return (
@@ -19,4 +19,4 @@ const StudentGamesPage = ({ id, complete }: StudentGamesPageProps) => {
   )
 }
 
-export default StudentGamesPage
+export default DashboardStudentGamesPage

@@ -6,7 +6,7 @@ type StudentProfilePageProps = {
   id: number
 }
 
-const StudentProfilePage = ({ id }: StudentProfilePageProps) => {
+const DashboardStudentProfilePage = ({ id }: StudentProfilePageProps) => {
   return (
     <>
       <MetaTags title="StudentProfile" description="StudentProfile page" />
@@ -16,4 +16,4 @@ const StudentProfilePage = ({ id }: StudentProfilePageProps) => {
   )
 }
 
-export default StudentProfilePage
+export default DashboardStudentProfilePage
