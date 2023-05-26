@@ -1,4 +1,4 @@
-import { validate } from '@redwoodjs/api'
+import { validate, validateUniqueness } from '@redwoodjs/api'
 import { hashPassword } from '@redwoodjs/auth-dbauth-api'
 
 import { requireAuth } from 'src/lib/auth'
@@ -60,9 +60,15 @@ export const createUser: MutationResolvers['createUser'] = async ({
     }
   }
 
-  return db.user.create({
-    data: userData,
-  })
+  return validateUniqueness(
+    'user',
+    { email: userData.email },
+    { message: 'This email is already in use.' },
+    (db) =>
+      db.user.create({
+        data: userData,
+      })
+  )
 }
 
 export const deleteUser: MutationResolvers['deleteUser'] = ({ id }) => {
