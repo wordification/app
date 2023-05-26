@@ -9,8 +9,8 @@
   "devDependencies": {
     "@commitlint/cli": "^17.6.3",
     "@commitlint/config-conventional": "^17.6.3",
-    "@redwoodjs/core": "5.1.5",
-    "@redwoodjs/studio": "5.1.5",
+    "@redwoodjs/core": "5.2.3",
+    "@redwoodjs/studio": "5.2.3",
     "husky": "^8.0.0",
     "prettier-plugin-tailwindcss": "^0.2.8"
   },
