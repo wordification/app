@@ -9,6 +9,7 @@ import {
   SelectField,
   Submit,
   TextField,
+  useForm,
 } from '@redwoodjs/forms'
 import { MetaTags, useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
@@ -28,11 +29,14 @@ const CREATE_USER_MUTATION = gql`
 `
 
 const CreateUserPage = () => {
+  const formMethods = useForm<BaseUserInput>()
+
   const [createUser, { loading, error }] = useMutation<CreateUserMutation>(
     CREATE_USER_MUTATION,
     {
       onCompleted: () => {
         toast.success('User Created')
+        formMethods.reset()
       },
       onError: (error) => {
         toast.error(error?.message ?? '')
@@ -56,6 +60,7 @@ const CreateUserPage = () => {
           className="mt-10"
           onSubmit={onSubmit}
           error={error}
+          formMethods={formMethods}
           config={{ mode: 'onBlur' }}
         >
           <FormError
