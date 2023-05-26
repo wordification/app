@@ -43,21 +43,21 @@ export const createUser: MutationResolvers['createUser'] = async ({
     },
   })
 
-  validate(input.teacherId, 'teacher id', {
-    numericality: {
-      positive: true,
-      integer: true,
-      message: 'Teacher ID must be a positive integer',
-    },
-  })
+  if (input.teacherId) {
+    validate(input.teacherId, 'teacher id', {
+      numericality: {
+        positive: true,
+        integer: true,
+        message: 'Teacher ID must be a positive integer',
+      },
+    })
 
-  const findUser = await db.user.findUnique({
-    where: { id: userData.teacherId?.valueOf() },
-  })
-  if (findUser === null || findUser?.roles !== 'TEACHER') {
-    throw new Error(
-      'Please select a valid teacher ID. This teacher does not exist.'
-    )
+    const findUser = await db.user.findUnique({
+      where: { id: userData.teacherId?.valueOf() },
+    })
+    if (findUser === null || findUser?.roles !== 'TEACHER') {
+      throw 'Please select a valid teacher ID. This teacher does not exist.'
+    }
   }
 
   return db.user.create({
