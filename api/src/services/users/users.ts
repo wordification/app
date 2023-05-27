@@ -13,6 +13,18 @@ export const user: QueryResolvers['user'] = ({ id }) => {
   })
 }
 
+export const currentStudents: QueryResolvers['currentStudents'] = async () => {
+  const currentUser = db.user.findUnique({
+    where: {
+      id: context.currentUser?.id,
+    },
+  })
+
+  const students = await currentUser.students()
+
+  return students
+}
+
 export const User: UserRelationResolvers = {
   games: (_obj, { root }) => {
     return db.user.findUnique({ where: { id: root?.id } }).games() as Promise<

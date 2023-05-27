@@ -15,13 +15,17 @@ import { useRef } from 'react'
 import { useAuth } from 'src/auth'
 
 const LoginPage = () => {
-  const { isAuthenticated, logIn, loading } = useAuth()
+  const { isAuthenticated, logIn, loading, hasRole } = useAuth()
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(routes.home())
+      if (hasRole('TEACHER')) {
+        navigate(routes.dashboard())
+      } else {
+        navigate(routes.home())
+      }
     }
-  }, [isAuthenticated])
+  }, [isAuthenticated, hasRole])
 
   const emailRef = useRef<HTMLInputElement>(null)
   useEffect(() => {
