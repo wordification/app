@@ -11,6 +11,7 @@ export const QUERY = gql`
       firstName
       lastName
       roles
+      teacherId
     }
   }
 `

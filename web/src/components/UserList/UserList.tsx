@@ -1,3 +1,4 @@
+import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
@@ -7,12 +8,13 @@ import { QUERY } from '../UsersCell/UsersCell'
 
 import type { FindExistingUsers, Role } from 'types/graphql'
 
-type ExistingUser = {
+export type ExistingUser = {
   id: number
   email: string
   firstName: string
   lastName: string
   roles: Role
+  teacherId?: number | null
 }
 
 const DELETE_USER_MUTATION = gql`
@@ -66,26 +68,37 @@ const UserList = ({ users }: FindExistingUsers) => {
             <th>Last Name</th>
             <th>First Name</th>
             <th>Role</th>
+            <th>Teacher ID</th>
           </tr>
         </thead>
         <tbody>
           {users.map((user) => (
             <tr key={user.id}>
               <td>
-                <button
-                  type="button"
-                  title={'Delete user ' + user.id}
-                  className="btn-outline btn-error btn-xs btn"
-                  onClick={() => onDeleteClick(user)}
-                >
-                  Delete
-                </button>
+                <nav className="btn-group">
+                  <Link
+                    to={routes.updateUser({ id: user.id })}
+                    title={'Update User ' + user.id}
+                    className="btn-outline btn-primary btn-xs btn mr-1"
+                  >
+                    Update
+                  </Link>
+                  <button
+                    type="button"
+                    title={'Delete User ' + user.id}
+                    className="btn-outline btn-error btn-xs btn"
+                    onClick={() => onDeleteClick(user)}
+                  >
+                    Delete
+                  </button>
+                </nav>
               </td>
               <td>{truncate(user.id)}</td>
               <td>{truncate(user.email)}</td>
               <td>{truncate(user.lastName)}</td>
               <td>{truncate(user.firstName)}</td>
               <td>{truncate(user.roles)}</td>
+              <td>{truncate(user.teacherId ?? 'n/a')}</td>
             </tr>
           ))}
         </tbody>

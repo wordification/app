@@ -7,7 +7,7 @@ const DeleteUserPage = () => {
     <>
       <MetaTags title="DeleteUser" description="DeleteUser page" />
 
-      <h1 className="mb-2 text-2xl font-bold">Delete Existing User</h1>
+      <h1 className="mb-2 text-2xl font-bold">Modify Existing User</h1>
 
       <UsersCell />
     </>

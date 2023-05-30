@@ -17,8 +17,8 @@ const MENU_ITEMS = [
     label: 'Add User',
   },
   {
-    to: '/admin/delete-user',
-    label: 'Remove User',
+    to: '/admin/modify-user',
+    label: 'Modify User',
   },
   {
     type: 'signout',

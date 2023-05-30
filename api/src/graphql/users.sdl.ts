@@ -150,18 +150,6 @@ export const schema = gql`
 
     "The user's email address (must be unique)."
     email: String
-
-    "The user's hashed password."
-    hashedPassword: String
-
-    "The salt used to hash the user's password."
-    salt: String
-
-    "A reset token for the user's password if generated."
-    resetToken: String
-
-    "The time at which the reset token expires."
-    resetTokenExpiresAt: DateTime
   }
 
   """
