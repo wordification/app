@@ -25,8 +25,7 @@ const LoginPage = () => {
         navigate(routes.dashboard())
       } else {
         navigate(routes.home())
-        }
-    }
+      }
     }
   }, [isAuthenticated, hasRole])
 
