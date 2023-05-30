@@ -13,7 +13,7 @@ import {
 } from '@redwoodjs/forms'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import type { BaseUserInput, CreateUserMutation } from 'types/graphql'
 
@@ -45,6 +45,12 @@ const CreateUserForm = () => {
   )
 
   const [role, setRole] = useState('')
+
+  useEffect(() => {
+    if (role !== 'STUDENT') {
+      formMethods.setValue('teacherId', undefined)
+    }
+  }, [role, formMethods])
 
   const onSubmit = (data: BaseUserInput) => {
     createUser({ variables: { input: data } })

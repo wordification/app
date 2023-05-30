@@ -67,9 +67,15 @@ export const createUser: MutationResolvers['createUser'] = async ({
     const findUser = await db.user.findUnique({
       where: { id: userData.teacherId?.valueOf() },
     })
-    if (findUser === null || findUser?.roles !== 'TEACHER') {
-      throw 'Please select a valid teacher ID. This teacher does not exist.'
-    }
+    const findRole = [findUser?.roles === 'TEACHER' ? findUser.id : undefined]
+
+    validate(input.teacherId, 'teacher id', {
+      inclusion: {
+        in: findRole,
+        message:
+          'Please select a valid teacher ID. This teacher does not exist.',
+      },
+    })
   }
 
   return validateUniqueness(
