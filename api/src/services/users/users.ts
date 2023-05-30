@@ -44,19 +44,19 @@ export const createUser: MutationResolvers['createUser'] = async ({
     length: { min: 1, max: 255 },
   })
 
-  validate(input.lastName, 'last name', {
+  validate(userData.lastName, 'last name', {
     length: { min: 1, max: 255 },
   })
 
-  validate(input.roles, 'user role', {
+  validate(userData.roles, 'user role', {
     inclusion: {
       in: ['STUDENT', 'TEACHER', 'ADMINISTRATOR'],
       message: 'Role of new user must be student, teacher, or administrator.',
     },
   })
 
-  if (input.teacherId) {
-    validate(input.teacherId, 'teacher id', {
+  if (userData.teacherId) {
+    validate(userData.teacherId, 'teacher id', {
       numericality: {
         positive: true,
         integer: true,
@@ -69,7 +69,7 @@ export const createUser: MutationResolvers['createUser'] = async ({
     })
     const findRole = [findUser?.roles === 'TEACHER' ? findUser.id : undefined]
 
-    validate(input.teacherId, 'teacher id', {
+    validate(userData.teacherId, 'teacher id', {
       inclusion: {
         in: findRole,
         message:
@@ -98,10 +98,55 @@ export const deleteUser: MutationResolvers['deleteUser'] = ({ id }) => {
   })
 }
 
-export const updateUser: MutationResolvers['updateUser'] = ({ id, input }) => {
+export const updateUser: MutationResolvers['updateUser'] = async ({
+  id,
+  input,
+}) => {
   requireAuth({
     roles: 'ADMINISTRATOR',
   })
+
+  validate(input.firstName, 'first name', {
+    length: { min: 1, max: 255 },
+  })
+
+  validate(input.lastName, 'last name', {
+    length: { min: 1, max: 255 },
+  })
+
+  validate(input.roles, 'user role', {
+    inclusion: {
+      in: ['STUDENT', 'TEACHER', 'ADMINISTRATOR'],
+      message: 'Role of new user must be student, teacher, or administrator.',
+    },
+  })
+
+  if (input.roles !== 'STUDENT') {
+    input.teacherId = null
+  }
+
+  if (input.teacherId) {
+    validate(input.teacherId, 'teacher id', {
+      numericality: {
+        positive: true,
+        integer: true,
+        message: 'Teacher ID must be a positive integer',
+      },
+    })
+
+    const findUser = await db.user.findUnique({
+      where: { id: input.teacherId?.valueOf() },
+    })
+    const findRole = [findUser?.roles === 'TEACHER' ? findUser.id : undefined]
+
+    validate(input.teacherId, 'teacher id', {
+      inclusion: {
+        in: findRole,
+        message:
+          'Please select a valid teacher ID. This teacher does not exist.',
+      },
+    })
+  }
 
   return db.user.update({
     data: input,

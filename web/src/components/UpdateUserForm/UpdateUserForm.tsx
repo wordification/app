@@ -12,7 +12,7 @@ import {
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation, useQuery } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { QUERY } from '../UserCell/UserCell'
 
@@ -45,7 +45,7 @@ const UpdateUserForm = ({ id }: UpdateUserFormProps) => {
     {
       onCompleted: () => {
         toast.success('User Updated')
-        navigate(routes.deleteUser())
+        navigate(routes.modifyUser())
       },
       onError: (error) => {
         toast.error(error?.message ?? '')
@@ -55,7 +55,12 @@ const UpdateUserForm = ({ id }: UpdateUserFormProps) => {
 
   const user = data?.user
 
-  const [role, setRole] = useState<Role | undefined>(user?.roles ?? undefined)
+  const [role, setRole] = useState<Role | undefined>()
+  useEffect(() => {
+    if (user?.roles) {
+      setRole(user.roles)
+    }
+  }, [user])
 
   if (!user) {
     return null
