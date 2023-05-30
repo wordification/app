@@ -1,4 +1,4 @@
-import { SkipNavLink, SkipNavContent } from '@redwoodjs/router'
+import { SkipNavLink, SkipNavContent, routes } from '@redwoodjs/router'
 import { Toaster } from '@redwoodjs/web/dist/toast'
 
 import Navbar from 'src/components/Navbar/Navbar'
@@ -9,15 +9,15 @@ type AdministratorLayoutProps = {
 
 const MENU_ITEMS = [
   {
-    to: '/admin',
+    to: routes.adminDashboard(),
     label: 'Dashboard',
   },
   {
-    to: '/admin/create-user',
+    to: routes.createUser(),
     label: 'Add User',
   },
   {
-    to: '/admin/modify-user',
+    to: routes.modifyUser(),
     label: 'Modify User',
   },
   {

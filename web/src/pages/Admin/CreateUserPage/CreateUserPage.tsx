@@ -28,7 +28,7 @@ const CREATE_USER_MUTATION = gql`
   }
 `
 
-const CreateUserPage = () => {
+const AdminCreateUserPage = () => {
   const formMethods = useForm<BaseUserInput>()
 
   const [createUser, { loading, error }] = useMutation<CreateUserMutation>(
@@ -204,4 +204,4 @@ const CreateUserPage = () => {
   )
 }
 
-export default CreateUserPage
+export default AdminCreateUserPage

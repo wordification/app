@@ -1,14 +1,14 @@
 import { render } from '@redwoodjs/testing/web'
 
-import DeleteUserPage from './DeleteUserPage'
+import AdminCreateUserPage from './CreateUserPage'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //   https://redwoodjs.com/docs/testing#testing-pages-layouts
 
-describe('DeleteUserPage', () => {
+describe('CreateUserPage', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<DeleteUserPage />)
+      render(<AdminCreateUserPage />)
     }).not.toThrow()
   })
 })

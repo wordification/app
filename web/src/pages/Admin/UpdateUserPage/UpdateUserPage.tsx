@@ -6,7 +6,7 @@ type UpdateUserPageProps = {
   id: number
 }
 
-const UpdateUserPage = ({ id }: UpdateUserPageProps) => {
+const AdminUpdateUserPage = ({ id }: UpdateUserPageProps) => {
   return (
     <>
       <MetaTags title="UpdateUser" description="UpdateUser page" />
@@ -17,4 +17,4 @@ const UpdateUserPage = ({ id }: UpdateUserPageProps) => {
   )
 }
 
-export default UpdateUserPage
+export default AdminUpdateUserPage

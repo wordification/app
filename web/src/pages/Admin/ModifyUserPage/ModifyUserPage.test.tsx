@@ -1,14 +1,14 @@
 import { render } from '@redwoodjs/testing/web'
 
-import CreateUserPage from './CreateUserPage'
+import AdminModifyUserPage from './ModifyUserPage'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //   https://redwoodjs.com/docs/testing#testing-pages-layouts
 
-describe('CreateUserPage', () => {
+describe('ModifyUserPage', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<CreateUserPage />)
+      render(<AdminModifyUserPage />)
     }).not.toThrow()
   })
 })

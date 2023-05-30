@@ -2,10 +2,10 @@ import { MetaTags } from '@redwoodjs/web'
 
 import UsersCell from 'src/components/UsersCell'
 
-const DeleteUserPage = () => {
+const AdminModifyUserPage = () => {
   return (
     <>
-      <MetaTags title="DeleteUser" description="DeleteUser page" />
+      <MetaTags title="ModifyUser" description="ModifyUser page" />
 
       <h1 className="mb-2 text-2xl font-bold">Modify Existing User</h1>
 
@@ -14,4 +14,4 @@ const DeleteUserPage = () => {
   )
 }
 
-export default DeleteUserPage
+export default AdminModifyUserPage
