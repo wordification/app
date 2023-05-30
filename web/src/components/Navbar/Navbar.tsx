@@ -40,6 +40,8 @@ const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
   const { hasRole } = useAuth()
   const roleRoute = hasRole('ADMINISTRATOR')
     ? routes.adminDashboard()
+    : hasRole('TEACHER')
+    ? routes.dashboard()
     : routes.home()
   return (
     <nav className="navbar">

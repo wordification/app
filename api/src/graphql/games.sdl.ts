@@ -83,6 +83,9 @@ export const schema = gql`
 
     "Fetch a game by ID. Can return null if the game doesn't exist."
     game(id: Int!): Game @requireAuth
+
+    "Fetch games for a user by userId."
+    userGames(userId: Int!): [Game!]! @requireAuth
   }
 
   """

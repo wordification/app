@@ -21,9 +21,12 @@ const LoginPage = () => {
     if (isAuthenticated) {
       if (hasRole('ADMINISTRATOR')) {
         navigate(routes.adminDashboard())
+      } else if (hasRole('TEACHER')) {
+        navigate(routes.dashboard())
       } else {
         navigate(routes.home())
-      }
+        }
+    }
     }
   }, [isAuthenticated, hasRole])
 

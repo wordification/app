@@ -14,6 +14,8 @@ import AdministratorLayout from 'src/layouts/AdministratorLayout/AdministratorLa
 import AuthLayout from 'src/layouts/AuthLayout/AuthLayout'
 import GlobalLayout from 'src/layouts/GlobalLayout/GlobalLayout'
 
+import TeacherLayout from './layouts/TeacherLayout/TeacherLayout'
+
 const Routes = () => {
   return (
     <Router useAuth={useAuth}>
@@ -36,6 +38,14 @@ const Routes = () => {
           <Route path="/profile" page={ProfilePage} name="profile" />
           <Route path="/about" page={AboutPage} name="about" />
           <Route path="/" page={HomePage} name="home" />
+        </Set>
+      </Private>
+      <Private unauthenticated="login" roles="TEACHER">
+        <Set wrap={TeacherLayout}>
+          <Route path="/dashboard/students/{id:Int}/games" page={DashboardStudentGamesPage} name="studentGames" />
+          <Route path="/dashboard/students/{id:Int}" page={DashboardStudentProfilePage} name="studentProfile" />
+          <Route path="/dashboard/students" page={DashboardStudentsPage} name="students" />
+          <Route path="/dashboard" page={DashboardPage} name="dashboard" />
         </Set>
       </Private>
       <Private unauthenticated="login" roles="ADMINISTRATOR">

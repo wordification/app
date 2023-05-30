@@ -21,6 +21,18 @@ export const user: QueryResolvers['user'] = ({ id }) => {
   })
 }
 
+export const currentStudents: QueryResolvers['currentStudents'] = async () => {
+  const currentUser = db.user.findUnique({
+    where: {
+      id: context.currentUser?.id,
+    },
+  })
+
+  const students = await currentUser.students()
+
+  return students
+}
+
 export const createUser: MutationResolvers['createUser'] = async ({
   input,
 }) => {
