@@ -10,6 +10,7 @@
 import { Router, Route, Set, Private } from '@redwoodjs/router'
 
 import { useAuth } from 'src/auth'
+import AdministratorLayout from 'src/layouts/AdministratorLayout/AdministratorLayout'
 import AuthLayout from 'src/layouts/AuthLayout/AuthLayout'
 import GlobalLayout from 'src/layouts/GlobalLayout/GlobalLayout'
 
@@ -45,6 +46,14 @@ const Routes = () => {
           <Route path="/dashboard/students/{id:Int}" page={DashboardStudentProfilePage} name="studentProfile" />
           <Route path="/dashboard/students" page={DashboardStudentsPage} name="students" />
           <Route path="/dashboard" page={DashboardPage} name="dashboard" />
+        </Set>
+      </Private>
+      <Private unauthenticated="login" roles="ADMINISTRATOR">
+        <Set wrap={AdministratorLayout}>
+          <Route path="/admin/update-user/{id:Int}" page={AdminUpdateUserPage} name="updateUser" />
+          <Route path="/admin/modify-user" page={AdminModifyUserPage} name="modifyUser" />
+          <Route path="/admin/create-user" page={AdminCreateUserPage} name="createUser" />
+          <Route path="/admin" page={AdminDashboardPage} name="adminDashboard" />
         </Set>
       </Private>
       <Route notfound page={NotFoundPage} />

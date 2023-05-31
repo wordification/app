@@ -19,7 +19,9 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      if (hasRole('TEACHER')) {
+      if (hasRole('ADMINISTRATOR')) {
+        navigate(routes.adminDashboard())
+      } else if (hasRole('TEACHER')) {
         navigate(routes.dashboard())
       } else {
         navigate(routes.home())

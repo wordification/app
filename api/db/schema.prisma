@@ -14,6 +14,8 @@ enum Role {
   STUDENT
   /// A user who can manage students' data.
   TEACHER
+  /// A user who can create users and manage users' data.
+  ADMINISTRATOR
 }
 
 /// A user.

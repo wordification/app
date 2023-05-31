@@ -49,12 +49,17 @@ export default async () => {
     return 1
   }
 
-  const isTeacher = await rl.question('Is this user a teacher? (y/N): ')
+  const isAdmin = await rl.question('Is this user an administrator? (y/n): ')
   let role: Role
-  if (isTeacher === 'y') {
-    role = Role.TEACHER
+  if (isAdmin === 'y') {
+    role = Role.ADMINISTRATOR
   } else {
-    role = Role.STUDENT
+    const isTeacher = await rl.question('Is this user a teacher? (y/n): ')
+    if (isTeacher === 'y') {
+      role = Role.TEACHER
+    } else {
+      role = Role.STUDENT
+    }
   }
 
   const user: BaseUserInput = {

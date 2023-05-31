@@ -7,6 +7,8 @@ export const schema = gql`
     STUDENT
     "A user who can manage students' data."
     TEACHER
+    "A user who can create users and manage users' data."
+    ADMINISTRATOR
   }
 
   """
@@ -79,6 +81,18 @@ export const schema = gql`
   Input for creating a new user.
   """
   input CreateUserInput {
+    "The user's first name."
+    firstName: String!
+
+    "The user's last name."
+    lastName: String!
+
+    "The user's role."
+    roles: Role!
+
+    "The ID of the user's teacher if they are a student."
+    teacherId: Int
+
     "The user's email address (must be unique)."
     email: String!
 
@@ -96,22 +110,60 @@ export const schema = gql`
   }
 
   """
+  Base input for creating a new user.
+  """
+  input BaseUserInput {
+    "The user's first name."
+    firstName: String!
+
+    "The user's last name."
+    lastName: String!
+
+    "The user's role."
+    roles: Role!
+
+    "The ID of the user's teacher if they are a student."
+    teacherId: Int
+
+    "The user's email address (must be unique)."
+    email: String!
+
+    "The user's password."
+    password: String!
+  }
+
+  """
   Input for updating a user.
   """
   input UpdateUserInput {
+    "The user's first name."
+    firstName: String
+
+    "The user's last name."
+    lastName: String
+
+    "The user's role."
+    roles: Role
+
+    "The ID of the user's teacher if they are a student."
+    teacherId: Int
+
     "The user's email address (must be unique)."
     email: String
+  }
 
-    "The user's hashed password."
-    hashedPassword: String
+  """
+  Mutations for users.
+  """
+  type Mutation {
+    "Creates a new user."
+    createUser(input: BaseUserInput!): User!
+      @requireAuth(roles: ["ADMINISTRATOR"])
 
-    "The salt used to hash the user's password."
-    salt: String
+    "Deletes an existing user."
+    deleteUser(id: Int!): User! @requireAuth(roles: ["ADMINISTRATOR"])
 
-    "A reset token for the user's password if generated."
-    resetToken: String
-
-    "The time at which the reset token expires."
-    resetTokenExpiresAt: DateTime
+    updateUser(id: Int!, input: UpdateUserInput!): User!
+      @requireAuth(roles: ["ADMINISTRATOR"])
   }
 `

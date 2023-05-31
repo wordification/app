@@ -38,12 +38,17 @@ const NavbarItem = ({ item }: { item: MenuItem }) => (
 
 const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
   const { hasRole } = useAuth()
+  const roleRoute = hasRole('ADMINISTRATOR')
+    ? routes.adminDashboard()
+    : hasRole('TEACHER')
+    ? routes.dashboard()
+    : routes.home()
   return (
     <nav className="navbar">
       <div className="navbar-start">
         <Link
           className="btn-ghost btn rounded-none text-xl normal-case text-primary"
-          to={hasRole('TEACHER') ? routes.dashboard() : routes.home()}
+          to={roleRoute}
         >
           Wordification
         </Link>
