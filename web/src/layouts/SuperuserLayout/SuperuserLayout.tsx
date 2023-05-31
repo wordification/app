@@ -10,7 +10,11 @@ type SuperuserLayoutProps = {
 const MENU_ITEMS = [
   {
     to: '/demo',
-    label: 'Dashboard',
+    label: 'Home',
+  },
+  {
+    to: '/demo/about',
+    label: 'About',
   },
   {
     type: 'signout',

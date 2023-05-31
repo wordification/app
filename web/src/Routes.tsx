@@ -37,8 +37,6 @@ const Routes = () => {
           <Route path="/games/matching" page={MatchingGamePage} name="matchingGame" />
           <Route path="/games" page={GamesPage} name="games" />
           <Route path="/profile" page={ProfilePage} name="profile" />
-          <Route path="/about" page={AboutPage} name="about" />
-          <Route path="/" page={HomePage} name="home" />
         </Set>
       </Private>
       <Private unauthenticated="login" roles={['TEACHER', 'SUPERUSER']}>
@@ -59,7 +57,8 @@ const Routes = () => {
       </Private>
       <Private unauthenticated="login" roles="SUPERUSER">
         <Set wrap={SuperuserLayout}>
-          <Route path="/demo" page={SuperuserDashboardPage} name="superuserDashboard" />
+          <Route path="/demo/about" page={AboutPage} name="about" />
+          <Route path="/demo" page={HomePage} name="superuserDashboard" />
         </Set>
       </Private>
       <Route notfound page={NotFoundPage} />

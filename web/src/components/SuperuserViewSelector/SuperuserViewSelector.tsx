@@ -55,7 +55,7 @@ const SuperuserViewSelector = () => {
             </Link>
           </li>
           <li>
-            <Link className="font-bold normal-case" to={routes.home()}>
+            <Link className="font-bold normal-case" to={routes.games()}>
               STUDENT
             </Link>
           </li>
