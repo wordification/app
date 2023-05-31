@@ -46,7 +46,7 @@ const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
     ? routes.adminDashboard()
     : hasRole('TEACHER')
     ? routes.dashboard()
-    : routes.home()
+    : routes.games()
   return (
     <nav className="navbar">
       <div className="navbar-start">

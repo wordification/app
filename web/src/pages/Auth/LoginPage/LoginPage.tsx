@@ -26,7 +26,7 @@ const LoginPage = () => {
       } else if (hasRole('TEACHER')) {
         navigate(routes.dashboard())
       } else {
-        navigate(routes.home())
+        navigate(routes.games())
       }
     }
   }, [isAuthenticated, hasRole])
