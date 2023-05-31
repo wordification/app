@@ -40,7 +40,9 @@ const NavbarItem = ({ item }: { item: MenuItem }) => (
 
 const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
   const { hasRole } = useAuth()
-  const roleRoute = hasRole('ADMINISTRATOR')
+  const roleRoute = hasRole('SUPERUSER')
+    ? routes.superuserDashboard()
+    : hasRole('ADMINISTRATOR')
     ? routes.adminDashboard()
     : hasRole('TEACHER')
     ? routes.dashboard()

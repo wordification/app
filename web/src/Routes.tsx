@@ -14,6 +14,7 @@ import AdministratorLayout from 'src/layouts/AdministratorLayout/AdministratorLa
 import AuthLayout from 'src/layouts/AuthLayout/AuthLayout'
 import GlobalLayout from 'src/layouts/GlobalLayout/GlobalLayout'
 
+import SuperuserLayout from './layouts/SuperuserLayout/SuperuserLayout'
 import TeacherLayout from './layouts/TeacherLayout/TeacherLayout'
 
 const Routes = () => {
@@ -54,6 +55,11 @@ const Routes = () => {
           <Route path="/admin/modify-user" page={AdminModifyUserPage} name="modifyUser" />
           <Route path="/admin/create-user" page={AdminCreateUserPage} name="createUser" />
           <Route path="/admin" page={AdminDashboardPage} name="adminDashboard" />
+        </Set>
+      </Private>
+      <Private unauthenticated="login" roles="SUPERUSER">
+        <Set wrap={SuperuserLayout}>
+          <Route path="/demo" page={SuperuserDashboardPage} name="superuserDashboard" />
         </Set>
       </Private>
       <Route notfound page={NotFoundPage} />
