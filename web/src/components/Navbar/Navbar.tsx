@@ -56,7 +56,7 @@ const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
         >
           Wordification
         </Link>
-        <SuperuserViewSelector />
+        {hasRole('SUPERUSER') && <SuperuserViewSelector />}
       </div>
       <div className="navbar-end">
         <ul className="menu menu-horizontal">
