@@ -217,7 +217,7 @@ export const sortingGameGradeFirstLevel: MutationResolvers['sortingGameGradeFirs
     if (game.currentWord.testedPhonemes.includes(phoneme)) {
       await advanceLevel(game.id, game.level)
 
-      return { correct: true }
+      return { correct: true, audio: [getSortingGamePhrase('correct')] }
     }
 
     const audio = [
