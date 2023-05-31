@@ -33,6 +33,7 @@ const Routes = () => {
             <Route path="/games/sorting/setup" page={SortingGameSetupGamePage} name="sortingGameSetup" />
             <Route path="/games/sorting" page={SortingGameMenuPage} name="sortingGame" />
           </Set>
+          <Route path="/progression" page={ProgressionPage} name="progression" />
           <Route path="/games/matching" page={MatchingGamePage} name="matchingGame" />
           <Route path="/games" page={GamesPage} name="games" />
           <Route path="/profile" page={ProfilePage} name="profile" />
