@@ -4,9 +4,11 @@ import { useState, useMemo, useEffect } from 'react'
 const Player = ({
   files,
   buttonLabel,
+  onComplete,
 }: {
   files: readonly string[]
   buttonLabel?: string
+  onComplete?: () => void
 }) => {
   const [currentFileIndex, setCurrentFileIndex] = useState(0)
   const sound = useMemo(
@@ -16,10 +18,12 @@ const Player = ({
         onend: () => {
           if (currentFileIndex < files.length - 1) {
             setCurrentFileIndex(currentFileIndex + 1)
+          } else {
+            onComplete?.()
           }
         },
       }),
-    [currentFileIndex, files]
+    [currentFileIndex, files, onComplete]
   )
 
   // handle autoplay
@@ -48,7 +52,7 @@ const Player = ({
 
   if (!buttonLabel) return null
   return (
-    <button className="btn-accent btn" type="button" onClick={handleRestart}>
+    <button className="btn-primary btn" type="button" onClick={handleRestart}>
       {buttonLabel}
     </button>
   )
