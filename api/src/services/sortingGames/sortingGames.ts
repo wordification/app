@@ -220,14 +220,14 @@ const handleGrade = async ({
   if (correct) {
     await advanceLevel(gameId, gameLevel)
 
-    return { correct: true }
+    return { status: 'CORRECT' as const }
   }
 
   // Only allow 2 incorrect guesses
-  if (incorrectGuesses >= 2) {
+  if (incorrectGuesses > 1) {
     await advanceLevel(gameId, gameLevel)
 
-    return { correct: true }
+    return { status: 'TOO_MANY_INCORRECT_GUESSES' as const }
   }
 
   await db.game.update({
@@ -237,7 +237,7 @@ const handleGrade = async ({
     where: { id: gameId },
   })
 
-  return { correct: false, audio: incorrectAudio }
+  return { status: 'INCORRECT' as const, audio: incorrectAudio }
 }
 
 export const sortingGameGradeFirstLevel: MutationResolvers['sortingGameGradeFirstLevel'] =
