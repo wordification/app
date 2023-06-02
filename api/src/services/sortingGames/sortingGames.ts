@@ -224,7 +224,7 @@ const handleGrade = async ({
   }
 
   // Only allow 2 incorrect guesses
-  if (incorrectGuesses > 1) {
+  if (incorrectGuesses >= 1) {
     await advanceLevel(gameId, gameLevel)
 
     return { status: 'TOO_MANY_INCORRECT_GUESSES' as const }
