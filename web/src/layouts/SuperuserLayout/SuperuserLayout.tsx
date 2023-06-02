@@ -1,24 +1,27 @@
-import '@reach/skip-nav/styles.css'
-import { SkipNavLink, SkipNavContent } from '@redwoodjs/router'
+import { SkipNavContent, SkipNavLink } from '@redwoodjs/router'
 import { Toaster } from '@redwoodjs/web/toast'
 
-import Navbar from 'src/components/Navbar/Navbar'
+import Navbar from 'src/components/Navbar'
 
-type GlobalLayoutProps = {
+type SuperuserLayoutProps = {
   children?: React.ReactNode
 }
 
 const MENU_ITEMS = [
   {
-    to: '/games',
-    label: 'Games',
+    to: '/demo',
+    label: 'Home',
+  },
+  {
+    to: '/demo/about',
+    label: 'About',
   },
   {
     type: 'signout',
   },
 ] as const
 
-const GlobalLayout = ({ children }: GlobalLayoutProps) => {
+const SuperuserLayout = ({ children }: SuperuserLayoutProps) => {
   return (
     <div className="flex min-h-screen flex-col">
       <SkipNavLink />
@@ -40,4 +43,4 @@ const GlobalLayout = ({ children }: GlobalLayoutProps) => {
   )
 }
 
-export default GlobalLayout
+export default SuperuserLayout

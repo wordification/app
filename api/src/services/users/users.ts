@@ -1,7 +1,6 @@
 import { validate, validateUniqueness } from '@redwoodjs/api'
 import { hashPassword } from '@redwoodjs/auth-dbauth-api'
 
-import { requireAuth } from 'src/lib/auth'
 import { db } from 'src/lib/db'
 
 import type { Game } from '@prisma/client'
@@ -67,7 +66,11 @@ export const createUser: MutationResolvers['createUser'] = async ({
     const findUser = await db.user.findUnique({
       where: { id: userData.teacherId?.valueOf() },
     })
-    const findRole = [findUser?.roles === 'TEACHER' ? findUser.id : undefined]
+    const findRole = [
+      findUser?.roles === 'TEACHER' || findUser?.roles === 'SUPERUSER'
+        ? findUser.id
+        : undefined,
+    ]
 
     validate(userData.teacherId, 'teacher id', {
       inclusion: {
@@ -90,9 +93,6 @@ export const createUser: MutationResolvers['createUser'] = async ({
 }
 
 export const deleteUser: MutationResolvers['deleteUser'] = ({ id }) => {
-  requireAuth({
-    roles: 'ADMINISTRATOR',
-  })
   return db.user.delete({
     where: { id },
   })
@@ -102,10 +102,6 @@ export const updateUser: MutationResolvers['updateUser'] = async ({
   id,
   input,
 }) => {
-  requireAuth({
-    roles: 'ADMINISTRATOR',
-  })
-
   validate(input.firstName, 'first name', {
     length: { min: 1, max: 255 },
   })
@@ -137,7 +133,11 @@ export const updateUser: MutationResolvers['updateUser'] = async ({
     const findUser = await db.user.findUnique({
       where: { id: input.teacherId?.valueOf() },
     })
-    const findRole = [findUser?.roles === 'TEACHER' ? findUser.id : undefined]
+    const findRole = [
+      findUser?.roles === 'TEACHER' || findUser?.roles === 'SUPERUSER'
+        ? findUser.id
+        : undefined,
+    ]
 
     validate(input.teacherId, 'teacher id', {
       inclusion: {

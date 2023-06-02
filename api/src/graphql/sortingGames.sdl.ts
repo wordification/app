@@ -76,11 +76,23 @@ export const schema = gql`
   }
 
   """
+  The status of the answer submitted.
+  """
+  enum SortingGameGradeStatus {
+    "The answer was correct."
+    CORRECT
+    "The answer was incorrect."
+    INCORRECT
+    "Too many incorrect guesses were made."
+    TOO_MANY_INCORRECT_GUESSES
+  }
+
+  """
   The response after grading the sorting game.
   """
   type SortingGameGradeResponse implements Audio {
-    "If the answer was correct."
-    correct: Boolean!
+    "The status of the answer submitted."
+    status: SortingGameGradeStatus!
     "A prompt if the answer was incorrect."
     audio: [String!]
   }

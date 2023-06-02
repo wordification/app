@@ -47,7 +47,7 @@ export const Failure = ({
 const GRADE_LEVEL_ONE_MUTATION = gql`
   mutation GradeLevelOneMutation($gameId: Int!, $phoneme: Int!) {
     sortingGameGradeFirstLevel(gameId: $gameId, phoneme: $phoneme) {
-      correct
+      status
       audio
     }
   }
@@ -64,10 +64,16 @@ export const Success = ({
     GRADE_LEVEL_ONE_MUTATION,
     {
       onCompleted: ({ sortingGameGradeFirstLevel }) => {
-        if (sortingGameGradeFirstLevel.correct) {
-          toast.success('Correct!')
-        } else {
-          toast.error('Incorrect!')
+        switch (sortingGameGradeFirstLevel.status) {
+          case 'CORRECT':
+            toast.success('Correct!')
+            break
+          case 'INCORRECT':
+            toast.error('Incorrect!')
+            break
+          case 'TOO_MANY_INCORRECT_GUESSES':
+            toast.error('Too many incorrect guesses!')
+            break
         }
         if (sortingGameGradeFirstLevel.audio) {
           setFiles(sortingGameGradeFirstLevel.audio)
