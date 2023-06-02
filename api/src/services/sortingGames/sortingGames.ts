@@ -37,6 +37,7 @@ export const selectNextWord = async (gameId: number) => {
       data: {
         level: 4,
         complete: true,
+        incorrectGuesses: 0,
         currentWordId: null,
       },
       where: { id: gameId },
@@ -51,6 +52,7 @@ export const selectNextWord = async (gameId: number) => {
       incompleteWords: {
         disconnect: [{ id: newWord.id }],
       },
+      incorrectGuesses: 0,
     },
     where: { id: gameId },
   })
@@ -78,7 +80,8 @@ export const advanceLevel = (gameId: number, currentLevel: number) => {
   }
   return db.game.update({
     data: {
-      level: currentLevel + 1,
+      level: { increment: 1 },
+      incorrectGuesses: 0,
     },
     where: { id: gameId },
   })
@@ -201,6 +204,42 @@ export const sortingGameThirdLevel: QueryResolvers['sortingGameThirdLevel'] =
     }
   }
 
+const handleGrade = async ({
+  gameId,
+  gameLevel,
+  incorrectGuesses,
+  correct,
+  incorrectAudio,
+}: {
+  gameId: number
+  gameLevel: number
+  incorrectGuesses: number
+  correct: boolean
+  incorrectAudio: string[] | undefined
+}) => {
+  if (correct) {
+    await advanceLevel(gameId, gameLevel)
+
+    return { status: 'CORRECT' as const }
+  }
+
+  // Only allow 2 incorrect guesses
+  if (incorrectGuesses >= 1) {
+    await advanceLevel(gameId, gameLevel)
+
+    return { status: 'TOO_MANY_INCORRECT_GUESSES' as const }
+  }
+
+  await db.game.update({
+    data: {
+      incorrectGuesses: { increment: 1 },
+    },
+    where: { id: gameId },
+  })
+
+  return { status: 'INCORRECT' as const, audio: incorrectAudio }
+}
+
 export const sortingGameGradeFirstLevel: MutationResolvers['sortingGameGradeFirstLevel'] =
   async ({ gameId, phoneme }) => {
     const game = await db.game.findUnique({
@@ -214,21 +253,19 @@ export const sortingGameGradeFirstLevel: MutationResolvers['sortingGameGradeFirs
       throw new Error('Current word not selected')
     }
 
-    if (game.currentWord.testedPhonemes.includes(phoneme)) {
-      await advanceLevel(game.id, game.level)
-
-      return { correct: true }
-    }
-
-    const audio = [
-      getSortingGamePhrase('incorrect'),
-      getPhoneme(phoneme),
-      getSortingGamePhrase('not_spelling_pattern'),
-      getSortingGameWord(game.currentWord.word),
-      getSortingGamePhrase('incorrect_try'),
-    ]
-
-    return { correct: false, audio }
+    return handleGrade({
+      gameId: game.id,
+      gameLevel: game.level,
+      incorrectGuesses: game.incorrectGuesses,
+      correct: game.currentWord.testedPhonemes.includes(phoneme),
+      incorrectAudio: [
+        getSortingGamePhrase('incorrect'),
+        getPhoneme(phoneme),
+        getSortingGamePhrase('not_spelling_pattern'),
+        getSortingGameWord(game.currentWord.word),
+        getSortingGamePhrase('incorrect_try'),
+      ],
+    })
   }
 
 export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSecondLevel'] =
@@ -248,21 +285,19 @@ export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSec
       throw new Error('Current word not selected')
     }
 
-    if (game.currentWord.testedGraphemes.includes(grapheme)) {
-      await advanceLevel(game.id, game.level)
-
-      return { correct: true }
-    }
-
-    const audio = [
-      getSortingGamePhrase('incorrect'),
-      getGrapheme(grapheme),
-      getSortingGamePhrase('not_spelling_pattern'),
-      getSortingGameWord(game.currentWord.word),
-      getSortingGamePhrase('tryagain'),
-    ]
-
-    return { correct: false, audio }
+    return handleGrade({
+      gameId: game.id,
+      gameLevel: game.level,
+      incorrectGuesses: game.incorrectGuesses,
+      correct: game.currentWord.testedGraphemes.includes(grapheme),
+      incorrectAudio: [
+        getSortingGamePhrase('incorrect'),
+        getGrapheme(grapheme),
+        getSortingGamePhrase('not_spelling_pattern'),
+        getSortingGameWord(game.currentWord.word),
+        getSortingGamePhrase('tryagain'),
+      ],
+    })
   }
 
 export const sortingGameGradeThirdLevel: MutationResolvers['sortingGameGradeThirdLevel'] =
@@ -282,21 +317,21 @@ export const sortingGameGradeThirdLevel: MutationResolvers['sortingGameGradeThir
       throw new Error('Current word not selected')
     }
 
-    if (game.currentWord.word === entry) {
-      await advanceLevel(game.id, game.level)
-
-      return { correct: true }
-    }
-
-    const audio = [
-      getSortingGamePhrase('incorrect'),
-      getSortingGameWord(game.currentWord.word),
-      getSortingGamePhrase('has_sound'),
-      getPhoneme(game.currentWord.testedPhonemes[0]),
-      getSortingGamePhrase('and_spelled_with'),
-      getGrapheme(game.currentWord.testedGraphemes[0]),
-      getSortingGamePhrase('tryagain'),
-    ]
-
-    return { correct: false, audio }
+    return handleGrade({
+      gameId: game.id,
+      gameLevel: game.level,
+      incorrectGuesses: game.incorrectGuesses,
+      correct:
+        game.currentWord.word.toLowerCase().trim() ===
+        entry.toLowerCase().trim(),
+      incorrectAudio: [
+        getSortingGamePhrase('incorrect'),
+        getSortingGameWord(game.currentWord.word),
+        getSortingGamePhrase('has_sound'),
+        getPhoneme(game.currentWord.testedPhonemes[0]),
+        getSortingGamePhrase('and_spelled_with'),
+        getGrapheme(game.currentWord.testedGraphemes[0]),
+        getSortingGamePhrase('tryagain'),
+      ],
+    })
   }

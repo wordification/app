@@ -41,6 +41,9 @@ export const schema = gql`
     "The current word being played."
     currentWordId: Int
 
+    "The number of incorrect guesses the user has made."
+    incorrectGuesses: Int!
+
     "The user who is playing the game."
     user: User!
 
