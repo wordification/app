@@ -49,16 +49,21 @@ export default async () => {
     return 1
   }
 
-  const isAdmin = await rl.question('Is this user an administrator? (y/n): ')
+  const isSuperuser = await rl.question('Is this user a superuser? (y/n): ')
   let role: Role
-  if (isAdmin === 'y') {
-    role = Role.ADMINISTRATOR
+  if (isSuperuser === 'y') {
+    role = Role.SUPERUSER
   } else {
-    const isTeacher = await rl.question('Is this user a teacher? (y/n): ')
-    if (isTeacher === 'y') {
-      role = Role.TEACHER
+    const isAdmin = await rl.question('Is this user an administrator? (y/n): ')
+    if (isAdmin === 'y') {
+      role = Role.ADMINISTRATOR
     } else {
-      role = Role.STUDENT
+      const isTeacher = await rl.question('Is this user a teacher? (y/n): ')
+      if (isTeacher === 'y') {
+        role = Role.TEACHER
+      } else {
+        role = Role.STUDENT
+      }
     }
   }
 

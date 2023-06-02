@@ -9,6 +9,8 @@ export const schema = gql`
     TEACHER
     "A user who can create users and manage users' data."
     ADMINISTRATOR
+    "A user who can access student, teacher, and administrator role views."
+    SUPERUSER
   }
 
   """
@@ -74,7 +76,7 @@ export const schema = gql`
     user(id: Int!): User @requireAuth
 
     "Fetch the currently logged in teacher's students."
-    currentStudents: [User!] @requireAuth(roles: ["TEACHER"])
+    currentStudents: [User!] @requireAuth(roles: ["TEACHER", "SUPERUSER"])
   }
 
   """
@@ -158,12 +160,13 @@ export const schema = gql`
   type Mutation {
     "Creates a new user."
     createUser(input: BaseUserInput!): User!
-      @requireAuth(roles: ["ADMINISTRATOR"])
+      @requireAuth(roles: ["ADMINISTRATOR", "SUPERUSER"])
 
     "Deletes an existing user."
-    deleteUser(id: Int!): User! @requireAuth(roles: ["ADMINISTRATOR"])
+    deleteUser(id: Int!): User!
+      @requireAuth(roles: ["ADMINISTRATOR", "SUPERUSER"])
 
     updateUser(id: Int!, input: UpdateUserInput!): User!
-      @requireAuth(roles: ["ADMINISTRATOR"])
+      @requireAuth(roles: ["ADMINISTRATOR", "SUPERUSER"])
   }
 `
