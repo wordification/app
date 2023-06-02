@@ -19,6 +19,7 @@ const DashboardPage = () => {
     <>
       <MetaTags title="Dashboard" description="Dashboard page" />
 
+      <h1 className="text-xl font-bold">Teacher Dashboard</h1>
       <ul className="grid gap-4 sm:grid-cols-3">
         {DASHBOARD_ITEMS.map((item) => (
           <Link

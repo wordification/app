@@ -16,6 +16,8 @@ enum Role {
   TEACHER
   /// A user who can create users and manage users' data.
   ADMINISTRATOR
+  /// A user who can access student, teacher, and administrator role views.
+  SUPERUSER
 }
 
 /// A user.
