@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-noninteractive-tabindex */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import { Link, routes } from '@redwoodjs/router'
 
 import { useAuth } from 'src/auth'
@@ -50,6 +52,35 @@ const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
   return (
     <nav className="navbar">
       <div className="navbar-start">
+        <div className="dropdown">
+          <label tabIndex={0} className="btn-ghost btn lg:hidden">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
+            </svg>
+          </label>
+          <ul
+            tabIndex={0}
+            className="menu-sm dropdown-content menu rounded-box mt-3 w-52 bg-secondary p-2 shadow"
+          >
+            {items.map((item) => (
+              <NavbarItem
+                item={item}
+                key={'to' in item ? item.to : item.type}
+              />
+            ))}
+          </ul>
+        </div>
         <Link
           className="btn-ghost btn mr-10 rounded-none text-xl normal-case text-primary"
           to={roleRoute}
@@ -59,11 +90,16 @@ const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
         {hasRole('SUPERUSER') && <SuperuserViewSelector />}
       </div>
       <div className="navbar-end">
-        <ul className="menu menu-horizontal">
-          {items.map((item) => (
-            <NavbarItem item={item} key={'to' in item ? item.to : item.type} />
-          ))}
-        </ul>
+        <div className="hidden lg:flex">
+          <ul className="menu menu-horizontal ">
+            {items.map((item) => (
+              <NavbarItem
+                item={item}
+                key={'to' in item ? item.to : item.type}
+              />
+            ))}
+          </ul>
+        </div>
       </div>
     </nav>
   )
