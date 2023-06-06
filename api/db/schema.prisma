@@ -1,6 +1,6 @@
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DEMO_DATABASE_URL")
 }
 
 generator client {
@@ -95,7 +95,7 @@ model Game {
 
   // RELATIONSHIP INFO
   /// The user who is playing the game.
-  user            User   @relation(fields: [userId], references: [id])
+  user            User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   /// The current word being played. Can be null if the game is complete.
   currentWord     Word?  @relation("currentGames", fields: [currentWordId], references: [id])
   /// All of the words played in the game.
