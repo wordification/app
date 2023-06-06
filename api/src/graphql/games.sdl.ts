@@ -41,6 +41,9 @@ export const schema = gql`
     "The current word being played."
     currentWordId: Int
 
+    "The number of incorrect guesses the user has made."
+    incorrectGuesses: Int!
+
     "The user who is playing the game."
     user: User!
 
@@ -83,6 +86,9 @@ export const schema = gql`
 
     "Fetch a game by ID. Can return null if the game doesn't exist."
     game(id: Int!): Game @requireAuth
+
+    "Fetch games for a user by userId."
+    userGames(userId: Int!): [Game!]! @requireAuth
   }
 
   """

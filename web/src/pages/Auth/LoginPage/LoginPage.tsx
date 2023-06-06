@@ -15,13 +15,21 @@ import { useRef } from 'react'
 import { useAuth } from 'src/auth'
 
 const LoginPage = () => {
-  const { isAuthenticated, logIn } = useAuth()
+  const { isAuthenticated, logIn, loading, hasRole } = useAuth()
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(routes.home())
+      if (hasRole('SUPERUSER')) {
+        navigate(routes.superuserDashboard())
+      } else if (hasRole('ADMINISTRATOR')) {
+        navigate(routes.adminDashboard())
+      } else if (hasRole('TEACHER')) {
+        navigate(routes.dashboard())
+      } else {
+        navigate(routes.games())
+      }
     }
-  }, [isAuthenticated])
+  }, [isAuthenticated, hasRole])
 
   const emailRef = useRef<HTMLInputElement>(null)
   useEffect(() => {
@@ -89,7 +97,12 @@ const LoginPage = () => {
           <FieldError name="password" className="text-sm text-error" />
         </div>
 
-        <Submit className="btn-primary btn my-2 block">Login</Submit>
+        <Submit
+          className={`btn-primary btn my-2 ${loading ? 'loading' : ''}`}
+          disabled={loading}
+        >
+          Login
+        </Submit>
         <Link to={routes.forgotPassword()} className="link-hover link text-sm">
           Forgot Password?
         </Link>

@@ -1,8 +1,6 @@
 datasource db {
-  provider          = "postgresql"
-  url               = env("DATABASE_URL")
-  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
-  directUrl         = env("DIRECT_DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
@@ -16,6 +14,10 @@ enum Role {
   STUDENT
   /// A user who can manage students' data.
   TEACHER
+  /// A user who can create users and manage users' data.
+  ADMINISTRATOR
+  /// A user who can access student, teacher, and administrator role views.
+  SUPERUSER
 }
 
 /// A user.
@@ -32,7 +34,7 @@ model User {
   /// The user's role.
   roles               Role      @default(STUDENT)
   /// The ID of the user's teacher if they are a student.
-  teacherId           Int?      @unique
+  teacherId           Int?
   /// The user's first name.
   firstName           String
   /// The user's last name.
@@ -79,15 +81,17 @@ model Game {
 
   // GAMEPLAY INFO
   /// The number of words played per phoneme. The actual number of words played will be this number times the number of phonemes, or less if there are not enough words.
-  wordsPerPhoneme Int
+  wordsPerPhoneme  Int
   /// The phonemes to test the user on.
-  phonemes        Int[]
+  phonemes         Int[]
   /// The current level of the game. Levels are unique to each game type, but all start at 1.
-  level           Int     @default(1)
+  level            Int     @default(1)
   /// If the game is complete.
-  complete        Boolean @default(false)
+  complete         Boolean @default(false)
   /// The current word being played.
-  currentWordId   Int?
+  currentWordId    Int?
+  /// The number of incorrect guesses the user has made.
+  incorrectGuesses Int     @default(0)
 
   // RELATIONSHIP INFO
   /// The user who is playing the game.

@@ -15,7 +15,7 @@ import { useRef } from 'react'
 import { useAuth } from 'src/auth'
 
 const SignupPage = () => {
-  const { isAuthenticated, signUp } = useAuth()
+  const { isAuthenticated, signUp, loading } = useAuth()
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -92,7 +92,9 @@ const SignupPage = () => {
           <FieldError name="new-password" className="text-sm text-error" />
         </div>
 
-        <Submit className="btn-primary btn my-2 block">Sign Up</Submit>
+        <Submit className={`btn-primary btn my-2 ${loading ? 'loading' : ''}`}>
+          Sign Up
+        </Submit>
         <p className="text-sm">
           Already have an account?{' '}
           <Link to={routes.login()} className="link-hover link">
