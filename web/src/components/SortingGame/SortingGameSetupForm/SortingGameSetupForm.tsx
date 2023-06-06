@@ -98,10 +98,10 @@ const SortingGameSetupForm = (props: SortingGameSetupFormProps) => {
           <span className="label-text">Phonemes</span>
         </Label>
 
-        <div className="flex">
+        <div className="flex flex-col">
           <SelectField
             name="first_phoneme"
-            className="select-bordered select mr-2 w-full"
+            className="select-bordered select mb-2 w-full"
             validation={{
               required: true,
               valueAsNumber: true,
@@ -112,10 +112,9 @@ const SortingGameSetupForm = (props: SortingGameSetupFormProps) => {
               },
             }}
             onChange={handlePhonemeOneChange}
+            defaultChecked
           >
-            <option disabled selected>
-              Select a Phoneme
-            </option>
+            <option>Select a Phoneme</option>
             {PHONEME_OPTIONS.map((p) => (
               <option key={p.id} value={p.id}>
                 {p.name}
@@ -124,7 +123,7 @@ const SortingGameSetupForm = (props: SortingGameSetupFormProps) => {
           </SelectField>
           <SelectField
             name="second_phoneme"
-            className="select-bordered select ml-2 w-full"
+            className="select-bordered select mb-2 w-full"
             validation={{
               required: true,
               valueAsNumber: true,
@@ -134,10 +133,9 @@ const SortingGameSetupForm = (props: SortingGameSetupFormProps) => {
                 },
               },
             }}
+            defaultChecked
           >
-            <option disabled selected>
-              Select a Phoneme
-            </option>
+            <option>Select a Phoneme</option>
             {availableOptions.map((p) => (
               <option key={p.id} value={p.id}>
                 {p.name}
