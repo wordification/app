@@ -61,7 +61,7 @@ const SuperuserViewSelector = () => {
           </li>
         </ul>
       </div>
-      <h1 className="ml-2 font-bold normal-case">
+      <h1 className="ml-2 hidden font-bold normal-case lg:block">
         CURRENT ROLE: {'\u00A0\u00A0'}
         {role}
       </h1>
