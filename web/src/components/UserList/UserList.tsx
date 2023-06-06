@@ -83,14 +83,16 @@ const UserList = ({ users }: FindExistingUsers) => {
                   >
                     Update
                   </Link>
-                  <button
-                    type="button"
-                    title={'Delete User ' + user.id}
-                    className="btn-outline btn-error btn-xs btn"
-                    onClick={() => onDeleteClick(user)}
-                  >
-                    Delete
-                  </button>
+                  {user.roles !== 'SUPERUSER' && (
+                    <button
+                      type="button"
+                      title={'Delete User ' + user.id}
+                      className="btn-outline btn-error btn-xs btn"
+                      onClick={() => onDeleteClick(user)}
+                    >
+                      Delete
+                    </button>
+                  )}
                 </nav>
               </td>
               <td>{truncate(user.id)}</td>
