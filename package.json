@@ -32,5 +32,8 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
+  },
+  "dependencies": {
+    "react-hook-form": "^7.44.3"
   }
 }
