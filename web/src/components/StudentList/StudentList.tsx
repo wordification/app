@@ -55,9 +55,9 @@ const StudentList = ({ currentStudents }: GetCurrentStudents) => {
           currentStudents?.filter(
             (student) =>
               student.id.toString().includes(data.searchString) ||
-              student.email.includes(data.searchString) ||
-              student.firstName.includes(data.searchString) ||
-              student.lastName.includes(data.searchString)
+              student.email.toLowerCase().includes(data.searchString) ||
+              student.firstName.toLowerCase().includes(data.searchString) ||
+              student.lastName.toLowerCase().includes(data.searchString)
           )
         )
     }
@@ -97,7 +97,7 @@ const StudentList = ({ currentStudents }: GetCurrentStudents) => {
               defaultChecked
               name="searchField"
             >
-              <option>All fields</option>
+              <option>All Fields</option>
               <option>ID</option>
               <option>Email</option>
               <option>Last Name</option>

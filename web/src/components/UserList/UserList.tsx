@@ -105,7 +105,7 @@ const UserList = ({ users }: FindExistingUsers) => {
       case 'Role':
         setDisplayUsers(
           users.filter((user) =>
-            user.roles.toLowerCase().includes(data.searchString)
+            user.roles.toString().toLowerCase().includes(data.searchString)
           )
         )
         break
@@ -121,10 +121,10 @@ const UserList = ({ users }: FindExistingUsers) => {
           users.filter(
             (user) =>
               user.id.toString().includes(data.searchString) ||
-              user.email.includes(data.searchString) ||
-              user.firstName.includes(data.searchString) ||
-              user.lastName.includes(data.searchString) ||
-              user.roles.includes(data.searchString) ||
+              user.email.toLowerCase().includes(data.searchString) ||
+              user.firstName.toLowerCase().includes(data.searchString) ||
+              user.lastName.toLowerCase().includes(data.searchString) ||
+              user.roles.toString().toLowerCase().includes(data.searchString) ||
               user.teacherId?.toString().includes(data.searchString)
           )
         )
