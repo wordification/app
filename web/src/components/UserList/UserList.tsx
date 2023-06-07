@@ -76,13 +76,15 @@ const UserList = ({ users }: FindExistingUsers) => {
             <tr key={user.id}>
               <td>
                 <nav className="btn-group">
-                  <Link
-                    to={routes.updateUser({ id: user.id })}
-                    title={'Update User ' + user.id}
-                    className="btn-outline btn-primary btn-xs btn mr-1"
-                  >
-                    Update
-                  </Link>
+                  {user.roles !== 'SUPERUSER' && (
+                    <Link
+                      to={routes.updateUser({ id: user.id })}
+                      title={'Update User ' + user.id}
+                      className="btn-outline btn-primary btn-xs btn mr-1"
+                    >
+                      Update
+                    </Link>
+                  )}
                   {user.roles !== 'SUPERUSER' && (
                     <button
                       type="button"
