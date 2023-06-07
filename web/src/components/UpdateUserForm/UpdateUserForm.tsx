@@ -156,7 +156,7 @@ const UpdateUserForm = ({ id }: UpdateUserFormProps) => {
                 message: 'A role is required.',
               },
               validate: {
-                matchesInitialValue: (value) => {
+                matchesInitialValue: (value: string) => {
                   return value !== '--Select a role--'
                 },
               },
