@@ -9,11 +9,11 @@ import {
   SelectField,
   Submit,
   TextField,
-  useForm,
 } from '@redwoodjs/forms'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
 
 import type { BaseUserInput, CreateUserMutation } from 'types/graphql'
 
@@ -156,7 +156,7 @@ const CreateUserForm = () => {
                 message: 'A role is required.',
               },
               validate: {
-                matchesInitialValue: (value) => {
+                matchesInitialValue: (value: string) => {
                   return value !== '--Select a role--'
                 },
               },
