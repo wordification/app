@@ -21,7 +21,7 @@ export const schema = gql`
     wordsPerPhoneme: Int!
 
     "The phonemes to test the user on."
-    phonemes: [Int]!
+    phonemes: [Int!]!
 
     "The unique identifier of the user the game setups are associated with."
     userId: Int!
@@ -70,6 +70,17 @@ export const schema = gql`
   }
 
   """
+  Input for upserting game setups.
+  """
+  input UpsertGameSetupInput {
+    "The number of words per phoneme in a game."
+    wordsPerPhoneme: Int
+
+    "The phonemes in a game."
+    phonemes: [Int]
+  }
+
+  """
   Mutations for game setups.
   """
   type Mutation {
@@ -80,6 +91,12 @@ export const schema = gql`
     "Updates a game setup."
     updateGameSetup(id: Int!, input: UpdateGameSetupInput!): GameSetup!
       @requireAuth(roles: ["TEACHER", "SUPERUSER"])
+
+    "Upserts a game setup."
+    upsertGameSetup(
+      input: UpsertGameSetupInput!
+      studentId: Int
+    ): [GameSetup!]! @requireAuth(roles: ["TEACHER", "SUPERUSER"])
 
     "Deletes a game setup."
     deleteGameSetup(id: Int!): GameSetup!

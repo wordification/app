@@ -120,7 +120,7 @@ model GameSetup {
   /// The phonemes to test the user on.
   phonemes          Int[]
   /// The unique identifier of the user the game rules are associated with.
-  userId            Int
+  userId            Int       @unique
 
   // RELATIONSHIP INFO
   /// The user who is associated with the game rules set by a teacher.
