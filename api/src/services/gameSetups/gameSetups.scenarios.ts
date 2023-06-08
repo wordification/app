@@ -1,15 +1,15 @@
-import type { Prisma, GameRulesToUser } from '@prisma/client'
+import type { Prisma, GameSetup } from '@prisma/client'
 import type { ScenarioData } from '@redwoodjs/testing/api'
 
-export const standard = defineScenario<Prisma.GameRulesToUserCreateArgs>({
-  gameRulesToUser: {
+export const standard = defineScenario<Prisma.GameSetupCreateArgs>({
+  gameSetup: {
     one: {
       data: {
-        wordsPerPhoneme: 1048915,
-        phonemes: 4717337,
+        wordsPerPhoneme: 4955654,
+        phonemes: 8867444,
         user: {
           create: {
-            email: 'String9843569',
+            email: 'String3896368',
             firstName: 'String',
             lastName: 'String',
             hashedPassword: 'String',
@@ -20,11 +20,11 @@ export const standard = defineScenario<Prisma.GameRulesToUserCreateArgs>({
     },
     two: {
       data: {
-        wordsPerPhoneme: 7347334,
-        phonemes: 628073,
+        wordsPerPhoneme: 1709650,
+        phonemes: 8483172,
         user: {
           create: {
-            email: 'String6948520',
+            email: 'String9818619',
             firstName: 'String',
             lastName: 'String',
             hashedPassword: 'String',
@@ -36,4 +36,4 @@ export const standard = defineScenario<Prisma.GameRulesToUserCreateArgs>({
   },
 })
 
-export type StandardScenario = ScenarioData<GameRulesToUser, 'gameRulesToUser'>
+export type StandardScenario = ScenarioData<GameSetup, 'gameSetup'>

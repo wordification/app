@@ -56,7 +56,7 @@ model User {
   /// All of the user's students if they are a teacher.
   students          User[]            @relation("teacher")
   /// All of the game specifications for all of a user's students if they are a teacher.
-  gameRulesToStudents GameRulesToUser[] @relation("gameRulesToStudents")
+  gameSetup         GameSetup[]       @relation("gameSetup")
 }
 
 /// Possible game types.
@@ -107,7 +107,7 @@ model Game {
 }
 
 /// Game rules set for an individual student.
-model GameRulesToUser {
+model GameSetup {
   // BASIC INFO
   /// The unique identifier of the game rules for a user.
   id                Int       @id @default(autoincrement())
@@ -124,7 +124,7 @@ model GameRulesToUser {
 
   // RELATIONSHIP INFO
   /// The user who is associated with the game rules set by a teacher.
-  user              User      @relation("gameRulesToStudents", fields: [userId], references: [id])
+  user              User      @relation("gameSetup", fields: [userId], references: [id])
 }
 
 /// A word.
