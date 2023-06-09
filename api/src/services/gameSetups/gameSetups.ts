@@ -72,18 +72,20 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
   })
 
   if (studentId) {
-    return db.gameSetup.upsert({
-      where: { userId: studentId },
-      create: {
-        wordsPerPhoneme,
-        phonemes,
-        userId: studentId,
-      },
-      update: {
-        wordsPerPhoneme,
-        phonemes,
-      },
-    })
+    return [
+      db.gameSetup.upsert({
+        where: { userId: studentId },
+        create: {
+          wordsPerPhoneme,
+          phonemes,
+          userId: studentId,
+        },
+        update: {
+          wordsPerPhoneme,
+          phonemes,
+        },
+      }),
+    ]
   } else {
     const teacher = await db.user.findUnique({
       where: {
