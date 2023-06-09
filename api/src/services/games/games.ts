@@ -1,3 +1,5 @@
+import { validate } from '@redwoodjs/api'
+
 import { requireAuth } from 'src/lib/auth'
 import { db } from 'src/lib/db'
 
@@ -61,11 +63,12 @@ export const createGame: MutationResolvers['createGame'] = async ({
     where: { userId: context.currentUser.id },
   })
 
-  if (!gameSetup) {
-    throw new Error(
-      'There is no Game Setup for this user!\nYour teacher must add a game setup.'
-    )
-  }
+  validate(gameSetup, {
+    presence: {
+      message:
+        'There is no Game Setup for this user!\nYour teacher must add a Game Setup.',
+    },
+  })
 
   const phonemes = gameSetup?.phonemes ?? []
   const wordsPerPhoneme = gameSetup?.wordsPerPhoneme ?? 0
