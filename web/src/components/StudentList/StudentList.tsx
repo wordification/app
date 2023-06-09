@@ -123,13 +123,22 @@ const StudentList = ({ currentStudents }: GetCurrentStudents) => {
             {displayStudents?.map((student) => (
               <tr key={student.id}>
                 <td>
-                  <Link
-                    to={routes.studentProfile({ id: student.id })}
-                    title={'Student Profile ' + student.id}
-                    className="btn-outline btn-primary btn-xs btn"
-                  >
-                    View Student
-                  </Link>
+                  <nav className="btn-group">
+                    <Link
+                      to={routes.studentProfile({ id: student.id })}
+                      title={'Student Profile ' + student.id}
+                      className="join-item btn-outline btn-primary btn-xs btn mr-1"
+                    >
+                      View Student
+                    </Link>
+                    <Link
+                      to={routes.classGameSetup({ id: student.id })}
+                      title={'Game Setup ' + student.id}
+                      className="join-item btn-outline btn-accent btn-xs btn"
+                    >
+                      Edit Game Setup
+                    </Link>
+                  </nav>
                 </td>
                 <td>{student.id}</td>
                 <td>{student.firstName}</td>
