@@ -55,8 +55,8 @@ model User {
   teacher           User?             @relation("teacher", fields: [teacherId], references: [id])
   /// All of the user's students if they are a teacher.
   students          User[]            @relation("teacher")
-  /// All of the game specifications for all of a user's students if they are a teacher.
-  gameSetup         GameSetup[]       @relation("gameSetup")
+  /// The user's game setup.
+  gameSetup         GameSetup?       @relation("gameSetup")
 }
 
 /// Possible game types.
