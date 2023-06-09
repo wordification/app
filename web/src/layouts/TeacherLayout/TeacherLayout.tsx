@@ -18,6 +18,10 @@ const MENU_ITEMS = [
     label: 'My Class',
   },
   {
+    to: '/dashboard/class-game-setup',
+    label: 'Class Game Setup',
+  },
+  {
     type: 'signout',
   },
 ] as const

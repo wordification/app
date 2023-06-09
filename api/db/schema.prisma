@@ -50,11 +50,13 @@ model User {
 
   // RELATIONSHIP INFO
   /// All of the user's games.
-  games    Game[]
+  games             Game[]
   // The user's teacher if they are a student.
-  teacher  User?  @relation("teacher", fields: [teacherId], references: [id])
+  teacher           User?             @relation("teacher", fields: [teacherId], references: [id])
   /// All of the user's students if they are a teacher.
-  students User[] @relation("teacher")
+  students          User[]            @relation("teacher")
+  /// The user's game setup.
+  gameSetup         GameSetup?       @relation("gameSetup")
 }
 
 /// Possible game types.
@@ -102,6 +104,27 @@ model Game {
   allWords        Word[] @relation("allGames")
   /// All of the words that have not been played in the game.
   incompleteWords Word[] @relation("incompleteGames")
+}
+
+/// Game rules set for an individual student.
+model GameSetup {
+  // BASIC INFO
+  /// The unique identifier of the game rules for a user.
+  id                Int       @id @default(autoincrement())
+  /// The time at which the game was created.
+  createdAt         DateTime  @default(now())
+  /// The time at which the game was last updated.
+  updatedAt         DateTime  @default(now()) @updatedAt
+  /// The number of words played per phoneme. The actual number of words played will be this number times the number of phonemes, or less if there are not enough words.
+  wordsPerPhoneme   Int
+  /// The phonemes to test the user on.
+  phonemes          Int[]
+  /// The unique identifier of the user the game rules are associated with.
+  userId            Int       @unique
+
+  // RELATIONSHIP INFO
+  /// The user who is associated with the game rules set by a teacher.
+  user              User      @relation("gameSetup", fields: [userId], references: [id])
 }
 
 /// A word.

@@ -8,9 +8,9 @@ const DASHBOARD_ITEMS = [
     to: routes.students(),
   },
   {
-    title: '',
-    content: 'Additional dashboard items coming soon...',
-    to: '',
+    title: 'Class Game Setup',
+    content: 'Set game rules/specifications for your entire class',
+    to: routes.classGameSetup(),
   },
 ] as const
 

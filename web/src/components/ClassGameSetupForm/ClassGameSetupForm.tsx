@@ -1,25 +1,25 @@
 import {
+  FieldError,
   Form,
   FormError,
-  FieldError,
   Label,
   NumberField,
-  Submit,
   SelectField,
+  Submit,
 } from '@redwoodjs/forms'
 import { useState } from 'react'
 
 import type { RWGqlError } from '@redwoodjs/forms'
-import type { CreateGameInput, Game, Scalars } from 'types/graphql'
+import type { UpsertGameSetupInput, GameSetup, Scalars } from 'types/graphql'
 
-type FormGame = NonNullable<Omit<Game, 'phonemes'>> & {
+type FormGame = NonNullable<Omit<GameSetup, 'phonemes'>> & {
   /** Input fields to form the phonemes to test the user on. */
   first_phoneme?: Array<Scalars['Int']>
   second_phoneme?: Array<Scalars['Int']>
 }
 
-type SortingGameSetupFormProps = {
-  onSave: (data: CreateGameInput) => void
+type ClassGameSetupFormProps = {
+  onSave: (data: UpsertGameSetupInput) => void
   error?: RWGqlError
   loading: boolean
 }
@@ -36,7 +36,7 @@ const PHONEME_OPTIONS = [
   { id: 53, name: 'Long O' },
 ] as const
 
-const SortingGameSetupForm = (props: SortingGameSetupFormProps) => {
+const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
   const [availableOptions, setAvailableOptions] =
     useState<readonly Phoneme[]>(PHONEME_OPTIONS)
 
@@ -157,4 +157,4 @@ const SortingGameSetupForm = (props: SortingGameSetupFormProps) => {
   )
 }
 
-export default SortingGameSetupForm
+export default ClassGameSetupForm
