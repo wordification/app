@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { Link, routes } from '@redwoodjs/router'
+import { Link, routes, useLocation } from '@redwoodjs/router'
 
 import { useAuth } from 'src/auth'
 
@@ -42,13 +42,17 @@ const NavbarItem = ({ item }: { item: MenuItem }) => (
 
 const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
   const { hasRole } = useAuth()
+  const location = useLocation()
+  const isRootPath = location.pathname === '/'
   const roleRoute = hasRole('SUPERUSER')
     ? routes.superuserDashboard()
     : hasRole('ADMINISTRATOR')
     ? routes.adminDashboard()
     : hasRole('TEACHER')
     ? routes.dashboard()
-    : routes.games()
+    : hasRole('STUDENT')
+    ? routes.games()
+    : routes.landing()
   return (
     <nav className="navbar">
       <div className="navbar-start">
@@ -71,7 +75,7 @@ const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
           </label>
           <ul
             tabIndex={0}
-            className="menu-sm dropdown-content menu rounded-box mt-3 w-52 bg-secondary p-2 shadow"
+            className="dropdown-content menu rounded-box menu-sm mt-3 w-52 bg-secondary p-2 shadow"
           >
             {items.map((item) => (
               <NavbarItem
@@ -87,7 +91,7 @@ const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
         >
           Wordification
         </Link>
-        {hasRole('SUPERUSER') && <SuperuserViewSelector />}
+        {hasRole('SUPERUSER') && !isRootPath && <SuperuserViewSelector />}
       </div>
       <div className="navbar-end">
         <div className="hidden lg:flex">

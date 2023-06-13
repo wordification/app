@@ -25,13 +25,13 @@ const SuperuserViewSelector = () => {
 
   return (
     <>
-      <div className="dropdown dropdown-end">
+      <div className="dropdown-end dropdown z-50">
         <label tabIndex={0} className="btn-primary rounded-btn btn m-1">
           Select Role
         </label>
         <ul
           tabIndex={0}
-          className="dropdown-content menu rounded-box mt-4 w-52 bg-secondary p-2 shadow"
+          className="dropdown-content menu rounded-box z-50 mt-4 w-52 bg-secondary p-2 shadow"
         >
           <li>
             <Link

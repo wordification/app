@@ -20,6 +20,7 @@ import TeacherLayout from './layouts/TeacherLayout/TeacherLayout'
 const Routes = () => {
   return (
     <Router useAuth={useAuth}>
+      <Route path="/" page={LandingPage} name="landing" />
       <Set wrap={AuthLayout}>
         <Route path="/login" page={AuthLoginPage} name="login" />
         <Route path="/forgot-password" page={AuthForgotPasswordPage} name="forgotPassword" />
@@ -37,7 +38,6 @@ const Routes = () => {
           <Route path="/games/matching" page={MatchingGamePage} name="matchingGame" />
           <Route path="/games" page={GamesPage} name="games" />
           <Route path="/profile" page={ProfilePage} name="profile" />
-          <Route path="/" page={HomePage} name="home" />
         </Set>
       </Private>
       <Private unauthenticated="login" roles={['TEACHER', 'SUPERUSER']}>

@@ -17,7 +17,7 @@
     "@redwoodjs/forms": "5.3.0",
     "@redwoodjs/router": "5.3.0",
     "@redwoodjs/web": "5.3.0",
-    "daisyui": "^2.51.6",
+    "daisyui": "^3.1.0",
     "howler": "^2.2.3",
     "humanize-string": "2.1.0",
     "prop-types": "15.8.1",
