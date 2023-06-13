@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { Link, routes } from '@redwoodjs/router'
+import { Link, routes, useLocation } from '@redwoodjs/router'
 
 import { useAuth } from 'src/auth'
 
@@ -42,6 +42,8 @@ const NavbarItem = ({ item }: { item: MenuItem }) => (
 
 const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
   const { hasRole } = useAuth()
+  const location = useLocation()
+  const isRootPath = location.pathname === '/'
   const roleRoute = hasRole('SUPERUSER')
     ? routes.superuserDashboard()
     : hasRole('ADMINISTRATOR')
@@ -89,7 +91,7 @@ const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
         >
           Wordification
         </Link>
-        {hasRole('SUPERUSER') && <SuperuserViewSelector />}
+        {hasRole('SUPERUSER') && !isRootPath && <SuperuserViewSelector />}
       </div>
       <div className="navbar-end">
         <div className="hidden lg:flex">
