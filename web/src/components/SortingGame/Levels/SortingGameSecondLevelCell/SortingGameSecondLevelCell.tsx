@@ -59,7 +59,7 @@ export const Success = ({
   FindSortingGameSecondLevelQueryVariables
 >) => {
   const [files, setFiles] = useState(sortingGameSecondLevel.audio)
-  const [gradeLevel, { loading }] = useMutation<GradeLevelTwoMutation>(
+  const [gradeLevel, { loading, client }] = useMutation<GradeLevelTwoMutation>(
     GRADE_LEVEL_TWO_MUTATION,
     {
       onCompleted: ({ sortingGameGradeSecondLevel }) => {
@@ -84,12 +84,12 @@ export const Success = ({
       // This refetches the query. Read more about other ways to
       // update the cache over here:
       // https://www.apollographql.com/docs/react/data/mutations/#making-all-other-cache-updates
-      refetchQueries: [
-        {
-          query: LEVEL_QUERY,
-          variables: { id: sortingGameSecondLevel.game.id },
-        },
-      ],
+      // refetchQueries: [
+      //   {
+      //     query: LEVEL_QUERY,
+      //     variables: { id: sortingGameSecondLevel.game.id },
+      //   },
+      // ],
       awaitRefetchQueries: true,
     }
   )
@@ -103,8 +103,21 @@ export const Success = ({
     })
   }
 
+  const handleComplete = async () => {
+    await client.query({
+      query: LEVEL_QUERY,
+      variables: { id: sortingGameSecondLevel.game.id },
+      notifyOnNetworkStatusChange: true,
+      // fetchPolicy: 'network-only',
+    })
+  }
+
   return (
-    <GameCard title="Click on the correct vowel sound." files={files}>
+    <GameCard
+      title="Click on the correct vowel sound."
+      files={files}
+      onComplete={() => handleComplete()}
+    >
       <div className="grid grid-cols-2 gap-4">
         {sortingGameSecondLevel.graphemes.map((grapheme) => (
           <button

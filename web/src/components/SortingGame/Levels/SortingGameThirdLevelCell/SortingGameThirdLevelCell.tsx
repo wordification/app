@@ -59,9 +59,8 @@ export const Success = ({
   FindSortingGameThirdLevelQueryVariables
 >) => {
   const [files, setFiles] = useState(sortingGameThirdLevel.audio)
-  const [gradeLevel, { loading, error }] = useMutation<GradeLevelThreeMutation>(
-    GRADE_LEVEL_THREE_MUTATION,
-    {
+  const [gradeLevel, { loading, client, error }] =
+    useMutation<GradeLevelThreeMutation>(GRADE_LEVEL_THREE_MUTATION, {
       onCompleted: ({ sortingGameGradeThirdLevel }) => {
         switch (sortingGameGradeThirdLevel.status) {
           case 'CORRECT':
@@ -84,15 +83,14 @@ export const Success = ({
       // This refetches the query. Read more about other ways to
       // update the cache over here:
       // https://www.apollographql.com/docs/react/data/mutations/#making-all-other-cache-updates
-      refetchQueries: [
-        {
-          query: LEVEL_QUERY,
-          variables: { id: sortingGameThirdLevel.game.id },
-        },
-      ],
+      // refetchQueries: [
+      //   {
+      //     query: LEVEL_QUERY,
+      //     variables: { id: sortingGameThirdLevel.game.id },
+      //   },
+      // ],
       awaitRefetchQueries: true,
-    }
-  )
+    })
 
   const handleSubmit = (
     input: Omit<GradeLevelThreeMutationVariables, 'gameId'>
@@ -106,8 +104,21 @@ export const Success = ({
     })
   }
 
+  const handleComplete = async () => {
+    await client.query({
+      query: LEVEL_QUERY,
+      variables: { id: sortingGameThirdLevel.game.id },
+      notifyOnNetworkStatusChange: true,
+      // fetchPolicy: 'network-only',
+    })
+  }
+
   return (
-    <GameCard title="Spell the word." files={files}>
+    <GameCard
+      title="Spell the word."
+      files={files}
+      onComplete={() => handleComplete()}
+    >
       <SortingGameThirdLevelForm
         onSubmit={handleSubmit}
         loading={loading}

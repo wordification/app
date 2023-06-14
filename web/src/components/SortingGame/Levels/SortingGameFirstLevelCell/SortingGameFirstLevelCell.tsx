@@ -112,6 +112,7 @@ export const Success = ({
       // fetchPolicy: 'network-only',
     })
   }
+
   return (
     <GameCard
       title="Click on the correct vowel sound."
