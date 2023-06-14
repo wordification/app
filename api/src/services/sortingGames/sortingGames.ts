@@ -2,6 +2,7 @@ import { db } from 'src/lib/db'
 
 import {
   getGrapheme,
+  getLetter,
   getPhoneme,
   getSortingGamePhrase,
   getSortingGameSentence,
@@ -210,19 +211,21 @@ const handleGrade = async ({
   incorrectGuesses,
   correct,
   incorrectAudio,
+  correctAudio,
 }: {
   gameId: number
   gameLevel: number
   incorrectGuesses: number
   correct: boolean
   incorrectAudio: string[] | undefined
+  correctAudio: string[] | undefined
 }) => {
   if (correct) {
     await advanceLevel(gameId, gameLevel)
 
     return {
       status: 'CORRECT' as const,
-      audio: [getSortingGamePhrase('correct')],
+      audio: correctAudio,
     }
   }
 
@@ -268,6 +271,12 @@ export const sortingGameGradeFirstLevel: MutationResolvers['sortingGameGradeFirs
         getSortingGameWord(game.currentWord.word),
         getSortingGamePhrase('incorrect_try'),
       ],
+      correctAudio: [
+        getSortingGamePhrase('correct'),
+        getPhoneme(phoneme),
+        getSortingGamePhrase('correct_vsound'),
+        getSortingGameWord(game.currentWord.word),
+      ],
     })
   }
 
@@ -300,6 +309,15 @@ export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSec
         getSortingGameWord(game.currentWord.word),
         getSortingGamePhrase('tryagain'),
       ],
+      correctAudio: [
+        getSortingGamePhrase('correct'),
+        getSortingGamePhrase('the'),
+        getPhoneme(game.currentWord.testedPhonemes[0]),
+        getSortingGamePhrase('in'),
+        getSortingGameWord(game.currentWord.word),
+        getSortingGamePhrase('spelled_with'),
+        getGrapheme(grapheme),
+      ],
     })
   }
 
@@ -320,6 +338,11 @@ export const sortingGameGradeThirdLevel: MutationResolvers['sortingGameGradeThir
       throw new Error('Current word not selected')
     }
 
+    const lettersInWord = Array.from(game.currentWord.word.toLowerCase().trim())
+    const letters = lettersInWord.map((letter) => {
+      return getLetter(letter)
+    })
+
     return handleGrade({
       gameId: game.id,
       gameLevel: game.level,
@@ -335,6 +358,13 @@ export const sortingGameGradeThirdLevel: MutationResolvers['sortingGameGradeThir
         getSortingGamePhrase('and_spelled_with'),
         getGrapheme(game.currentWord.testedGraphemes[0]),
         getSortingGamePhrase('tryagain'),
+      ],
+      correctAudio: [
+        getSortingGamePhrase('correct'),
+        getSortingGameWord(game.currentWord.word),
+        getSortingGamePhrase('is_spelled'),
+        ...letters,
+        getSortingGamePhrase('good_job'),
       ],
     })
   }

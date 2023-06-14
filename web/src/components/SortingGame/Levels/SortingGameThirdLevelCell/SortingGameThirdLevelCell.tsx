@@ -58,12 +58,14 @@ export const Success = ({
   FindSortingGameThirdLevelQuery,
   FindSortingGameThirdLevelQueryVariables
 >) => {
+  const [playingAudio, setPlayingAudio] = useState(false)
   const [files, setFiles] = useState(sortingGameThirdLevel.audio)
   const [gradeLevel, { loading, client, error }] =
     useMutation<GradeLevelThreeMutation>(GRADE_LEVEL_THREE_MUTATION, {
       onCompleted: ({ sortingGameGradeThirdLevel }) => {
         switch (sortingGameGradeThirdLevel.status) {
           case 'CORRECT':
+            setPlayingAudio(true)
             toast.success('Correct!')
             break
           case 'INCORRECT':
@@ -121,7 +123,7 @@ export const Success = ({
     >
       <SortingGameThirdLevelForm
         onSubmit={handleSubmit}
-        loading={loading}
+        loading={loading || playingAudio}
         error={error}
       />
     </GameCard>

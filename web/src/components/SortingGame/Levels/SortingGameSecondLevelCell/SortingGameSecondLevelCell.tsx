@@ -58,6 +58,7 @@ export const Success = ({
   FindSortingGameSecondLevelQuery,
   FindSortingGameSecondLevelQueryVariables
 >) => {
+  const [playingAudio, setPlayingAudio] = useState(false)
   const [files, setFiles] = useState(sortingGameSecondLevel.audio)
   const [gradeLevel, { loading, client }] = useMutation<GradeLevelTwoMutation>(
     GRADE_LEVEL_TWO_MUTATION,
@@ -65,6 +66,7 @@ export const Success = ({
       onCompleted: ({ sortingGameGradeSecondLevel }) => {
         switch (sortingGameGradeSecondLevel.status) {
           case 'CORRECT':
+            setPlayingAudio(true)
             toast.success('Correct!')
             break
           case 'INCORRECT':
@@ -124,7 +126,7 @@ export const Success = ({
             className="btn-secondary btn normal-case"
             type="button"
             onClick={() => handleClick(grapheme)}
-            disabled={loading}
+            disabled={loading || playingAudio}
             key={grapheme}
           >
             {grapheme}
