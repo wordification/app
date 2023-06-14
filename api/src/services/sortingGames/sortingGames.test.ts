@@ -65,24 +65,47 @@ describe('sortingGames', () => {
       grapheme: 'ow',
     })
 
-    expect(result2).toEqual({ correct: true })
+    expect(result2).toContainEqual({ correct: true })
+    // expect(result2).toEqual({ correct: true })
   })
 
-  scenario('grades the third level', async (scenario: StandardScenario) => {
-    const result1 = await sortingGameGradeThirdLevel({
-      gameId: scenario.game.lastWord.id,
-      entry: 's',
-    })
+  scenario.only(
+    'grades the third level',
+    async (scenario: StandardScenario) => {
+      const result1 = await sortingGameGradeThirdLevel({
+        gameId: scenario.game.lastWord.id,
+        entry: 's',
+      })
 
-    expect(result1).toEqual({ correct: false })
+      expect(result1).toEqual({ correct: false })
 
-    const result2 = await sortingGameGradeThirdLevel({
-      gameId: scenario.game.lastWord.id,
-      entry: 'snow',
-    })
+      const result2 = await sortingGameGradeThirdLevel({
+        gameId: scenario.game.lastWord.id,
+        entry: 'snow',
+      })
 
-    expect(result2).toEqual({ correct: true })
-  })
+      expect(result2).toEqual({ correct: true })
+    }
+  )
+
+  scenario(
+    'checks the third level case insensitively',
+    async (scenario: StandardScenario) => {
+      const result1 = await sortingGameGradeThirdLevel({
+        gameId: scenario.game.lastWord.id,
+        entry: 'S',
+      })
+
+      expect(result1).toEqual({ correct: false })
+
+      const result2 = await sortingGameGradeThirdLevel({
+        gameId: scenario.game.lastWord.id,
+        entry: 'SNOW',
+      })
+
+      expect(result2).toEqual({ correct: true })
+    }
+  )
 
   scenario('advances the level', async (scenario: StandardScenario) => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

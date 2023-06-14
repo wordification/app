@@ -41,6 +41,9 @@ export const schema = gql`
     "The current word being played."
     currentWordId: Int
 
+    "The number of incorrect guesses the user has made."
+    incorrectGuesses: Int!
+
     "The user who is playing the game."
     user: User!
 
@@ -96,10 +99,10 @@ export const schema = gql`
     type: GameType!
 
     "The number of words played per phoneme. The actual number of words played will be this number times the number of phonemes, or less if there are not enough words."
-    wordsPerPhoneme: Int!
+    wordsPerPhoneme: Int
 
     "The phonemes to test the user on."
-    phonemes: [Int!]!
+    phonemes: [Int!]
 
     "The current word being played."
     currentWordId: Int

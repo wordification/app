@@ -14,11 +14,13 @@ import AdministratorLayout from 'src/layouts/AdministratorLayout/AdministratorLa
 import AuthLayout from 'src/layouts/AuthLayout/AuthLayout'
 import GlobalLayout from 'src/layouts/GlobalLayout/GlobalLayout'
 
+import SuperuserLayout from './layouts/SuperuserLayout/SuperuserLayout'
 import TeacherLayout from './layouts/TeacherLayout/TeacherLayout'
 
 const Routes = () => {
   return (
     <Router useAuth={useAuth}>
+      <Route path="/" page={LandingPage} name="landing" />
       <Set wrap={AuthLayout}>
         <Route path="/login" page={AuthLoginPage} name="login" />
         <Route path="/forgot-password" page={AuthForgotPasswordPage} name="forgotPassword" />
@@ -36,24 +38,29 @@ const Routes = () => {
           <Route path="/games/matching" page={MatchingGamePage} name="matchingGame" />
           <Route path="/games" page={GamesPage} name="games" />
           <Route path="/profile" page={ProfilePage} name="profile" />
-          <Route path="/about" page={AboutPage} name="about" />
-          <Route path="/" page={HomePage} name="home" />
         </Set>
       </Private>
-      <Private unauthenticated="login" roles="TEACHER">
+      <Private unauthenticated="login" roles={['TEACHER', 'SUPERUSER']}>
         <Set wrap={TeacherLayout}>
+          <Route path="/dashboard/class-game-setup" page={DashboardClassGameSetupPage} name="classGameSetup" />
           <Route path="/dashboard/students/{id:Int}/games" page={DashboardStudentGamesPage} name="studentGames" />
           <Route path="/dashboard/students/{id:Int}" page={DashboardStudentProfilePage} name="studentProfile" />
           <Route path="/dashboard/students" page={DashboardStudentsPage} name="students" />
           <Route path="/dashboard" page={DashboardPage} name="dashboard" />
         </Set>
       </Private>
-      <Private unauthenticated="login" roles="ADMINISTRATOR">
+      <Private unauthenticated="login" roles={['ADMINISTRATOR', 'SUPERUSER']}>
         <Set wrap={AdministratorLayout}>
           <Route path="/admin/update-user/{id:Int}" page={AdminUpdateUserPage} name="updateUser" />
           <Route path="/admin/modify-user" page={AdminModifyUserPage} name="modifyUser" />
           <Route path="/admin/create-user" page={AdminCreateUserPage} name="createUser" />
           <Route path="/admin" page={AdminDashboardPage} name="adminDashboard" />
+        </Set>
+      </Private>
+      <Private unauthenticated="login" roles="SUPERUSER">
+        <Set wrap={SuperuserLayout}>
+          <Route path="/demo/about" page={AboutPage} name="about" />
+          <Route path="/demo" page={HomePage} name="superuserDashboard" />
         </Set>
       </Private>
       <Route notfound page={NotFoundPage} />
