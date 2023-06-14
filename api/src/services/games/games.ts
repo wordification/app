@@ -1,6 +1,5 @@
 import { validate } from '@redwoodjs/api'
 
-import { requireAuth } from 'src/lib/auth'
 import { db } from 'src/lib/db'
 
 import { selectGameWords } from '../words/words'
@@ -101,9 +100,6 @@ export const createGame: MutationResolvers['createGame'] = async ({
 }
 
 export const deleteGame: MutationResolvers['deleteGame'] = ({ id }) => {
-  requireAuth({
-    roles: 'TEACHER',
-  })
   return db.game.delete({
     where: { id },
   })

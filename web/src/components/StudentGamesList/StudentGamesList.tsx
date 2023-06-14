@@ -92,11 +92,11 @@ const StudentGamesList = ({
               <td>{truncate(game.level)}</td>
               <td>{game.complete ? 'Y' : 'N'}</td>
               <td>
-                {hasRole('TEACHER') && (
+                {(hasRole('TEACHER') || hasRole('SUPERUSER')) && (
                   <button
                     type="button"
                     title={'Delete game ' + game.id}
-                    className="btn-outline btn-error btn-xs btn"
+                    className="btn-error btn-outline btn-xs btn"
                     onClick={() => onDeleteClick(game.id)}
                   >
                     Delete

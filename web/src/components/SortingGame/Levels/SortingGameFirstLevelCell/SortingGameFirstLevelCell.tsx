@@ -59,13 +59,15 @@ export const Success = ({
   FindSortingGameFirstLevelQuery,
   FindSortingGameFirstLevelQueryVariables
 >) => {
+  const [playingAudio, setPlayingAudio] = useState(false)
   const [files, setFiles] = useState(sortingGameFirstLevel.audio)
-  const [gradeLevel, { loading }] = useMutation<GradeLevelOneMutation>(
+  const [gradeLevel, { loading, client }] = useMutation<GradeLevelOneMutation>(
     GRADE_LEVEL_ONE_MUTATION,
     {
       onCompleted: ({ sortingGameGradeFirstLevel }) => {
         switch (sortingGameGradeFirstLevel.status) {
           case 'CORRECT':
+            setPlayingAudio(true)
             toast.success('Correct!')
             break
           case 'INCORRECT':
@@ -85,12 +87,12 @@ export const Success = ({
       // This refetches the query. Read more about other ways to
       // update the cache over here:
       // https://www.apollographql.com/docs/react/data/mutations/#making-all-other-cache-updates
-      refetchQueries: [
-        {
-          query: LEVEL_QUERY,
-          variables: { id: sortingGameFirstLevel.game.id },
-        },
-      ],
+      // refetchQueries: [
+      //   {
+      //     query: LEVEL_QUERY,
+      //     variables: { id: sortingGameFirstLevel.game.id },
+      //   },
+      // ],
       awaitRefetchQueries: true,
     }
   )
@@ -104,15 +106,28 @@ export const Success = ({
     })
   }
 
+  const handleComplete = async () => {
+    await client.query({
+      query: LEVEL_QUERY,
+      variables: { id: sortingGameFirstLevel.game.id },
+      notifyOnNetworkStatusChange: true,
+      // fetchPolicy: 'network-only',
+    })
+  }
+
   return (
-    <GameCard title="Click on the correct vowel sound." files={files}>
+    <GameCard
+      title="Click on the correct vowel sound."
+      files={files}
+      onComplete={() => handleComplete()}
+    >
       <div className="grid grid-cols-2 gap-4">
         {sortingGameFirstLevel.phonemes.map((option) => (
           <button
             className="btn-secondary btn normal-case"
             type="button"
             onClick={() => handleClick(option.id)}
-            disabled={loading}
+            disabled={loading || playingAudio}
             key={option.id}
           >
             {option.label}

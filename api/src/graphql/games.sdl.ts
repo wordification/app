@@ -116,6 +116,6 @@ export const schema = gql`
     createGame(input: CreateGameInput!): Game! @requireAuth
 
     "Deletes an existing game."
-    deleteGame(id: Int!): Game! @requireAuth(roles: ["TEACHER"])
+    deleteGame(id: Int!): Game! @requireAuth(roles: ["TEACHER", "SUPERUSER"])
   }
 `
