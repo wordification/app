@@ -17,7 +17,7 @@ const MENU_ITEMS = [
     label: 'Who We Are',
   },
   {
-    to: '',
+    to: '/try-it',
     label: 'Try It!',
   },
   {
