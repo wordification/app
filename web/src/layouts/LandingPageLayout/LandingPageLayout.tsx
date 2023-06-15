@@ -9,6 +9,18 @@ type LandingPageLayoutProps = {
 
 const MENU_ITEMS = [
   {
+    to: '/supporters',
+    label: 'Our Supporters',
+  },
+  {
+    to: '/contributors',
+    label: 'Who We Are',
+  },
+  {
+    to: '',
+    label: 'Try It!',
+  },
+  {
     to: '/login',
     label: 'Sign In',
   },
@@ -26,7 +38,9 @@ const LandingPageLayout = ({ children }: LandingPageLayoutProps) => {
 
       <SkipNavContent />
 
-      <main>{children}</main>
+      <main className="container mx-auto flex-grow p-4 md:px-8">
+        {children}
+      </main>
       <footer className="mx-auto w-full bg-base-300 p-4 text-center">
         <p>&copy; 2023 Wordification</p>
       </footer>
