@@ -22,6 +22,8 @@ const Routes = () => {
   return (
     <Router useAuth={useAuth}>
       <Set wrap={LandingPageLayout}>
+        <Route path="/contributors" page={LandingContributorsPage} name="contributors" />
+        <Route path="/supporters" page={LandingSupportersPage} name="supporters" />
         <Route path="/" page={LandingPage} name="landing" />
       </Set>
       <Set wrap={AuthLayout}>
