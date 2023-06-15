@@ -52,16 +52,13 @@ const Importance = () => {
   return (
     <div className="flex flex-col items-center bg-base-200 py-10">
       <div className="container mx-auto">
-        <h2 className="mb-5 text-2xl font-semibold">
-          The practical importance of this project cannot be overstated
-        </h2>
         <div className="flex flex-col">
           {ITEMS.map(({ title, body }) => (
             <div
               key={title}
               className="collapse-plus collapse mb-1 bg-base-100"
             >
-              <input type="radio" name="my-accordion" checked />
+              <input type="radio" name="importance-accordion" />
               <div className="collapse-title text-xl font-medium">{title}</div>
               <div className="collapse-content">{body}</div>
             </div>

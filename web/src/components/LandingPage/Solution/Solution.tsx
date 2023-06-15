@@ -2,9 +2,6 @@ const Solution = () => {
   return (
     <div className="flex flex-col items-center bg-base-100 py-10">
       <div className="container mx-auto">
-        <h2 className="mb-5 text-2xl font-semibold underline">
-          Computerized Spelling Instruction: A Solution
-        </h2>
         <div className="card mb-20 w-auto bg-base-200 shadow-xl transition hover:shadow-2xl">
           <div className="card-body">
             <p>

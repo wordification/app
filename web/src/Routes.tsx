@@ -14,13 +14,16 @@ import AdministratorLayout from 'src/layouts/AdministratorLayout/AdministratorLa
 import AuthLayout from 'src/layouts/AuthLayout/AuthLayout'
 import GlobalLayout from 'src/layouts/GlobalLayout/GlobalLayout'
 
+import LandingPageLayout from './layouts/LandingPageLayout/LandingPageLayout'
 import SuperuserLayout from './layouts/SuperuserLayout/SuperuserLayout'
 import TeacherLayout from './layouts/TeacherLayout/TeacherLayout'
 
 const Routes = () => {
   return (
     <Router useAuth={useAuth}>
-      <Route path="/" page={LandingPage} name="landing" />
+      <Set wrap={LandingPageLayout}>
+        <Route path="/" page={LandingPage} name="landing" />
+      </Set>
       <Set wrap={AuthLayout}>
         <Route path="/login" page={AuthLoginPage} name="login" />
         <Route path="/forgot-password" page={AuthForgotPasswordPage} name="forgotPassword" />
