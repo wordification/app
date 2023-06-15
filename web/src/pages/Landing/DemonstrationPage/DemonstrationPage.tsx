@@ -1,3 +1,4 @@
+import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
 const LandingDemonstrationPage = () => {
@@ -13,7 +14,10 @@ const LandingDemonstrationPage = () => {
                 Try Wordification
               </h1>
               <p className="py-6">Watch our demo video or sign in!</p>
-              <button className="btn-primary btn">Sign In</button>
+
+              <Link className="font-bold normal-case" to={routes.login()}>
+                <button className="btn-primary btn w-96">Sign In</button>
+              </Link>
             </div>
           </div>
 
