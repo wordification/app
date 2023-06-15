@@ -9,19 +9,20 @@ type LandingPageLayoutProps = {
 
 const MENU_ITEMS = [
   {
-    to: '/dashboard',
-    label: 'Dashboard',
+    to: '/supporters',
+    label: 'Our Supporters',
   },
   {
-    to: '/dashboard/students',
-    label: 'My Class',
+    to: '/contributors',
+    label: 'Who We Are',
   },
   {
-    to: '/dashboard/class-game-setup',
-    label: 'Class Game Setup',
+    to: '/try-it',
+    label: 'Try It!',
   },
   {
-    type: 'signout',
+    to: '/login',
+    label: 'Sign In',
   },
 ] as const
 

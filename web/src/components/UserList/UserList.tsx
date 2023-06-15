@@ -196,7 +196,7 @@ const UserList = ({ users }: FindExistingUsers) => {
                       <Link
                         to={routes.updateUser({ id: user.id })}
                         title={'Update User ' + user.id}
-                        className="btn-outline btn-primary btn-xs btn mr-1"
+                        className="btn-primary btn-outline btn-xs btn mr-1"
                       >
                         Update
                       </Link>

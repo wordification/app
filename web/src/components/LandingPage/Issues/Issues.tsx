@@ -53,9 +53,6 @@ const Issues = () => {
   return (
     <div className="flex flex-col items-center bg-base-100 py-10">
       <div className="container mx-auto">
-        <h2 className="mb-5 text-2xl font-semibold">
-          Inadequacy of Current Typical Practice
-        </h2>
         <div className="card mb-8 w-auto bg-base-200 shadow-xl transition hover:shadow-2xl">
           <div className="card-body">
             <p>
@@ -73,16 +70,15 @@ const Issues = () => {
             </p>
           </div>
         </div>
-        <div className="grid w-full gap-8 md:grid-cols-3">
+        <div className="flex flex-col">
           {CARDS.map(({ title, body }) => (
             <div
               key={title}
-              className="card bg-base-200 shadow-xl transition hover:shadow-2xl"
+              className="collapse-plus collapse mb-1 bg-base-200"
             >
-              <div className="card-body">
-                <h3 className="card-title">{title}</h3>
-                <div>{body}</div>
-              </div>
+              <input type="radio" name="issues-accordion" />
+              <div className="collapse-title text-xl font-medium">{title}</div>
+              <div className="collapse-content">{body}</div>
             </div>
           ))}
         </div>
