@@ -75,7 +75,7 @@ const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
           </label>
           <ul
             tabIndex={0}
-            className="dropdown-content menu rounded-box menu-sm mt-3 w-52 bg-secondary p-2 shadow"
+            className="dropdown-content menu rounded-box menu-sm z-50 mt-3 w-52 bg-secondary p-2 shadow"
           >
             {items.map((item) => (
               <NavbarItem
