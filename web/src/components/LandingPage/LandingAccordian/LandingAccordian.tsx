@@ -32,7 +32,11 @@ const LandingAccordian = () => {
     <div className="flex flex-col">
       {PAGES.map(({ title, body }, index) => {
         if (title === 'Transition') {
-          return <div key={title}>{body}</div>
+          return (
+            <div key={title} className="mb-5">
+              {body}
+            </div>
+          )
         } else {
           return (
             <div key={title} className="container mx-auto">
