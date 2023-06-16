@@ -46,9 +46,9 @@ const LandingSupportersPage = () => {
                 className="card card-side card-compact bg-base-300 shadow-lg transition hover:shadow-2xl"
               >
                 {link === '' ? (
-                  <h2 className="card-body items-center">
+                  <div className="card-body items-center">
                     <h3 className="card-title">{name}</h3>
-                  </h2>
+                  </div>
                 ) : (
                   <a
                     href={link}

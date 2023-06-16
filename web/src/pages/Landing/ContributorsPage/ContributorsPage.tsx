@@ -29,11 +29,11 @@ const PI_INFO = [
   {
     name: 'Dr. Tracey Weldon',
     info: (
-      <div className="text-center">
+      <p>
         Consultant
         <br />
         Greenwood/Asher & Associates
-      </div>
+      </p>
     ),
     link: 'https://www.linkedin.com/in/tracey-weldon-b7784134/',
   },
@@ -62,7 +62,7 @@ const DEV_INFO = [
   },
   {
     name: 'Jackson Ginn',
-    info: '[USC BS Computer Science, 2025',
+    info: 'USC BS Computer Science, 2025',
     link: 'https://www.linkedin.com/in/jacksonginn/',
   },
   {
@@ -137,7 +137,7 @@ const LandingContributorsPage = () => {
                     className="card-body items-center"
                   >
                     <h3 className="card-title">{name}</h3>
-                    <p className="text-lg">{info}</p>
+                    <div className="text-center text-lg">{info}</div>
                   </a>
                 </li>
               ))}
@@ -164,7 +164,7 @@ const LandingContributorsPage = () => {
                     className="card-body items-center"
                   >
                     <h3 className="card-title">{name}</h3>
-                    <p className="text-lg">{info}</p>
+                    <div className="text-center text-lg">{info}</div>
                   </a>
                 </li>
               ))}
@@ -191,7 +191,7 @@ const LandingContributorsPage = () => {
                     className="card-body items-center"
                   >
                     <h3 className="card-title">{name}</h3>
-                    <p className="text-lg">{info}</p>
+                    <div className="text-center text-lg">{info}</div>
                   </a>
                 </li>
               ))}
