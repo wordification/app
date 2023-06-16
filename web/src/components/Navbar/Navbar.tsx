@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { Link, routes, useLocation } from '@redwoodjs/router'
+import { Link, navigate, routes, useLocation } from '@redwoodjs/router'
+import { toast } from '@redwoodjs/web/toast'
 
 import { useAuth } from 'src/auth'
 
@@ -21,8 +22,14 @@ export type MenuItem =
 const SignoutButton = () => {
   const { logOut } = useAuth()
 
+  const handleSignout = () => {
+    logOut()
+    toast.success('Goodbye!')
+    navigate(routes.landing())
+  }
+
   return (
-    <button onClick={logOut} className="font-bold normal-case">
+    <button onClick={handleSignout} className="font-bold normal-case">
       Sign Out
     </button>
   )
@@ -43,8 +50,15 @@ const NavbarItem = ({ item }: { item: MenuItem }) => (
 const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
   const { hasRole } = useAuth()
   const location = useLocation()
-  const isRootPath = location.pathname === '/'
-  const roleRoute = hasRole('SUPERUSER')
+  const isRootPath =
+    location.pathname === routes.landing() ||
+    location.pathname === routes.supporters() ||
+    location.pathname === routes.contributors() ||
+    location.pathname === routes.demonstration()
+
+  const roleRoute = isRootPath
+    ? routes.landing()
+    : hasRole('SUPERUSER')
     ? routes.superuserDashboard()
     : hasRole('ADMINISTRATOR')
     ? routes.adminDashboard()

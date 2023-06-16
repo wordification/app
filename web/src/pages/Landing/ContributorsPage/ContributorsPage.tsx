@@ -23,12 +23,18 @@ const PI_INFO = [
   },
   {
     name: 'Dr. Homayoun Valafar',
-    info: 'Computer Science & Engineering, USC\nConsultant',
+    info: 'Computer Science & Engineering, USC',
     link: 'https://sc.edu/study/colleges_schools/engineering_and_computing/faculty-staff/homayounvalafar.php',
   },
   {
     name: 'Dr. Tracey Weldon',
-    info: 'Greenwood/Asher & Associates',
+    info: (
+      <p>
+        Consultant
+        <br />
+        Greenwood/Asher & Associates
+      </p>
+    ),
     link: 'https://www.linkedin.com/in/tracey-weldon-b7784134/',
   },
 ] as const
@@ -56,7 +62,7 @@ const DEV_INFO = [
   },
   {
     name: 'Jackson Ginn',
-    info: '[USC BS Computer Science, 2025',
+    info: 'USC BS Computer Science, 2025',
     link: 'https://www.linkedin.com/in/jacksonginn/',
   },
   {
@@ -131,7 +137,7 @@ const LandingContributorsPage = () => {
                     className="card-body items-center"
                   >
                     <h3 className="card-title">{name}</h3>
-                    <p className="text-lg">{info}</p>
+                    <div className="text-center text-lg">{info}</div>
                   </a>
                 </li>
               ))}
@@ -158,7 +164,7 @@ const LandingContributorsPage = () => {
                     className="card-body items-center"
                   >
                     <h3 className="card-title">{name}</h3>
-                    <p className="text-lg">{info}</p>
+                    <div className="text-center text-lg">{info}</div>
                   </a>
                 </li>
               ))}
@@ -185,7 +191,7 @@ const LandingContributorsPage = () => {
                     className="card-body items-center"
                   >
                     <h3 className="card-title">{name}</h3>
-                    <p className="text-lg">{info}</p>
+                    <div className="text-center text-lg">{info}</div>
                   </a>
                 </li>
               ))}

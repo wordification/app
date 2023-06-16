@@ -3,7 +3,7 @@ import { MetaTags } from '@redwoodjs/web'
 const SUPPORTER_INFO = [
   {
     name: 'College of Arts and Sciences, USC',
-    link: 'https://sc.edu/study/colleges_schools/artsandsciences/english_language_and_literature/our_people/directory/dubinsky_stanley.php',
+    link: 'https://www.sc.edu/study/colleges_schools/artsandsciences/index.php',
   },
   {
     name: 'Office of Undergraduate Research, USC',
@@ -18,7 +18,7 @@ const SUPPORTER_INFO = [
     link: 'https://sc.edu/about/offices_and_divisions/research/',
   },
   {
-    name: 'SholasTech, LLC',
+    name: 'ScholasTech, LLC',
     link: '',
   },
 ] as const
@@ -46,9 +46,9 @@ const LandingSupportersPage = () => {
                 className="card card-side card-compact bg-base-300 shadow-lg transition hover:shadow-2xl"
               >
                 {link === '' ? (
-                  <h2 className="card-body items-center">
+                  <div className="card-body items-center">
                     <h3 className="card-title">{name}</h3>
-                  </h2>
+                  </div>
                 ) : (
                   <a
                     href={link}

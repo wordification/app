@@ -12,24 +12,28 @@ const Introduction = () => {
             instruction provided through computer-based gamified instruction
             support students’ spelling development across a variety of dialects,
             to make literacy widely and universally available?
-            <br />
-            <br />
-            Currently, classroom spelling instruction is largely
-            memorization-based and one-size-fits-all. More sophisticated,
-            individualized tutoring methods are available only to those wealthy
-            enough to afford it.
-            <br />
-            To make improved spelling instruction universally accessible and
-            promote higher literacy, our team has worked to design a new method
-            of spelling instruction that is both beneficial to typical students
-            and a breakthrough for literacy-challenged students.
-            <br />
-            Wordification is a gamified interactive spelling-instruction
-            platform based on linguistic principles, incorporating AI-based
-            internal assessment. Fully developed, it will provide
-            cost-effective, individualized spelling instruction for all
-            students.
           </p>
+          <ul className="list-disc py-2 pl-6 text-left text-xl">
+            <li>
+              Current classroom spelling instruction is largely
+              memorization-based and one-size-fits-all. Sophisticated,
+              individualized tutoring is available only to those who can afford
+              it.
+            </li>
+            <li>
+              <i>Wordification</i> is a dialectally responsive, linguistically
+              based instructional solution, a platform that will provide
+              individualized spelling instruction and AI-based internal
+              assessment.
+            </li>
+            <li>
+              <i>Wordification</i>, fully developed, will be beneficial to
+              typical students and a breakthrough for literacy-challenged
+              students, as a cost-effective, universally available literacy
+              tool, supporting spelling development across a variety of
+              dialects.
+            </li>
+          </ul>
         </div>
       </div>
     </div>
