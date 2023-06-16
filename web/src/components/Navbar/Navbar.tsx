@@ -50,8 +50,15 @@ const NavbarItem = ({ item }: { item: MenuItem }) => (
 const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
   const { hasRole } = useAuth()
   const location = useLocation()
-  const isRootPath = location.pathname === '/'
-  const roleRoute = hasRole('SUPERUSER')
+  const isRootPath =
+    location.pathname === routes.landing() ||
+    location.pathname === routes.supporters() ||
+    location.pathname === routes.contributors() ||
+    location.pathname === routes.demonstration()
+
+  const roleRoute = isRootPath
+    ? routes.landing()
+    : hasRole('SUPERUSER')
     ? routes.superuserDashboard()
     : hasRole('ADMINISTRATOR')
     ? routes.adminDashboard()
