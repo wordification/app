@@ -23,12 +23,18 @@ const PI_INFO = [
   },
   {
     name: 'Dr. Homayoun Valafar',
-    info: 'Computer Science & Engineering, USC\nConsultant',
+    info: 'Computer Science & Engineering, USC',
     link: 'https://sc.edu/study/colleges_schools/engineering_and_computing/faculty-staff/homayounvalafar.php',
   },
   {
     name: 'Dr. Tracey Weldon',
-    info: 'Greenwood/Asher & Associates',
+    info: (
+      <div className="text-center">
+        Consultant
+        <br />
+        Greenwood/Asher & Associates
+      </div>
+    ),
     link: 'https://www.linkedin.com/in/tracey-weldon-b7784134/',
   },
 ] as const

@@ -18,7 +18,7 @@ const SUPPORTER_INFO = [
     link: 'https://sc.edu/about/offices_and_divisions/research/',
   },
   {
-    name: 'SholasTech, LLC',
+    name: 'ScholasTech, LLC',
     link: '',
   },
 ] as const
