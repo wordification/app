@@ -3,7 +3,7 @@ import { MetaTags } from '@redwoodjs/web'
 const SUPPORTER_INFO = [
   {
     name: 'College of Arts and Sciences, USC',
-    link: 'https://sc.edu/study/colleges_schools/artsandsciences/english_language_and_literature/our_people/directory/dubinsky_stanley.php',
+    link: 'https://www.sc.edu/study/colleges_schools/artsandsciences/index.php',
   },
   {
     name: 'Office of Undergraduate Research, USC',
