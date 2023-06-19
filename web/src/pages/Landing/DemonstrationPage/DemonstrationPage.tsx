@@ -38,7 +38,15 @@ const LandingDemonstrationPage = () => {
       </div>
 
       <div className="rounded-box mx-auto mt-20 w-fit bg-neutral p-4 shadow-inner">
-        {/** TODO: Create demo video */}
+        <iframe
+          width="1120"
+          height="630"
+          src="https://www.youtube-nocookie.com/embed/qmGYTPTPBSo"
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        ></iframe>
       </div>
     </>
   )
