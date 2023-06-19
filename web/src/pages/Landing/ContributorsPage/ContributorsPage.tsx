@@ -7,24 +7,14 @@ const PI_INFO = [
     link: 'https://sc.edu/study/colleges_schools/artsandsciences/english_language_and_literature/our_people/directory/dubinsky_stanley.php',
   },
   {
-    name: 'Dr. Lisa Fitton',
-    info: 'Communication Sciences & Disorders, USC',
-    link: 'https://sc.edu/study/colleges_schools/public_health/faculty-staff/fitton_lisa.php',
-  },
-  {
     name: 'Dr. Krystal Werfel',
     info: 'Boys Town National Research Hospital',
     link: 'https://www.boystownhospital.org/research/faculty/krystal-werfel',
   },
   {
-    name: 'Dr. Biplav Srivastava',
-    info: 'AI Institute, USC',
-    link: 'https://sc.edu/study/colleges_schools/engineering_and_computing/faculty-staff/srivastava.php',
-  },
-  {
-    name: 'Dr. Homayoun Valafar',
-    info: 'Computer Science & Engineering, USC',
-    link: 'https://sc.edu/study/colleges_schools/engineering_and_computing/faculty-staff/homayounvalafar.php',
+    name: 'Dr. Lisa Fitton',
+    info: 'Communication Sciences & Disorders, USC',
+    link: 'https://sc.edu/study/colleges_schools/public_health/faculty-staff/fitton_lisa.php',
   },
   {
     name: 'Dr. Tracey Weldon',
@@ -36,6 +26,16 @@ const PI_INFO = [
       </p>
     ),
     link: 'https://www.linkedin.com/in/tracey-weldon-b7784134/',
+  },
+  {
+    name: 'Dr. Biplav Srivastava',
+    info: 'AI Institute, USC',
+    link: 'https://sc.edu/study/colleges_schools/engineering_and_computing/faculty-staff/srivastava.php',
+  },
+  {
+    name: 'Dr. Homayoun Valafar',
+    info: 'Computer Science & Engineering, USC',
+    link: 'https://sc.edu/study/colleges_schools/engineering_and_computing/faculty-staff/homayounvalafar.php',
   },
 ] as const
 
