@@ -37,8 +37,9 @@ const LandingDemonstrationPage = () => {
         </div>
       </div>
 
-      <div className="rounded-box mx-auto mt-20 w-fit bg-neutral p-4 shadow-inner">
+      <div className="rounded-box mx-auto mt-20 bg-neutral p-4 shadow-inner">
         <iframe
+          className="md:w-1120 h-630 w-full"
           width="1120"
           height="630"
           src="https://www.youtube-nocookie.com/embed/qmGYTPTPBSo"
