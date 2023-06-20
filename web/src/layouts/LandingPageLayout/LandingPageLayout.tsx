@@ -9,7 +9,7 @@ type LandingPageLayoutProps = {
 
 const MENU_ITEMS = [
   {
-    to: '/',
+    to: '/#about',
     label: 'About',
   },
   {

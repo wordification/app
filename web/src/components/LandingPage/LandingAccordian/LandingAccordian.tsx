@@ -29,7 +29,7 @@ const PAGES = [
 
 const LandingAccordian = () => {
   return (
-    <div className="flex flex-col">
+    <div id="about" className="flex flex-col">
       {PAGES.map(({ title, body }, index) => {
         if (title === 'Transition') {
           return (
@@ -45,7 +45,11 @@ const LandingAccordian = () => {
                   index % 2 === 0 ? 'bg-base-100' : 'bg-base-200'
                 }`}
               >
-                <input type="radio" name="landing-accordion" />
+                <input
+                  type="radio"
+                  name="landing-accordion"
+                  checked={index === 0 ? true : undefined}
+                />
                 <div className="collapse-title mb-5 text-2xl font-semibold">
                   {title}
                 </div>
