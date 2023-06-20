@@ -38,9 +38,15 @@ const SignoutButton = () => {
 const NavbarItem = ({ item }: { item: MenuItem }) => (
   <li>
     {'to' in item ? (
-      <Link className="font-bold normal-case" to={item.to}>
-        {item.label}
-      </Link>
+      item.to === '/#about' ? (
+        <a className="font-bold normal-case" href="/#about">
+          {item.label}
+        </a>
+      ) : (
+        <Link className="font-bold normal-case" to={item.to}>
+          {item.label}
+        </Link>
+      )
     ) : (
       <SignoutButton />
     )}
