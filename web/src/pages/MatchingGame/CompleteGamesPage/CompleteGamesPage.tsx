@@ -1,22 +1,5 @@
-import { Link, routes } from '@redwoodjs/router'
-import { MetaTags } from '@redwoodjs/web'
-
 const MatchingGameCompleteGamesPage = () => {
-  return (
-    <>
-      <MetaTags title="CompleteGames" description="CompleteGames page" />
-
-      <h1>CompleteGamesPage</h1>
-      <p>
-        Find me in{' '}
-        <code>./web/src/pages/CompleteGamesPage/CompleteGamesPage.tsx</code>
-      </p>
-      <p>
-        My default route is named <code>completeGames</code>, link to me with `
-        <Link to={routes.completeGames()}>CompleteGames</Link>`
-      </p>
-    </>
-  )
+  return <MatchingGamesCell complete />
 }
 
 export default MatchingGameCompleteGamesPage

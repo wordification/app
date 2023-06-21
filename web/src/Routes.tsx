@@ -37,15 +37,15 @@ const Routes = () => {
         <Set wrap={GlobalLayout}>
           <Set>
             <Route path="/games/matching/{id:Int}" page={MatchingGameIndividualGamePage} name="matchingGameIndividual" />
-            <Route path="/games/matching/scores" page={MatchingGameIncompleteGamesPage} name="matchingGameIncomplete" />
-            <Route path="/games/matching/resume" page={MatchingGameCompleteGamesPage} name="matchingGameComplete" />
+            <Route path="/games/matching/resume" page={MatchingGameIncompleteGamesPage} name="matchingGameIncomplete" />
+            <Route path="/games/matching/scores" page={MatchingGameCompleteGamesPage} name="matchingGameComplete" />
             <Route path="/games/matching/setup" page={MatchingGameSetupGamePage} name="matchingGameSetup" />
             <Route path="/games/matching" page={MatchingGameMenuPage} name="matchingGame" />
           </Set>
           <Set>
             <Route path="/games/sorting/{id:Int}" page={SortingGameIndividualGamePage} name="sortingGameIndividual" />
-            <Route path="/games/sorting/scores" page={SortingGameIncompleteGamesPage} name="sortingGameIncomplete" />
-            <Route path="/games/sorting/resume" page={SortingGameCompleteGamesPage} name="sortingGameComplete" />
+            <Route path="/games/sorting/resume" page={SortingGameIncompleteGamesPage} name="sortingGameIncomplete" />
+            <Route path="/games/sorting/scores" page={SortingGameCompleteGamesPage} name="sortingGameComplete" />
             <Route path="/games/sorting/setup" page={SortingGameSetupGamePage} name="sortingGameSetup" />
             <Route path="/games/sorting" page={SortingGameMenuPage} name="sortingGame" />
           </Set>
