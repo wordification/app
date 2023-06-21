@@ -13,10 +13,13 @@ import type {
   AllMappedModels,
 } from 'types/graphql'
 
-export const games: QueryResolvers['games'] = ({ complete }) => {
+export const games: QueryResolvers['games'] = ({ complete, type }) => {
   if (typeof complete !== 'boolean') {
     return db.game.findMany({
-      where: { userId: context.currentUser?.id },
+      where: {
+        userId: context.currentUser?.id,
+        type: type ?? { in: ['SORTING', 'MATCHING'] },
+      },
       orderBy: {
         updatedAt: 'desc',
       },
@@ -29,6 +32,7 @@ export const games: QueryResolvers['games'] = ({ complete }) => {
     where: {
       userId: context.currentUser?.id,
       complete,
+      type: type ?? { in: ['SORTING', 'MATCHING'] },
     },
   })
 }

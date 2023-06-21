@@ -6,8 +6,8 @@ import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import type { FindSortingGames } from 'types/graphql'
 
 export const QUERY = gql`
-  query FindSortingGames($complete: Boolean) {
-    sortingGames: games(complete: $complete) {
+  query FindSortingGames($complete: Boolean, $type: GameType) {
+    sortingGames: games(complete: $complete, type: $type) {
       id
       user {
         email
