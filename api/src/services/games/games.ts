@@ -28,10 +28,7 @@ export const games: QueryResolvers['games'] = ({ complete }) => {
     },
     where: {
       userId: context.currentUser?.id,
-      complete: {
-        // I don't know why this is inverted, but it works
-        not: complete,
-      },
+      complete,
     },
   })
 }
