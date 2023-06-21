@@ -10,10 +10,6 @@ type GlobalLayoutProps = {
 
 const MENU_ITEMS = [
   {
-    to: '/about',
-    label: 'About',
-  },
-  {
     to: '/games',
     label: 'Games',
   },

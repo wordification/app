@@ -46,7 +46,7 @@ export const Failure = ({
 const GRADE_LEVEL_TWO_MUTATION = gql`
   mutation GradeLevelTwoMutation($gameId: Int!, $grapheme: String!) {
     sortingGameGradeSecondLevel(gameId: $gameId, grapheme: $grapheme) {
-      correct
+      status
       audio
     }
   }
@@ -58,15 +58,23 @@ export const Success = ({
   FindSortingGameSecondLevelQuery,
   FindSortingGameSecondLevelQueryVariables
 >) => {
+  const [playingAudio, setPlayingAudio] = useState(false)
   const [files, setFiles] = useState(sortingGameSecondLevel.audio)
-  const [gradeLevel, { loading }] = useMutation<GradeLevelTwoMutation>(
+  const [gradeLevel, { loading, client }] = useMutation<GradeLevelTwoMutation>(
     GRADE_LEVEL_TWO_MUTATION,
     {
       onCompleted: ({ sortingGameGradeSecondLevel }) => {
-        if (sortingGameGradeSecondLevel.correct) {
-          toast.success('Correct!')
-        } else {
-          toast.error('Incorrect!')
+        switch (sortingGameGradeSecondLevel.status) {
+          case 'CORRECT':
+            setPlayingAudio(true)
+            toast.success('Correct!')
+            break
+          case 'INCORRECT':
+            toast.error('Incorrect!')
+            break
+          case 'TOO_MANY_INCORRECT_GUESSES':
+            toast.error('Too many incorrect guesses!')
+            break
         }
         if (sortingGameGradeSecondLevel.audio) {
           setFiles(sortingGameGradeSecondLevel.audio)
@@ -78,12 +86,12 @@ export const Success = ({
       // This refetches the query. Read more about other ways to
       // update the cache over here:
       // https://www.apollographql.com/docs/react/data/mutations/#making-all-other-cache-updates
-      refetchQueries: [
-        {
-          query: LEVEL_QUERY,
-          variables: { id: sortingGameSecondLevel.game.id },
-        },
-      ],
+      // refetchQueries: [
+      //   {
+      //     query: LEVEL_QUERY,
+      //     variables: { id: sortingGameSecondLevel.game.id },
+      //   },
+      // ],
       awaitRefetchQueries: true,
     }
   )
@@ -97,15 +105,28 @@ export const Success = ({
     })
   }
 
+  const handleComplete = async () => {
+    await client.query({
+      query: LEVEL_QUERY,
+      variables: { id: sortingGameSecondLevel.game.id },
+      notifyOnNetworkStatusChange: true,
+      // fetchPolicy: 'network-only',
+    })
+  }
+
   return (
-    <GameCard title="Click on the correct vowel sound." files={files}>
+    <GameCard
+      title="Click on the correct vowel sound."
+      files={files}
+      onComplete={() => handleComplete()}
+    >
       <div className="grid grid-cols-2 gap-4">
         {sortingGameSecondLevel.graphemes.map((grapheme) => (
           <button
             className="btn-secondary btn normal-case"
             type="button"
             onClick={() => handleClick(grapheme)}
-            disabled={loading}
+            disabled={loading || playingAudio}
             key={grapheme}
           >
             {grapheme}

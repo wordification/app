@@ -2,9 +2,7 @@ import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
-import SortingGameSetupForm from 'src/components/SortingGame/SortingGameSetupForm'
-
-import type { CreateGameInput, CreateGameMutation } from 'types/graphql'
+import type { CreateGameMutation } from 'types/graphql'
 
 const CREATE_GAME_MUTATION = gql`
   mutation CreateGameMutation($input: CreateGameInput!) {
@@ -28,11 +26,10 @@ const SetupGamePage = () => {
     }
   )
 
-  const onSave = (input: CreateGameInput) => {
+  if (!loading && !error) {
     createGame({
       variables: {
         input: {
-          ...input,
           type: 'SORTING',
         },
       },
@@ -43,9 +40,10 @@ const SetupGamePage = () => {
     <div className="card bg-base-200 text-base-content">
       <div className="card-body">
         <header>
-          <h1 className="card-title">New Game</h1>
+          <h1 className="card-title">
+            {error ? error.message : 'Creating New Game...'}
+          </h1>
         </header>
-        <SortingGameSetupForm onSave={onSave} loading={loading} error={error} />
       </div>
     </div>
   )
