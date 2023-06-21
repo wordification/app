@@ -82,6 +82,11 @@ export const schema = gql`
       If complete is not defined, fetch all games.
       """
       complete: Boolean
+
+      """
+      Fetch only a given type of game.
+      """
+      type: GameType
     ): [Game!]! @requireAuth
 
     "Fetch a game by ID. Can return null if the game doesn't exist."
