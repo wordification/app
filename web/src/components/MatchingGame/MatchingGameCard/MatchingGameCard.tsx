@@ -17,7 +17,7 @@ const OldMatchingGameCard = ({
             flipped ? '[transform:rotateY(180deg)]' : ''
           }`}
         >
-          <div className="card-body absolute inset-0 items-center justify-center text-center [backface-visibility:hidden] [transform:rotateY(180deg)]">
+          <div className="card-body absolute inset-0 items-center justify-center text-center [transform:rotateY(180deg)] [backface-visibility:hidden]">
             <span className="card-title">{word}</span>
           </div>
         </button>
@@ -43,7 +43,7 @@ const MatchingGameCard = ({
           flipped ? '[transform:rotateY(180deg)]' : ''
         }`}
       >
-        <div className="align-center card-body absolute inset-0 justify-center text-center [backface-visibility:hidden] [transform:rotateY(180deg)]">
+        <div className="align-center card-body absolute inset-0 justify-center text-center [transform:rotateY(180deg)] [backface-visibility:hidden]">
           {word}
         </div>
       </div>
