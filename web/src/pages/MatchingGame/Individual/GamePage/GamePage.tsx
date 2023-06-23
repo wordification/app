@@ -1,3 +1,5 @@
+import MatchingGameCell from 'src/components/MatchingGame/MatchingGameCell'
+
 type MatchingGameIndividualGamePageProps = {
   id: number
 }

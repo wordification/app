@@ -2,7 +2,9 @@ import { GameType } from '@prisma/client'
 
 import { db } from 'src/lib/db'
 
-import type { MutationResolvers, Word } from 'types/graphql'
+import { getSortingGamePhrase } from '../audio'
+
+import type { MutationResolvers, QueryResolvers, Word } from 'types/graphql'
 /**
  * Finds a matching game by ID and validates that it exists and is a matching
  * game.
@@ -72,6 +74,30 @@ export const completeWords = async (
     },
   })
 }
+
+export const matchingGamePlayLevel: QueryResolvers['matchingGamePlayLevel'] =
+  async ({ gameId }) => {
+    const game = await findMatchingGame(gameId)
+
+    const incompleteWords = game?.incompleteWords
+
+    if (!incompleteWords) {
+      throw new Error('No words selected for matching')
+    }
+
+    /**
+     * TODO: ADD AUDIOS
+     *    Current audio is sample and incorrect.
+     *    Need to set up matching game audio.
+     **/
+    const audio = [getSortingGamePhrase('introvsound')]
+
+    return {
+      game,
+      audio,
+      incompleteWords,
+    }
+  }
 
 export const matchingGameGrade: MutationResolvers['matchingGameGrade'] =
   async ({ gameId, firstWordId, secondWordId }) => {
