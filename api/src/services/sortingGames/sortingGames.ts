@@ -8,7 +8,7 @@ import {
   getPhoneme,
   getSortingGamePhrase,
   getSortingGameSentence,
-  getSortingGameWord,
+  getWord,
 } from '../audio'
 
 import type { QueryResolvers, MutationResolvers } from 'types/graphql'
@@ -139,17 +139,17 @@ export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] =
       // figure out vowel sound in
       getSortingGamePhrase('introvsound'),
       // [ WORD ]
-      getSortingGameWord(currentWord.word),
+      getWord(currentWord.word),
       // a sentence that has
       getSortingGamePhrase('intro_sentence'),
       // [ WORD ]
-      getSortingGameWord(currentWord.word),
+      getWord(currentWord.word),
       // [ SENTENCE ]
       getSortingGameSentence(currentWord.word),
       // the sounds that make
       getSortingGamePhrase('intro_sounds'),
       // [ WORD ]
-      getSortingGameWord(currentWord.word),
+      getWord(currentWord.word),
       // are
       getSortingGamePhrase('are'),
       // [ SOUNDs ]
@@ -157,7 +157,7 @@ export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] =
       // which is the vowel sound in
       getSortingGamePhrase('intro_vsound_select'),
       // [ WORD ]
-      getSortingGameWord(currentWord.word),
+      getWord(currentWord.word),
     ]
 
     return {
@@ -191,7 +191,7 @@ export const sortingGameSecondLevel: QueryResolvers['sortingGameSecondLevel'] =
       getSortingGamePhrase('spelling_pattern'),
       getPhoneme(currentWord.testedPhonemes[0]),
       getSortingGamePhrase('in'),
-      getSortingGameWord(currentWord.word),
+      getWord(currentWord.word),
     ]
 
     return {
@@ -213,7 +213,7 @@ export const sortingGameThirdLevel: QueryResolvers['sortingGameThirdLevel'] =
 
     const audio = [
       getSortingGamePhrase('box_prompt'),
-      getSortingGameWord(currentWord.word),
+      getWord(currentWord.word),
     ]
 
     return {
@@ -280,14 +280,14 @@ export const sortingGameGradeFirstLevel: MutationResolvers['sortingGameGradeFirs
         getSortingGamePhrase('incorrect'),
         getPhoneme(phoneme),
         getSortingGamePhrase('not_spelling_pattern'),
-        getSortingGameWord(game.currentWord.word),
+        getWord(game.currentWord.word),
         getSortingGamePhrase('incorrect_try'),
       ],
       correctAudio: [
         getSortingGamePhrase('correct'),
         getPhoneme(phoneme),
         getSortingGamePhrase('correct_vsound'),
-        getSortingGameWord(game.currentWord.word),
+        getWord(game.currentWord.word),
       ],
     })
   }
@@ -309,7 +309,7 @@ export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSec
         getSortingGamePhrase('incorrect'),
         getGrapheme(grapheme),
         getSortingGamePhrase('not_spelling_pattern'),
-        getSortingGameWord(game.currentWord.word),
+        getWord(game.currentWord.word),
         getSortingGamePhrase('tryagain'),
       ],
       correctAudio: [
@@ -317,7 +317,7 @@ export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSec
         getSortingGamePhrase('the'),
         getPhoneme(game.currentWord.testedPhonemes[0]),
         getSortingGamePhrase('in'),
-        getSortingGameWord(game.currentWord.word),
+        getWord(game.currentWord.word),
         getSortingGamePhrase('spelled_with'),
         getGrapheme(grapheme),
       ],
@@ -346,7 +346,7 @@ export const sortingGameGradeThirdLevel: MutationResolvers['sortingGameGradeThir
         entry.toLowerCase().trim(),
       incorrectAudio: [
         getSortingGamePhrase('incorrect'),
-        getSortingGameWord(game.currentWord.word),
+        getWord(game.currentWord.word),
         getSortingGamePhrase('has_sound'),
         getPhoneme(game.currentWord.testedPhonemes[0]),
         getSortingGamePhrase('and_spelled_with'),
@@ -355,7 +355,7 @@ export const sortingGameGradeThirdLevel: MutationResolvers['sortingGameGradeThir
       ],
       correctAudio: [
         getSortingGamePhrase('correct'),
-        getSortingGameWord(game.currentWord.word),
+        getWord(game.currentWord.word),
         getSortingGamePhrase('is_spelled'),
         ...letters,
         getSortingGamePhrase('good_job'),
