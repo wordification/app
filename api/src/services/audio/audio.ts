@@ -13,11 +13,11 @@ export const getLetter = (letter: string) => {
   return `${STATIC_PATH}/common/letters/${letter}.mp3`
 }
 
-// Sorting game specific files
-export const getSortingGameWord = (word: string) => {
-  return `${STATIC_PATH}/sorting/words/${word}.mp3`
+export const getWord = (word: string) => {
+  return `${STATIC_PATH}/common/words/${word}.mp3`
 }
 
+// Sorting game specific files
 export const getSortingGameSentence = (sentence: string) => {
   return `${STATIC_PATH}/sorting/sentences/${sentence}_sentence.mp3`
 }
