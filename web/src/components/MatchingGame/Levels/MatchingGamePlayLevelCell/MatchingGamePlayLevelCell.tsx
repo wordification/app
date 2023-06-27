@@ -18,7 +18,6 @@ import type {
 type MatchingCard = {
   id: number
   word: string
-  testedPhonemes: number[]
 }
 
 export const beforeQuery = (props: FindMatchingGamePlayLevelQueryVariables) => {
@@ -36,14 +35,12 @@ export const QUERY = gql`
         allWords {
           id
           word
-          testedPhonemes
         }
       }
       audio
       incompleteWords {
         id
         word
-        testedPhonemes
       }
     }
   }
@@ -192,6 +189,9 @@ export const Success = ({
             const isIncompleteWord = matchingGamePlayLevel.incompleteWords.some(
               (incompleteWord) => incompleteWord.id === word.id
             )
+            const selected = flippedWords.some(
+              (flippedWord) => flippedWord.id === word.id
+            )
 
             return (
               <>
@@ -200,7 +200,7 @@ export const Success = ({
                   word={word.word}
                   flipped={!isIncompleteWord}
                   check={check}
-                  disabled={playingAudio}
+                  disabled={playingAudio || selected}
                   files={files}
                   onClick={() => flipCard(word)}
                   onComplete={() => handleComplete()}
