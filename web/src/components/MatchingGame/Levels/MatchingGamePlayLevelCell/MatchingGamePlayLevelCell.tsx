@@ -4,7 +4,9 @@ import {
   useMutation,
 } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
+
+import Player from 'src/components/Player/Player'
 
 import MatchingGameCard from '../../MatchingGameCard/MatchingGameCard'
 import { QUERY as LEVEL_QUERY } from '../../MatchingGameCell/MatchingGameCell'
@@ -68,6 +70,7 @@ const GRADE_MATCHING_GAME_MUTATION = gql`
       secondWordId: $secondWordId
     ) {
       correct
+      audio
     }
   }
 `
@@ -99,11 +102,14 @@ export const Success = ({
         }
 
         setCheck(!check)
+        setFlippedWords([])
 
-        /** TODO: INTRO AUDIO */
-        // if (matchingGameGrade.audio) {
-        //   setFiles(matchingGameGrade.audio)
-        // }
+        setTimeout(() => {
+          if (matchingGameGrade.audio) {
+            setPlayingAudio(true)
+            setFiles(matchingGameGrade.audio)
+          }
+        }, 1500)
       },
       onError: (error) => {
         toast.error(error.message)
@@ -144,8 +150,6 @@ export const Success = ({
     const updatedFlippedWords = [...flippedWords, card]
     setFlippedWords(updatedFlippedWords)
 
-    setPlayingAudio(true)
-
     const { data } = await client.query({
       query: GET_AUDIO_QUERY,
       variables: {
@@ -154,24 +158,14 @@ export const Success = ({
     })
 
     setFiles(data?.readWord)
-    setPlayingAudio(false)
+    setPlayingAudio(true)
 
     if (updatedFlippedWords.length === 2) {
       await handleGradeLevel(updatedFlippedWords[0], updatedFlippedWords[1])
-      setFlippedWords([])
-
-      // if (matchingGamePlayLevel.incompleteWords) {
-      //   await client.query({
-      //     query: LEVEL_QUERY,
-      //     variables: { id: matchingGamePlayLevel.game.id },
-      //     notifyOnNetworkStatusChange: true,
-      //     // fetchPolicy: 'no-cache',
-      //   })
-      // }
     }
   }
 
-  const handleComplete = async () => {
+  const handleComplete = useCallback(async () => {
     setPlayingAudio(false)
     await client.query({
       query: LEVEL_QUERY,
@@ -179,35 +173,37 @@ export const Success = ({
       notifyOnNetworkStatusChange: true,
       // fetchPolicy: 'no-cache',
     })
-  }
+  }, [matchingGamePlayLevel.game.id, client])
 
   return (
-    <div className="card bg-base-100 text-base-content shadow-2xl">
-      <div className="card-body items-center justify-center">
-        <ul className="grid grid-cols-2 gap-4 md:grid-cols-5">
-          {matchingGamePlayLevel.game.allWords.map((word) => {
-            const isIncompleteWord = matchingGamePlayLevel.incompleteWords.some(
-              (incompleteWord) => incompleteWord.id === word.id
-            )
-            const selected = flippedWords.some(
-              (flippedWord) => flippedWord.id === word.id
-            )
+    <>
+      <div className="card bg-base-100 text-base-content shadow-2xl">
+        <div className="card-body items-center justify-center">
+          <ul className="grid grid-cols-2 gap-4 md:grid-cols-5">
+            {matchingGamePlayLevel.game.allWords.map((word) => {
+              const isIncompleteWord =
+                matchingGamePlayLevel.incompleteWords.some(
+                  (incompleteWord) => incompleteWord.id === word.id
+                )
+              const selected = flippedWords.some(
+                (flippedWord) => flippedWord.id === word.id
+              )
 
-            return (
-              <MatchingGameCard
-                key={word.id}
-                word={word.word}
-                flipped={!isIncompleteWord}
-                check={check}
-                disabled={playingAudio || selected}
-                files={files}
-                onClick={() => flipCard(word)}
-                onComplete={() => handleComplete()}
-              />
-            )
-          })}
-        </ul>
+              return (
+                <MatchingGameCard
+                  key={word.id}
+                  word={word.word}
+                  flipped={!isIncompleteWord}
+                  check={check}
+                  disabled={playingAudio || selected}
+                  onClick={() => flipCard(word)}
+                />
+              )
+            })}
+          </ul>
+        </div>
       </div>
-    </div>
+      {files && <Player files={files} onComplete={handleComplete} />}
+    </>
   )
 }
