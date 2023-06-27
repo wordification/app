@@ -75,19 +75,27 @@ const GRADE_MATCHING_GAME_MUTATION = gql`
   }
 `
 
+const GET_AUDIO_QUERY = gql`
+  query ReadWordQuery($word: String!) {
+    readWord(word: $word)
+  }
+`
+
 export const Success = ({
   matchingGamePlayLevel,
 }: CellSuccessProps<
   FindMatchingGamePlayLevelQuery,
   FindMatchingGamePlayLevelQueryVariables
 >) => {
+  const [playingAudio, setPlayingAudio] = useState(false)
+  const [files, setFiles] = useState(matchingGamePlayLevel.audio)
+
   const [gradeLevel, { client }] = useMutation<GradeMatchingGameMutation>(
     GRADE_MATCHING_GAME_MUTATION,
     {
       fetchPolicy: 'no-cache',
       onCompleted: ({ matchingGameGrade }) => {
         if (matchingGameGrade.correct) {
-          // setPlayingAudio(true)
           toast.success('Correct!')
         } else {
           toast.error('Incorrect!')
@@ -95,7 +103,7 @@ export const Success = ({
 
         setCheck(!check)
 
-        /** TODO: AUDIO */
+        /** TODO: INTRO AUDIO */
         // if (matchingGameGrade.audio) {
         //   setFiles(matchingGameGrade.audio)
         // }
@@ -139,19 +147,41 @@ export const Success = ({
     const updatedFlippedWords = [...flippedWords, card]
     setFlippedWords(updatedFlippedWords)
 
+    setPlayingAudio(true)
+
+    const { data } = await client.query({
+      query: GET_AUDIO_QUERY,
+      variables: {
+        word: card.word,
+      },
+    })
+
+    setFiles(data?.readWord)
+    setPlayingAudio(false)
+
     if (updatedFlippedWords.length === 2) {
       await handleGradeLevel(updatedFlippedWords[0], updatedFlippedWords[1])
       setFlippedWords([])
 
-      if (matchingGamePlayLevel.incompleteWords) {
-        await client.query({
-          query: LEVEL_QUERY,
-          variables: { id: matchingGamePlayLevel.game.id },
-          notifyOnNetworkStatusChange: true,
-          // fetchPolicy: 'no-cache',
-        })
-      }
+      // if (matchingGamePlayLevel.incompleteWords) {
+      //   await client.query({
+      //     query: LEVEL_QUERY,
+      //     variables: { id: matchingGamePlayLevel.game.id },
+      //     notifyOnNetworkStatusChange: true,
+      //     // fetchPolicy: 'no-cache',
+      //   })
+      // }
     }
+  }
+
+  const handleComplete = async () => {
+    setPlayingAudio(false)
+    await client.query({
+      query: LEVEL_QUERY,
+      variables: { id: matchingGamePlayLevel.game.id },
+      notifyOnNetworkStatusChange: true,
+      // fetchPolicy: 'no-cache',
+    })
   }
 
   return (
@@ -164,13 +194,18 @@ export const Success = ({
             )
 
             return (
-              <MatchingGameCard
-                key={word.id}
-                word={word.word}
-                flipped={!isIncompleteWord}
-                check={check}
-                onClick={() => flipCard(word)}
-              />
+              <>
+                <MatchingGameCard
+                  key={word.id}
+                  word={word.word}
+                  flipped={!isIncompleteWord}
+                  check={check}
+                  disabled={playingAudio}
+                  files={files}
+                  onClick={() => flipCard(word)}
+                  onComplete={() => handleComplete()}
+                />
+              </>
             )
           })}
         </ul>
