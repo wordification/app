@@ -194,18 +194,16 @@ export const Success = ({
             )
 
             return (
-              <>
-                <MatchingGameCard
-                  key={word.id}
-                  word={word.word}
-                  flipped={!isIncompleteWord}
-                  check={check}
-                  disabled={playingAudio || selected}
-                  files={files}
-                  onClick={() => flipCard(word)}
-                  onComplete={() => handleComplete()}
-                />
-              </>
+              <MatchingGameCard
+                key={word.id}
+                word={word.word}
+                flipped={!isIncompleteWord}
+                check={check}
+                disabled={playingAudio || selected}
+                files={files}
+                onClick={() => flipCard(word)}
+                onComplete={() => handleComplete()}
+              />
             )
           })}
         </ul>
