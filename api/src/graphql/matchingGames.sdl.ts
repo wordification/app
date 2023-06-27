@@ -39,15 +39,11 @@ export const schema = gql`
   """
   The response after grading the matching game.
   """
-  type MatchingGameGradeResponse {
-    "The game associated with the response."
-    game: Game!
+  type MatchingGameGradeResponse implements Audio {
     "If the answer was correct."
     correct: Boolean!
-    "The first word selected."
-    firstWord: Word!
-    "The second word selected."
-    secondWord: Word!
+    "An array of audio file paths."
+    audio: [String!]
   }
 
   """

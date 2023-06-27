@@ -25,3 +25,8 @@ export const getSortingGameSentence = (sentence: string) => {
 export const getSortingGamePhrase = (phrase: string) => {
   return `${STATIC_PATH}/sorting/phrases/${phrase}.mp3`
 }
+
+// Matching game specific files
+export const getMatchingGamePhrase = (phrase: string) => {
+  return `${STATIC_PATH}/matching/phrases/${phrase}.mp3`
+}
