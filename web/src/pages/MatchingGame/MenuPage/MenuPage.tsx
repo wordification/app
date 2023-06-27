@@ -1,29 +1,29 @@
 import { Link, routes } from '@redwoodjs/router'
 
-const SORTING_MENU_ITEMS = [
+const MATCHING_MENU_ITEMS = [
   {
     title: 'New Game',
     content: 'Start a new game',
-    to: routes.sortingGameSetup(),
+    to: routes.matchingGameSetup(),
   },
   {
     title: 'Resume Game',
     content: 'Resume a game in progress',
-    to: routes.sortingGameIncomplete(),
+    to: routes.matchingGameIncomplete(),
   },
   {
     title: 'Completed Games',
     content: 'View completed games',
-    to: routes.sortingGameComplete(),
+    to: routes.matchingGameComplete(),
   },
 ] as const
 
-const SortingMenuPage = () => {
+const MatchingGameMenuPage = () => {
   return (
     <>
-      <h1 className="text-xl font-bold">Sorting Game</h1>
+      <h1 className="text-xl font-bold">Matching Game</h1>
       <ul className="grid gap-4 sm:grid-cols-3">
-        {SORTING_MENU_ITEMS.map((item) => (
+        {MATCHING_MENU_ITEMS.map((item) => (
           <Link
             to={item.to}
             key={item.to}
@@ -40,4 +40,4 @@ const SortingMenuPage = () => {
   )
 }
 
-export default SortingMenuPage
+export default MatchingGameMenuPage

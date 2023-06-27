@@ -93,15 +93,15 @@ export const standard = defineScenario<
     },
   },
   game: {
-    notLastWord: (scenario: StandardScenario) => ({
+    notLastWords: (scenario: StandardScenario) => ({
       include: {
         incompleteWords: true,
       },
       data: {
         updatedAt: '2023-04-30T21:33:37.356Z',
-        type: 'SORTING',
-        level: 3,
-        wordsPerPhoneme: 1,
+        type: 'MATCHING',
+        level: 1,
+        wordsPerPhoneme: 2,
         phonemes: [49, 53],
         user: {
           create: {
@@ -113,28 +113,43 @@ export const standard = defineScenario<
             salt: 'String',
           },
         },
-        currentWord: { connect: { id: scenario.word.wife.id } },
         incompleteWords: {
           connect: [
             { id: scenario.word.sight.id },
             { id: scenario.word.show.id },
+            { id: scenario.word.wife.id },
+            { id: scenario.word.snow.id },
+          ],
+        },
+        allWords: {
+          connect: [
+            { id: scenario.word.sight.id },
+            { id: scenario.word.show.id },
+            { id: scenario.word.wife.id },
+            { id: scenario.word.snow.id },
           ],
         },
       },
     }),
-    lastWord: (scenario: StandardScenario) => ({
+    lastWords: (scenario: StandardScenario) => ({
       data: {
         updatedAt: '2023-04-30T21:33:37.356Z',
-        type: 'SORTING',
-        wordsPerPhoneme: 1,
+        type: 'MATCHING',
+        wordsPerPhoneme: 2,
         phonemes: [49, 53],
-        currentWord: {
-          connect: {
-            id: scenario.word.snow.id,
-          },
-        },
         incompleteWords: {
-          connect: [],
+          connect: [
+            { id: scenario.word.show.id },
+            { id: scenario.word.snow.id },
+          ],
+        },
+        allWords: {
+          connect: [
+            { id: scenario.word.sight.id },
+            { id: scenario.word.show.id },
+            { id: scenario.word.wife.id },
+            { id: scenario.word.snow.id },
+          ],
         },
         user: {
           create: {
@@ -148,33 +163,13 @@ export const standard = defineScenario<
         },
       },
     }),
-    lastLevel: (scenario: StandardScenario) => ({
-      data: {
-        updatedAt: '2023-04-30T21:33:37.356Z',
-        type: 'SORTING',
-        level: 4,
-        wordsPerPhoneme: 1,
-        phonemes: [49, 53],
-        currentWord: {
-          connect: {
-            id: scenario.word.snow.id,
-          },
-        },
-        incompleteWords: {
-          connect: [],
-        },
-        user: {
-          connect: { id: scenario.user.one.id },
-        },
-      },
-    }),
   },
 })
 
 export type StandardScenario = ScenarioData<
   Game,
   'game',
-  'lastWord' | 'notLastWord' | 'lastLevel'
+  'lastWords' | 'notLastWords'
 > &
   ScenarioData<User, 'user', 'one'> &
   ScenarioData<Word, 'word', 'sight' | 'snow' | 'show' | 'wife'>

@@ -13,10 +13,13 @@ import type {
   AllMappedModels,
 } from 'types/graphql'
 
-export const games: QueryResolvers['games'] = ({ complete }) => {
+export const games: QueryResolvers['games'] = ({ complete, type }) => {
   if (typeof complete !== 'boolean') {
     return db.game.findMany({
-      where: { userId: context.currentUser?.id },
+      where: {
+        userId: context.currentUser?.id,
+        type: type ?? { in: ['SORTING', 'MATCHING'] },
+      },
       orderBy: {
         updatedAt: 'desc',
       },
@@ -28,10 +31,8 @@ export const games: QueryResolvers['games'] = ({ complete }) => {
     },
     where: {
       userId: context.currentUser?.id,
-      complete: {
-        // I don't know why this is inverted, but it works
-        not: complete,
-      },
+      complete,
+      type: type ?? { in: ['SORTING', 'MATCHING'] },
     },
   })
 }
@@ -70,7 +71,10 @@ export const createGame: MutationResolvers['createGame'] = async ({
   })
 
   const phonemes = gameSetup?.phonemes ?? []
-  const wordsPerPhoneme = gameSetup?.wordsPerPhoneme ?? 0
+  const wordsPerPhoneme =
+    input.type === 'SORTING'
+      ? gameSetup?.wordsPerPhoneme ?? 0
+      : (gameSetup?.wordsPerPhoneme ?? 0) * 2
 
   const gameWords = await selectGameWords({
     count: wordsPerPhoneme,
@@ -78,7 +82,28 @@ export const createGame: MutationResolvers['createGame'] = async ({
     phonemes: phonemes,
   })
 
-  const [currentWord, ...incompleteWords] = gameWords
+  if (input.type === 'SORTING') {
+    const [currentWord, ...incompleteWords] = gameWords
+    return db.game.create({
+      data: {
+        ...input,
+        wordsPerPhoneme,
+        phonemes,
+        userId: context.currentUser.id,
+        allWords: {
+          connect: gameWords.map((word) => ({ id: word.id })),
+        },
+        incompleteWords: {
+          connect: incompleteWords.map((word) => ({ id: word.id })),
+        },
+        currentWordId: currentWord.id,
+      },
+      include: {
+        allWords: true,
+      },
+    })
+  }
+  // input.type === 'MATCHING'
   return db.game.create({
     data: {
       ...input,
@@ -89,9 +114,8 @@ export const createGame: MutationResolvers['createGame'] = async ({
         connect: gameWords.map((word) => ({ id: word.id })),
       },
       incompleteWords: {
-        connect: incompleteWords.map((word) => ({ id: word.id })),
+        connect: gameWords.map((word) => ({ id: word.id })),
       },
-      currentWordId: currentWord.id,
     },
     include: {
       allWords: true,

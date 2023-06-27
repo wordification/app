@@ -1,5 +1,5 @@
 import { Howl } from 'howler'
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, memo } from 'react'
 
 const Player = ({
   files,
@@ -58,4 +58,4 @@ const Player = ({
   )
 }
 
-export default Player
+export default memo(Player)

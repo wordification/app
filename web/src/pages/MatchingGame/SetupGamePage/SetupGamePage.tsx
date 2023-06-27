@@ -13,13 +13,13 @@ const CREATE_GAME_MUTATION = gql`
   }
 `
 
-const SetupGamePage = () => {
+const MatchingGameSetupGamePage = () => {
   const [createGame, { error }] = useMutation<CreateGameMutation>(
     CREATE_GAME_MUTATION,
     {
       onCompleted: ({ createGame }) => {
         toast.success('Game created!')
-        navigate(routes.sortingGameIndividual({ id: createGame.id }))
+        navigate(routes.matchingGameIndividual({ id: createGame.id }))
       },
       onError: (error) => {
         toast.error(error.message)
@@ -31,7 +31,7 @@ const SetupGamePage = () => {
     createGame({
       variables: {
         input: {
-          type: 'SORTING',
+          type: 'MATCHING',
         },
       },
     })
@@ -51,4 +51,4 @@ const SetupGamePage = () => {
   )
 }
 
-export default SetupGamePage
+export default MatchingGameSetupGamePage

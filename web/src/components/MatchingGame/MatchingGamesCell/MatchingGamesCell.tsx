@@ -1,13 +1,13 @@
 import { Link, routes } from '@redwoodjs/router'
 
-import SortingGamesList from 'src/components/SortingGame/SortingGamesList'
+import MatchingGamesList from 'src/components/MatchingGame/MatchingGamesList'
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
-import type { FindSortingGames } from 'types/graphql'
+import type { FindMatchingGames } from 'types/graphql'
 
 export const QUERY = gql`
-  query FindSortingGames($complete: Boolean, $type: GameType) {
-    sortingGames: games(complete: $complete, type: $type) {
+  query FindMatchingGames($complete: Boolean, $type: GameType) {
+    matchingGames: games(complete: $complete, type: $type) {
       id
       user {
         email
@@ -26,7 +26,7 @@ export const Empty = () => {
   return (
     <div className="text-center">
       {'No games yet. '}
-      <Link to={routes.sortingGameSetup()} className="link-hover link">
+      <Link to={routes.matchingGameSetup()} className="link-hover link">
         {'Start one?'}
       </Link>
     </div>
@@ -38,7 +38,7 @@ export const Failure = ({ error }: CellFailureProps) => (
 )
 
 export const Success = ({
-  sortingGames,
-}: CellSuccessProps<FindSortingGames>) => {
-  return <SortingGamesList sortingGames={sortingGames} />
+  matchingGames,
+}: CellSuccessProps<FindMatchingGames>) => {
+  return <MatchingGamesList matchingGames={matchingGames} />
 }

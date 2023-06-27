@@ -1,3 +1,5 @@
+import { GameType } from '@prisma/client'
+
 import { db } from 'src/lib/db'
 
 import {
@@ -6,7 +8,7 @@ import {
   getPhoneme,
   getSortingGamePhrase,
   getSortingGameSentence,
-  getSortingGameWord,
+  getWord,
 } from '../audio'
 
 import type { QueryResolvers, MutationResolvers } from 'types/graphql'
@@ -61,14 +63,16 @@ export const selectNextWord = async (gameId: number) => {
 
 /**
  * Advances to the next level of a sorting game. These are the levels:
+ *
  * 0. Initial level (not currently used)
  * 1. Phoneme level (click long I or long O, etc)
  * 2. Grapheme level (click iCe, igh, y, etc)
  * 3. Word level (type the word)
  * 4. Complete (game is over)
+ *
  * @param gameId The ID of the game to advance
  * @param currentLevel The current level of the game
- * @returns The updated game or undefined if the game is already complete
+ * @returns The updated game or the current game if the game is already complete
  */
 export const advanceLevel = (gameId: number, currentLevel: number) => {
   if (currentLevel >= 4) {
@@ -88,14 +92,37 @@ export const advanceLevel = (gameId: number, currentLevel: number) => {
   })
 }
 
+/**
+ * Finds a sorting game by ID and validates that it exists and is a sorting
+ * game.
+ *
+ * @param gameId The ID of the game to find
+ * @returns The game if it exists and is a sorting game, and its current word
+ * @throws An error if the game is not found
+ * @throws An error if the game is not a sorting game
+ */
+const findSortingGame = async (gameId: number) => {
+  const game = await db.game.findUnique({
+    where: { id: gameId },
+    include: {
+      currentWord: true,
+    },
+  })
+
+  if (!game) {
+    throw new Error('Game not found')
+  }
+
+  if (game.type !== GameType.SORTING) {
+    throw new Error('Game is not a sorting game')
+  }
+
+  return game
+}
+
 export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] =
   async ({ gameId }) => {
-    const game = await db.game.findUnique({
-      where: { id: gameId },
-      include: {
-        currentWord: true,
-      },
-    })
+    const game = await findSortingGame(gameId)
 
     const currentWord = game?.currentWord
 
@@ -112,17 +139,17 @@ export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] =
       // figure out vowel sound in
       getSortingGamePhrase('introvsound'),
       // [ WORD ]
-      getSortingGameWord(currentWord.word),
+      getWord(currentWord.word),
       // a sentence that has
       getSortingGamePhrase('intro_sentence'),
       // [ WORD ]
-      getSortingGameWord(currentWord.word),
+      getWord(currentWord.word),
       // [ SENTENCE ]
       getSortingGameSentence(currentWord.word),
       // the sounds that make
       getSortingGamePhrase('intro_sounds'),
       // [ WORD ]
-      getSortingGameWord(currentWord.word),
+      getWord(currentWord.word),
       // are
       getSortingGamePhrase('are'),
       // [ SOUNDs ]
@@ -130,7 +157,7 @@ export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] =
       // which is the vowel sound in
       getSortingGamePhrase('intro_vsound_select'),
       // [ WORD ]
-      getSortingGameWord(currentWord.word),
+      getWord(currentWord.word),
     ]
 
     return {
@@ -152,12 +179,7 @@ export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] =
 
 export const sortingGameSecondLevel: QueryResolvers['sortingGameSecondLevel'] =
   async ({ gameId }) => {
-    const game = await db.game.findUnique({
-      where: { id: gameId },
-      include: {
-        currentWord: true,
-      },
-    })
+    const game = await findSortingGame(gameId)
 
     const currentWord = game?.currentWord
 
@@ -169,7 +191,7 @@ export const sortingGameSecondLevel: QueryResolvers['sortingGameSecondLevel'] =
       getSortingGamePhrase('spelling_pattern'),
       getPhoneme(currentWord.testedPhonemes[0]),
       getSortingGamePhrase('in'),
-      getSortingGameWord(currentWord.word),
+      getWord(currentWord.word),
     ]
 
     return {
@@ -181,12 +203,7 @@ export const sortingGameSecondLevel: QueryResolvers['sortingGameSecondLevel'] =
 
 export const sortingGameThirdLevel: QueryResolvers['sortingGameThirdLevel'] =
   async ({ gameId }) => {
-    const game = await db.game.findUnique({
-      where: { id: gameId },
-      include: {
-        currentWord: true,
-      },
-    })
+    const game = await findSortingGame(gameId)
 
     const currentWord = game?.currentWord
 
@@ -196,7 +213,7 @@ export const sortingGameThirdLevel: QueryResolvers['sortingGameThirdLevel'] =
 
     const audio = [
       getSortingGamePhrase('box_prompt'),
-      getSortingGameWord(currentWord.word),
+      getWord(currentWord.word),
     ]
 
     return {
@@ -248,12 +265,7 @@ const handleGrade = async ({
 
 export const sortingGameGradeFirstLevel: MutationResolvers['sortingGameGradeFirstLevel'] =
   async ({ gameId, phoneme }) => {
-    const game = await db.game.findUnique({
-      where: { id: gameId },
-      include: {
-        currentWord: true,
-      },
-    })
+    const game = await findSortingGame(gameId)
 
     if (!game?.currentWord) {
       throw new Error('Current word not selected')
@@ -268,32 +280,23 @@ export const sortingGameGradeFirstLevel: MutationResolvers['sortingGameGradeFirs
         getSortingGamePhrase('incorrect'),
         getPhoneme(phoneme),
         getSortingGamePhrase('not_spelling_pattern'),
-        getSortingGameWord(game.currentWord.word),
+        getWord(game.currentWord.word),
         getSortingGamePhrase('incorrect_try'),
       ],
       correctAudio: [
         getSortingGamePhrase('correct'),
         getPhoneme(phoneme),
         getSortingGamePhrase('correct_vsound'),
-        getSortingGameWord(game.currentWord.word),
+        getWord(game.currentWord.word),
       ],
     })
   }
 
 export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSecondLevel'] =
   async ({ gameId, grapheme }) => {
-    const game = await db.game.findUnique({
-      where: { id: gameId },
-      include: {
-        currentWord: true,
-      },
-    })
+    const game = await findSortingGame(gameId)
 
-    if (game === null) {
-      throw new Error('Game not found')
-    }
-
-    if (game.currentWord === null) {
+    if (!game?.currentWord) {
       throw new Error('Current word not selected')
     }
 
@@ -306,7 +309,7 @@ export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSec
         getSortingGamePhrase('incorrect'),
         getGrapheme(grapheme),
         getSortingGamePhrase('not_spelling_pattern'),
-        getSortingGameWord(game.currentWord.word),
+        getWord(game.currentWord.word),
         getSortingGamePhrase('tryagain'),
       ],
       correctAudio: [
@@ -314,7 +317,7 @@ export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSec
         getSortingGamePhrase('the'),
         getPhoneme(game.currentWord.testedPhonemes[0]),
         getSortingGamePhrase('in'),
-        getSortingGameWord(game.currentWord.word),
+        getWord(game.currentWord.word),
         getSortingGamePhrase('spelled_with'),
         getGrapheme(grapheme),
       ],
@@ -323,18 +326,9 @@ export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSec
 
 export const sortingGameGradeThirdLevel: MutationResolvers['sortingGameGradeThirdLevel'] =
   async ({ gameId, entry }) => {
-    const game = await db.game.findUnique({
-      where: { id: gameId },
-      include: {
-        currentWord: true,
-      },
-    })
+    const game = await findSortingGame(gameId)
 
-    if (game === null) {
-      throw new Error('Game not found')
-    }
-
-    if (game.currentWord === null) {
+    if (!game?.currentWord) {
       throw new Error('Current word not selected')
     }
 
@@ -352,7 +346,7 @@ export const sortingGameGradeThirdLevel: MutationResolvers['sortingGameGradeThir
         entry.toLowerCase().trim(),
       incorrectAudio: [
         getSortingGamePhrase('incorrect'),
-        getSortingGameWord(game.currentWord.word),
+        getWord(game.currentWord.word),
         getSortingGamePhrase('has_sound'),
         getPhoneme(game.currentWord.testedPhonemes[0]),
         getSortingGamePhrase('and_spelled_with'),
@@ -361,7 +355,7 @@ export const sortingGameGradeThirdLevel: MutationResolvers['sortingGameGradeThir
       ],
       correctAudio: [
         getSortingGamePhrase('correct'),
-        getSortingGameWord(game.currentWord.word),
+        getWord(game.currentWord.word),
         getSortingGamePhrase('is_spelled'),
         ...letters,
         getSortingGamePhrase('good_job'),
