@@ -1,6 +1,7 @@
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
+import { useEffect } from 'react'
 
 import type { CreateGameMutation } from 'types/graphql'
 
@@ -13,7 +14,7 @@ const CREATE_GAME_MUTATION = gql`
 `
 
 const MatchingGameSetupGamePage = () => {
-  const [createGame, { loading, error }] = useMutation<CreateGameMutation>(
+  const [createGame, { error }] = useMutation<CreateGameMutation>(
     CREATE_GAME_MUTATION,
     {
       onCompleted: ({ createGame }) => {
@@ -26,7 +27,7 @@ const MatchingGameSetupGamePage = () => {
     }
   )
 
-  if (!loading && !error) {
+  useEffect(() => {
     createGame({
       variables: {
         input: {
@@ -34,7 +35,8 @@ const MatchingGameSetupGamePage = () => {
         },
       },
     })
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) // Empty dependency array ensures only one game is created
 
   return (
     <div className="card bg-base-200 text-base-content">
