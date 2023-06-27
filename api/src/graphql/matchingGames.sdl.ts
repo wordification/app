@@ -29,6 +29,11 @@ export const schema = gql`
     First level is matching the correct phonemes.
     """
     matchingGamePlayLevel(gameId: Int!): MatchingGamePlayLevel! @requireAuth
+
+    """
+    Fetch the audio file of a given word.
+    """
+    readWord(word: String!): [String!] @requireAuth
   }
 
   """

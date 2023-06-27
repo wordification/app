@@ -2,7 +2,7 @@ import { GameType } from '@prisma/client'
 
 import { db } from 'src/lib/db'
 
-import { getSortingGamePhrase } from '../audio'
+import { getSortingGamePhrase, getWord } from '../audio'
 
 import type { MutationResolvers, QueryResolvers, Word } from 'types/graphql'
 /**
@@ -98,6 +98,11 @@ export const matchingGamePlayLevel: QueryResolvers['matchingGamePlayLevel'] =
       incompleteWords,
     }
   }
+
+export const readWord: QueryResolvers['readWord'] = async ({ word }) => {
+  const audio = [getWord(word)]
+  return audio
+}
 
 export const matchingGameGrade: MutationResolvers['matchingGameGrade'] =
   async ({ gameId, firstWordId, secondWordId }) => {
