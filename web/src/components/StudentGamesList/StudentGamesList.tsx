@@ -74,6 +74,7 @@ const StudentGamesList = ({
             <th>ID</th>
             <th>User</th>
             <th>Last Played</th>
+            <th>Game Type</th>
             <th># of Words</th>
             <th>Phonemes</th>
             <th>Level</th>
@@ -87,6 +88,7 @@ const StudentGamesList = ({
               <td>{truncate(game.id)}</td>
               <td>{truncate(game.user?.email)}</td>
               <td>{timeTag(game.updatedAt)}</td>
+              <td>{truncate(game.type)}</td>
               <td>{truncate(game.wordsPerPhoneme * game.phonemes.length)}</td>
               <td>{truncate(game.phonemes.join(' & '))}</td>
               <td>{truncate(game.level)}</td>
