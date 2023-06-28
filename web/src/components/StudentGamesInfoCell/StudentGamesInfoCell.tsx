@@ -21,6 +21,7 @@ export const QUERY = gql`
       wordsPerPhoneme
       phonemes
       level
+      type
     }
   }
 `
