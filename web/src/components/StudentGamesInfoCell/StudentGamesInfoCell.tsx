@@ -1,5 +1,7 @@
 import { Link, routes } from '@redwoodjs/router'
 
+import { useAuth } from 'src/auth'
+
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import type {
   FindStudentGamesInfoById,
@@ -40,6 +42,8 @@ export const Success = ({
   FindStudentGamesInfoById,
   FindStudentGamesInfoByIdVariables
 >) => {
+  const { hasRole } = useAuth()
+
   const incompleteGames = games.filter((game) => !game.complete)
   const completeGames = games.filter((game) => game.complete)
 
@@ -49,41 +53,47 @@ export const Success = ({
         <div className="stat">
           <div className="stat-title">Total Games</div>
           <div className="stat-value mb-2">{games.length}</div>
-          <Link
-            to={routes.studentGames({ id: games[0].userId })}
-            title={'Student Games ' + games[0].userId}
-            className="btn-primary btn-outline btn-xs btn"
-          >
-            View All Games
-          </Link>
+          {hasRole('TEACHER') && (
+            <Link
+              to={routes.studentGames({ id: games[0].userId })}
+              title={'Student Games ' + games[0].userId}
+              className="btn-primary btn-outline btn-xs btn"
+            >
+              View All Games
+            </Link>
+          )}
         </div>
         <div className="stat">
           <div className="stat-title">Complete Games</div>
           <div className="stat-value mb-2">{completeGames.length}</div>
-          <Link
-            to={routes.studentGames({
-              id: games[0].userId,
-              complete: true,
-            })}
-            title={'Student Games ' + games[0].userId}
-            className="btn-primary btn-outline btn-xs btn"
-          >
-            View Complete Games
-          </Link>
+          {hasRole('TEACHER') && (
+            <Link
+              to={routes.studentGames({
+                id: games[0].userId,
+                complete: true,
+              })}
+              title={'Student Games ' + games[0].userId}
+              className="btn-primary btn-outline btn-xs btn"
+            >
+              View Complete Games
+            </Link>
+          )}
         </div>
         <div className="stat">
           <div className="stat-title">Incomplete Games</div>
           <div className="stat-value mb-2">{incompleteGames.length}</div>
-          <Link
-            to={routes.studentGames({
-              id: games[0].userId,
-              complete: false,
-            })}
-            title={'Student Games ' + games[0].userId}
-            className="btn-primary btn-outline btn-xs btn"
-          >
-            View Incomplete Games
-          </Link>
+          {hasRole('TEACHER') && (
+            <Link
+              to={routes.studentGames({
+                id: games[0].userId,
+                complete: false,
+              })}
+              title={'Student Games ' + games[0].userId}
+              className="btn-primary btn-outline btn-xs btn"
+            >
+              View Incomplete Games
+            </Link>
+          )}
         </div>
       </div>
     </>
