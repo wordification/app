@@ -35,10 +35,11 @@ export const Success = ({
 >) => {
   return (
     <>
-      <h1 className="mb-2 text-2xl font-bold">
-        {student.firstName} {student.lastName}
-      </h1>
+      <h1 className="mb-5 text-2xl font-bold">Student Information</h1>
 
+      <h1 className="mb-2 text-2xl font-bold">
+        {student.lastName}, {student.firstName}
+      </h1>
       <div className="mb-2 overflow-x-auto">
         <table className="table-zebra table w-full">
           <thead>

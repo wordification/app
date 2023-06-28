@@ -14,6 +14,10 @@ const MENU_ITEMS = [
     label: 'Games',
   },
   {
+    to: '/profile',
+    label: 'Profile',
+  },
+  {
     type: 'signout',
   },
 ] as const
