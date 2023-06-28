@@ -1,4 +1,4 @@
-import { Link, routes } from '@redwoodjs/router'
+import { Link, routes, useLocation } from '@redwoodjs/router'
 
 import { useAuth } from 'src/auth'
 
@@ -43,6 +43,7 @@ export const Success = ({
   FindStudentGamesInfoByIdVariables
 >) => {
   const { hasRole } = useAuth()
+  const { pathname } = useLocation()
 
   const incompleteGames = games.filter((game) => !game.complete)
   const completeGames = games.filter((game) => game.complete)
@@ -53,7 +54,8 @@ export const Success = ({
         <div className="stat">
           <div className="stat-title">Total Games</div>
           <div className="stat-value mb-2">{games.length}</div>
-          {hasRole('TEACHER') && (
+          {(hasRole('TEACHER') ||
+            (hasRole('SUPERUSER') && pathname !== '/profile')) && (
             <Link
               to={routes.studentGames({ id: games[0].userId })}
               title={'Student Games ' + games[0].userId}
@@ -66,7 +68,8 @@ export const Success = ({
         <div className="stat">
           <div className="stat-title">Complete Games</div>
           <div className="stat-value mb-2">{completeGames.length}</div>
-          {hasRole('TEACHER') && (
+          {(hasRole('TEACHER') ||
+            (hasRole('SUPERUSER') && pathname !== '/profile')) && (
             <Link
               to={routes.studentGames({
                 id: games[0].userId,
@@ -82,7 +85,8 @@ export const Success = ({
         <div className="stat">
           <div className="stat-title">Incomplete Games</div>
           <div className="stat-value mb-2">{incompleteGames.length}</div>
-          {hasRole('TEACHER') && (
+          {(hasRole('TEACHER') ||
+            (hasRole('SUPERUSER') && pathname !== '/profile')) && (
             <Link
               to={routes.studentGames({
                 id: games[0].userId,
