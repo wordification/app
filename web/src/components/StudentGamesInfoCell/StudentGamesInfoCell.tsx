@@ -19,6 +19,7 @@ export const QUERY = gql`
       wordsPerPhoneme
       phonemes
       level
+      type
     }
   }
 `
@@ -51,7 +52,7 @@ export const Success = ({
           <Link
             to={routes.studentGames({ id: games[0].userId })}
             title={'Student Games ' + games[0].userId}
-            className="btn-outline btn-primary btn-xs btn"
+            className="btn-primary btn-outline btn-xs btn"
           >
             View All Games
           </Link>
@@ -65,7 +66,7 @@ export const Success = ({
               complete: true,
             })}
             title={'Student Games ' + games[0].userId}
-            className="btn-outline btn-primary btn-xs btn"
+            className="btn-primary btn-outline btn-xs btn"
           >
             View Complete Games
           </Link>
@@ -79,7 +80,7 @@ export const Success = ({
               complete: false,
             })}
             title={'Student Games ' + games[0].userId}
-            className="btn-outline btn-primary btn-xs btn"
+            className="btn-primary btn-outline btn-xs btn"
           >
             View Incomplete Games
           </Link>
