@@ -21,7 +21,6 @@ import TeacherLayout from './layouts/TeacherLayout/TeacherLayout'
 const Routes = () => {
   return (
     <Router useAuth={useAuth}>
-      <Route path="/test" page={TestPage} name="test" />
       <Set wrap={LandingPageLayout}>
         <Route path="/try-it" page={LandingDemonstrationPage} name="demonstration" />
         <Route path="/contributors" page={LandingContributorsPage} name="contributors" />
