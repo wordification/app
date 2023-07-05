@@ -36,6 +36,13 @@ const PHONEME_OPTIONS = [
   { id: 53, name: 'Long O' },
 ] as const
 
+const MATCHING_BOARD_SIZE_OPTIONS = [
+  { id: 0, name: '3x4' },
+  { id: 1, name: '4x4' },
+  { id: 2, name: '4x5' },
+  { id: 3, name: '4x6' },
+] as const
+
 const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
   const [availableOptions, setAvailableOptions] =
     useState<readonly Phoneme[]>(PHONEME_OPTIONS)
@@ -70,24 +77,7 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
         listClassName="list-disc list-inside text-sm"
       />
 
-      <div className="form-control w-full max-w-xs">
-        <Label
-          name="wordsPerPhoneme"
-          className="label"
-          errorClassName="label text-error"
-        >
-          <span className="label-text">Words per phoneme</span>
-        </Label>
-
-        <NumberField
-          name="wordsPerPhoneme"
-          defaultValue={3}
-          className="input-bordered input w-full max-w-xs"
-          errorClassName="input input-bordered border-error w-full max-w-xs"
-          validation={{ required: true }}
-        />
-      </div>
-      <FieldError name="wordsPerPhoneme" className="text-sm text-error" />
+      <h2 className="text-lg">All Games</h2>
 
       <div className="form-control w-full max-w-xs">
         <Label
@@ -148,6 +138,56 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
         <FieldError name="first_phoneme" className="text-error" />
         <FieldError name="second_phoneme" className="text-error" />
       </div>
+
+      <div className="divider w-full max-w-xs"></div>
+      <h2 className="text-lg">Sorting Game</h2>
+
+      <div className="form-control w-full max-w-xs">
+        <Label
+          name="wordsPerPhoneme"
+          className="label"
+          errorClassName="label text-error"
+        >
+          <span className="label-text">Words per phoneme</span>
+        </Label>
+
+        <NumberField
+          name="wordsPerPhoneme"
+          defaultValue={3}
+          className="input-bordered input mb-2 w-full max-w-xs"
+          errorClassName="input input-bordered border-error w-full max-w-xs"
+          validation={{ required: true }}
+        />
+      </div>
+      <FieldError name="wordsPerPhoneme" className="text-sm text-error" />
+
+      <div className="divider w-full max-w-xs"></div>
+      <h2 className="text-lg">Matching Game</h2>
+
+      <div className="form-control w-full max-w-xs">
+        <Label
+          name="matchingBoardSize"
+          className="label"
+          errorClassName="label text-error"
+        >
+          <span className="label-text">Size of Board</span>
+        </Label>
+
+        <SelectField
+          name="matchingBoardSize"
+          defaultValue={0}
+          className="input-bordered select mb-2 w-full"
+          validation={{ required: true, valueAsNumber: true }}
+        >
+          {MATCHING_BOARD_SIZE_OPTIONS.map((s) => (
+            <option key={s.id} value={s.id}>
+              {s.name}
+            </option>
+          ))}
+        </SelectField>
+      </div>
+      <FieldError name="matchingBoardSize" className="text-sm text-error" />
+
       <div className="mt-2">
         <Submit disabled={props.loading} className="btn-primary btn">
           Submit

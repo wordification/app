@@ -11,12 +11,19 @@
 //
 // See https://storybook.js.org/docs/react/writing-stories/args.
 
-import type { ComponentMeta } from '@storybook/react'
-
 import ClassGameSetupForm from './ClassGameSetupForm'
 
+import type { ComponentMeta } from '@storybook/react'
+
 export const generated = () => {
-  return <ClassGameSetupForm />
+  return (
+    <ClassGameSetupForm
+      onSave={function (): void {
+        throw new Error('Function not implemented.')
+      }}
+      loading={false}
+    />
+  )
 }
 
 export default {

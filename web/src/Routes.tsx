@@ -55,7 +55,6 @@ const Routes = () => {
       <Private unauthenticated="login" roles={['TEACHER', 'SUPERUSER']}>
         <Set wrap={TeacherLayout}>
           <Route path="/dashboard/class-game-setup" page={DashboardClassGameSetupPage} name="classGameSetup" />
-          <Route path="/dashboard/class-game-setup-menu" page={DashboardClassGameSetupMenuPage} name="classGameSetupMenu" />
           <Route path="/dashboard/students/{id:Int}/games" page={DashboardStudentGamesPage} name="studentGames" />
           <Route path="/dashboard/students/{id:Int}" page={DashboardStudentProfilePage} name="studentProfile" />
           <Route path="/dashboard/students" page={DashboardStudentsPage} name="students" />
