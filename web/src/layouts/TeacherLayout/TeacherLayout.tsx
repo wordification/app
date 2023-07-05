@@ -18,7 +18,7 @@ const MENU_ITEMS = [
     label: 'My Class',
   },
   {
-    to: '/dashboard/class-game-setup',
+    to: '/dashboard/class-game-setup-menu',
     label: 'Class Game Setup',
   },
   {
