@@ -119,6 +119,8 @@ model GameSetup {
   wordsPerPhoneme   Int
   /// The phonemes to test the user on.
   phonemes          Int[]
+  /// The size and configuration of the cards for a matching game.
+  matchingBoardSize Int       @default(0)
   /// The unique identifier of the user the game rules are associated with.
   userId            Int       @unique
 

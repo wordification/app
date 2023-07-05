@@ -132,7 +132,7 @@ const StudentList = ({ currentStudents }: GetCurrentStudents) => {
                       View Student
                     </Link>
                     <Link
-                      to={routes.classGameSetupMenu({ id: student.id })}
+                      to={routes.classGameSetup({ id: student.id })}
                       title={'Game Setup ' + student.id}
                       className="btn-accent btn-outline btn-xs join-item btn"
                     >

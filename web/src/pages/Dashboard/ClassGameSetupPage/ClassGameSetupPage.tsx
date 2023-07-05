@@ -22,10 +22,9 @@ const UPSERT_GAME_SETUP_MUTATION = gql`
 
 type ClassGameSetupPageProps = {
   id?: string
-  type: string
 }
 
-const DashboardClassGameSetupPage = ({ id, type }: ClassGameSetupPageProps) => {
+const DashboardClassGameSetupPage = ({ id }: ClassGameSetupPageProps) => {
   const [upsertGameSetup, { loading, error }] =
     useMutation<UpsertGameSetupMutation>(UPSERT_GAME_SETUP_MUTATION, {
       onCompleted: () => {
@@ -59,18 +58,11 @@ const DashboardClassGameSetupPage = ({ id, type }: ClassGameSetupPageProps) => {
         <div className="card-body">
           <header>
             <h1 className="card-title">
-              {id === undefined
-                ? `Student ID# ${id}: Game Setup`
-                : 'Class Game Setup'}
+              {id ? `Student ID# ${id}: Game Setup` : 'Class Game Setup'}
             </h1>
           </header>
-          {type === 'sorting' ? (
-            <ClassGameSetupForm
-              onSave={onSave}
-              loading={loading}
-              error={error}
-            />
-          ) : null}
+
+          <ClassGameSetupForm onSave={onSave} loading={loading} error={error} />
         </div>
       </div>
     </>
