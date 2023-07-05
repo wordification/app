@@ -127,14 +127,14 @@ const StudentList = ({ currentStudents }: GetCurrentStudents) => {
                     <Link
                       to={routes.studentProfile({ id: student.id })}
                       title={'Student Profile ' + student.id}
-                      className="join-item btn-outline btn-primary btn-xs btn mr-1"
+                      className="btn-primary btn-outline btn-xs join-item btn mr-1"
                     >
                       View Student
                     </Link>
                     <Link
                       to={routes.classGameSetup({ id: student.id })}
                       title={'Game Setup ' + student.id}
-                      className="join-item btn-outline btn-accent btn-xs btn"
+                      className="btn-accent btn-outline btn-xs join-item btn"
                     >
                       Edit Game Setup
                     </Link>

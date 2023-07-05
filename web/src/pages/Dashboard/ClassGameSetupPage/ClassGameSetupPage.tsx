@@ -61,6 +61,7 @@ const DashboardClassGameSetupPage = ({ id }: ClassGameSetupPageProps) => {
               {id ? `Student ID# ${id}: Game Setup` : 'Class Game Setup'}
             </h1>
           </header>
+
           <ClassGameSetupForm onSave={onSave} loading={loading} error={error} />
         </div>
       </div>
