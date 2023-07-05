@@ -20,21 +20,38 @@ const fileData = fs.readFileSync(filePath, 'utf8')
 const words: Word[] = JSON.parse(fileData)
 
 // Filter words based on phonemes
-const wordsWithPhoneme45 = words.filter((word) => word.phonemes.includes(45))
-const wordsWithPhoneme44 = words.filter((word) => word.phonemes.includes(44))
-const wordsWithPhoneme47 = words.filter((word) => word.phonemes.includes(47))
+const wordsWithLongE = words.filter(
+  (word) => word.phonemes.includes(45) && word.numSyllables === 1
+)
+const wordsWithLongA = words.filter(
+  (word) =>
+    (word.phonemes.includes(44) || word.phonemes.includes(51)) &&
+    word.numSyllables === 1
+)
+const wordsWithLongU = words.filter(
+  (word) => word.phonemes.includes(47) && word.numSyllables === 1
+)
 
 // Print the filtered words
-wordsWithPhoneme45.forEach((word) => {
-  console.log('Long E: ', word.word)
+console.log('Long E')
+wordsWithLongE.forEach((word) => {
+  console.log(word.word)
 })
+// Display the count
+console.log(`Count: ${wordsWithLongE.length}`)
 
 // Print the filtered words
-wordsWithPhoneme44.forEach((word) => {
-  console.log('Long E: ', word.word)
+console.log('Long A')
+wordsWithLongA.forEach((word) => {
+  console.log(word.word)
 })
+// Display the count
+console.log(`Count: ${wordsWithLongA.length}`)
 
 // Print the filtered words
-wordsWithPhoneme47.forEach((word) => {
-  console.log('Long E: ', word.word)
+console.log('Long U')
+wordsWithLongU.forEach((word) => {
+  console.log(word.word)
 })
+// Display the count
+console.log(`Count: ${wordsWithLongU.length}`)
