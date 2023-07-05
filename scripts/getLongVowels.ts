@@ -19,7 +19,7 @@ const filePath = path.join(__dirname, 'word_data.json') // Construct the absolut
 const fileData = fs.readFileSync(filePath, 'utf8')
 const words: Word[] = JSON.parse(fileData)
 
-// Filter words based on phonemes
+// Filter words based on phonemes with one syllable
 const wordsWithLongE = words.filter(
   (word) => word.phonemes.includes(45) && word.numSyllables === 1
 )
