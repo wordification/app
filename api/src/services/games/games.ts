@@ -71,10 +71,17 @@ export const createGame: MutationResolvers['createGame'] = async ({
   })
 
   const phonemes = gameSetup?.phonemes ?? []
-  const wordsPerPhoneme =
-    input.type === 'SORTING'
-      ? gameSetup?.wordsPerPhoneme ?? 0
-      : (gameSetup?.wordsPerPhoneme ?? 0) * 2
+  let wordsPerPhoneme = gameSetup?.wordsPerPhoneme ?? 0
+  if (input.type !== 'SORTING') {
+    wordsPerPhoneme =
+      gameSetup?.matchingBoardSize === 0
+        ? 6
+        : gameSetup?.matchingBoardSize === 1
+        ? 8
+        : gameSetup?.matchingBoardSize === 2
+        ? 10
+        : 12
+  }
 
   const gameWords = await selectGameWords({
     count: wordsPerPhoneme,
