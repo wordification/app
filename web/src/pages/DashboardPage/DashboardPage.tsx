@@ -10,7 +10,7 @@ const DASHBOARD_ITEMS = [
   {
     title: 'Class Game Setup',
     content: 'Set game rules/specifications for your entire class',
-    to: routes.classGameSetup(),
+    to: routes.classGameSetupMenu(),
   },
 ] as const
 
