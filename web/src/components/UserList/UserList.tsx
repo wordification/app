@@ -33,6 +33,22 @@ const DELETE_USER_MUTATION = gql`
   }
 `
 
+const EMAIL_USER_MUTATION = gql`
+  mutation EmailUserMutation($id: Int!) {
+    emailUser(id: $id) {
+      id
+    }
+  }
+`
+
+const timeTag = (datetime: string) => {
+  return (
+    <time dateTime={datetime} title={datetime}>
+      {new Date(datetime).toUTCString()}
+    </time>
+  )
+}
+
 const UserList = ({ users }: FindExistingUsers) => {
   const formMethods = useForm<SearchUserListInput>()
 
@@ -48,6 +64,15 @@ const UserList = ({ users }: FindExistingUsers) => {
     // https://www.apollographql.com/docs/react/data/mutations/#making-all-other-cache-updates
     refetchQueries: [{ query: QUERY }],
     awaitRefetchQueries: true,
+  })
+
+  const [emailUser] = useMutation(EMAIL_USER_MUTATION, {
+    onCompleted: () => {
+      toast.success('Email sent')
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
   })
 
   const [displayUsers, setDisplayUsers] = useState(users)
@@ -70,6 +95,16 @@ const UserList = ({ users }: FindExistingUsers) => {
       )
     ) {
       deleteUser({ variables: { id: user.id } })
+    }
+  }
+
+  const onEmailClick = (user: ExistingUser) => {
+    if (
+      confirm(
+        `Are you sure you want to send an email to ${user.lastName}, ${user.firstName}?`
+      )
+    ) {
+      emailUser({ variables: { id: user.id } })
     }
   }
 
@@ -211,6 +246,14 @@ const UserList = ({ users }: FindExistingUsers) => {
                         Delete
                       </button>
                     )}
+                    <button
+                      type="button"
+                      title={'Email User ' + user.id}
+                      className="btn-outline btn-error btn-xs btn"
+                      onClick={() => onEmailClick(user)}
+                    >
+                      Send Email
+                    </button>
                   </nav>
                 </td>
                 <td>{truncate(user.id)}</td>

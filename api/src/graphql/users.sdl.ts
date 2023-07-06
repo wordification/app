@@ -166,7 +166,12 @@ export const schema = gql`
     deleteUser(id: Int!): User!
       @requireAuth(roles: ["ADMINISTRATOR", "SUPERUSER"])
 
+    "Updates an existing user."
     updateUser(id: Int!, input: UpdateUserInput!): User!
+      @requireAuth(roles: ["ADMINISTRATOR", "SUPERUSER"])
+
+    "Sends an email to a user."
+    emailUser(id: Int!): User!
       @requireAuth(roles: ["ADMINISTRATOR", "SUPERUSER"])
   }
 `
