@@ -57,8 +57,6 @@ model User {
   students          User[]            @relation("teacher")
   /// The user's game setup.
   gameSetup         GameSetup?       @relation("gameSetup")
-  /// The user's audit logs to track emails sent.
-  audits            Audit[]
 }
 
 /// Possible game types.
@@ -166,22 +164,4 @@ model Word {
   allGames        Game[] @relation("allGames")
   /// All of the games that have played this word but have not completed it.
   incompleteGames Game[] @relation("incompleteGames")
-}
-
-model Audit {
-  // BASIC INFO
-  /// The unique identifier of a user.
-  id          Int       @id @default(autoincrement())
-  /// The time at which the user was created.
-  createdAt   DateTime  @default(now())
-  /// The time at which the user was last updated.
-  updatedAt   DateTime  @default(now()) @updatedAt
-  /// The ID of the user associated with the audit.
-  userId      Int
-  /// The log information for this audit.
-  log         String
-
-  // RELATIONSHIP INFO
-  /// The user associated with the audit.
-  user        User     @relation(fields: [userId], references: [id])
 }
