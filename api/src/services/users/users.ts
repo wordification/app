@@ -154,6 +154,20 @@ export const updateUser: MutationResolvers['updateUser'] = async ({
   })
 }
 
+export const emailUser: MutationResolvers['emailUser'] = async ({ id }) => {
+  const user = await db.user.findUnique({
+    where: { id },
+  })
+
+  if (!user) {
+    throw new Error('User does not exist!')
+  }
+
+  console.log('Sending email to', user)
+
+  return user
+}
+
 export const User: UserRelationResolvers = {
   games: (_obj, { root }) => {
     return db.user.findUnique({ where: { id: root?.id } }).games() as Promise<
