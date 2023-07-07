@@ -54,6 +54,7 @@ const Routes = () => {
       </Private>
       <Private unauthenticated="login" roles={['TEACHER', 'SUPERUSER']}>
         <Set wrap={TeacherLayout}>
+          <Route path="/dashboard/reset-password" page={ResetPasswordPage} name="resetPasswordTeacher" />
           <Route path="/dashboard/class-game-setup" page={DashboardClassGameSetupPage} name="classGameSetup" />
           <Route path="/dashboard/students/{id:Int}/games" page={DashboardStudentGamesPage} name="studentGames" />
           <Route path="/dashboard/students/{id:Int}" page={DashboardStudentProfilePage} name="studentProfile" />
@@ -63,6 +64,7 @@ const Routes = () => {
       </Private>
       <Private unauthenticated="login" roles={['ADMINISTRATOR', 'SUPERUSER']}>
         <Set wrap={AdministratorLayout}>
+          <Route path="/admin/reset-password" page={ResetPasswordPage} name="resetPasswordAdmin" />
           <Route path="/admin/update-user/{id:Int}" page={AdminUpdateUserPage} name="updateUser" />
           <Route path="/admin/modify-user" page={AdminModifyUserPage} name="modifyUser" />
           <Route path="/admin/create-user" page={AdminCreateUserPage} name="createUser" />

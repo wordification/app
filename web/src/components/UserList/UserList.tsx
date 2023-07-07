@@ -1,5 +1,5 @@
 import { Form, Label, SelectField, Submit, TextField } from '@redwoodjs/forms'
-import { Link, routes } from '@redwoodjs/router'
+import { Link, navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 import { useEffect, useState } from 'react'
@@ -41,14 +41,6 @@ const EMAIL_USER_MUTATION = gql`
   }
 `
 
-const timeTag = (datetime: string) => {
-  return (
-    <time dateTime={datetime} title={datetime}>
-      {new Date(datetime).toUTCString()}
-    </time>
-  )
-}
-
 const UserList = ({ users }: FindExistingUsers) => {
   const formMethods = useForm<SearchUserListInput>()
 
@@ -68,7 +60,7 @@ const UserList = ({ users }: FindExistingUsers) => {
 
   const [emailUser] = useMutation(EMAIL_USER_MUTATION, {
     onCompleted: () => {
-      toast.success('Email sent')
+      toast.success('Email Sent')
     },
     onError: (error) => {
       toast.error(error.message)
@@ -99,12 +91,17 @@ const UserList = ({ users }: FindExistingUsers) => {
   }
 
   const onEmailClick = (user: ExistingUser) => {
-    if (
-      confirm(
-        `Are you sure you want to send an email to ${user.lastName}, ${user.firstName}?`
+    if (user.roles === 'STUDENT') {
+      navigate(
+        routes.resetPasswordAdmin({
+          id: user.id,
+          name: user.lastName + ', ' + user.firstName,
+        })
       )
-    ) {
-      emailUser({ variables: { id: user.id } })
+    } else {
+      if (confirm(`Send a password reset request to ${user.email}?`)) {
+        emailUser({ variables: { id: user.id } })
+      }
     }
   }
 
@@ -228,6 +225,16 @@ const UserList = ({ users }: FindExistingUsers) => {
                 <td>
                   <nav className="btn-group">
                     {user.roles !== 'SUPERUSER' && (
+                      <button
+                        type="button"
+                        title={'Reset Password - User ' + user.id}
+                        className="btn-accent btn-outline btn-xs btn mr-1"
+                        onClick={() => onEmailClick(user)}
+                      >
+                        Reset Password
+                      </button>
+                    )}
+                    {user.roles !== 'SUPERUSER' && (
                       <Link
                         to={routes.updateUser({ id: user.id })}
                         title={'Update User ' + user.id}
@@ -246,14 +253,11 @@ const UserList = ({ users }: FindExistingUsers) => {
                         Delete
                       </button>
                     )}
-                    <button
-                      type="button"
-                      title={'Email User ' + user.id}
-                      className="btn-outline btn-error btn-xs btn"
-                      onClick={() => onEmailClick(user)}
-                    >
-                      Send Email
-                    </button>
+                    {user.roles === 'SUPERUSER' && (
+                      <h2 className="text-error">
+                        Superusers cannot be modified!
+                      </h2>
+                    )}
                   </nav>
                 </td>
                 <td>{truncate(user.id)}</td>

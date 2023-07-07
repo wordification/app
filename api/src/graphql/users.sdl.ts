@@ -152,6 +152,9 @@ export const schema = gql`
 
     "The user's email address (must be unique)."
     email: String
+
+    "The user's new password."
+    password: String
   }
 
   """

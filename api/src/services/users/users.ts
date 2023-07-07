@@ -99,10 +99,74 @@ export const deleteUser: MutationResolvers['deleteUser'] = ({ id }) => {
   })
 }
 
+/**
+ * Checks if the current user is authroized to update another user's password.
+ * A user either must be the current user, or a higher role priority than of
+ * the user's password that is being changed.
+ *
+ * @param id
+ * @returns The id of the user who's password is being changed if authorized,
+ *          -1 if the current user is unauthorized.
+ */
+const canUpdatePassword = async (id: number): Promise<number> => {
+  if (context.currentUser?.id === id) {
+    return id
+  }
+
+  const targetUser = await db.user.findUnique({
+    where: { id: id },
+  })
+
+  const targetUserRoleLevel =
+    targetUser?.roles === 'SUPERUSER'
+      ? 3
+      : targetUser?.roles === 'ADMINISTRATOR'
+      ? 2
+      : targetUser?.roles === 'TEACHER'
+      ? 1
+      : 0
+
+  const currentUserRoleLevel =
+    context.currentUser?.roles === 'SUPERUSER'
+      ? 3
+      : context.currentUser?.roles === 'ADMINISTRATOR'
+      ? 2
+      : context.currentUser?.roles === 'TEACHER'
+      ? 1
+      : 0
+
+  return currentUserRoleLevel > targetUserRoleLevel ? id : -1
+}
+
 export const updateUser: MutationResolvers['updateUser'] = async ({
   id,
   input,
 }) => {
+  if (input.password) {
+    const validId = await canUpdatePassword(id)
+
+    console.log(validId)
+
+    validate(id, 'id', {
+      inclusion: {
+        in: [validId],
+        message: "You are not authorized to change this user's password.",
+      },
+    })
+
+    validate(input.password, 'password', {
+      length: { min: 1, max: 255 },
+    })
+
+    const [hashedPassword, salt] = hashPassword(input.password)
+    const userData = { hashedPassword, salt }
+
+    return db.user.update({
+      data: userData,
+      where: { id },
+    })
+  }
+
   validate(input.firstName, 'first name', {
     length: { min: 1, max: 255 },
   })
@@ -155,14 +219,16 @@ export const updateUser: MutationResolvers['updateUser'] = async ({
   })
 }
 
-function sendTestEmail(emailAddress: string) {
-  const subject = 'Test Email'
+function sendPasswordResetEmail(emailAddress: string) {
+  const subject = 'Wordifiation -- Password Reset'
   const text =
-    'This is a manually triggered test email.\n\n' +
-    'It was sent from a RedwoodJS application.'
+    'Please click this link to reset your password.\n\n' +
+    '-Wordification Development Team'
+
+  /// Insert link to password reset page in href
   const html =
-    'This is a manually triggered test email.<br><br>' +
-    'It was sent from a RedwoodJS application.'
+    'Please click <a href="">this link</a> to reset your password.<br><br>' +
+    '-Wordification Development Team'
   return sendEmail({ to: emailAddress, subject, text, html })
 }
 
@@ -175,7 +241,7 @@ export const emailUser: MutationResolvers['emailUser'] = async ({ id }) => {
     throw new Error('User does not exist!')
   }
 
-  await sendTestEmail(user.email)
+  await sendPasswordResetEmail(user.email)
 
   return user
 }
