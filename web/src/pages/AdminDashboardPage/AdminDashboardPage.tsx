@@ -12,6 +12,11 @@ const DASHBOARD_ITEMS = [
     content: 'Delete or Update information for an existing user.',
     to: routes.modifyUser(),
   },
+  {
+    title: 'Change Password',
+    content: 'Change your current password.',
+    to: routes.resetPasswordAdmin(),
+  },
 ] as const
 
 const AdminDashboardPage = () => {
