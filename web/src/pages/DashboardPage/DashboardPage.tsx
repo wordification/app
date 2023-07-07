@@ -12,6 +12,11 @@ const DASHBOARD_ITEMS = [
     content: 'Set game rules/specifications for your entire class',
     to: routes.classGameSetup(),
   },
+  {
+    title: 'Change Password',
+    content: 'Change your current password.',
+    to: routes.resetPasswordTeacher(),
+  },
 ] as const
 
 const DashboardPage = () => {

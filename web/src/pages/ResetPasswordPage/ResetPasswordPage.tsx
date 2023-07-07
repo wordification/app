@@ -1,5 +1,6 @@
 import { MetaTags } from '@redwoodjs/web'
 
+import { useAuth } from 'src/auth'
 import DirectPasswordReset from 'src/components/DirectPasswordReset/DirectPasswordReset'
 
 type ResetPasswordPageProps = {
@@ -8,14 +9,20 @@ type ResetPasswordPageProps = {
 }
 
 const ResetPasswordPage = ({ id, name }: ResetPasswordPageProps) => {
+  const { currentUser } = useAuth()
+  const userId = id ? id : (currentUser?.id as string)
+  const userName = name
+    ? name
+    : ((currentUser?.lastName + ', ' + currentUser?.firstName) as string)
+
   return (
     <>
       <MetaTags title="ResetPassword" description="ResetPassword page" />
       <h1 className="text-2xl font-bold">
-        Reset Password —— {name} — ID# {id}
+        Reset Password —— {userName} — ID# {userId}
       </h1>
 
-      {id ? <DirectPasswordReset id={id} /> : null}
+      {userId ? <DirectPasswordReset id={userId} /> : null}
     </>
   )
 }

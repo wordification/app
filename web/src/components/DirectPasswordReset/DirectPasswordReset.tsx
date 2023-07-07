@@ -34,7 +34,7 @@ const DirectPasswordReset = ({ id }: DirectPasswordResetProps) => {
     UPDATE_USER_MUTATION,
     {
       onCompleted: () => {
-        toast.success('User Updated')
+        toast.success('Password Updated')
         back()
       },
       onError: (error) => {
