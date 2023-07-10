@@ -171,7 +171,7 @@ export const schema = gql`
 
     "Updates an existing user."
     updateUser(id: Int!, input: UpdateUserInput!): User!
-      @requireAuth(roles: ["ADMINISTRATOR", "SUPERUSER"])
+      @requireAuth(roles: ["TEACHER", "ADMINISTRATOR", "SUPERUSER"])
 
     "Sends an email to a user."
     emailUser(id: Int!): User!

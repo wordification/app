@@ -6,7 +6,6 @@ import {
   PasswordField,
   Submit,
 } from '@redwoodjs/forms'
-import { back } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
@@ -35,7 +34,6 @@ const DirectPasswordReset = ({ id }: DirectPasswordResetProps) => {
     {
       onCompleted: () => {
         toast.success('Password Updated')
-        back()
       },
       onError: (error) => {
         toast.error(error?.message ?? '')
