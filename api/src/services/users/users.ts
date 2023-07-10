@@ -219,16 +219,40 @@ export const updateUser: MutationResolvers['updateUser'] = async ({
   })
 }
 
-function sendPasswordResetEmail(emailAddress: string) {
-  const subject = 'Wordifiation -- Password Reset'
-  const text =
-    'Please click this link to reset your password.\n\n' +
-    '-Wordification Development Team'
+function generateRandomPassword() {
+  const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  const numbers = '0123456789'
+  const characters = '!@#$%^&*()'
 
-  /// Insert link to password reset page in href
-  const html =
-    'Please click <a href="">this link</a> to reset your password.<br><br>' +
-    '-Wordification Development Team'
+  const getRandomChar = (charset: string) => {
+    const randomIndex = Math.floor(Math.random() * charset.length)
+    return charset[randomIndex]
+  }
+
+  const randomLetters = Array.from({ length: 4 }, () => getRandomChar(letters))
+  const randomNumbers = Array.from({ length: 2 }, () => getRandomChar(numbers))
+  const randomCharacter = getRandomChar(characters)
+
+  const passwordArray = [...randomLetters, ...randomNumbers, randomCharacter]
+  const password = passwordArray.join('')
+
+  return password
+}
+
+function sendPasswordResetEmail(
+  emailAddress: string,
+  tempPassword: string,
+  resetLink: string
+) {
+  const subject = 'Wordification - Password Reset'
+  const text = `Your temporary password is ${tempPassword}\n
+    Please click this link to reset your password:\n
+    ${resetLink}\n\n
+    - Wordification Development Team`
+
+  const html = `Your temporary password is ${tempPassword}<br>
+    Please click <a href="${resetLink}">this link</a> to reset your password.<br><br>- Wordification Development Team`
+
   return sendEmail({ to: emailAddress, subject, text, html })
 }
 
@@ -241,7 +265,17 @@ export const emailUser: MutationResolvers['emailUser'] = async ({ id }) => {
     throw new Error('User does not exist!')
   }
 
-  await sendPasswordResetEmail(user.email)
+  const tempPassword = generateRandomPassword()
+
+  await updateUser({ id: id, input: { password: tempPassword } })
+
+  const linkRole =
+    user.roles === 'ADMINISTRATOR' || user.roles === 'SUPERUSER'
+      ? 'admin'
+      : 'dashboard'
+  const resetLink = `http://localhost:8910/${linkRole}/reset-password?id=${id}&name=${user.lastName},%20${user.firstName}`
+
+  await sendPasswordResetEmail(user.email, tempPassword, resetLink)
 
   return user
 }
