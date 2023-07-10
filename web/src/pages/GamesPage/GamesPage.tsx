@@ -5,7 +5,7 @@ const GAME_CHOICES = [
   {
     title: 'Sorting',
     content: 'Sort the cards to win!',
-    to: '/games/sorting',
+    to: routes.sortingGame(),
   },
   {
     title: 'Matching',
