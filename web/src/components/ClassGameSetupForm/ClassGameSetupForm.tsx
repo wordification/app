@@ -43,6 +43,11 @@ const MATCHING_BOARD_SIZE_OPTIONS = [
   { id: 3, name: '4x6' },
 ] as const
 
+const MATCHING_GAME_TYPE_OPTIONS = [
+  { id: '0', name: 'MEMORY' },
+  { id: '1', name: 'GROUPING' },
+] as const
+
 const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
   const [availableOptions, setAvailableOptions] =
     useState<readonly Phoneme[]>(PHONEME_OPTIONS)
@@ -187,6 +192,30 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
         </SelectField>
       </div>
       <FieldError name="matchingBoardSize" className="text-sm text-error" />
+
+      <div className="form-control w-full max-w-xs">
+        <Label
+          name="matchingGameType"
+          className="label"
+          errorClassName="label text-error"
+        >
+          <span className="label-text">Matching Game Type</span>
+        </Label>
+
+        <SelectField
+          name="matchingGameType"
+          defaultValue={0}
+          className="input-bordered select mb-2 w-full"
+          validation={{ required: true }}
+        >
+          {MATCHING_GAME_TYPE_OPTIONS.map((s) => (
+            <option key={s.id} value={s.name}>
+              {s.name}
+            </option>
+          ))}
+        </SelectField>
+      </div>
+      <FieldError name="matchingGameType" className="text-sm text-error" />
 
       <div className="mt-2">
         <Submit disabled={props.loading} className="btn-primary btn">
