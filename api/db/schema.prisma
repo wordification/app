@@ -63,8 +63,16 @@ model User {
 enum GameType {
   /// A game where a user is given a word and must select the correct category.
   SORTING
-  /// A game where a user must match two words with the same phoneme.
+  /// A game where a user must match words with the same phoneme.
   MATCHING
+}
+
+/// Possible matching game types.
+enum MatchingGameType {
+  /// A game where a user must match two words with the same phoneme.
+  MEMORY
+  /// A game where a user must select all words with a given phoneme.
+  GROUPING
 }
 
 /// A base game. Can be used for any game type.
@@ -80,6 +88,8 @@ model Game {
   updatedAt DateTime @default(now()) @updatedAt
   /// The type of game.
   type      GameType
+  /// The style of matching game.
+  matchingGameType  MatchingGameType?
 
   // GAMEPLAY INFO
   /// The number of words played per phoneme. The actual number of words played will be this number times the number of phonemes, or less if there are not enough words.
@@ -121,6 +131,8 @@ model GameSetup {
   phonemes          Int[]
   /// The size and configuration of the cards for a matching game.
   matchingBoardSize Int       @default(0)
+  /// The style of matching game.
+  matchingGameType  MatchingGameType
   /// The unique identifier of the user the game rules are associated with.
   userId            Int       @unique
 
