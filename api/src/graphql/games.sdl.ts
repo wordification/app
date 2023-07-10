@@ -18,6 +18,9 @@ export const schema = gql`
     "The type of game."
     type: GameType!
 
+    "The style of matching game."
+    matchingGameType: MatchingGameType
+
     """
     The number of words played per phoneme.
     The actual number of words played will be this
@@ -72,6 +75,21 @@ export const schema = gql`
   }
 
   """
+  Possible matching game types.
+  """
+  enum MatchingGameType {
+    """
+    A game where a user must match two words with the same phoneme.
+    """
+    MEMORY
+
+    """
+    A game where a user must select all words with a given phoneme.
+    """
+    GROUPING
+  }
+
+  """
   Queries for games.
   """
   type Query {
@@ -111,6 +129,9 @@ export const schema = gql`
 
     "The current word being played."
     currentWordId: Int
+
+    "The style of matching game."
+    matchingGameType: MatchingGameType
   }
 
   """
