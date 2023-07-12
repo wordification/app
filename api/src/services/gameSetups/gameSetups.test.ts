@@ -1,5 +1,3 @@
-import type { GameSetup } from '@prisma/client'
-
 import {
   gameSetups,
   gameSetup,
@@ -7,7 +5,9 @@ import {
   updateGameSetup,
   deleteGameSetup,
 } from './gameSetups'
+
 import type { StandardScenario } from './gameSetups.scenarios'
+import type { GameSetup } from '@prisma/client'
 
 // Generated boilerplate tests do not account for all circumstances
 // and can fail without adjustments, e.g. Float.

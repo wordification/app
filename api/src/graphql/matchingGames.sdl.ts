@@ -61,5 +61,15 @@ export const schema = gql`
       "The second word that was selected."
       secondWordId: Int!
     ): MatchingGameGradeResponse! @requireAuth
+
+    """
+    Grade the grouping matching game.
+    """
+    groupingMatchingGameGrade(
+      "The game that is being graded."
+      gameId: Int!
+      "The first word that was selected."
+      wordId: Int!
+    ): MatchingGameGradeResponse! @requireAuth
   }
 `
