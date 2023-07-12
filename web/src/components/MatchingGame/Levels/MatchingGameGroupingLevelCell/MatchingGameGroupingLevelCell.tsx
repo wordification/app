@@ -175,7 +175,8 @@ export const Success = ({
       <div className="card bg-base-100 text-base-content shadow-2xl">
         <div className="card-body items-center justify-center">
           <h2 className="card-title">
-            Click all the words that have {currentPhonemeName}
+            Click all the words that have the &apos;{currentPhonemeName}&apos;
+            sound
           </h2>
           <ul
             className={`grid grid-cols-2 gap-4 ${
