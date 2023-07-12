@@ -152,6 +152,9 @@ export const schema = gql`
 
     "The user's email address (must be unique)."
     email: String
+
+    "The user's new password."
+    password: String
   }
 
   """
@@ -166,7 +169,12 @@ export const schema = gql`
     deleteUser(id: Int!): User!
       @requireAuth(roles: ["ADMINISTRATOR", "SUPERUSER"])
 
+    "Updates an existing user."
     updateUser(id: Int!, input: UpdateUserInput!): User!
+      @requireAuth(roles: ["TEACHER", "ADMINISTRATOR", "SUPERUSER"])
+
+    "Sends an email to a user."
+    emailUser(id: Int!): User!
       @requireAuth(roles: ["ADMINISTRATOR", "SUPERUSER"])
   }
 `

@@ -125,6 +125,16 @@ const StudentList = ({ currentStudents }: GetCurrentStudents) => {
                 <td>
                   <nav className="btn-group">
                     <Link
+                      to={routes.resetPasswordTeacher({
+                        id: student.id,
+                        name: student.lastName + ', ' + student.firstName,
+                      })}
+                      title={'Reset Password - User ' + student.id}
+                      className="btn-outline btn-error btn-xs join-item btn mr-1"
+                    >
+                      Reset Password
+                    </Link>
+                    <Link
                       to={routes.studentProfile({ id: student.id })}
                       title={'Student Profile ' + student.id}
                       className="btn-primary btn-outline btn-xs join-item btn mr-1"

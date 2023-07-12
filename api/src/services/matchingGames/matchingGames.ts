@@ -148,11 +148,6 @@ export const matchingGamePlayLevel: QueryResolvers['matchingGamePlayLevel'] =
       throw new Error('No words selected for matching')
     }
 
-    /**
-     * TODO: ADD AUDIOS
-     *    Current audio is sample and incorrect.
-     *    Need to set up matching game audio.
-     **/
     const audio = [getMatchingGamePhrase('instructions')]
 
     return {
