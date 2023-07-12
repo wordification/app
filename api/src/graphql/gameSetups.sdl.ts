@@ -23,6 +23,9 @@ export const schema = gql`
     "The phonemes to test the user on."
     phonemes: [Int!]!
 
+    "The size and configuration of the cards for a matching game."
+    matchingBoardSize: Int!
+
     "The unique identifier of the user the game setups are associated with."
     userId: Int!
 
@@ -48,6 +51,9 @@ export const schema = gql`
     "The number of words per phoneme in a game."
     wordsPerPhoneme: Int!
 
+    "The size of a board for matching game."
+    matchingBoardSize: Int!
+
     "The phonemes in a game."
     phonemes: [Int]!
 
@@ -62,6 +68,9 @@ export const schema = gql`
     "The number of words per phoneme in a game."
     wordsPerPhoneme: Int
 
+    "The size of a board for matching game."
+    matchingBoardSize: Int
+
     "The phonemes in a game."
     phonemes: [Int]!
 
@@ -75,6 +84,9 @@ export const schema = gql`
   input UpsertGameSetupInput {
     "The number of words per phoneme in a game."
     wordsPerPhoneme: Int
+
+    "The size of a board for matching game."
+    matchingBoardSize: Int
 
     "The phonemes in a game."
     phonemes: [Int]

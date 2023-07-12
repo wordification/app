@@ -179,7 +179,15 @@ export const Success = ({
     <>
       <div className="card bg-base-100 text-base-content shadow-2xl">
         <div className="card-body items-center justify-center">
-          <ul className="grid grid-cols-2 gap-4 md:grid-cols-5">
+          <ul
+            className={`grid grid-cols-2 gap-4 ${
+              matchingGamePlayLevel.game.allWords.length === 24
+                ? 'md:grid-cols-6'
+                : matchingGamePlayLevel.game.allWords.length === 20
+                ? 'md:grid-cols-5'
+                : 'md:grid-cols-4'
+            }`}
+          >
             {matchingGamePlayLevel.game.allWords.map((word) => {
               const isIncompleteWord =
                 matchingGamePlayLevel.incompleteWords.some(

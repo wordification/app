@@ -2,10 +2,13 @@ import { validate } from '@redwoodjs/api'
 
 import { db } from 'src/lib/db'
 
+import type { MakeRelationsOptional } from '@redwoodjs/api'
 import type {
   QueryResolvers,
   MutationResolvers,
   GameSetupRelationResolvers,
+  AllMappedModels,
+  User,
 } from 'types/graphql'
 
 export const gameSetups: QueryResolvers['gameSetups'] = () => {
@@ -42,6 +45,14 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
     throw new Error('You must be logged in to create a game!')
   }
 
+  const matchingBoardSize = input.matchingBoardSize as number
+  validate(matchingBoardSize, 'matching game board size', {
+    numericality: {
+      integer: true,
+      message: 'You must select one of the given options!',
+    },
+  })
+
   const wordsPerPhoneme = input.wordsPerPhoneme as number
   validate(wordsPerPhoneme, 'words per phoneme', {
     numericality: {
@@ -77,11 +88,13 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
         where: { userId: studentId },
         create: {
           wordsPerPhoneme,
+          matchingBoardSize,
           phonemes,
           userId: studentId,
         },
         update: {
           wordsPerPhoneme,
+          matchingBoardSize,
           phonemes,
         },
       }),
@@ -102,11 +115,13 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
       return db.gameSetup.upsert({
         create: {
           wordsPerPhoneme,
+          matchingBoardSize,
           phonemes,
           userId,
         },
         update: {
           wordsPerPhoneme,
+          matchingBoardSize,
           phonemes,
         },
         where: { userId },
@@ -128,6 +143,8 @@ export const deleteGameSetup: MutationResolvers['deleteGameSetup'] = ({
 
 export const GameSetup: GameSetupRelationResolvers = {
   user: (_obj, { root }) => {
-    return db.gameSetup.findUnique({ where: { id: root?.id } }).user()
+    return db.gameSetup
+      .findUnique({ where: { id: root?.id } })
+      .user() as Promise<MakeRelationsOptional<User, AllMappedModels>>
   },
 }
