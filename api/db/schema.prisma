@@ -134,7 +134,7 @@ model GameSetup {
   /// The size and configuration of the cards for a matching game.
   matchingBoardSize Int       @default(0)
   /// The style of matching game.
-  matchingGameType  MatchingGameType
+  matchingGameType  MatchingGameType  @default(MEMORY)
   /// The unique identifier of the user the game rules are associated with.
   userId            Int       @unique
 
