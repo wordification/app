@@ -6,6 +6,7 @@ type MatchingGameCardProps = {
   check: boolean
   disabled: boolean
   onClick: () => void
+  grouping?: boolean
 }
 
 /**
@@ -19,6 +20,7 @@ const MatchingGameCard = ({
   check,
   disabled,
   onClick,
+  grouping,
 }: MatchingGameCardProps) => {
   const [isFlipped, setIsFlipped] = useState<boolean>(flipped)
   const [oldCheck, setOldCheck] = useState<boolean>(check)
@@ -50,12 +52,20 @@ const MatchingGameCard = ({
         disabled={flipped || disabled}
       >
         <div
-          className={`card relative h-full w-full rounded-xl bg-primary text-primary-content shadow-xl transition-all duration-500 [transform-style:preserve-3d] ${
+          className={`card relative h-full w-full rounded-xl text-primary-content shadow-xl transition-all duration-500 [transform-style:preserve-3d] ${
             isFlipped || flipped ? '[transform:rotateY(180deg)]' : ''
-          }`}
+          } ${flipped ? 'bg-green-500' : 'bg-primary'}`}
         >
-          <div className="align-center card-body absolute inset-0 justify-center text-center [backface-visibility:hidden]"></div>
-          <div className="align-center card-body absolute inset-0 justify-center text-center [transform:rotateY(180deg)] [backface-visibility:hidden]">
+          <div
+            className={`align-center card-body absolute inset-0 justify-center text-center ${
+              grouping ? '[transform:rotateY(180deg)]' : ''
+            } [backface-visibility:hidden]`}
+          ></div>
+          <div
+            className={`align-center ${
+              grouping ? '' : '[transform:rotateY(180deg)]'
+            } card-body absolute inset-0 justify-center text-center [backface-visibility:hidden]`}
+          >
             {word}
           </div>
         </div>

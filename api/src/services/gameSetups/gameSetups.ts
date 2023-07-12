@@ -9,6 +9,7 @@ import type {
   GameSetupRelationResolvers,
   AllMappedModels,
   User,
+  MatchingGameType,
 } from 'types/graphql'
 
 export const gameSetups: QueryResolvers['gameSetups'] = () => {
@@ -44,6 +45,13 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
   if (!context.currentUser) {
     throw new Error('You must be logged in to create a game!')
   }
+
+  const matchingGameType = input.matchingGameType as MatchingGameType
+  validate(matchingGameType, 'matching game type', {
+    inclusion: {
+      in: [matchingGameType],
+    },
+  })
 
   const matchingBoardSize = input.matchingBoardSize as number
   validate(matchingBoardSize, 'matching game board size', {
@@ -89,12 +97,14 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
         create: {
           wordsPerPhoneme,
           matchingBoardSize,
+          matchingGameType,
           phonemes,
           userId: studentId,
         },
         update: {
           wordsPerPhoneme,
           matchingBoardSize,
+          matchingGameType,
           phonemes,
         },
       }),
@@ -116,12 +126,14 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
         create: {
           wordsPerPhoneme,
           matchingBoardSize,
+          matchingGameType,
           phonemes,
           userId,
         },
         update: {
           wordsPerPhoneme,
           matchingBoardSize,
+          matchingGameType,
           phonemes,
         },
         where: { userId },
