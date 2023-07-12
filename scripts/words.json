@@ -1714,7 +1714,7 @@
   {
     "word": "bring",
     "gradeLevel": 2,
-    "phonemes": [1, 21, 45, 18],
+    "phonemes": [1, 21, 40, 18],
     "graphemes": ["b", "r", "i", "ng"],
     "syllables": ["ons", "ons", "nuc", "cod"],
     "numSyllables": 1,
@@ -3298,7 +3298,7 @@
   {
     "word": "drink",
     "gradeLevel": 3,
-    "phonemes": [2, 21, 45, 18, 12],
+    "phonemes": [2, 21, 40, 18, 12],
     "graphemes": ["d", "r", "i", "n", "k"],
     "syllables": ["ons", "ons", "nuc", "cod", "cod"],
     "numSyllables": 1,
@@ -6214,7 +6214,7 @@
   {
     "word": "king",
     "gradeLevel": 2,
-    "phonemes": [13, 45, 18],
+    "phonemes": [13, 40, 18],
     "graphemes": ["k", "i", "ng"],
     "syllables": ["ons", "nuc", "cod"],
     "numSyllables": 1,
@@ -7238,7 +7238,7 @@
   {
     "word": "miss",
     "gradeLevel": 2,
-    "phonemes": [15, 45, 22],
+    "phonemes": [15, 40, 22],
     "graphemes": ["m", "i", "ss"],
     "syllables": ["ons", "nuc", "cod"],
     "numSyllables": 1,
@@ -9578,7 +9578,7 @@
   {
     "word": "sang",
     "gradeLevel": 2,
-    "phonemes": [22, 44, 18],
+    "phonemes": [22, 38, 18],
     "graphemes": ["s", "a", "ng"],
     "syllables": ["ons", "nuc", "cod"],
     "numSyllables": 1,
@@ -10618,7 +10618,7 @@
   {
     "word": "spring",
     "gradeLevel": 3,
-    "phonemes": [22, 19, 21, 45, 18],
+    "phonemes": [22, 19, 21, 40, 18],
     "graphemes": ["s", "p", "r", "i", "ng"],
     "syllables": ["ons", "ons", "ons", "nuc", "cod"],
     "numSyllables": 1,
@@ -11562,7 +11562,7 @@
   {
     "word": "thing",
     "gradeLevel": 2,
-    "phonemes": [26, 45, 18],
+    "phonemes": [26, 40, 18],
     "graphemes": ["th", "i", "ng"],
     "syllables": ["ons", "nuc", "cod"],
     "numSyllables": 1,
