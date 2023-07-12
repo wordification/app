@@ -26,11 +26,29 @@ export const schema = gql`
     "The size and configuration of the cards for a matching game."
     matchingBoardSize: Int!
 
+    "The style of matching game."
+    matchingGameType: MatchingGameType!
+
     "The unique identifier of the user the game setups are associated with."
     userId: Int!
 
     "The user who is associated with the game setups set by a teacher."
     user: User!
+  }
+
+  """
+  Possible matching game types.
+  """
+  enum MatchingGameType {
+    """
+    A game where a user must match two words with the same phoneme.
+    """
+    MEMORY
+
+    """
+    A game where a user must select all words with a given phoneme.
+    """
+    GROUPING
   }
 
   """
@@ -55,7 +73,10 @@ export const schema = gql`
     matchingBoardSize: Int!
 
     "The phonemes in a game."
-    phonemes: [Int]!
+    phonemes: [Int!]!
+
+    "The style of matching game."
+    matchingGameType: MatchingGameType!
 
     "The user the game setup is associated to."
     userId: Int!
@@ -66,16 +87,19 @@ export const schema = gql`
   """
   input UpdateGameSetupInput {
     "The number of words per phoneme in a game."
-    wordsPerPhoneme: Int
+    wordsPerPhoneme: Int!
 
     "The size of a board for matching game."
-    matchingBoardSize: Int
+    matchingBoardSize: Int!
+
+    "The style of matching game."
+    matchingGameType: MatchingGameType!
 
     "The phonemes in a game."
-    phonemes: [Int]!
+    phonemes: [Int!]!
 
     "The user the game setup is associated to."
-    userId: Int
+    userId: Int!
   }
 
   """
@@ -87,6 +111,9 @@ export const schema = gql`
 
     "The size of a board for matching game."
     matchingBoardSize: Int
+
+    "The style of matching game."
+    matchingGameType: MatchingGameType
 
     "The phonemes in a game."
     phonemes: [Int]

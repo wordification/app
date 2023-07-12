@@ -11,6 +11,7 @@ export const QUERY = gql`
     matchingGame: game(id: $id) {
       id
       level
+      matchingGameType
       allWords {
         id
       }
@@ -38,6 +39,9 @@ export const Success = ({
     <MatchingGameLevelManager
       gameId={matchingGame.id}
       level={matchingGame.level}
+      matchingGameType={matchingGame.matchingGameType}
     />
   )
+
+  return
 }
