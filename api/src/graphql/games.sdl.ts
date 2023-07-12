@@ -44,6 +44,9 @@ export const schema = gql`
     "The current word being played."
     currentWordId: Int
 
+    "The current phoneme for a grouping matching game"
+    currentPhonemeId: Int
+
     "The number of incorrect guesses the user has made."
     incorrectGuesses: Int!
 
@@ -129,6 +132,9 @@ export const schema = gql`
 
     "The current word being played."
     currentWordId: Int
+
+    "The current phoneme for a grouping matching game"
+    currentPhonemeId: Int
 
     "The style of matching game."
     matchingGameType: MatchingGameType

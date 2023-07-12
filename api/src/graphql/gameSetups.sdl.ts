@@ -73,7 +73,7 @@ export const schema = gql`
     matchingBoardSize: Int!
 
     "The phonemes in a game."
-    phonemes: [Int]!
+    phonemes: [Int!]!
 
     "The style of matching game."
     matchingGameType: MatchingGameType!
@@ -87,19 +87,19 @@ export const schema = gql`
   """
   input UpdateGameSetupInput {
     "The number of words per phoneme in a game."
-    wordsPerPhoneme: Int
+    wordsPerPhoneme: Int!
 
     "The size of a board for matching game."
-    matchingBoardSize: Int
+    matchingBoardSize: Int!
 
     "The style of matching game."
-    matchingGameType: MatchingGameType
+    matchingGameType: MatchingGameType!
 
     "The phonemes in a game."
-    phonemes: [Int]!
+    phonemes: [Int!]!
 
     "The user the game setup is associated to."
-    userId: Int
+    userId: Int!
   }
 
   """
