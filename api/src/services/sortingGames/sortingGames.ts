@@ -279,7 +279,7 @@ export const sortingGameGradeFirstLevel: MutationResolvers['sortingGameGradeFirs
       incorrectAudio: [
         getSortingGamePhrase('incorrect'),
         getPhoneme(phoneme),
-        getSortingGamePhrase('not_spelling_pattern'),
+        getSortingGamePhrase('incorrect_vsound'),
         getWord(game.currentWord.word),
         getSortingGamePhrase('incorrect_try'),
       ],
@@ -307,9 +307,12 @@ export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSec
       correct: game.currentWord.testedGraphemes.includes(grapheme),
       incorrectAudio: [
         getSortingGamePhrase('incorrect'),
-        getGrapheme(grapheme),
-        getSortingGamePhrase('not_spelling_pattern'),
+        getSortingGamePhrase('the'),
+        getPhoneme(game.currentWord.testedPhonemes[0]),
+        getSortingGamePhrase('sound_in'),
         getWord(game.currentWord.word),
+        getSortingGamePhrase('not_spelled_with'),
+        getGrapheme(grapheme),
         getSortingGamePhrase('tryagain'),
       ],
       correctAudio: [
