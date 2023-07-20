@@ -207,7 +207,7 @@ const UserList = ({ users }: FindExistingUsers) => {
         </div>
       </Form>
       <div className="overflow-x-auto">
-        <table className="table-zebra table w-full">
+        <table className="table-zebra table-xs table w-full lg:table-md">
           <thead>
             <tr>
               <th>&nbsp;</th>
@@ -223,12 +223,12 @@ const UserList = ({ users }: FindExistingUsers) => {
             {displayUsers.map((user) => (
               <tr key={user.id}>
                 <td>
-                  <nav className="btn-group">
+                  <div className="join-vertical join">
                     {user.roles !== 'SUPERUSER' && (
                       <button
                         type="button"
                         title={'Reset Password - User ' + user.id}
-                        className="btn-accent btn-outline btn-xs btn mr-1"
+                        className="btn-accent btn-outline join-item btn-xs btn mb-1"
                         onClick={() => onEmailClick(user)}
                       >
                         Reset Password
@@ -238,7 +238,7 @@ const UserList = ({ users }: FindExistingUsers) => {
                       <Link
                         to={routes.updateUser({ id: user.id })}
                         title={'Update User ' + user.id}
-                        className="btn-primary btn-outline btn-xs btn mr-1"
+                        className="btn-primary btn-outline join-item btn-xs btn mb-1"
                       >
                         Update
                       </Link>
@@ -247,7 +247,7 @@ const UserList = ({ users }: FindExistingUsers) => {
                       <button
                         type="button"
                         title={'Delete User ' + user.id}
-                        className="btn-outline btn-error btn-xs btn"
+                        className="btn-outline btn-error join-item btn-xs btn"
                         onClick={() => onDeleteClick(user)}
                       >
                         Delete
@@ -258,7 +258,7 @@ const UserList = ({ users }: FindExistingUsers) => {
                         Superusers cannot be modified!
                       </h2>
                     )}
-                  </nav>
+                  </div>
                 </td>
                 <td>{truncate(user.id)}</td>
                 <td>{truncate(user.email)}</td>
