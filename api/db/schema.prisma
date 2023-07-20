@@ -179,3 +179,16 @@ model Word {
   /// All of the games that have played this word but have not completed it.
   incompleteGames Game[] @relation("incompleteGames")
 }
+
+/// A phoneme.
+model Phoneme {
+  // BASIC INFO
+  /// The unique identifier of a word.
+  id              Int       @id @unique
+  /// The name of the phoneme that corresponds to an ID.
+  name            String
+  /// The time at which the word was created.
+  createdAt       DateTime  @default(now())
+  /// The time at which the word was last updated.
+  updatedAt       DateTime  @default(now()) @updatedAt
+}
