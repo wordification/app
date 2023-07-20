@@ -123,6 +123,7 @@ const findSortingGame = async (gameId: number) => {
 export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] =
   async ({ gameId }) => {
     const game = await findSortingGame(gameId)
+    const phonemes = await db.phoneme.findMany()
 
     const currentWord = game?.currentWord
 
@@ -163,17 +164,7 @@ export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] =
     return {
       game,
       audio,
-      // TODO: figure out a better way to access the phonemes
-      phonemes: [
-        {
-          id: 49,
-          label: 'Long I',
-        },
-        {
-          id: 53,
-          label: 'Long O',
-        },
-      ],
+      phonemes,
     }
   }
 
