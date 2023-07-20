@@ -50,7 +50,7 @@ export const Success = ({
 
   return (
     <>
-      <div className="stats shadow">
+      <div className="stats stats-vertical ml-2 shadow lg:stats-horizontal">
         <div className="stat">
           <div className="stat-title">Total Games</div>
           <div className="stat-value mb-2">{games.length}</div>

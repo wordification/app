@@ -41,7 +41,7 @@ export const Success = ({
         {student.lastName}, {student.firstName}
       </h1>
       <div className="mb-2 overflow-x-auto">
-        <table className="table-zebra table w-full">
+        <table className="table-zebra table-xs table w-full lg:table-md">
           <thead>
             <tr>
               <th>ID#</th>
