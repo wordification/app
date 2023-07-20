@@ -108,7 +108,7 @@ const StudentList = ({ currentStudents }: GetCurrentStudents) => {
         </div>
       </Form>
       <div className="overflow-x-auto">
-        <table className="table-zebra table w-full">
+        <table className="table-zebra table-xs table w-full lg:table-md">
           {/* head */}
           <thead>
             <tr>
@@ -123,32 +123,32 @@ const StudentList = ({ currentStudents }: GetCurrentStudents) => {
             {displayStudents?.map((student) => (
               <tr key={student.id}>
                 <td>
-                  <nav className="btn-group">
+                  <div className="join-vertical join">
                     <Link
                       to={routes.resetPasswordTeacher({
                         id: student.id,
                         name: student.lastName + ', ' + student.firstName,
                       })}
                       title={'Reset Password - User ' + student.id}
-                      className="btn-outline btn-error btn-xs join-item btn mr-1"
+                      className="btn-outline btn-error join-item btn-xs btn mb-1"
                     >
                       Reset Password
                     </Link>
                     <Link
                       to={routes.studentProfile({ id: student.id })}
                       title={'Student Profile ' + student.id}
-                      className="btn-primary btn-outline btn-xs join-item btn mr-1"
+                      className="btn-primary btn-outline join-item btn-xs btn mb-1"
                     >
                       View Student
                     </Link>
                     <Link
                       to={routes.classGameSetup({ id: student.id })}
                       title={'Game Setup ' + student.id}
-                      className="btn-accent btn-outline btn-xs join-item btn"
+                      className="btn-accent btn-outline join-item btn-xs btn"
                     >
                       Edit Game Setup
                     </Link>
-                  </nav>
+                  </div>
                 </td>
                 <td>{student.id}</td>
                 <td>{student.firstName}</td>
