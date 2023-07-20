@@ -28,7 +28,7 @@ export const QUERY = gql`
       audio
       phonemes {
         id
-        label
+        name
       }
     }
   }
@@ -130,7 +130,7 @@ export const Success = ({
             disabled={loading || playingAudio}
             key={option.id}
           >
-            {option.label}
+            {option.name}
           </button>
         ))}
       </div>
