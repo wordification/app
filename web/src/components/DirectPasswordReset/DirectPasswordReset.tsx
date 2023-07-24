@@ -5,6 +5,8 @@ import {
   Label,
   PasswordField,
   Submit,
+  TextField,
+  useForm,
 } from '@redwoodjs/forms'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
@@ -29,11 +31,14 @@ const UPDATE_USER_MUTATION = gql`
 `
 
 const DirectPasswordReset = ({ id }: DirectPasswordResetProps) => {
+  const formMethods = useForm<FormPassword>()
+
   const [updateUser, { loading, error }] = useMutation<UpdateUserMutation>(
     UPDATE_USER_MUTATION,
     {
       onCompleted: () => {
         toast.success('Password Updated')
+        formMethods.reset()
       },
       onError: (error) => {
         toast.error(error?.message ?? '')
@@ -41,11 +46,10 @@ const DirectPasswordReset = ({ id }: DirectPasswordResetProps) => {
     }
   )
 
-  // const [password, setPassword] = useState()
-
   const onSubmit = (data: FormPassword) => {
     if (data.password !== data.confirmPassword) {
-      throw new Error('Passwords must match.')
+      toast.error('Passwords must match.')
+      return
     }
 
     const { password } = data
@@ -54,7 +58,12 @@ const DirectPasswordReset = ({ id }: DirectPasswordResetProps) => {
 
   return (
     <div className="w-full max-w-md">
-      <Form<FormPassword> className="mt-10" onSubmit={onSubmit} error={error}>
+      <Form<FormPassword>
+        className="mt-10"
+        formMethods={formMethods}
+        onSubmit={onSubmit}
+        error={error}
+      >
         <FormError
           error={error}
           wrapperClassName="card card-body bg-base-300"
@@ -62,6 +71,18 @@ const DirectPasswordReset = ({ id }: DirectPasswordResetProps) => {
           listClassName="list-disc list-inside text-sm"
         />
         <div className="flex flex-col">
+          <div className="hidden">
+            <Label name="username" className="mb-2 text-sm font-bold">
+              Username
+            </Label>
+            <TextField
+              name="username"
+              aria-hidden="true"
+              className="input-bordered input w-full max-w-xs"
+              autoComplete="username"
+              tabIndex={-1}
+            />
+          </div>
           <div className="mb-4 flex flex-col">
             <Label name="password" className="mb-2 text-sm font-bold">
               New Password
