@@ -11,7 +11,12 @@ import {
   getWord,
 } from '../audio'
 
-import type { QueryResolvers, MutationResolvers } from 'types/graphql'
+import type { Phoneme } from '@prisma/client'
+import type {
+  QueryResolvers,
+  MutationResolvers,
+  ResolverTypeWrapper,
+} from 'types/graphql'
 
 /**
  * Updates a sorting game to select a new word to test. If there are no more
@@ -123,6 +128,12 @@ const findSortingGame = async (gameId: number) => {
 export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] =
   async ({ gameId }) => {
     const game = await findSortingGame(gameId)
+    const phonemes = game.phonemes.map(async (p) => {
+      const phoneme = await db.phoneme.findUnique({
+        where: { id: p },
+      })
+      return phoneme as ResolverTypeWrapper<Phoneme>
+    })
 
     const currentWord = game?.currentWord
 
@@ -163,17 +174,7 @@ export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] =
     return {
       game,
       audio,
-      // TODO: figure out a better way to access the phonemes
-      phonemes: [
-        {
-          id: 49,
-          label: 'Long I',
-        },
-        {
-          id: 53,
-          label: 'Long O',
-        },
-      ],
+      phonemes,
     }
   }
 

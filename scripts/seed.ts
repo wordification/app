@@ -1,8 +1,9 @@
 import { db } from 'api/src/lib/db'
 
+import phonemeData from './phonemes.json'
 import wordData from './words.json'
 
-import type { Word } from '@prisma/client'
+import type { Word, Phoneme } from '@prisma/client'
 
 // const seedWords = () => {
 //   return db.word.createMany({
@@ -28,7 +29,7 @@ type UpsertResult = {
   updated: number
 }
 
-const isEqual = (existingWord: Word, word: Word): boolean => {
+const isWordEqual = (existingWord: Word, word: Word): boolean => {
   return (
     existingWord.gradeLevel === word.gradeLevel &&
     existingWord.numSyllables === word.numSyllables &&
@@ -43,6 +44,13 @@ const isEqual = (existingWord: Word, word: Word): boolean => {
   )
 }
 
+const isPhonemeEqual = (
+  existingPhoneme: Phoneme,
+  phoneme: Phoneme
+): boolean => {
+  return existingPhoneme.name === phoneme.name
+}
+
 const seedWords = async (): Promise<UpsertResult> => {
   let createdCount = 0
   let updatedCount = 0
@@ -55,7 +63,7 @@ const seedWords = async (): Promise<UpsertResult> => {
 
     if (existingWord) {
       // Compare the existing data with the data to be updated
-      if (!isEqual(existingWord, word)) {
+      if (!isWordEqual(existingWord, word)) {
         await db.word.update({
           where: { word: word.word },
           data: {
@@ -92,13 +100,62 @@ const seedWords = async (): Promise<UpsertResult> => {
   return { created: createdCount, updated: updatedCount }
 }
 
+const seedPhonemes = async (): Promise<UpsertResult> => {
+  let createdCount = 0
+  let updatedCount = 0
+
+  for (let i = 0; i < phonemeData.length; i++) {
+    const phoneme = phonemeData[i] as Phoneme
+    const existingPhoneme = await db.phoneme.findUnique({
+      where: { id: phoneme.id },
+    })
+
+    if (existingPhoneme) {
+      // Compare the existing data with the data to be updated
+      if (!isPhonemeEqual(existingPhoneme, phoneme)) {
+        await db.phoneme.update({
+          where: { id: phoneme.id },
+          data: {
+            name: phoneme.name,
+          },
+        })
+        updatedCount++
+      }
+    } else {
+      await db.phoneme.create({
+        data: {
+          id: phoneme.id,
+          name: phoneme.name,
+        },
+      })
+      createdCount++
+    }
+  }
+
+  return { created: createdCount, updated: updatedCount }
+}
+
 const seedDb = async () => {
   try {
     const wordRecord = await seedWords()
-    console.info(`Seeded: ${wordRecord.created + wordRecord.updated} word(s)`)
-    console.info(`------------------`)
-    console.info(`Created: ${wordRecord.created} word(s)`)
-    console.info(`Updated: ${wordRecord.updated} word(s)`)
+    console.info(
+      `Words Seeded: ${wordRecord.created + wordRecord.updated} word(s)`
+    )
+    console.info(`===========================`)
+    console.info(`Words Created: ${wordRecord.created} word(s)`)
+    console.info(`Words Updated: ${wordRecord.updated} word(s)`)
+
+    console.info(`---------------------------`)
+
+    const phonemeRecord = await seedPhonemes()
+    console.info(
+      `Phonemes Seeded: ${
+        phonemeRecord.created + phonemeRecord.updated
+      } word(s)`
+    )
+    console.info(`===========================`)
+    console.info(`Phonemes Created: ${phonemeRecord.created} word(s)`)
+    console.info(`Phonemes Updated: ${phonemeRecord.updated} word(s)`)
   } catch (error) {
     console.warn('Please define seed data.')
     console.error(error)

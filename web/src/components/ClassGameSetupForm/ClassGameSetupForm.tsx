@@ -7,7 +7,8 @@ import {
   SelectField,
   Submit,
 } from '@redwoodjs/forms'
-import { useState } from 'react'
+import { useQuery } from '@redwoodjs/web'
+import { useEffect, useState } from 'react'
 
 import type { RWGqlError } from '@redwoodjs/forms'
 import type { UpsertGameSetupInput, GameSetup, Scalars } from 'types/graphql'
@@ -29,12 +30,14 @@ type Phoneme = {
   name: string
 }
 
-const PHONEME_OPTIONS = [
-  { id: 40, name: 'Short I' },
-  { id: 49, name: 'Long I' },
-  { id: 55, name: 'Short O' },
-  { id: 53, name: 'Long O' },
-] as const
+const PHONEME_OPTIONS = gql`
+  query PhonemeOptions {
+    phonemes {
+      id
+      name
+    }
+  }
+`
 
 const MATCHING_BOARD_SIZE_OPTIONS = [
   { id: 0, name: '3x4' },
@@ -49,14 +52,26 @@ const MATCHING_GAME_TYPE_OPTIONS = [
 ] as const
 
 const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
-  const [availableOptions, setAvailableOptions] =
-    useState<readonly Phoneme[]>(PHONEME_OPTIONS)
+  const { loading, error, data } = useQuery(PHONEME_OPTIONS)
+
+  const [availableOptions, setAvailableOptions] = useState<readonly Phoneme[]>(
+    []
+  )
+  const [phonemeOptions, setPhonemeOptions] = useState<readonly Phoneme[]>([])
+
+  useEffect(() => {
+    if (!loading && !error && data && data.phonemes) {
+      const fetchedPhonemeOptions: Phoneme[] = data.phonemes
+      setPhonemeOptions(fetchedPhonemeOptions)
+    }
+  }, [loading, error, data])
+
+  if (loading) return <div>Loading...</div>
+  if (error) return <div style={{ color: 'red' }}>Error: {error?.message}</div>
 
   const handlePhonemeOneChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = parseInt(e.target.value)
-    const filteredOptions = PHONEME_OPTIONS.filter(
-      (p) => p.id !== selectedValue
-    )
+    const filteredOptions = phonemeOptions.filter((p) => p.id !== selectedValue)
     setAvailableOptions(filteredOptions)
   }
 
@@ -110,7 +125,7 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
             defaultChecked
           >
             <option>Select a Phoneme</option>
-            {PHONEME_OPTIONS.map((p) => (
+            {phonemeOptions.map((p) => (
               <option key={p.id} value={p.id}>
                 {p.name}
               </option>

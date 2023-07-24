@@ -8,16 +8,6 @@ export const schema = gql`
   }
 
   """
-  A sorting game phoneme.
-  """
-  type Phoneme {
-    "The numeric representation of the phoneme (e.g. 49)."
-    id: Int!
-    "A label for the phoneme (e.g. 'Long I')."
-    label: String!
-  }
-
-  """
   The intro to the first level of the sorting game.
   First level is identifying the correct phoneme.
   """
