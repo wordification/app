@@ -27,6 +27,7 @@ import type { Word, Phoneme } from '@prisma/client'
 type UpsertResult = {
   created: number
   updated: number
+  deleted: number
 }
 
 const isWordEqual = (existingWord: Word, word: Word): boolean => {
@@ -54,6 +55,20 @@ const isPhonemeEqual = (
 const seedWords = async (): Promise<UpsertResult> => {
   let createdCount = 0
   let updatedCount = 0
+  let deletedCount = 0
+
+  const existingWords = await db.word.findMany()
+  const wordDataSet = new Set(wordData.map((word) => word.word))
+
+  // Delete words that exist in the database but not in the word data
+  for (const existingWord of existingWords) {
+    if (!wordDataSet.has(existingWord.word)) {
+      await db.word.delete({
+        where: { word: existingWord.word },
+      })
+      deletedCount++
+    }
+  }
 
   for (let i = 0; i < wordData.length; i++) {
     const word = wordData[i] as Word
@@ -97,12 +112,26 @@ const seedWords = async (): Promise<UpsertResult> => {
     }
   }
 
-  return { created: createdCount, updated: updatedCount }
+  return { created: createdCount, updated: updatedCount, deleted: deletedCount }
 }
 
 const seedPhonemes = async (): Promise<UpsertResult> => {
   let createdCount = 0
   let updatedCount = 0
+  let deletedCount = 0
+
+  const existingPhonemes = await db.phoneme.findMany()
+  const phonemeDataSet = new Set(phonemeData.map((phoneme) => phoneme.id))
+
+  // Delete phonemes that exist in the database but not in the phoneme data
+  for (const existingPhoneme of existingPhonemes) {
+    if (!phonemeDataSet.has(existingPhoneme.id)) {
+      await db.phoneme.delete({
+        where: { id: existingPhoneme.id },
+      })
+      deletedCount++
+    }
+  }
 
   for (let i = 0; i < phonemeData.length; i++) {
     const phoneme = phonemeData[i] as Phoneme
@@ -132,7 +161,7 @@ const seedPhonemes = async (): Promise<UpsertResult> => {
     }
   }
 
-  return { created: createdCount, updated: updatedCount }
+  return { created: createdCount, updated: updatedCount, deleted: deletedCount }
 }
 
 const seedDb = async () => {
@@ -141,21 +170,23 @@ const seedDb = async () => {
     console.info(
       `Words Seeded: ${wordRecord.created + wordRecord.updated} word(s)`
     )
-    console.info(`===========================`)
+    console.info(`==============================`)
     console.info(`Words Created: ${wordRecord.created} word(s)`)
     console.info(`Words Updated: ${wordRecord.updated} word(s)`)
+    console.info(`Words Deleted: ${wordRecord.deleted} word(s)`)
 
-    console.info(`---------------------------`)
+    console.info(`------------------------------`)
 
     const phonemeRecord = await seedPhonemes()
     console.info(
       `Phonemes Seeded: ${
         phonemeRecord.created + phonemeRecord.updated
-      } word(s)`
+      } phoneme(s)`
     )
-    console.info(`===========================`)
-    console.info(`Phonemes Created: ${phonemeRecord.created} word(s)`)
-    console.info(`Phonemes Updated: ${phonemeRecord.updated} word(s)`)
+    console.info(`==============================`)
+    console.info(`Phonemes Created: ${phonemeRecord.created} phoneme(s)`)
+    console.info(`Phonemes Updated: ${phonemeRecord.updated} phoneme(s)`)
+    console.info(`Phonemes Deleted: ${phonemeRecord.deleted} phoneme(s)`)
   } catch (error) {
     console.warn('Please define seed data.')
     console.error(error)
