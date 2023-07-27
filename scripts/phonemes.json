@@ -1,22 +1,27 @@
 [
   {
     "id": 49,
-    "name": "Long I"
+    "name": "Long I",
+    "graphemes": ["iCe", "igh", "y"]
   },
   {
     "id": 53,
-    "name": "Long O"
+    "name": "Long O",
+    "graphemes": ["ow", "oa", "oCe"]
   },
   {
     "id": 45,
-    "name": "Long E"
+    "name": "Long E",
+    "graphemes": ["e", "ea", "ee"]
   },
   {
     "id": 44,
-    "name": "Long A"
+    "name": "Long A",
+    "graphemes": ["ai", "ay", "aCe"]
   },
   {
     "id": 47,
-    "name": "Long U"
+    "name": "Long U",
+    "graphemes": ["ew", "oo", "o"]
   }
 ]

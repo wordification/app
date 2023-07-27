@@ -195,9 +195,22 @@ export const sortingGameSecondLevel: QueryResolvers['sortingGameSecondLevel'] =
       getWord(currentWord.word),
     ]
 
+    const phonemes = await Promise.all(
+      game.phonemes.map(async (p) => {
+        const phoneme = await db.phoneme.findUnique({
+          where: { id: p },
+        })
+        return phoneme as ResolverTypeWrapper<Phoneme>
+      })
+    )
+
+    console.log(phonemes)
+
+    const graphemes = phonemes.flatMap((p) => p.graphemes)
+
     return {
       game,
-      graphemes: ['iCe', 'igh', 'y', 'ow', 'oa', 'oCe'],
+      graphemes,
       audio,
     }
   }
