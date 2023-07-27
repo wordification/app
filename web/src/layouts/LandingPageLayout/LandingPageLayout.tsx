@@ -25,6 +25,10 @@ const MENU_ITEMS = [
     label: 'Try It!',
   },
   {
+    to: '/view-more',
+    label: 'View More',
+  },
+  {
     to: '/login',
     label: 'Sign In',
   },
