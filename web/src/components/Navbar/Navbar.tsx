@@ -60,7 +60,8 @@ const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
     location.pathname === routes.landing() ||
     location.pathname === routes.supporters() ||
     location.pathname === routes.contributors() ||
-    location.pathname === routes.demonstration()
+    location.pathname === routes.demonstration() ||
+    location.pathname === routes.presentation()
 
   const roleRoute = isRootPath
     ? routes.landing()
