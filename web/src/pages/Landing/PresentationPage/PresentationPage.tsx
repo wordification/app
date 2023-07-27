@@ -32,7 +32,7 @@ const LandingPresentationPage = () => {
           </div>
           {/** --^^^-- REMOVE WHEN INSERTING DOC --^^^-- */}
 
-          <div className="text-center lg:text-left">
+          <div className="py-6 text-center lg:text-left">
             <h1 className="text-5xl font-semibold">Wordification:</h1>
             <h1 className="text-5xl font-bold">
               A New Way of Teaching English Spelling Patterns [CSCE &apos;23]
