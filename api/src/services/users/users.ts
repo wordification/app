@@ -110,6 +110,9 @@ export const deleteUser: MutationResolvers['deleteUser'] = ({ id }) => {
  */
 const canUpdatePassword = async (id: number): Promise<number> => {
   if (context.currentUser?.id === id) {
+    if (context.currentUser?.roles === 'SUPERUSER') {
+      return -1
+    }
     return id
   }
 
