@@ -348,8 +348,8 @@
       "Please, act your age.",
       "When I was your age, I could ride a bike."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["aCe"],
+    "testedPhonemes": [44]
   },
   {
     "word": "ago",
@@ -812,8 +812,8 @@
       "She ate a piece of cake.",
       "Someone ate all the fruit."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["aCe"],
+    "testedPhonemes": [44]
   },
   {
     "word": "attention",
@@ -1020,8 +1020,8 @@
       "The soldiers went back to their home base.",
       "She ran all the way to third base."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["aCe"],
+    "testedPhonemes": [44]
   },
   {
     "word": "basket",
@@ -1068,8 +1068,8 @@
       "You have to be polite.",
       "She will not be happy."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["e"],
+    "testedPhonemes": [45]
   },
   {
     "word": "beach",
@@ -1084,8 +1084,8 @@
       "The beach is crowded on the weekends.",
       "I fly my kite on the beach."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ea"],
+    "testedPhonemes": [45]
   },
   {
     "word": "bear",
@@ -1180,8 +1180,8 @@
       "A bee is buzzing around.",
       "The bee flew out the window."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ee"],
+    "testedPhonemes": [45]
   },
   {
     "word": "been",
@@ -1964,8 +1964,8 @@
       "We let the birds fly out of the cage.",
       "I found the cage empty."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["aCe"],
+    "testedPhonemes": [44]
   },
   {
     "word": "cake",
@@ -1980,8 +1980,8 @@
       "She likes chocolate cake.",
       "What kind of cake do you want?"
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["aCe"],
+    "testedPhonemes": [44]
   },
   {
     "word": "call",
@@ -2012,8 +2012,8 @@
       "My shoelaces came undone.",
       "The boy came running towards me."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["aCe"],
+    "testedPhonemes": [44]
   },
   {
     "word": "camp",
@@ -2236,8 +2236,8 @@
       "He is not allowed to go in the cave.",
       "No one could find the cave."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["aCe"],
+    "testedPhonemes": [44]
   },
   {
     "word": "change",
@@ -2860,8 +2860,8 @@
       "I like to exercise every day.",
       "She slept all day."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ay"],
+    "testedPhonemes": [44]
   },
   {
     "word": "dear",
@@ -2908,8 +2908,8 @@
       "Take a deep breath.",
       "How deep is the lake?"
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ee"],
+    "testedPhonemes": [45]
   },
   {
     "word": "deer",
@@ -3052,8 +3052,8 @@
       "What do you like on your pizza?",
       "Do a good job."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["o"],
+    "testedPhonemes": [47]
   },
   {
     "word": "doctor",
@@ -3276,8 +3276,8 @@
       "I had a bad dream last night.",
       "It was only a dream."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ea"],
+    "testedPhonemes": [45]
   },
   {
     "word": "dress",
@@ -3404,8 +3404,8 @@
       "Each one is different.",
       "Each student has a locker."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ea"],
+    "testedPhonemes": [45]
   },
   {
     "word": "early",
@@ -3452,8 +3452,8 @@
       "The sun always rises in the east.",
       "She lives on the east side of the city."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ea"],
+    "testedPhonemes": [45]
   },
   {
     "word": "eat",
@@ -3468,8 +3468,8 @@
       "Eat more vegetables.",
       "I do not eat sushi."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ea"],
+    "testedPhonemes": [45]
   },
   {
     "word": "eating",
@@ -3788,8 +3788,8 @@
       "Her face got sunburnt this weekend.",
       "Please wash your face."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["aCe"],
+    "testedPhonemes": [44]
   },
   {
     "word": "fall",
@@ -3916,8 +3916,8 @@
       "She went to feed the baby.",
       "I like to feed the birds at the zoo."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ee"],
+    "testedPhonemes": [45]
   },
   {
     "word": "feel",
@@ -3932,8 +3932,8 @@
       "Do you feel like going swimming?",
       "You will feel better tomorrow."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ee"],
+    "testedPhonemes": [45]
   },
   {
     "word": "feeling",
@@ -3964,8 +3964,8 @@
       "His feet are cold.",
       "It is only two feet deep in the pool."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ee"],
+    "testedPhonemes": [45]
   },
   {
     "word": "fell",
@@ -4012,8 +4012,8 @@
       "I will be back in a few minutes.",
       "Can I have a few French fries?"
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ew"],
+    "testedPhonemes": [47]
   },
   {
     "word": "field",
@@ -4348,8 +4348,8 @@
       "Please eat your food.",
       "We need food."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["oo"],
+    "testedPhonemes": [47]
   },
   {
     "word": "foot",
@@ -4508,8 +4508,8 @@
       "There will be free food.",
       "This one is free."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ee"],
+    "testedPhonemes": [45]
   },
   {
     "word": "friend",
@@ -4636,8 +4636,8 @@
       "My favorite game is hide-and-seek.",
       " We played a game during recess."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["aCe"],
+    "testedPhonemes": [44]
   },
   {
     "word": "gas",
@@ -4668,8 +4668,8 @@
       "My teacher gave me a book.",
       "They gave me presents at my party."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["aCe"],
+    "testedPhonemes": [44]
   },
   {
     "word": "get",
@@ -4924,8 +4924,8 @@
       "I am in the fourth grade.",
       "I got a good grade in English class."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["aCe"],
+    "testedPhonemes": [44]
   },
   {
     "word": "grandmother",
@@ -4998,8 +4998,8 @@
       "I like his shirt because it is green.",
       "She likes to eat green peppers."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ee"],
+    "testedPhonemes": [45]
   },
   {
     "word": "grew",
@@ -5014,8 +5014,8 @@
       "She grew up to be a famous actress.",
       "The sky grew darker and darker."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ew"],
+    "testedPhonemes": [47]
   },
   {
     "word": "ground",
@@ -5334,8 +5334,8 @@
       "He has a nice car.",
       "He likes music."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["e"],
+    "testedPhonemes": [45]
   },
   {
     "word": "he's",
@@ -5414,8 +5414,8 @@
       "This heat is intense.",
       "Heat is a form of energy."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ea"],
+    "testedPhonemes": [45]
   },
   {
     "word": "heavy",
@@ -6160,8 +6160,8 @@
       "My mom asked us to keep our rooms clean.",
       "How long can I keep this book?"
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ee"],
+    "testedPhonemes": [45]
   },
   {
     "word": "kept",
@@ -6256,8 +6256,8 @@
       "Few students knew how to do this problem.",
       "Everyone knew she could speak Spanish too."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ew"],
+    "testedPhonemes": [47]
   },
   {
     "word": "knife",
@@ -6336,8 +6336,8 @@
       "We are going to take our boat out on the lake.",
       "We like to go swimming in the lake."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["aCe"],
+    "testedPhonemes": [44]
   },
   {
     "word": "land",
@@ -6416,8 +6416,8 @@
       "You can't be late for the train.",
       "I usually stay up late on the weekends."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["aCe"],
+    "testedPhonemes": [44]
   },
   {
     "word": "later",
@@ -6464,8 +6464,8 @@
       "I prefer to lay on my back.",
       "Lay it on the table for me please."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ay"],
+    "testedPhonemes": [44]
   },
   {
     "word": "learn",
@@ -6496,8 +6496,8 @@
       "Please don't leave the TV on.",
       "I told him to leave the room."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ea"],
+    "testedPhonemes": [45]
   },
   {
     "word": "left",
@@ -6912,8 +6912,8 @@
       "The bed was made when I got home.",
       "She made dinner for us."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["aCe"],
+    "testedPhonemes": [44]
   },
   {
     "word": "mail",
@@ -6928,8 +6928,8 @@
       "I will send this book to you by mail.",
       "Don't forget to mail this letter."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ai"],
+    "testedPhonemes": [44]
   },
   {
     "word": "make",
@@ -6944,8 +6944,8 @@
       "We make our teacher happy.",
       "He is going to make the team."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["aCe"],
+    "testedPhonemes": [44]
   },
   {
     "word": "making",
@@ -7008,8 +7008,8 @@
       "You may park here.",
       "My birthday is in May."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ay"],
+    "testedPhonemes": [44]
   },
   {
     "word": "maybe",
@@ -7040,8 +7040,8 @@
       "Can you please help me?",
       "She gave it to me."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["e"],
+    "testedPhonemes": [45]
   },
   {
     "word": "mean",
@@ -7056,8 +7056,8 @@
       "What does this mean?",
       "Is your dog mean?"
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ea"],
+    "testedPhonemes": [45]
   },
   {
     "word": "meat",
@@ -7072,8 +7072,8 @@
       "We eat meat every day.",
       "Meat is good for you."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ea"],
+    "testedPhonemes": [45]
   },
   {
     "word": "men",
@@ -7312,8 +7312,8 @@
       "We can see the moon.",
       "The moon is very bright tonight."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["oo"],
+    "testedPhonemes": [47]
   },
   {
     "word": "more",
@@ -7552,8 +7552,8 @@
       "We found a nail stuck in the tire.",
       "The nail went through the wall."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ai"],
+    "testedPhonemes": [44]
   },
   {
     "word": "name",
@@ -7568,8 +7568,8 @@
       "What is your name?",
       "I want to name my dog spot."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["aCe"],
+    "testedPhonemes": [44]
   },
   {
     "word": "near",
@@ -7616,8 +7616,8 @@
       "She is going to need a job.",
       "I need help with something."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ee"],
+    "testedPhonemes": [45]
   },
   {
     "word": "never",
@@ -7648,8 +7648,8 @@
       "We cannot afford a new car.",
       "I want a new watch."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ew"],
+    "testedPhonemes": [47]
   },
   {
     "word": "news",
@@ -7664,8 +7664,8 @@
       "That is exciting news.",
       "We watched the news before bed."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ew"],
+    "testedPhonemes": [47]
   },
   {
     "word": "next",
@@ -8240,8 +8240,8 @@
       "Turn to page ten in the book.",
       "He wrote notes on the page."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["aCe"],
+    "testedPhonemes": [44]
   },
   {
     "word": "paint",
@@ -8256,8 +8256,8 @@
       "We can't touch the wet paint.",
       "Sometimes we can paint with watercolors."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ai"],
+    "testedPhonemes": [44]
   },
   {
     "word": "pair",
@@ -8416,8 +8416,8 @@
       "She forgot to pay.",
       "He will pay you later."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ay"],
+    "testedPhonemes": [44]
   },
   {
     "word": "peanut",
@@ -9028,8 +9028,8 @@
       "We had a race to the bathroom.",
       "She won the race."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["aCe"],
+    "testedPhonemes": [44]
   },
   {
     "word": "radio",
@@ -9060,8 +9060,8 @@
       "It is going to rain later.",
       "I felt a drop of rain."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ai"],
+    "testedPhonemes": [44]
   },
   {
     "word": "raise",
@@ -9076,8 +9076,8 @@
       "Tom got a raise at work.",
       "Don't raise your voice."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ai"],
+    "testedPhonemes": [44]
   },
   {
     "word": "rat",
@@ -9108,8 +9108,8 @@
       "She tried to reach for the ceiling.",
       "He has been trying to reach her."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ea"],
+    "testedPhonemes": [45]
   },
   {
     "word": "read",
@@ -9124,8 +9124,8 @@
       "She wants to read that book.",
       "We read that book in class."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ea"],
+    "testedPhonemes": [45]
   },
   {
     "word": "reading",
@@ -9172,8 +9172,8 @@
       "She is real busy.",
       "He was real happy."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ea"],
+    "testedPhonemes": [45]
   },
   {
     "word": "really",
@@ -9460,8 +9460,8 @@
       "He has his own room.",
       "Where is your room?"
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["oo"],
+    "testedPhonemes": [47]
   },
   {
     "word": "round",
@@ -9572,8 +9572,8 @@
       "We have the same shoes.",
       "She is the same height as me."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["aCe"],
+    "testedPhonemes": [44]
   },
   {
     "word": "sang",
@@ -9636,8 +9636,8 @@
       "Please say it louder.",
       "I don't know what to say."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ay"],
+    "testedPhonemes": [44]
   },
   {
     "word": "says",
@@ -9700,8 +9700,8 @@
       "The sea is blue.",
       "The sea was very calm."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ea"],
+    "testedPhonemes": [45]
   },
   {
     "word": "seat",
@@ -9716,8 +9716,8 @@
       "I saved you a seat.",
       "She sat in my seat."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ea"],
+    "testedPhonemes": [45]
   },
   {
     "word": "second",
@@ -9748,8 +9748,8 @@
       "I am happy to see you.",
       "Did you see that?"
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ee"],
+    "testedPhonemes": [45]
   },
   {
     "word": "seem",
@@ -9764,8 +9764,8 @@
       "We all seem young.",
       "They seem to be hurt."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ee"],
+    "testedPhonemes": [45]
   },
   {
     "word": "seen",
@@ -9780,8 +9780,8 @@
       "She has seen many patients today.",
       "I haven't seen you in a while."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ee"],
+    "testedPhonemes": [45]
   },
   {
     "word": "send",
@@ -9956,8 +9956,8 @@
       "She is ten years old.",
       "She can ride a bike."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["e"],
+    "testedPhonemes": [45]
   },
   {
     "word": "sheep",
@@ -9972,8 +9972,8 @@
       "I saw a flock of sheep.",
       "We fed the sheep at the farm."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ee"],
+    "testedPhonemes": [45]
   },
   {
     "word": "ship",
@@ -10276,8 +10276,8 @@
       "How did you sleep last night?",
       "He did not sleep well."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ee"],
+    "testedPhonemes": [45]
   },
   {
     "word": "slowly",
@@ -10468,8 +10468,8 @@
       "It is going to rain soon.",
       "I will be back soon."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["oo"],
+    "testedPhonemes": [47]
   },
   {
     "word": "sorry",
@@ -10692,8 +10692,8 @@
       "They live in the same state.",
       "He is in a poor state of health."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["aCe"],
+    "testedPhonemes": [44]
   },
   {
     "word": "stay",
@@ -10708,8 +10708,8 @@
       "Stay here with us.",
       "You can stay as long as you'd like."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ay"],
+    "testedPhonemes": [44]
   },
   {
     "word": "step",
@@ -10884,8 +10884,8 @@
       "He looked both ways before crossing the street.",
       "You cannot park your car on the street."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ee"],
+    "testedPhonemes": [45]
   },
   {
     "word": "strong",
@@ -11172,8 +11172,8 @@
       "It will not take very long.",
       "Let's take a picture together."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["aCe"],
+    "testedPhonemes": [44]
   },
   {
     "word": "taken",
@@ -11268,8 +11268,8 @@
       "We are going to teach Sarah the alphabet.",
       "She will teach me how to read."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ea"],
+    "testedPhonemes": [45]
   },
   {
     "word": "teacher",
@@ -11300,8 +11300,8 @@
       "I am a member of the baseball team.",
       "My dad is the coach of our basketball team."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ea"],
+    "testedPhonemes": [45]
   },
   {
     "word": "teeth",
@@ -11316,8 +11316,8 @@
       "I brush my teeth every day.",
       "We have to brush our teeth after eating dinner."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ee"],
+    "testedPhonemes": [45]
   },
   {
     "word": "tell",
@@ -11444,8 +11444,8 @@
       "I can play the piano.",
       "The book is easy."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["e"],
+    "testedPhonemes": [45]
   },
   {
     "word": "their",
@@ -11700,8 +11700,8 @@
       "There are three birds on the tree.",
       "We have three dogs."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ee"],
+    "testedPhonemes": [45]
   },
   {
     "word": "threw",
@@ -11716,8 +11716,8 @@
       "They threw the ball back and forth.",
       "The child threw a rock in the pond."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ew"],
+    "testedPhonemes": [47]
   },
   {
     "word": "through",
@@ -11796,8 +11796,8 @@
       "I am able to help you.",
       "Nice to meet you."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["o"],
+    "testedPhonemes": [47]
   },
   {
     "word": "today",
@@ -11892,8 +11892,8 @@
       "She ate too much and was feeling sick.",
       "I am too tired to go to the park."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["oo"],
+    "testedPhonemes": [47]
   },
   {
     "word": "took",
@@ -12420,8 +12420,8 @@
       "She read her book while she had to wait.",
       "He had to wait his turn in line."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ai"],
+    "testedPhonemes": [44]
   },
   {
     "word": "walk",
@@ -12580,8 +12580,8 @@
       "You have to go that way to get to the park.",
       "This is the way to the library."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ay"],
+    "testedPhonemes": [44]
   },
   {
     "word": "we",
@@ -12596,8 +12596,8 @@
       "We love dogs.",
       "We are leaving soon."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["e"],
+    "testedPhonemes": [45]
   },
   {
     "word": "wear",
@@ -12644,8 +12644,8 @@
       "This is going to be a long week.",
       "We spent a week at the beach."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ee"],
+    "testedPhonemes": [45]
   },
   {
     "word": "well",
@@ -12756,8 +12756,8 @@
       "Flour is made from wheat.",
       "We grow wheat on the farm."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["ea"],
+    "testedPhonemes": [45]
   },
   {
     "word": "when",
@@ -12852,8 +12852,8 @@
       "Who is next in line?",
       "Who stole my book?"
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["o"],
+    "testedPhonemes": [47]
   },
   {
     "word": "whole",
@@ -13524,7 +13524,7 @@
       "I want to go to the zoo.",
       "She took us to the zoo."
     ],
-    "testedGraphemes": [],
-    "testedPhonemes": []
+    "testedGraphemes": ["oo"],
+    "testedPhonemes": [47]
   }
 ]
