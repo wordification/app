@@ -49,6 +49,10 @@ export const QUERY = gql`
         id
         word
       }
+      phonemes {
+        id
+        name
+      }
     }
   }
 `
@@ -168,7 +172,10 @@ export const Success = ({
   }, [matchingGameGroupingLevel.game.id, client])
 
   const currentPhonemeName =
-    matchingGameGroupingLevel.game.currentPhonemeId === 49 ? 'Long I' : 'Long O'
+    matchingGameGroupingLevel.phonemes.find(
+      (phoneme) =>
+        phoneme.id === matchingGameGroupingLevel.game.currentPhonemeId
+    )?.name || null
 
   return (
     <>

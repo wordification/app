@@ -204,8 +204,6 @@ export const sortingGameSecondLevel: QueryResolvers['sortingGameSecondLevel'] =
       })
     )
 
-    console.log(phonemes)
-
     const graphemes = phonemes.flatMap((p) => p.graphemes)
 
     return {
