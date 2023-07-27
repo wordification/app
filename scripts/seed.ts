@@ -78,7 +78,10 @@ const seedWords = async (): Promise<UpsertResult> => {
 
     if (existingWord) {
       // Compare the existing data with the data to be updated
-      if (!isWordEqual(existingWord, word)) {
+      if (
+        !isWordEqual(existingWord, word) ||
+        !isWordEqual(word, existingWord)
+      ) {
         await db.word.update({
           where: { word: word.word },
           data: {
