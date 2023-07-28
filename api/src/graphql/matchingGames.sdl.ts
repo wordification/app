@@ -18,6 +18,8 @@ export const schema = gql`
     incompleteWords: [Word!]!
     "An array of audio file paths."
     audio: [String!]
+    "An array of phonemes being used in this game."
+    phonemes: [Phoneme!]!
   }
 
   """

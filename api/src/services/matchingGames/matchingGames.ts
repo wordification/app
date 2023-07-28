@@ -4,7 +4,13 @@ import { db } from 'src/lib/db'
 
 import { getMatchingGamePhrase, getWord } from '../audio'
 
-import type { MutationResolvers, QueryResolvers, Word } from 'types/graphql'
+import type { Phoneme } from '@prisma/client'
+import type {
+  MutationResolvers,
+  QueryResolvers,
+  ResolverTypeWrapper,
+  Word,
+} from 'types/graphql'
 /**
  * Finds a matching game by ID and validates that it exists and is a matching
  * game.
@@ -150,10 +156,20 @@ export const matchingGamePlayLevel: QueryResolvers['matchingGamePlayLevel'] =
 
     const audio = [getMatchingGamePhrase('instructions')]
 
+    const phonemes = await Promise.all(
+      game.phonemes.map(async (p) => {
+        const phoneme = await db.phoneme.findUnique({
+          where: { id: p },
+        })
+        return phoneme as ResolverTypeWrapper<Phoneme>
+      })
+    )
+
     return {
       game,
       audio,
       incompleteWords,
+      phonemes,
     }
   }
 

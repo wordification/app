@@ -9,6 +9,9 @@ export const schema = gql`
     "The name of the phoneme that corresponds to an ID."
     name: String!
 
+    "The graphemes to be tested on for that phoneme."
+    graphemes: [String!]!
+
     "The time at which the word was created."
     createdAt: DateTime!
 

@@ -63,6 +63,7 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
     if (!loading && !error && data && data.phonemes) {
       const fetchedPhonemeOptions: Phoneme[] = data.phonemes
       setPhonemeOptions(fetchedPhonemeOptions)
+      setAvailableOptions(fetchedPhonemeOptions)
     }
   }, [loading, error, data])
 

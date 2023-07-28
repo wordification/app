@@ -78,11 +78,11 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
         if (phonemes.length !== 2) {
           throw new Error('You must select exactly two phonemes!')
         }
-        const allowedPhonemes = [49, 53]
+        const allowedPhonemes = [49, 53, 45, 44, 47]
         phonemes.forEach((phoneme) => {
           if (!allowedPhonemes.includes(phoneme)) {
             throw new Error(
-              'Invalid phonemes selected! Please only select Long I and Long O.'
+              'Invalid phonemes selected! Allowed Phonemes: Long I, Long O, Long E, Long A, Long U'
             )
           }
         })

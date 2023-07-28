@@ -187,6 +187,8 @@ model Phoneme {
   id              Int       @id @unique
   /// The name of the phoneme that corresponds to an ID.
   name            String
+  /// The graphemes to be tested on for that phoneme.
+  graphemes       String[]
   /// The time at which the word was created.
   createdAt       DateTime  @default(now())
   /// The time at which the word was last updated.
