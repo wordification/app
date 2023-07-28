@@ -43,7 +43,6 @@ const MATCHING_BOARD_SIZE_OPTIONS = [
   { id: 0, name: '3x4' },
   { id: 1, name: '4x4' },
   { id: 2, name: '4x5' },
-  { id: 3, name: '4x6' },
 ] as const
 
 const MATCHING_GAME_TYPE_OPTIONS = [
