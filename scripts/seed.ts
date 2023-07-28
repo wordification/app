@@ -49,7 +49,10 @@ const isPhonemeEqual = (
   existingPhoneme: Phoneme,
   phoneme: Phoneme
 ): boolean => {
-  return existingPhoneme.name === phoneme.name
+  return (
+    existingPhoneme.name === phoneme.name &&
+    existingPhoneme.graphemes.every((g) => phoneme.graphemes.includes(g))
+  )
 }
 
 const seedWords = async (): Promise<UpsertResult> => {
@@ -78,7 +81,10 @@ const seedWords = async (): Promise<UpsertResult> => {
 
     if (existingWord) {
       // Compare the existing data with the data to be updated
-      if (!isWordEqual(existingWord, word)) {
+      if (
+        !isWordEqual(existingWord, word) ||
+        !isWordEqual(word, existingWord)
+      ) {
         await db.word.update({
           where: { word: word.word },
           data: {
@@ -141,11 +147,15 @@ const seedPhonemes = async (): Promise<UpsertResult> => {
 
     if (existingPhoneme) {
       // Compare the existing data with the data to be updated
-      if (!isPhonemeEqual(existingPhoneme, phoneme)) {
+      if (
+        !isPhonemeEqual(existingPhoneme, phoneme) ||
+        !isPhonemeEqual(phoneme, existingPhoneme)
+      ) {
         await db.phoneme.update({
           where: { id: phoneme.id },
           data: {
             name: phoneme.name,
+            graphemes: phoneme.graphemes,
           },
         })
         updatedCount++
@@ -155,6 +165,7 @@ const seedPhonemes = async (): Promise<UpsertResult> => {
         data: {
           id: phoneme.id,
           name: phoneme.name,
+          graphemes: phoneme.graphemes,
         },
       })
       createdCount++
