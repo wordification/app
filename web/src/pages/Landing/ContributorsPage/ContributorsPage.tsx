@@ -7,15 +7,29 @@ const PI_INFO = [
     link: 'https://sc.edu/study/colleges_schools/artsandsciences/english_language_and_literature/our_people/directory/dubinsky_stanley.php',
   },
   {
-    name: 'Dr. Krystal Werfel',
-    info: 'Boys Town National Research Hospital',
-    link: 'https://www.boystownhospital.org/research/faculty/krystal-werfel',
+    name: 'Dr. Matt Irvin',
+    info: 'Child Development Research Center, USC',
+    link: 'https://sc.edu/study/colleges_schools/education/faculty-staff/irvin_matt.php',
   },
-
+  {
+    name: 'Dr. Jason Porter',
+    info: 'College of Information and Communications, USC',
+    link: 'https://sc.edu/study/colleges_schools/cic/faculty-staff/porter_jason.php',
+  },
+  {
+    name: 'Dr. Lucy Spence',
+    info: 'College of Education, USC',
+    link: 'https://sc.edu/study/colleges_schools/education/faculty-staff/spence_lucy.php',
+  },
   {
     name: 'Dr. Biplav Srivastava',
     info: 'AI Institute, USC',
     link: 'https://sc.edu/study/colleges_schools/engineering_and_computing/faculty-staff/srivastava.php',
+  },
+  {
+    name: 'Dr. Angie Starrett',
+    info: 'College of Education, USC',
+    link: 'https://sc.edu/study/colleges_schools/education/faculty-staff/starrett_angie.php',
   },
   {
     name: 'Dr. Homayoun Valafar',
@@ -23,40 +37,25 @@ const PI_INFO = [
     link: 'https://sc.edu/study/colleges_schools/engineering_and_computing/faculty-staff/homayounvalafar.php',
   },
   {
-    name: 'Matt Irvin',
-    info: 'Child Development Research Center, USC',
-    link: 'https://sc.edu/study/colleges_schools/education/faculty-staff/irvin_matt.php',
-  },
-  {
-    name: 'Jason Porter',
-    info: 'College of Information and Communications, USC',
-    link: 'https://sc.edu/study/colleges_schools/cic/faculty-staff/porter_jason.php',
-  },
-  {
-    name: 'Lucy Spence',
-    info: 'College of Education, USC',
-    link: 'https://sc.edu/study/colleges_schools/education/faculty-staff/spence_lucy.php',
-  },
-  {
-    name: 'Angie Starrett',
-    info: 'College of Education, USC',
-    link: 'https://sc.edu/study/colleges_schools/education/faculty-staff/starrett_angie.php',
+    name: 'Dr. Krystal Werfel',
+    info: 'Boys Town National Research Hospital',
+    link: 'https://www.boystownhospital.org/research/faculty/krystal-werfel',
   },
 ] as const
 
 const KEY_PERSONNEL_INFO = [
-  {
-    name: 'Dr. Tracey Weldon',
-    info: 'Greenwood/Asher & Associates',
-    link: 'https://www.linkedin.com/in/tracey-weldon-b7784134/',
-  },
   {
     name: 'Don Doggett',
     info: 'South Carolina Organization of Rural Schools',
     link: 'https://www.linkedin.com/in/don-doggett/',
   },
   {
-    name: 'Taylor (Jing) Wen',
+    name: 'Dr. Tracey Weldon',
+    info: 'Greenwood/Asher & Associates',
+    link: 'https://www.linkedin.com/in/tracey-weldon-b7784134/',
+  },
+  {
+    name: 'Dr. Taylor (Jing) Wen',
     info: 'College of Information and Communications, USC',
     link: 'https://sc.edu/study/colleges_schools/cic/faculty-staff/wen_taylor.php',
   },
