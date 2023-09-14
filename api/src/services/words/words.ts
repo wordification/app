@@ -15,13 +15,30 @@ export const filterWords = async ({
   validate(numSyllables, 'numSyllables', {
     numericality: { onlyInteger: true, positive: true },
   })
-  return db.word.findMany({
+  const phonemeMatchWords = await db.word.findMany({
     where: {
       numSyllables,
-      testedPhonemes: {
+      phonemes: {
         hasSome: phonemes,
       },
     },
+  })
+
+  const phonemesData = await db.phoneme.findMany()
+
+  return phonemeMatchWords.filter((word) => {
+    const phonemeIndex = word.phonemes.findIndex((p) =>
+      phonemes.some((id) => id === p)
+    )
+    const targetPhoneme = word.phonemes[phonemeIndex] ?? -1
+
+    if (phonemeIndex > -1 && targetPhoneme !== -1) {
+      const possibleGraphemes = phonemesData
+        .filter((p) => p.id === targetPhoneme)
+        .flatMap((p) => p.graphemes)
+
+      return possibleGraphemes.some((g) => g === word.graphemes[phonemeIndex])
+    }
   })
 }
 
