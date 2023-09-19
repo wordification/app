@@ -92,10 +92,12 @@ model Game {
   matchingGameType  MatchingGameType?
 
   // GAMEPLAY INFO
-  /// The number of words played per phoneme. The actual number of words played will be this number times the number of phonemes, or less if there are not enough words.
-  wordsPerPhoneme  Int
+  /// The number of words played per phoneme or grapheme. The actual number of words played will be this number times the number of phonemes or graphemes, or less if there are not enough words.
+  wordsPerUnit     Int
   /// The phonemes to test the user on.
   phonemes         Int[]
+  /// The graphemes to test the user on.
+  graphemes        String[]
   /// The current level of the game. Levels are unique to each game type, but all start at 1.
   level            Int     @default(1)
   /// If the game is complete.
@@ -127,10 +129,12 @@ model GameSetup {
   createdAt         DateTime  @default(now())
   /// The time at which the game was last updated.
   updatedAt         DateTime  @default(now()) @updatedAt
-  /// The number of words played per phoneme. The actual number of words played will be this number times the number of phonemes, or less if there are not enough words.
-  wordsPerPhoneme   Int
+  /// The number of words played per phoneme or grapheme. The actual number of words played will be this number times the number of phonemes or graphemes, or less if there are not enough words.
+  wordsPerUnit      Int
   /// The phonemes to test the user on.
   phonemes          Int[]
+  /// The graphemes to test the user on.
+  graphemes         String[]
   /// The size and configuration of the cards for a matching game.
   matchingBoardSize Int       @default(0)
   /// The style of matching game.

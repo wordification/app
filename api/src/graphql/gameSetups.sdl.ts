@@ -13,15 +13,18 @@ export const schema = gql`
     updatedAt: DateTime!
 
     """
-    The number of words played per phoneme.
+    The number of words played per phoneme or grapheme.
     The actual number of words played will be this
-    number times the number of phonemes, or less
+    number times the number of phonemes or graphemes, or less
     if there are not enough words.
     """
-    wordsPerPhoneme: Int!
+    wordsPerUnit: Int!
 
     "The phonemes to test the user on."
-    phonemes: [Int!]!
+    phonemes: [Int!]
+
+    "The graphemes to test the user on."
+    graphemes: [String!]
 
     "The size and configuration of the cards for a matching game."
     matchingBoardSize: Int!
