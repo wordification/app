@@ -61,8 +61,8 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
     },
   })
 
-  const wordsPerPhoneme = input.wordsPerPhoneme as number
-  validate(wordsPerPhoneme, 'words per phoneme', {
+  const wordsPerUnit = input.wordsPerUnit as number
+  validate(wordsPerUnit, 'words per phoneme', {
     numericality: {
       lessThanOrEqual: 10,
       positive: true,
@@ -95,14 +95,14 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
       db.gameSetup.upsert({
         where: { userId: studentId },
         create: {
-          wordsPerPhoneme,
+          wordsPerUnit,
           matchingBoardSize,
           matchingGameType,
           phonemes,
           userId: studentId,
         },
         update: {
-          wordsPerPhoneme,
+          wordsPerUnit,
           matchingBoardSize,
           matchingGameType,
           phonemes,
@@ -124,14 +124,14 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
 
       return db.gameSetup.upsert({
         create: {
-          wordsPerPhoneme,
+          wordsPerUnit,
           matchingBoardSize,
           matchingGameType,
           phonemes,
           userId,
         },
         update: {
-          wordsPerPhoneme,
+          wordsPerUnit,
           matchingBoardSize,
           matchingGameType,
           phonemes,

@@ -30,10 +30,10 @@ export const schema = gql`
     wordsPerUnit: Int!
 
     "The phonemes to test the user on."
-    phonemes: [Int!]
+    phonemes: [Int!]!
 
     "The graphemes to test the user on."
-    graphemes: [String!]
+    graphemes: [String!]!
 
     """
     The current level of the game. Levels are unique
@@ -127,11 +127,14 @@ export const schema = gql`
     "The type of game."
     type: GameType!
 
-    "The number of words played per phoneme. The actual number of words played will be this number times the number of phonemes, or less if there are not enough words."
-    wordsPerPhoneme: Int
+    "The number of words played per phoneme or grapheme. The actual number of words played will be this number times the number of phonemes or graphemes, or less if there are not enough words."
+    wordsPerUnit: Int
 
     "The phonemes to test the user on."
     phonemes: [Int!]
+
+    "The graphemes to test the user on."
+    graphemes: [String!]
 
     "The current word being played."
     currentWordId: Int
