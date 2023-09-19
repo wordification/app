@@ -74,15 +74,45 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
   const phonemes = input.phonemes?.filter((phoneme) => !!phoneme) as number[]
   validate(phonemes, 'phonemes', {
     custom: {
-      with: () => {
+      with: async () => {
         if (phonemes.length !== 2) {
           throw new Error('You must select exactly two phonemes!')
         }
-        const allowedPhonemes = [49, 53, 45, 44, 47]
+        const dbPhonemes = await db.phoneme.findMany()
+        const allowedPhonemes = dbPhonemes.flatMap((p) => p.id)
         phonemes.forEach((phoneme) => {
           if (!allowedPhonemes.includes(phoneme)) {
+            const allowedPhonemeNames = dbPhonemes.flatMap((p) => p.name)
             throw new Error(
-              'Invalid phonemes selected! Allowed Phonemes: Long I, Long O, Long E, Long A, Long U'
+              `Invalid phonemes selected! Allowed Phonemes: ${allowedPhonemeNames.join(
+                ', '
+              )}`
+            )
+          }
+        })
+      },
+    },
+  })
+
+  const graphemes = input.graphemes?.filter(
+    (grapheme) => !!grapheme
+  ) as string[]
+  validate(graphemes, 'graphemes', {
+    custom: {
+      with: async () => {
+        // if (graphemes.length !== 2) {
+        //   throw new Error('You must select exactly two graphemes!')
+        // }
+        const dbPhonemes = await db.phoneme.findMany()
+        const allowedGraphemes = dbPhonemes.flatMap((p) =>
+          p.graphemes.flatMap((g) => g)
+        )
+        graphemes.forEach((grapheme) => {
+          if (!allowedGraphemes.includes(grapheme)) {
+            throw new Error(
+              `Invalid graphemes selected! Allowed Graphemes: ${allowedGraphemes.join(
+                ', '
+              )}`
             )
           }
         })
@@ -99,6 +129,7 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
           matchingBoardSize,
           matchingGameType,
           phonemes,
+          graphemes,
           userId: studentId,
         },
         update: {
@@ -106,6 +137,7 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
           matchingBoardSize,
           matchingGameType,
           phonemes,
+          graphemes,
         },
       }),
     ]
@@ -128,6 +160,7 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
           matchingBoardSize,
           matchingGameType,
           phonemes,
+          graphemes,
           userId,
         },
         update: {
@@ -135,6 +168,7 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
           matchingBoardSize,
           matchingGameType,
           phonemes,
+          graphemes,
         },
         where: { userId },
       })

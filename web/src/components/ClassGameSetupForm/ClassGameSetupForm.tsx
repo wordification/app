@@ -13,10 +13,14 @@ import { useEffect, useState } from 'react'
 import type { RWGqlError } from '@redwoodjs/forms'
 import type { UpsertGameSetupInput, GameSetup, Scalars } from 'types/graphql'
 
-type FormGame = NonNullable<Omit<GameSetup, 'phonemes'>> & {
-  /** Input fields to form the phonemes to test the user on. */
+type FormGame = NonNullable<Omit<Omit<GameSetup, 'phonemes'>, 'graphemes'>> & {
+  /** Input field to make a selection of a phoneme or grapheme based game. */
+  phoneme_grapheme_selection?: Array<Scalars['Int']>
+  /** Input fields to form the phonemes or graphemes to test the user on. */
   first_phoneme?: Array<Scalars['Int']>
   second_phoneme?: Array<Scalars['Int']>
+  first_grapheme?: Array<Scalars['String']>
+  second_grapheme?: Array<Scalars['String']>
 }
 
 type ClassGameSetupFormProps = {
@@ -110,9 +114,9 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
   }
 
   const handleGraphemeOneChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedValue = parseInt(e.target.value)
+    const selectedValue = e.target.value
     const filteredOptions = graphemeOptions.filter(
-      (p) => p.id !== selectedValue
+      (p) => p.name !== selectedValue
     )
     setAvailableGraphemeOptions(filteredOptions)
   }
@@ -129,15 +133,27 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
   }
 
   const onSubmit = (data: FormGame) => {
-    const { first_phoneme = 0, second_phoneme = 0, ...restData } = data
+    const {
+      first_phoneme = 0,
+      second_phoneme = 0,
+      first_grapheme = '',
+      second_grapheme = '',
+      phoneme_grapheme_selection: _,
+      ...restData
+    } = data
     const phonemes: number[] = [
       ...(Array.isArray(first_phoneme) ? first_phoneme : [first_phoneme]),
       ...(Array.isArray(second_phoneme) ? second_phoneme : [second_phoneme]),
     ].filter((p) => !!p)
+    const graphemes: string[] = [
+      ...(Array.isArray(first_grapheme) ? first_grapheme : [first_grapheme]),
+      ...(Array.isArray(second_grapheme) ? second_grapheme : [second_grapheme]),
+    ].filter((g) => !!g)
 
     props.onSave({
       ...restData,
       phonemes,
+      graphemes,
     })
   }
 
@@ -154,14 +170,14 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
 
       <div className="form-control w-full max-w-xs">
         <Label
-          name="phoneme_grapheme"
+          name="phoneme_grapheme_selection"
           className="label"
           errorClassName="label text-error"
         >
           <span className="label-text">Choose Phonemes or Graphemes</span>
         </Label>
         <SelectField
-          name="phoneme_grapheme_game"
+          name="phoneme_grapheme_selection"
           defaultValue={0}
           className="input-bordered select mb-2 w-full"
           onChange={handlePhonemeGraphemeGameChange}
@@ -173,6 +189,9 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
             </option>
           ))}
         </SelectField>
+      </div>
+      <div className="flex flex-col">
+        <FieldError name="phoneme_grapheme_selection" className="text-error" />
       </div>
 
       {phonemeGraphemeGame && (
@@ -233,6 +252,11 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
         </div>
       )}
 
+      <div className="flex flex-col">
+        <FieldError name="first_phoneme" className="text-error" />
+        <FieldError name="second_phoneme" className="text-error" />
+      </div>
+
       {!phonemeGraphemeGame && (
         <div className="form-control w-full max-w-xs">
           <Label
@@ -249,7 +273,7 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
               className="select-bordered select mb-2 w-full"
               validation={{
                 required: true,
-                valueAsNumber: true,
+                valueAsNumber: false,
                 validate: {
                   matchesInitialValue: (value) => {
                     return value !== 'Select a Grapheme'
@@ -261,7 +285,7 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
             >
               <option>Select a Grapheme</option>
               {graphemeOptions.map((p) => (
-                <option key={p.id} value={p.id}>
+                <option key={p.id} value={p.name}>
                   {p.name}
                 </option>
               ))}
@@ -271,7 +295,7 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
               className="select-bordered select mb-2 w-full"
               validation={{
                 required: true,
-                valueAsNumber: true,
+                valueAsNumber: false,
                 validate: {
                   matchesInitialValue: (value) => {
                     return value !== 'Select a Grapheme'
@@ -282,7 +306,7 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
             >
               <option>Select a Grapheme</option>
               {availableGraphemeOptions.map((p) => (
-                <option key={p.id} value={p.id}>
+                <option key={p.id} value={p.name}>
                   {p.name}
                 </option>
               ))}
@@ -292,8 +316,8 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
       )}
 
       <div className="flex flex-col">
-        <FieldError name="first_phoneme" className="text-error" />
-        <FieldError name="second_phoneme" className="text-error" />
+        <FieldError name="first_grapheme" className="text-error" />
+        <FieldError name="second_grapheme" className="text-error" />
       </div>
 
       <div className="divider w-full max-w-xs"></div>
@@ -301,7 +325,7 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
 
       <div className="form-control w-full max-w-xs">
         <Label
-          name="wordsPerPhoneme"
+          name="wordsPerUnit"
           className="label"
           errorClassName="label text-error"
         >
@@ -309,14 +333,14 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
         </Label>
 
         <NumberField
-          name="wordsPerPhoneme"
+          name="wordsPerUnit"
           defaultValue={3}
           className="input-bordered input mb-2 w-full max-w-xs"
           errorClassName="input input-bordered border-error w-full max-w-xs"
           validation={{ required: true }}
         />
       </div>
-      <FieldError name="wordsPerPhoneme" className="text-sm text-error" />
+      <FieldError name="wordsPerUnit" className="text-sm text-error" />
 
       <div className="divider w-full max-w-xs"></div>
       <h2 className="text-lg">Matching Game</h2>
