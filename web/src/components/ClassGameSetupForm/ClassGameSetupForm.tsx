@@ -28,6 +28,12 @@ type ClassGameSetupFormProps = {
 type Phoneme = {
   id: number
   name: string
+  graphemes: string[]
+}
+
+type Grapheme = {
+  id: number
+  name: string
 }
 
 const PHONEME_OPTIONS = gql`
@@ -35,6 +41,7 @@ const PHONEME_OPTIONS = gql`
     phonemes {
       id
       name
+      graphemes
     }
   }
 `
@@ -50,6 +57,11 @@ const MATCHING_GAME_TYPE_OPTIONS = [
   { id: '1', name: 'GROUPING' },
 ] as const
 
+const PHONEME_GRAPHEME_WORD_OPTIONS = [
+  { id: '0', name: 'Phonemes' },
+  { id: '1', name: 'Graphemes' },
+] as const
+
 const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
   const { loading, error, data } = useQuery(PHONEME_OPTIONS)
 
@@ -58,11 +70,33 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
   )
   const [phonemeOptions, setPhonemeOptions] = useState<readonly Phoneme[]>([])
 
+  const [availableGraphemeOptions, setAvailableGraphemeOptions] = useState<
+    readonly Grapheme[]
+  >([])
+  const [graphemeOptions, setGraphemeOptions] = useState<readonly Grapheme[]>(
+    []
+  )
+
+  const [phonemeGraphemeGame, setPhonemeGraphemeGame] = useState<boolean>(true)
+
   useEffect(() => {
     if (!loading && !error && data && data.phonemes) {
       const fetchedPhonemeOptions: Phoneme[] = data.phonemes
+
+      let idx = 0
+      const fetchedGraphemeOptions = fetchedPhonemeOptions.flatMap((p) => {
+        return p.graphemes.flatMap((g) => ({
+          id: idx++,
+          name: g,
+        }))
+      }) as Grapheme[]
+
+      console.log(fetchedGraphemeOptions)
+
       setPhonemeOptions(fetchedPhonemeOptions)
       setAvailableOptions(fetchedPhonemeOptions)
+      setAvailableGraphemeOptions(fetchedGraphemeOptions)
+      setGraphemeOptions(fetchedGraphemeOptions)
     }
   }, [loading, error, data])
 
@@ -73,6 +107,25 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
     const selectedValue = parseInt(e.target.value)
     const filteredOptions = phonemeOptions.filter((p) => p.id !== selectedValue)
     setAvailableOptions(filteredOptions)
+  }
+
+  const handleGraphemeOneChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValue = parseInt(e.target.value)
+    const filteredOptions = graphemeOptions.filter(
+      (p) => p.id !== selectedValue
+    )
+    setAvailableGraphemeOptions(filteredOptions)
+  }
+
+  const handlePhonemeGraphemeGameChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const selectedValue = parseInt(e.target.value)
+    if (selectedValue === 0) {
+      setPhonemeGraphemeGame(true)
+    } else {
+      setPhonemeGraphemeGame(false)
+    }
   }
 
   const onSubmit = (data: FormGame) => {
@@ -101,59 +154,143 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
 
       <div className="form-control w-full max-w-xs">
         <Label
-          name="phonemes"
+          name="phoneme_grapheme"
           className="label"
           errorClassName="label text-error"
         >
-          <span className="label-text">Phonemes</span>
+          <span className="label-text">Choose Phonemes or Graphemes</span>
         </Label>
-
-        <div className="flex flex-col">
-          <SelectField
-            name="first_phoneme"
-            className="select-bordered select mb-2 w-full"
-            validation={{
-              required: true,
-              valueAsNumber: true,
-              validate: {
-                matchesInitialValue: (value) => {
-                  return value !== 'Select a Phoneme'
-                },
-              },
-            }}
-            onChange={handlePhonemeOneChange}
-            defaultChecked
-          >
-            <option>Select a Phoneme</option>
-            {phonemeOptions.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.name}
-              </option>
-            ))}
-          </SelectField>
-          <SelectField
-            name="second_phoneme"
-            className="select-bordered select mb-2 w-full"
-            validation={{
-              required: true,
-              valueAsNumber: true,
-              validate: {
-                matchesInitialValue: (value) => {
-                  return value !== 'Select a Phoneme'
-                },
-              },
-            }}
-            defaultChecked
-          >
-            <option>Select a Phoneme</option>
-            {availableOptions.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.name}
-              </option>
-            ))}
-          </SelectField>
-        </div>
+        <SelectField
+          name="phoneme_grapheme_game"
+          defaultValue={0}
+          className="input-bordered select mb-2 w-full"
+          onChange={handlePhonemeGraphemeGameChange}
+          validation={{ required: true, valueAsNumber: true }}
+        >
+          {PHONEME_GRAPHEME_WORD_OPTIONS.map((s) => (
+            <option key={s.id} value={s.id}>
+              {s.name}
+            </option>
+          ))}
+        </SelectField>
       </div>
+
+      {phonemeGraphemeGame && (
+        <div className="form-control w-full max-w-xs">
+          <Label
+            name="phonemes"
+            className="label"
+            errorClassName="label text-error"
+          >
+            <span className="label-text">Phonemes</span>
+          </Label>
+
+          <div className="flex flex-col">
+            <SelectField
+              name="first_phoneme"
+              className="select-bordered select mb-2 w-full"
+              validation={{
+                required: true,
+                valueAsNumber: true,
+                validate: {
+                  matchesInitialValue: (value) => {
+                    return value !== 'Select a Phoneme'
+                  },
+                },
+              }}
+              onChange={handlePhonemeOneChange}
+              defaultChecked
+            >
+              <option>Select a Phoneme</option>
+              {phonemeOptions.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.name}
+                </option>
+              ))}
+            </SelectField>
+            <SelectField
+              name="second_phoneme"
+              className="select-bordered select mb-2 w-full"
+              validation={{
+                required: true,
+                valueAsNumber: true,
+                validate: {
+                  matchesInitialValue: (value) => {
+                    return value !== 'Select a Phoneme'
+                  },
+                },
+              }}
+              defaultChecked
+            >
+              <option>Select a Phoneme</option>
+              {availableOptions.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.name}
+                </option>
+              ))}
+            </SelectField>
+          </div>
+        </div>
+      )}
+
+      {!phonemeGraphemeGame && (
+        <div className="form-control w-full max-w-xs">
+          <Label
+            name="graphemes"
+            className="label"
+            errorClassName="label text-error"
+          >
+            <span className="label-text">Graphemes</span>
+          </Label>
+
+          <div className="flex flex-col">
+            <SelectField
+              name="first_grapheme"
+              className="select-bordered select mb-2 w-full"
+              validation={{
+                required: true,
+                valueAsNumber: true,
+                validate: {
+                  matchesInitialValue: (value) => {
+                    return value !== 'Select a Grapheme'
+                  },
+                },
+              }}
+              onChange={handleGraphemeOneChange}
+              defaultChecked
+            >
+              <option>Select a Grapheme</option>
+              {graphemeOptions.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.name}
+                </option>
+              ))}
+            </SelectField>
+            <SelectField
+              name="second_grapheme"
+              className="select-bordered select mb-2 w-full"
+              validation={{
+                required: true,
+                valueAsNumber: true,
+                validate: {
+                  matchesInitialValue: (value) => {
+                    return value !== 'Select a Grapheme'
+                  },
+                },
+              }}
+              defaultChecked
+            >
+              <option>Select a Grapheme</option>
+              {availableGraphemeOptions.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.name}
+                </option>
+              ))}
+            </SelectField>
+          </div>
+        </div>
+      )}
+
       <div className="flex flex-col">
         <FieldError name="first_phoneme" className="text-error" />
         <FieldError name="second_phoneme" className="text-error" />
