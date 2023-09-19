@@ -2,6 +2,8 @@ import { validate } from '@redwoodjs/api'
 
 import { db } from 'src/lib/db'
 
+import { getWord } from '../audio'
+
 import type { Game } from '@prisma/client'
 import type { QueryResolvers, WordRelationResolvers } from 'types/graphql'
 
@@ -26,7 +28,10 @@ export const filterWords = async ({
 
   const phonemesData = await db.phoneme.findMany()
 
-  return phonemeMatchWords.filter((word) => {
+  /**
+   * CORRECT CODE:
+   *
+   * return phonemeMatchWords.filter((word) => {
     const phonemeIndex = word.phonemes.findIndex((p) =>
       phonemes.some((id) => id === p)
     )
@@ -40,6 +45,31 @@ export const filterWords = async ({
       return possibleGraphemes.some((g) => g === word.graphemes[phonemeIndex])
     }
   })
+   */
+
+  /**
+   * TODO: Add audio for missing words.
+   *  This is a TEMPORARY FIX to not include valid words with no audio for the time being.
+   *  Checking if audio exists for the word. NOT THE BEST WAY TO DO THIS EITHER BUT NEEDED FOR THE MOMENT.
+   *  Correct code is above. Delete this section and replace with correct code.
+   */
+  return phonemeMatchWords
+    .filter((word) => {
+      const phonemeIndex = word.phonemes.findIndex((p) =>
+        phonemes.some((id) => id === p)
+      )
+      const targetPhoneme = word.phonemes[phonemeIndex] ?? -1
+
+      if (phonemeIndex > -1 && targetPhoneme !== -1) {
+        const possibleGraphemes = phonemesData
+          .filter((p) => p.id === targetPhoneme)
+          .flatMap((p) => p.graphemes)
+
+        return possibleGraphemes.some((g) => g === word.graphemes[phonemeIndex])
+      }
+    })
+    .filter((word) => getWord(word.word))
+  //////
 }
 
 export const selectGameWords = async ({
