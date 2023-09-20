@@ -70,8 +70,8 @@ export const createGame: MutationResolvers['createGame'] = async ({
     },
   })
 
-  const phonemes = gameSetup?.phonemes ?? []
-  const graphemes = gameSetup?.graphemes ?? []
+  const phonemes = gameSetup?.phonemes
+  const graphemes = gameSetup?.graphemes
 
   let wordsPerUnit = gameSetup?.wordsPerUnit ?? 0
   if (input.type !== 'SORTING') {
@@ -89,10 +89,13 @@ export const createGame: MutationResolvers['createGame'] = async ({
     count: wordsPerUnit,
     numSyllables: 1,
     phonemes: phonemes,
+    graphemes: graphemes,
   })
 
+  console.log(gameWords)
+
   if (input.type === 'SORTING') {
-    const [currentWord, ...incompleteWords] = gameWords
+    const [currentWord, ...incompleteWords] = gameWords ?? []
     return db.game.create({
       data: {
         ...input,
@@ -101,7 +104,7 @@ export const createGame: MutationResolvers['createGame'] = async ({
         graphemes,
         userId: context.currentUser.id,
         allWords: {
-          connect: gameWords.map((word) => ({ id: word.id })),
+          connect: gameWords?.map((word) => ({ id: word.id })),
         },
         incompleteWords: {
           connect: incompleteWords.map((word) => ({ id: word.id })),
@@ -122,13 +125,17 @@ export const createGame: MutationResolvers['createGame'] = async ({
       phonemes,
       graphemes,
       currentPhonemeId:
-        gameSetup?.matchingGameType === 'GROUPING' ? phonemes[0] : undefined,
+        gameSetup?.matchingGameType === 'GROUPING'
+          ? phonemes
+            ? phonemes[0]
+            : undefined
+          : undefined,
       userId: context.currentUser.id,
       allWords: {
-        connect: gameWords.map((word) => ({ id: word.id })),
+        connect: gameWords?.map((word) => ({ id: word.id })),
       },
       incompleteWords: {
-        connect: gameWords.map((word) => ({ id: word.id })),
+        connect: gameWords?.map((word) => ({ id: word.id })),
       },
     },
     include: {
