@@ -95,8 +95,6 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
         }))
       }) as Grapheme[]
 
-      console.log(fetchedGraphemeOptions)
-
       setPhonemeOptions(fetchedPhonemeOptions)
       setAvailableOptions(fetchedPhonemeOptions)
       setAvailableGraphemeOptions(fetchedGraphemeOptions)
@@ -138,17 +136,34 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
       second_phoneme = 0,
       first_grapheme = '',
       second_grapheme = '',
-      phoneme_grapheme_selection: _,
+      phoneme_grapheme_selection = 0,
       ...restData
     } = data
-    const phonemes: number[] = [
-      ...(Array.isArray(first_phoneme) ? first_phoneme : [first_phoneme]),
-      ...(Array.isArray(second_phoneme) ? second_phoneme : [second_phoneme]),
-    ].filter((p) => !!p)
-    const graphemes: string[] = [
-      ...(Array.isArray(first_grapheme) ? first_grapheme : [first_grapheme]),
-      ...(Array.isArray(second_grapheme) ? second_grapheme : [second_grapheme]),
-    ].filter((g) => !!g)
+
+    const selection = [
+      ...(Array.isArray(phoneme_grapheme_selection)
+        ? phoneme_grapheme_selection
+        : [phoneme_grapheme_selection]),
+    ].filter((s) => !!s)
+
+    let phonemes: number[] = []
+    let graphemes: string[] = []
+
+    if (selection.length === 0) {
+      phonemes = [
+        ...(Array.isArray(first_phoneme) ? first_phoneme : [first_phoneme]),
+        ...(Array.isArray(second_phoneme) ? second_phoneme : [second_phoneme]),
+      ].filter((p) => !!p)
+    }
+
+    if (selection.length === 1) {
+      graphemes = [
+        ...(Array.isArray(first_grapheme) ? first_grapheme : [first_grapheme]),
+        ...(Array.isArray(second_grapheme)
+          ? second_grapheme
+          : [second_grapheme]),
+      ].filter((g) => !!g)
+    }
 
     props.onSave({
       ...restData,
