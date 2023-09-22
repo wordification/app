@@ -60,10 +60,10 @@ export const selectGameWords = async ({
     }
 
     const data: typeof possibleWords = []
-    const wordIndices: Set<Number> = new Set<Number>()
+    const wordIndices: Set<number> = new Set<number>()
     for (let i = 0; i < count; i++) {
       let index = Math.floor(Math.random() * possibleWords.length)
-      while(wordIndices.has(index)) {
+      while (wordIndices.has(index)) {
         index = Math.floor(Math.random() * possibleWords.length)
       }
       wordIndices.add(index)
