@@ -103,13 +103,7 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
     validate(graphemes, 'graphemes', {
       custom: {
         with: async () => {
-          if (graphemes.length !== 2) {
-            throw new Error('You must select exactly two graphemes!')
-          }
-          const dbPhonemes = await db.phoneme.findMany()
-          const allowedGraphemes = dbPhonemes.flatMap((p) =>
-            p.graphemes.flatMap((g) => g)
-          )
+          const allowedGraphemes = ['w', 'wh', 'iCe', 'oCe', 'aCe']
           graphemes.forEach((grapheme) => {
             if (!allowedGraphemes.includes(grapheme)) {
               throw new Error(

@@ -19,8 +19,7 @@ type FormGame = NonNullable<Omit<Omit<GameSetup, 'phonemes'>, 'graphemes'>> & {
   /** Input fields to form the phonemes or graphemes to test the user on. */
   first_phoneme?: Array<Scalars['Int']>
   second_phoneme?: Array<Scalars['Int']>
-  first_grapheme?: Array<Scalars['String']>
-  second_grapheme?: Array<Scalars['String']>
+  game_graphemes?: string
 }
 
 type ClassGameSetupFormProps = {
@@ -35,11 +34,6 @@ type Phoneme = {
   graphemes: string[]
 }
 
-type Grapheme = {
-  id: number
-  name: string
-}
-
 const PHONEME_OPTIONS = gql`
   query PhonemeOptions {
     phonemes {
@@ -49,6 +43,11 @@ const PHONEME_OPTIONS = gql`
     }
   }
 `
+/** Current Options for demo version */
+export const GRAPHEME_GAME_OPTIONS = [
+  { id: 0, name: 'Initial Consonants', value: ['w', 'wh'] },
+  { id: 1, name: `Silent 'e'`, value: ['iCe', 'oCe', 'aCe'] },
+]
 
 const MATCHING_BOARD_SIZE_OPTIONS = [
   { id: 0, name: '3x4' },
@@ -74,31 +73,14 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
   )
   const [phonemeOptions, setPhonemeOptions] = useState<readonly Phoneme[]>([])
 
-  const [availableGraphemeOptions, setAvailableGraphemeOptions] = useState<
-    readonly Grapheme[]
-  >([])
-  const [graphemeOptions, setGraphemeOptions] = useState<readonly Grapheme[]>(
-    []
-  )
-
   const [phonemeGraphemeGame, setPhonemeGraphemeGame] = useState<boolean>(true)
 
   useEffect(() => {
     if (!loading && !error && data && data.phonemes) {
       const fetchedPhonemeOptions: Phoneme[] = data.phonemes
 
-      let idx = 0
-      const fetchedGraphemeOptions = fetchedPhonemeOptions.flatMap((p) => {
-        return p.graphemes.flatMap((g) => ({
-          id: idx++,
-          name: g,
-        }))
-      }) as Grapheme[]
-
       setPhonemeOptions(fetchedPhonemeOptions)
       setAvailableOptions(fetchedPhonemeOptions)
-      setAvailableGraphemeOptions(fetchedGraphemeOptions)
-      setGraphemeOptions(fetchedGraphemeOptions)
     }
   }, [loading, error, data])
 
@@ -109,14 +91,6 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
     const selectedValue = parseInt(e.target.value)
     const filteredOptions = phonemeOptions.filter((p) => p.id !== selectedValue)
     setAvailableOptions(filteredOptions)
-  }
-
-  const handleGraphemeOneChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedValue = e.target.value
-    const filteredOptions = graphemeOptions.filter(
-      (p) => p.name !== selectedValue
-    )
-    setAvailableGraphemeOptions(filteredOptions)
   }
 
   const handlePhonemeGraphemeGameChange = (
@@ -134,8 +108,7 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
     const {
       first_phoneme = 0,
       second_phoneme = 0,
-      first_grapheme = '',
-      second_grapheme = '',
+      game_graphemes = '',
       phoneme_grapheme_selection = 0,
       ...restData
     } = data
@@ -157,12 +130,7 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
     }
 
     if (selection.length === 1) {
-      graphemes = [
-        ...(Array.isArray(first_grapheme) ? first_grapheme : [first_grapheme]),
-        ...(Array.isArray(second_grapheme)
-          ? second_grapheme
-          : [second_grapheme]),
-      ].filter((g) => !!g)
+      graphemes = JSON.parse(game_graphemes)
     }
 
     props.onSave({
@@ -279,60 +247,35 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
             className="label"
             errorClassName="label text-error"
           >
-            <span className="label-text">Graphemes</span>
+            <span className="label-text">Grapheme Game Options</span>
           </Label>
 
-          <div className="flex flex-col">
-            <SelectField
-              name="first_grapheme"
-              className="select-bordered select mb-2 w-full"
-              validation={{
-                required: true,
-                valueAsNumber: false,
-                validate: {
-                  matchesInitialValue: (value) => {
-                    return value !== 'Select a Grapheme'
-                  },
+          <SelectField
+            name="game_graphemes"
+            className="select-bordered select mb-2 w-full"
+            validation={{
+              required: true,
+              valueAsNumber: false,
+              validate: {
+                matchesInitialValue: (value) => {
+                  return value !== 'Select a Grapheme'
                 },
-              }}
-              onChange={handleGraphemeOneChange}
-              defaultChecked
-            >
-              <option>Select a Grapheme</option>
-              {graphemeOptions.map((p) => (
-                <option key={p.id} value={p.name}>
-                  {p.name}
-                </option>
-              ))}
-            </SelectField>
-            <SelectField
-              name="second_grapheme"
-              className="select-bordered select mb-2 w-full"
-              validation={{
-                required: true,
-                valueAsNumber: false,
-                validate: {
-                  matchesInitialValue: (value) => {
-                    return value !== 'Select a Grapheme'
-                  },
-                },
-              }}
-              defaultChecked
-            >
-              <option>Select a Grapheme</option>
-              {availableGraphemeOptions.map((p) => (
-                <option key={p.id} value={p.name}>
-                  {p.name}
-                </option>
-              ))}
-            </SelectField>
-          </div>
+              },
+            }}
+            defaultChecked
+          >
+            <option>Select a Grapheme Game Option</option>
+            {GRAPHEME_GAME_OPTIONS.map((p) => (
+              <option key={p.id} value={JSON.stringify(p.value)}>
+                {p.name}
+              </option>
+            ))}
+          </SelectField>
         </div>
       )}
 
       <div className="flex flex-col">
-        <FieldError name="first_grapheme" className="text-error" />
-        <FieldError name="second_grapheme" className="text-error" />
+        <FieldError name="game_graphemes" className="text-error" />
       </div>
 
       <div className="divider w-full max-w-xs"></div>

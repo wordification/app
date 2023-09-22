@@ -91,51 +91,15 @@ export const filterWordsByGrapheme = async ({
     },
   })
 
-  const phonemesData = await db.phoneme.findMany()
-
-  /**
-   * CORRECT CODE:
-   *
-   * return graphemeMatchWords
-    .filter((word) => {
-      const graphemeIndex = word.graphemes.findIndex((g) =>
-        graphemes.some((id) => id === g)
-      )
-      const targetGrapheme = word.graphemes[graphemeIndex] ?? ''
-
-      if (graphemeIndex > -1 && targetGrapheme !== '') {
-        const targetPhoneme = phonemesData.find((p) =>
-          p.graphemes.includes(targetGrapheme)
-        )
-
-        return targetPhoneme?.id === word.phonemes[graphemeIndex]
-      }
-    })
-   */
-
-  /**
-   * TODO: Add audio for missing words.
-   *  This is a TEMPORARY FIX to not include valid words with no audio for the time being.
-   *  Checking if audio exists for the word. NOT THE BEST WAY TO DO THIS EITHER BUT NEEDED FOR THE MOMENT.
-   *  Correct code is above. Delete this section and replace with correct code.
-   */
-  return graphemeMatchWords
-    .filter((word) => {
-      const graphemeIndex = word.graphemes.findIndex((g) =>
-        graphemes.some((id) => id === g)
-      )
-      const targetGrapheme = word.graphemes[graphemeIndex] ?? ''
-
-      if (graphemeIndex > -1 && targetGrapheme !== '') {
-        const targetPhoneme = phonemesData.find((p) =>
-          p.graphemes.includes(targetGrapheme)
-        )
-
-        return targetPhoneme?.id === word.phonemes[graphemeIndex]
-      }
-    })
-    .filter((word) => getWord(word.word))
-  //////
+  // Case for initial consonants, checks first grapheme
+  //  Only current cases are 'w' and 'wh'
+  if (graphemes.includes('w') && graphemes.includes('wh')) {
+    return graphemeMatchWords.filter((matchingGrapheme) =>
+      graphemes.some((grapheme) => grapheme === matchingGrapheme.graphemes[0])
+    )
+  } else {
+    return graphemeMatchWords
+  }
 }
 
 export type Word = {
@@ -180,6 +144,8 @@ export const selectGameWords = async ({
 
   let words: Word[]
 
+  /** TODO: Fix this mess,
+   *  Jackson has a PR with updated way. Let him merge and integrate his method */
   if (phonemes !== undefined && phonemes.length !== 0) {
     words = await filterWordsByPhoneme({
       phonemes: phonemes,
@@ -219,6 +185,8 @@ export const selectGameWords = async ({
       graphemes: graphemes,
       numSyllables: numSyllables,
     })
+
+    console.log(words)
 
     if (words.length < count * graphemes.length) {
       throw new Error('Not enough words found!')
