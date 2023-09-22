@@ -37,7 +37,8 @@ export const schema = gql`
 
     """
     The current level of the game. Levels are unique
-    to each game type, but all start at 1.
+    to each game type, but all phoneme games start at 1.
+    Grapheme games start at 2.
     """
     level: Int!
 

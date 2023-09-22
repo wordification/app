@@ -45,8 +45,12 @@ const PHONEME_OPTIONS = gql`
 `
 /** Current Options for demo version */
 export const GRAPHEME_GAME_OPTIONS = [
-  { id: 0, name: 'Initial Consonants', value: ['w', 'wh'] },
-  { id: 1, name: `Silent 'e'`, value: ['iCe', 'oCe', 'aCe'] },
+  { id: 0, name: `Initial Consonants - 'w', 'wh'`, value: ['w', 'wh'] },
+  {
+    id: 1,
+    name: `Silent 'e' Vowels - 'aCe', 'iCe', 'oCe'`,
+    value: ['iCe', 'oCe', 'aCe'],
+  },
 ]
 
 const MATCHING_BOARD_SIZE_OPTIONS = [
@@ -287,7 +291,9 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
           className="label"
           errorClassName="label text-error"
         >
-          <span className="label-text">Words per phoneme</span>
+          <span className="label-text">{`Words per ${
+            phonemeGraphemeGame ? 'Phoneme' : 'Grapheme'
+          }`}</span>
         </Label>
 
         <NumberField

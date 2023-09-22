@@ -21,7 +21,8 @@ import type {
 /**
  * Updates a sorting game to select a new word to test. If there are no more
  * words to test, the game is marked as complete. Otherwise, the game is
- * reset to level 1 and the next word is selected.
+ * reset to level 1 or 2, depending on if the current game is a phoneme or
+ * grapheme based game, and the next word is selected.
  *
  * @param gameId The ID of the game to advance
  * @returns The updated game
@@ -55,7 +56,7 @@ export const selectNextWord = async (gameId: number) => {
   const newWord = incompleteWords[0]
   return db.game.update({
     data: {
-      level: 1,
+      level: game.phonemes.length !== 0 ? 1 : 2,
       currentWordId: newWord.id,
       incompleteWords: {
         disconnect: [{ id: newWord.id }],
@@ -188,23 +189,41 @@ export const sortingGameSecondLevel: QueryResolvers['sortingGameSecondLevel'] =
       throw new Error('Current word not selected')
     }
 
-    const audio = [
-      getSortingGamePhrase('spelling_pattern'),
-      getPhoneme(currentWord.testedPhonemes[0]),
-      getSortingGamePhrase('in'),
-      getWord(currentWord.word),
-    ]
+    /**  ??? Make phoneme/grapheme game type field in db ???  */
 
-    const phonemes = await Promise.all(
-      game.phonemes.map(async (p) => {
-        const phoneme = await db.phoneme.findUnique({
-          where: { id: p },
+    // Need different audio for grapheme game
+    // RECORD AUDIO FOR 'w' AND 'wh' INTIAL CONSONAT WORDS
+    const audio =
+      game.phonemes.length !== 0
+        ? [
+            getSortingGamePhrase('spelling_pattern'),
+            getPhoneme(currentWord.testedPhonemes[0]),
+            getSortingGamePhrase('in'),
+            getWord(currentWord.word),
+          ]
+        : [
+            getSortingGamePhrase('spelling_pattern'),
+            getSortingGamePhrase('in'),
+            getWord(currentWord.word),
+          ]
+
+    let graphemes: string[]
+
+    if (game.phonemes.length !== 0) {
+      const phonemes = await Promise.all(
+        game.phonemes.map(async (p) => {
+          const phoneme = await db.phoneme.findUnique({
+            where: { id: p },
+          })
+          return phoneme as ResolverTypeWrapper<Phoneme>
         })
-        return phoneme as ResolverTypeWrapper<Phoneme>
-      })
-    )
-
-    const graphemes = phonemes.flatMap((p) => p.graphemes)
+      )
+      graphemes = phonemes.flatMap((p) => p.graphemes)
+    } else if (game.graphemes.length !== 0) {
+      graphemes = game.graphemes
+    } else {
+      throw new Error('No phonemes/graphemes selected!')
+    }
 
     return {
       game,
@@ -316,7 +335,9 @@ export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSec
       gameId: game.id,
       gameLevel: game.level,
       incorrectGuesses: game.incorrectGuesses,
-      correct: game.currentWord.testedGraphemes.includes(grapheme),
+      correct: !game.graphemes.includes('w')
+        ? game.currentWord.testedGraphemes.includes(grapheme)
+        : game.currentWord.graphemes[0] === grapheme,
       incorrectAudio: [
         getSortingGamePhrase('incorrect'),
         getSortingGamePhrase('the'),

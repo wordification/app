@@ -102,6 +102,7 @@ export const createGame: MutationResolvers['createGame'] = async ({
         wordsPerUnit,
         phonemes,
         graphemes,
+        level: phonemes === undefined || phonemes.length === 0 ? 2 : 1,
         userId: context.currentUser.id,
         allWords: {
           connect: gameWords?.map((word) => ({ id: word.id })),
