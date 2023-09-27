@@ -42,6 +42,7 @@ export const QUERY = gql`
           testedPhonemes
         }
         phonemes
+        graphemes
         currentUnitIndex
       }
       audio
@@ -171,21 +172,21 @@ export const Success = ({
     })
   }, [matchingGameGroupingLevel.game.id, client])
 
-  const currentPhonemeName =
-    matchingGameGroupingLevel.phonemes.find(
-      (phoneme) =>
-        phoneme.id ===
-        matchingGameGroupingLevel.game.phonemes[
-          matchingGameGroupingLevel.game.currentUnitIndex ?? 0
+  const currentSoundLabel =
+    matchingGameGroupingLevel.game.phonemes.length !== 0
+      ? matchingGameGroupingLevel.game.phonemes[
+          matchingGameGroupingLevel.game.currentUnitIndex ?? -1
         ]
-    )?.name || null
+      : matchingGameGroupingLevel.game.graphemes[
+          matchingGameGroupingLevel.game.currentUnitIndex ?? -1
+        ]
 
   return (
     <>
       <div className="card bg-base-100 text-base-content shadow-2xl">
         <div className="card-body items-center justify-center">
           <h2 className="card-title">
-            Click all the words that have the &apos;{currentPhonemeName}&apos;
+            Click all the words that have the &apos;{currentSoundLabel}&apos;
             sound
           </h2>
           <ul
