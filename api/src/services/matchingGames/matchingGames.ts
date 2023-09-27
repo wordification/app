@@ -84,7 +84,12 @@ export const completeWords = async (
       },
     })
   } else {
-    /// updated game for GROUPING matching game
+    console.log('GROUPING GAME GRADING IS RUNNING...')
+
+    const game = await findMatchingGame(gameId)
+
+    /// Updated game for GROUPING matching game
+    //  Stays on same phoneme here
     const updatedGame = await db.game.update({
       where: { id: gameId },
       data: {
@@ -97,30 +102,38 @@ export const completeWords = async (
       },
     })
 
-    const game = await findMatchingGame(gameId)
-
+    // Check if there exists a word that has a phoneme
+    //  that is the current phoneme being tested
+    console.log('WORDS LEFT WITH CURRENT PHONEME? :')
     if (
-      updatedGame.incompleteWords.some(
-        (incompleteWord) =>
-          incompleteWord.testedPhonemes[0] === game.currentPhonemeId
+      updatedGame.incompleteWords.some((incompleteWord) =>
+        incompleteWord.phonemes.some(
+          (p) => p === game.phonemes[game.currentUnitIndex ?? -1]
+        )
       )
     ) {
+      console.log('YES !!')
       return updatedGame
     }
+    console.log('NO !!')
 
-    // Iterate to the next phoneme in the phonemes array and set it as the currentPhonemeId
-    // If there is no next phoneme, return -1
-    const currentIndex = game.phonemes.indexOf(game.currentPhonemeId ?? 0)
-    const nextIndex = currentIndex + 1
-    const nextPhoneme =
-      nextIndex < game.phonemes.length ? game.phonemes[nextIndex] : -1
+    // Check if the game is complete
 
-    if (nextPhoneme > 0) {
+    console.log('IS THE GAME FULLY COMPLETE? : ')
+    console.log('VALUE OF currentUnitIndex: ', game.currentUnitIndex ?? -1)
+    console.log('VALUE OF phonemes.length: ', game.phonemes.length)
+    console.log(game.currentUnitIndex ?? -1 < game.phonemes.length)
+
+    if (
+      game.currentUnitIndex !== null &&
+      game.currentUnitIndex < game.phonemes.length - 1
+    ) {
+      console.log('NO ! GOING TO NEXT PHONEME')
       return db.game.update({
         where: { id: gameId },
         data: {
           level: 1,
-          currentPhonemeId: nextPhoneme,
+          currentUnitIndex: game.currentUnitIndex + 1,
           incompleteWords: {
             set: game.allWords.map((word) => ({ id: word.id })),
           },
@@ -130,12 +143,13 @@ export const completeWords = async (
         },
       })
     }
+    console.log('YES ! DONE !')
     return db.game.update({
       where: { id: gameId },
       data: {
         level: 2,
         complete: true,
-        currentPhonemeId: null,
+        currentUnitIndex: null,
       },
       include: {
         incompleteWords: true,
@@ -188,8 +202,12 @@ export const groupingMatchingGameGrade: MutationResolvers['groupingMatchingGameG
       throw new Error('Word not found')
     }
 
-    const correct = word.testedPhonemes.some(
-      (phoneme) => phoneme === game.currentPhonemeId
+    if (game.currentUnitIndex === undefined) {
+      throw new Error('Current phoneme/grapheme not specified!')
+    }
+
+    const correct = word.phonemes.some(
+      (phoneme) => phoneme === game.phonemes[game.currentUnitIndex ?? 0]
     )
 
     const correctAudio = [getMatchingGamePhrase('correct')]

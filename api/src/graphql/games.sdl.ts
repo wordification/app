@@ -48,8 +48,8 @@ export const schema = gql`
     "The current word being played."
     currentWordId: Int
 
-    "The current phoneme for a grouping matching game"
-    currentPhonemeId: Int
+    "The current index of a phoneme or grapheme for a grouping matching game."
+    currentUnitIndex: Int
 
     "The number of incorrect guesses the user has made."
     incorrectGuesses: Int!

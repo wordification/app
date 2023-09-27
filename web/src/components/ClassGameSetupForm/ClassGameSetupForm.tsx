@@ -44,14 +44,16 @@ const PHONEME_OPTIONS = gql`
   }
 `
 /** Current Options for demo version */
-export const GRAPHEME_GAME_OPTIONS = [
+const GRAPHEME_GAME_OPTIONS = [
   { id: 0, name: `Initial Consonants - 'w', 'wh'`, value: ['w', 'wh'] },
   {
     id: 1,
     name: `Silent 'e' Vowels - 'aCe', 'iCe', 'oCe'`,
     value: ['iCe', 'oCe', 'aCe'],
   },
-]
+] as const
+
+const GRAPHEME_MATCHING_BOARD_SIZE_OPTIONS = [{ id: 0, name: '3x4' }] as const
 
 const MATCHING_BOARD_SIZE_OPTIONS = [
   { id: 0, name: '3x4' },
@@ -262,7 +264,7 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
               valueAsNumber: false,
               validate: {
                 matchesInitialValue: (value) => {
-                  return value !== 'Select a Grapheme'
+                  return value !== 'Select a Grapheme Game Option'
                 },
               },
             }}
@@ -324,11 +326,17 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
           className="input-bordered select mb-2 w-full"
           validation={{ required: true, valueAsNumber: true }}
         >
-          {MATCHING_BOARD_SIZE_OPTIONS.map((s) => (
-            <option key={s.id} value={s.id}>
-              {s.name}
-            </option>
-          ))}
+          {phonemeGraphemeGame
+            ? MATCHING_BOARD_SIZE_OPTIONS.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.name}
+                </option>
+              ))
+            : GRAPHEME_MATCHING_BOARD_SIZE_OPTIONS.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.name}
+                </option>
+              ))}
         </SelectField>
       </div>
       <FieldError name="matchingBoardSize" className="text-sm text-error" />

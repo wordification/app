@@ -42,7 +42,7 @@ export const QUERY = gql`
           testedPhonemes
         }
         phonemes
-        currentPhonemeId
+        currentUnitIndex
       }
       audio
       incompleteWords {
@@ -174,7 +174,10 @@ export const Success = ({
   const currentPhonemeName =
     matchingGameGroupingLevel.phonemes.find(
       (phoneme) =>
-        phoneme.id === matchingGameGroupingLevel.game.currentPhonemeId
+        phoneme.id ===
+        matchingGameGroupingLevel.game.phonemes[
+          matchingGameGroupingLevel.game.currentUnitIndex ?? 0
+        ]
     )?.name || null
 
   return (

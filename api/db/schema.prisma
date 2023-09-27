@@ -106,8 +106,8 @@ model Game {
   currentWordId    Int?
   /// The number of incorrect guesses the user has made.
   incorrectGuesses Int     @default(0)
-  /// The current phoneme for a grouping matching game
-  currentPhonemeId    Int?
+  /// The current index of a phoneme or grapheme for a grouping matching game.
+  currentUnitIndex Int?
 
   // RELATIONSHIP INFO
   /// The user who is playing the game.
