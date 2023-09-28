@@ -165,17 +165,14 @@ export const selectGameWords = async ({
       }
 
       const data: typeof possibleWords = []
+      const wordIndices: Set<number> = new Set<number>()
       for (let i = 0; i < count; i++) {
-        const newWord =
-          possibleWords[Math.floor(Math.random() * possibleWords.length)]
-
-        // TODO: This is a hack to prevent duplicate words
-        // and is horribly inefficient.
-        if (data.includes(newWord)) {
-          i--
-          continue
+        let index = Math.floor(Math.random() * possibleWords.length)
+        while (wordIndices.has(index)) {
+          index = Math.floor(Math.random() * possibleWords.length)
         }
-
+        wordIndices.add(index)
+        const newWord = possibleWords[index]
         data.push(newWord)
       }
       return data
@@ -202,17 +199,14 @@ export const selectGameWords = async ({
       }
 
       const data: typeof possibleWords = []
+      const wordIndices: Set<number> = new Set<number>()
       for (let i = 0; i < count; i++) {
-        const newWord =
-          possibleWords[Math.floor(Math.random() * possibleWords.length)]
-
-        // TODO: This is a hack to prevent duplicate words
-        // and is horribly inefficient.
-        if (data.includes(newWord)) {
-          i--
-          continue
+        let index = Math.floor(Math.random() * possibleWords.length)
+        while (wordIndices.has(index)) {
+          index = Math.floor(Math.random() * possibleWords.length)
         }
-
+        wordIndices.add(index)
+        const newWord = possibleWords[index]
         data.push(newWord)
       }
       return data
