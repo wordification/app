@@ -2,8 +2,6 @@ import { validate } from '@redwoodjs/api'
 
 import { db } from 'src/lib/db'
 
-import { getWord } from '../audio'
-
 import type { Game } from '@prisma/client'
 import type { QueryResolvers, WordRelationResolvers } from 'types/graphql'
 
@@ -17,59 +15,14 @@ export const filterWords = async ({
   validate(numSyllables, 'numSyllables', {
     numericality: { onlyInteger: true, positive: true },
   })
-  const phonemeMatchWords = await db.word.findMany({
+  return db.word.findMany({
     where: {
       numSyllables,
-      phonemes: {
+      testedPhonemes: {
         hasSome: phonemes,
       },
     },
   })
-
-  const phonemesData = await db.phoneme.findMany()
-
-  /**
-   * CORRECT CODE:
-   *
-   * return phonemeMatchWords.filter((word) => {
-    const phonemeIndex = word.phonemes.findIndex((p) =>
-      phonemes.some((id) => id === p)
-    )
-    const targetPhoneme = word.phonemes[phonemeIndex] ?? -1
-
-    if (phonemeIndex > -1 && targetPhoneme !== -1) {
-      const possibleGraphemes = phonemesData
-        .filter((p) => p.id === targetPhoneme)
-        .flatMap((p) => p.graphemes)
-
-      return possibleGraphemes.some((g) => g === word.graphemes[phonemeIndex])
-    }
-  })
-   */
-
-  /**
-   * TODO: Add audio for missing words.
-   *  This is a TEMPORARY FIX to not include valid words with no audio for the time being.
-   *  Checking if audio exists for the word. NOT THE BEST WAY TO DO THIS EITHER BUT NEEDED FOR THE MOMENT.
-   *  Correct code is above. Delete this section and replace with correct code.
-   */
-  return phonemeMatchWords
-    .filter((word) => {
-      const phonemeIndex = word.phonemes.findIndex((p) =>
-        phonemes.some((id) => id === p)
-      )
-      const targetPhoneme = word.phonemes[phonemeIndex] ?? -1
-
-      if (phonemeIndex > -1 && targetPhoneme !== -1) {
-        const possibleGraphemes = phonemesData
-          .filter((p) => p.id === targetPhoneme)
-          .flatMap((p) => p.graphemes)
-
-        return possibleGraphemes.some((g) => g === word.graphemes[phonemeIndex])
-      }
-    })
-    .filter((word) => getWord(word.word))
-  //////
 }
 
 export const selectGameWords = async ({
@@ -107,14 +60,17 @@ export const selectGameWords = async ({
     }
 
     const data: typeof possibleWords = []
-    const wordIndices: Set<number> = new Set<number>()
     for (let i = 0; i < count; i++) {
-      let index = Math.floor(Math.random() * possibleWords.length)
-      while (wordIndices.has(index)) {
-        index = Math.floor(Math.random() * possibleWords.length)
+      const newWord =
+        possibleWords[Math.floor(Math.random() * possibleWords.length)]
+
+      // TODO: This is a hack to prevent duplicate words
+      // and is horribly inefficient.
+      if (data.includes(newWord)) {
+        i--
+        continue
       }
-      wordIndices.add(index)
-      const newWord = possibleWords[index]
+
       data.push(newWord)
     }
     return data
