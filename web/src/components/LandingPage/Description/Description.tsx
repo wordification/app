@@ -5,7 +5,7 @@ const Description = () => {
         <div className="card mb-20 w-auto bg-base-200 shadow-xl transition hover:shadow-2xl">
           <div className="card-body">
             <p className="py-6 text-xl">
-              The Wordification® Project is developing a web-based game system
+              The Wordification™ Project is developing a web-based game system
               aimed at providing a language-based (as opposed to memory based)
               tool for English spelling instruction, and one that does not rely
               on teacher training. The application will be engineered so as to
