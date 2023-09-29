@@ -18,7 +18,7 @@ export const QUERY = gql`
         email
       }
       updatedAt
-      wordsPerPhoneme
+      wordsPerUnit
       phonemes
       level
       type
