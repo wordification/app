@@ -22,19 +22,23 @@ export const schema = gql`
     matchingGameType: MatchingGameType
 
     """
-    The number of words played per phoneme.
+    The number of words played per phoneme or grapheme.
     The actual number of words played will be this
-    number times the number of phonemes, or less
+    number times the number of phonemes or graphemes, or less
     if there are not enough words.
     """
-    wordsPerPhoneme: Int!
+    wordsPerUnit: Int!
 
     "The phonemes to test the user on."
     phonemes: [Int!]!
 
+    "The graphemes to test the user on."
+    graphemes: [String!]!
+
     """
     The current level of the game. Levels are unique
-    to each game type, but all start at 1.
+    to each game type, but all phoneme games start at 1.
+    Grapheme games start at 2.
     """
     level: Int!
 
@@ -44,8 +48,8 @@ export const schema = gql`
     "The current word being played."
     currentWordId: Int
 
-    "The current phoneme for a grouping matching game"
-    currentPhonemeId: Int
+    "The current index of a phoneme or grapheme for a grouping matching game."
+    currentUnitIndex: Int
 
     "The number of incorrect guesses the user has made."
     incorrectGuesses: Int!
@@ -124,11 +128,14 @@ export const schema = gql`
     "The type of game."
     type: GameType!
 
-    "The number of words played per phoneme. The actual number of words played will be this number times the number of phonemes, or less if there are not enough words."
-    wordsPerPhoneme: Int
+    "The number of words played per phoneme or grapheme. The actual number of words played will be this number times the number of phonemes or graphemes, or less if there are not enough words."
+    wordsPerUnit: Int
 
     "The phonemes to test the user on."
     phonemes: [Int!]
+
+    "The graphemes to test the user on."
+    graphemes: [String!]
 
     "The current word being played."
     currentWordId: Int

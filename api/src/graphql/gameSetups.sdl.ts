@@ -13,15 +13,18 @@ export const schema = gql`
     updatedAt: DateTime!
 
     """
-    The number of words played per phoneme.
+    The number of words played per phoneme or grapheme.
     The actual number of words played will be this
-    number times the number of phonemes, or less
+    number times the number of phonemes or graphemes, or less
     if there are not enough words.
     """
-    wordsPerPhoneme: Int!
+    wordsPerUnit: Int!
 
     "The phonemes to test the user on."
     phonemes: [Int!]!
+
+    "The graphemes to test the user on."
+    graphemes: [String!]!
 
     "The size and configuration of the cards for a matching game."
     matchingBoardSize: Int!
@@ -66,14 +69,17 @@ export const schema = gql`
   Input for creating game setups.
   """
   input CreateGameSetupInput {
-    "The number of words per phoneme in a game."
-    wordsPerPhoneme: Int!
+    "The number of words per phoneme or grapheme in a game."
+    wordsPerUnit: Int!
 
     "The size of a board for matching game."
     matchingBoardSize: Int!
 
     "The phonemes in a game."
     phonemes: [Int!]!
+
+    "The graphemes in a game."
+    graphemes: [String!]!
 
     "The style of matching game."
     matchingGameType: MatchingGameType!
@@ -86,8 +92,8 @@ export const schema = gql`
   Input for updating game setups.
   """
   input UpdateGameSetupInput {
-    "The number of words per phoneme in a game."
-    wordsPerPhoneme: Int!
+    "The number of words per phoneme or grapheme in a game."
+    wordsPerUnit: Int!
 
     "The size of a board for matching game."
     matchingBoardSize: Int!
@@ -98,6 +104,9 @@ export const schema = gql`
     "The phonemes in a game."
     phonemes: [Int!]!
 
+    "The graphemes in a game."
+    graphemes: [String!]!
+
     "The user the game setup is associated to."
     userId: Int!
   }
@@ -106,8 +115,8 @@ export const schema = gql`
   Input for upserting game setups.
   """
   input UpsertGameSetupInput {
-    "The number of words per phoneme in a game."
-    wordsPerPhoneme: Int
+    "The number of words per phoneme or grapheme in a game."
+    wordsPerUnit: Int
 
     "The size of a board for matching game."
     matchingBoardSize: Int
@@ -117,6 +126,9 @@ export const schema = gql`
 
     "The phonemes in a game."
     phonemes: [Int]
+
+    "The graphemes in a game."
+    graphemes: [String]
   }
 
   """

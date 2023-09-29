@@ -70,12 +70,15 @@ export const createGame: MutationResolvers['createGame'] = async ({
     },
   })
 
-  const phonemes = gameSetup?.phonemes ?? []
-  let wordsPerPhoneme = gameSetup?.wordsPerPhoneme ?? 0
+  const phonemes = gameSetup?.phonemes
+  const graphemes = gameSetup?.graphemes
+
+  const pg = phonemes?.length !== 0 ? phonemes : graphemes
+  let wordsPerUnit = gameSetup?.wordsPerUnit ?? 0
   if (input.type !== 'SORTING') {
-    wordsPerPhoneme =
+    wordsPerUnit =
       gameSetup?.matchingBoardSize === 0
-        ? 6
+        ? 12 / (pg?.length ?? 0) // A 3x4 is currently the only option for graphemes. No need for this elsewhere.
         : gameSetup?.matchingBoardSize === 1
         ? 8
         : gameSetup?.matchingBoardSize === 2
@@ -84,21 +87,26 @@ export const createGame: MutationResolvers['createGame'] = async ({
   }
 
   const gameWords = await selectGameWords({
-    count: wordsPerPhoneme,
+    count: wordsPerUnit,
     numSyllables: 1,
     phonemes: phonemes,
+    graphemes: graphemes,
   })
 
+  console.log(gameWords)
+
   if (input.type === 'SORTING') {
-    const [currentWord, ...incompleteWords] = gameWords
+    const [currentWord, ...incompleteWords] = gameWords ?? []
     return db.game.create({
       data: {
         ...input,
-        wordsPerPhoneme,
+        wordsPerUnit,
         phonemes,
+        graphemes,
+        level: phonemes === undefined || phonemes.length === 0 ? 2 : 1,
         userId: context.currentUser.id,
         allWords: {
-          connect: gameWords.map((word) => ({ id: word.id })),
+          connect: gameWords?.map((word) => ({ id: word.id })),
         },
         incompleteWords: {
           connect: incompleteWords.map((word) => ({ id: word.id })),
@@ -114,17 +122,18 @@ export const createGame: MutationResolvers['createGame'] = async ({
   return db.game.create({
     data: {
       ...input,
-      wordsPerPhoneme,
+      wordsPerUnit,
       matchingGameType: gameSetup?.matchingGameType,
       phonemes,
-      currentPhonemeId:
-        gameSetup?.matchingGameType === 'GROUPING' ? phonemes[0] : undefined,
+      graphemes,
+      currentUnitIndex:
+        gameSetup?.matchingGameType === 'GROUPING' ? 0 : undefined,
       userId: context.currentUser.id,
       allWords: {
-        connect: gameWords.map((word) => ({ id: word.id })),
+        connect: gameWords?.map((word) => ({ id: word.id })),
       },
       incompleteWords: {
-        connect: gameWords.map((word) => ({ id: word.id })),
+        connect: gameWords?.map((word) => ({ id: word.id })),
       },
     },
     include: {
