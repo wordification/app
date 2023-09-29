@@ -116,7 +116,7 @@ export const Success = ({
 
   return (
     <GameCard
-      title="Click on the correct vowel sound."
+      title="Click on the correct spelling pattern."
       files={files}
       onComplete={() => handleComplete()}
     >

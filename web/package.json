@@ -13,10 +13,10 @@
     ]
   },
   "dependencies": {
-    "@redwoodjs/auth-dbauth-web": "6.2.1",
-    "@redwoodjs/forms": "6.2.1",
-    "@redwoodjs/router": "6.2.1",
-    "@redwoodjs/web": "6.2.1",
+    "@redwoodjs/auth-dbauth-web": "6.3.1",
+    "@redwoodjs/forms": "6.3.1",
+    "@redwoodjs/router": "6.3.1",
+    "@redwoodjs/web": "6.3.1",
     "daisyui": "^3.1.0",
     "howler": "^2.2.3",
     "humanize-string": "2.1.0",
@@ -25,7 +25,7 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "@redwoodjs/vite": "6.2.1",
+    "@redwoodjs/vite": "6.3.1",
     "@types/howler": "^2.2.7",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.23",
