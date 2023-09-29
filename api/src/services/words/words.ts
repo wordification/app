@@ -2,8 +2,6 @@ import { validate } from '@redwoodjs/api'
 
 import { db } from 'src/lib/db'
 
-import { getWord } from '../audio'
-
 import type { Game } from '@prisma/client'
 import type { QueryResolvers, WordRelationResolvers } from 'types/graphql'
 
@@ -28,10 +26,7 @@ export const filterWordsByPhoneme = async ({
 
   const phonemesData = await db.phoneme.findMany()
 
-  /**
-   * CORRECT CODE:
-   *
-   * return phonemeMatchWords.filter((word) => {
+  return phonemeMatchWords.filter((word) => {
     const phonemeIndex = word.phonemes.findIndex((p) =>
       phonemes.some((id) => id === p)
     )
@@ -45,31 +40,6 @@ export const filterWordsByPhoneme = async ({
       return possibleGraphemes.some((g) => g === word.graphemes[phonemeIndex])
     }
   })
-   */
-
-  /**
-   * TODO: Add audio for missing words.
-   *  This is a TEMPORARY FIX to not include valid words with no audio for the time being.
-   *  Checking if audio exists for the word. NOT THE BEST WAY TO DO THIS EITHER BUT NEEDED FOR THE MOMENT.
-   *  Correct code is above. Delete this section and replace with correct code.
-   */
-  return phonemeMatchWords
-    .filter((word) => {
-      const phonemeIndex = word.phonemes.findIndex((p) =>
-        phonemes.some((id) => id === p)
-      )
-      const targetPhoneme = word.phonemes[phonemeIndex] ?? -1
-
-      if (phonemeIndex > -1 && targetPhoneme !== -1) {
-        const possibleGraphemes = phonemesData
-          .filter((p) => p.id === targetPhoneme)
-          .flatMap((p) => p.graphemes)
-
-        return possibleGraphemes.some((g) => g === word.graphemes[phonemeIndex])
-      }
-    })
-    .filter((word) => getWord(word.word))
-  //////
 }
 
 export const filterWordsByGrapheme = async ({
@@ -144,8 +114,6 @@ export const selectGameWords = async ({
 
   let words: Word[]
 
-  /** TODO: Fix this mess,
-   *  Jackson has a PR with updated way. Let him merge and integrate his method */
   if (phonemes !== undefined && phonemes.length !== 0) {
     words = await filterWordsByPhoneme({
       phonemes: phonemes,
@@ -164,7 +132,7 @@ export const selectGameWords = async ({
         throw new Error('Not enough words found!')
       }
 
-      const data: typeof possibleWords = []
+      const data: Word[] = []
       const wordIndices: Set<number> = new Set<number>()
       for (let i = 0; i < count; i++) {
         let index = Math.floor(Math.random() * possibleWords.length)
@@ -198,7 +166,7 @@ export const selectGameWords = async ({
         throw new Error('Not enough words found!')
       }
 
-      const data: typeof possibleWords = []
+      const data: Word[] = []
       const wordIndices: Set<number> = new Set<number>()
       for (let i = 0; i < count; i++) {
         let index = Math.floor(Math.random() * possibleWords.length)
