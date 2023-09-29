@@ -6,7 +6,7 @@ import Transition from '../Transition/Transition'
 
 const PAGES = [
   {
-    title: 'The Wordification® Project Description',
+    title: 'The Wordification™ Project Description',
     body: <Description />,
   },
   {

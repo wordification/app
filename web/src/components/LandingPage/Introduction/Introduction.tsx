@@ -4,7 +4,7 @@ const Introduction = () => {
       <div className="hero-content text-center">
         <div>
           <h1 className="mb-1 text-5xl font-semibold">
-            The Wordification® Project
+            The Wordification™ Project
           </h1>
           <h2 className="text-2xl font-semibold">By ScholasTech, LLC</h2>
           <ul className="list-disc py-6 pl-6 text-left text-xl">
