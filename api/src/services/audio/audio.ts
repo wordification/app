@@ -10,6 +10,11 @@ function cleanText(word: string): string {
   return cleanedText
 }
 
+// SWE Example Words
+export const getSWEWord = (word: string) => {
+  return `${STATIC_PATH}/common/SWE_words/${cleanText(word)}.mp3`
+}
+
 // Common files
 export const getPhoneme = (phoneme: string | number) => {
   return `${STATIC_PATH}/common/phonemes/${phoneme}.mp3`
