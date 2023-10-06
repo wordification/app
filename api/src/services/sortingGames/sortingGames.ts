@@ -198,12 +198,24 @@ export const sortingGameSecondLevel: QueryResolvers['sortingGameSecondLevel'] =
       game.phonemes.length !== 0
         ? [
             getSortingGamePhrase('spelling_pattern'),
-            getPhoneme(currentWord.testedPhonemes[0]),
+            getPhoneme(
+              currentWord.phonemes.find((p) =>
+                game.phonemes.some((gp) => gp === p)
+              ) ?? -1
+            ),
+            getSortingGamePhrase('in'),
+            getWord(currentWord.word),
+          ]
+        : game.graphemes.includes('w')
+        ? [
+            getSortingGamePhrase('spelling_pattern'),
+            getSortingGamePhrase('initial_consonant'),
             getSortingGamePhrase('in'),
             getWord(currentWord.word),
           ]
         : [
             getSortingGamePhrase('spelling_pattern'),
+            getSortingGamePhrase('vowel_sound'),
             getSortingGamePhrase('in'),
             getWord(currentWord.word),
           ]
@@ -307,7 +319,7 @@ export const sortingGameGradeFirstLevel: MutationResolvers['sortingGameGradeFirs
       gameId: game.id,
       gameLevel: game.level,
       incorrectGuesses: game.incorrectGuesses,
-      correct: game.currentWord.testedPhonemes.includes(phoneme),
+      correct: game.currentWord.phonemes.includes(phoneme),
       incorrectAudio: [
         getSortingGamePhrase('incorrect'),
         getPhoneme(phoneme),
@@ -332,8 +344,6 @@ export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSec
       throw new Error('Current word not selected')
     }
 
-    // TODO: Replace testedPhoneme[] with another way to access
-
     return handleGrade({
       gameId: game.id,
       gameLevel: game.level,
@@ -346,7 +356,11 @@ export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSec
           ? [
               getSortingGamePhrase('incorrect'),
               getSortingGamePhrase('the'),
-              getPhoneme(game.currentWord.testedPhonemes[0]),
+              getPhoneme(
+                game.currentWord.phonemes.find((p) =>
+                  game.phonemes.some((gp) => gp === p)
+                ) ?? -1
+              ),
               getSortingGamePhrase('sound_in'),
               getWord(game.currentWord.word),
               getSortingGamePhrase('not_spelled_with'),
@@ -365,7 +379,11 @@ export const sortingGameGradeSecondLevel: MutationResolvers['sortingGameGradeSec
           ? [
               getSortingGamePhrase('correct'),
               getSortingGamePhrase('the'),
-              getPhoneme(game.currentWord.testedPhonemes[0]),
+              getPhoneme(
+                game.currentWord.phonemes.find((p) =>
+                  game.phonemes.some((gp) => gp === p)
+                ) ?? -1
+              ),
               getSortingGamePhrase('in'),
               getWord(game.currentWord.word),
               getSortingGamePhrase('spelled_with'),
@@ -406,15 +424,32 @@ export const sortingGameGradeThirdLevel: MutationResolvers['sortingGameGradeThir
               getSortingGamePhrase('incorrect'),
               getWord(game.currentWord.word),
               getSortingGamePhrase('has_sound'),
-              getPhoneme(game.currentWord.testedPhonemes[0]),
+              getPhoneme(
+                game.currentWord.phonemes.find((p) =>
+                  game.phonemes.some((gp) => gp === p)
+                ) ?? -1
+              ),
               getSortingGamePhrase('and_spelled_with'),
-              getGrapheme(game.currentWord.testedGraphemes[0]),
+              getGrapheme(
+                game.currentWord.graphemes[
+                  game.currentWord.phonemes.indexOf(
+                    game.currentWord.phonemes.find((p) =>
+                      game.phonemes.some((gp) => gp === p)
+                    ) ?? 0
+                  ) ?? -1
+                ]
+              ),
               getSortingGamePhrase('tryagain'),
             ]
           : [
               getSortingGamePhrase('incorrect'),
               getWord(game.currentWord.word),
               getSortingGamePhrase('spelled_with'),
+              getGrapheme(
+                game.currentWord.graphemes.find((g) =>
+                  game.graphemes.some((gg) => gg === g)
+                ) ?? ''
+              ),
             ],
       correctAudio: [
         getSortingGamePhrase('correct'),
