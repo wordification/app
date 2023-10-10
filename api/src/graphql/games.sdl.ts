@@ -65,6 +65,9 @@ export const schema = gql`
 
     "All of the words that have not been played in the game."
     incompleteWords: [Word!]!
+
+    "The current score of a phoneme based game."
+    score: Int
   }
 
   """

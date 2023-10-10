@@ -266,6 +266,15 @@ export const sortingGameThirdLevel: QueryResolvers['sortingGameThirdLevel'] =
     }
   }
 
+const updateScore = async (gameId: number, correct: boolean) => {
+  return db.game.update({
+    data: {
+      score: correct ? { increment: 1 } : { decrement: 1 },
+    },
+    where: { id: gameId },
+  })
+}
+
 const handleGrade = async ({
   gameId,
   gameLevel,
@@ -282,6 +291,8 @@ const handleGrade = async ({
   correctAudio: string[] | undefined
 }) => {
   if (correct) {
+    await updateScore(gameId, correct)
+
     await advanceLevel(gameId, gameLevel)
 
     return {

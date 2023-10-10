@@ -103,6 +103,7 @@ export const createGame: MutationResolvers['createGame'] = async ({
         wordsPerUnit,
         phonemes,
         graphemes,
+        score: 0,
         level: phonemes === undefined || phonemes.length === 0 ? 2 : 1,
         userId: context.currentUser.id,
         allWords: {
