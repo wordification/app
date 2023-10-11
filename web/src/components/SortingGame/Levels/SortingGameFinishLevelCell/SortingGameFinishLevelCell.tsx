@@ -14,6 +14,7 @@ export const QUERY = gql`
         id
         word
       }
+      finalScore
     }
   }
 `
@@ -34,6 +35,9 @@ export const Success = ({
   FindSortingGameFinishLevelQuery,
   FindSortingGameFinishLevelQueryVariables
 >) => {
+  const gameScore = parseFloat(
+    (sortingGameFinishLevel.finalScore ?? 0).toFixed(2)
+  )
   return (
     <div className="card bg-base-300 text-base-content shadow-xl">
       <div className="card-body">
@@ -44,6 +48,22 @@ export const Success = ({
             <li key={word.id}>{word.word}</li>
           ))}
         </ul>
+        <h2 className="card-title">
+          Score: {gameScore} —{' '}
+          {gameScore < 0 ? 'FAIL' : gameScore < 3 ? 'MARGINAL' : 'PASS'}
+        </h2>
+
+        <progress
+          className={`${
+            gameScore < 0
+              ? 'progress-error'
+              : gameScore < 3
+              ? 'progress-warning'
+              : 'progress-success'
+          } progress w-56`}
+          value={gameScore + 12}
+          max="18"
+        ></progress>
         <div className="card-actions justify-end">
           <Link className="btn-primary btn" to={routes.sortingGameSetup()}>
             Play again

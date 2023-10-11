@@ -42,6 +42,10 @@ export const selectNextWord = async (gameId: number) => {
 
   const { incompleteWords } = game
 
+  const finalScore = parseFloat(
+    ((game.score ?? 0) / game.wordsPerUnit).toFixed(2)
+  )
+
   if (incompleteWords.length === 0) {
     return db.game.update({
       data: {
@@ -49,6 +53,8 @@ export const selectNextWord = async (gameId: number) => {
         complete: true,
         incorrectGuesses: 0,
         currentWordId: null,
+        finalScore,
+        score: null,
       },
       where: { id: gameId },
     })
@@ -266,6 +272,15 @@ export const sortingGameThirdLevel: QueryResolvers['sortingGameThirdLevel'] =
     }
   }
 
+const updateScore = async (gameId: number, correct: boolean) => {
+  return db.game.update({
+    data: {
+      score: correct ? { increment: 1 } : { decrement: 1 },
+    },
+    where: { id: gameId },
+  })
+}
+
 const handleGrade = async ({
   gameId,
   gameLevel,
@@ -281,6 +296,7 @@ const handleGrade = async ({
   incorrectAudio: string[] | undefined
   correctAudio: string[] | undefined
 }) => {
+  await updateScore(gameId, correct)
   if (correct) {
     await advanceLevel(gameId, gameLevel)
 
