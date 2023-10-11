@@ -42,6 +42,10 @@ export const selectNextWord = async (gameId: number) => {
 
   const { incompleteWords } = game
 
+  const finalScore = parseFloat(
+    ((game.score ?? 0) / game.wordsPerUnit).toFixed(2)
+  )
+
   if (incompleteWords.length === 0) {
     return db.game.update({
       data: {
@@ -49,6 +53,8 @@ export const selectNextWord = async (gameId: number) => {
         complete: true,
         incorrectGuesses: 0,
         currentWordId: null,
+        finalScore,
+        score: null,
       },
       where: { id: gameId },
     })
@@ -290,9 +296,8 @@ const handleGrade = async ({
   incorrectAudio: string[] | undefined
   correctAudio: string[] | undefined
 }) => {
+  await updateScore(gameId, correct)
   if (correct) {
-    await updateScore(gameId, correct)
-
     await advanceLevel(gameId, gameLevel)
 
     return {

@@ -68,6 +68,12 @@ export const schema = gql`
 
     "The current score of a phoneme based game."
     score: Int
+
+    """
+    The score calculated when a game is complete. Calculated by the
+    current score divided by the number of words per phoneme.
+    """
+    finalScore: Float
   }
 
   """
