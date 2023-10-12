@@ -35,9 +35,22 @@ export const Success = ({
   FindSortingGameFinishLevelQuery,
   FindSortingGameFinishLevelQueryVariables
 >) => {
-  const gameScore = parseFloat(
-    (sortingGameFinishLevel.finalScore ?? 0).toFixed(2)
-  )
+  const gameScore = sortingGameFinishLevel.finalScore ?? 0
+
+  // Map game score on a 3 point grade scale.
+  //  -12 - 0 ->  0.0 - 1.0  ->  RED
+  //  0 - 3   ->  1.0 - 2.0  ->  YELLOW
+  //  3 - 6   ->  2.0 - 3.0  ->  GREEN
+  const shiftGameScore = gameScore + 12.0
+  const mappedGameScore =
+    shiftGameScore >= 0 && shiftGameScore <= 12
+      ? (shiftGameScore - 0) / (12 - 0)
+      : shiftGameScore > 12 && shiftGameScore <= 15
+      ? 1 + (shiftGameScore - 12) / (15 - 12)
+      : shiftGameScore > 15 && shiftGameScore <= 18
+      ? 2 + (shiftGameScore - 15) / (18 - 15)
+      : 0
+
   return (
     <div className="card bg-base-300 text-base-content shadow-xl">
       <div className="card-body">
@@ -50,20 +63,25 @@ export const Success = ({
         </ul>
         <h2 className="card-title">
           Score: {gameScore} —{' '}
-          {gameScore < 0 ? 'FAIL' : gameScore < 3 ? 'MARGINAL' : 'PASS'}
+          {mappedGameScore < 1
+            ? 'FAIL'
+            : mappedGameScore < 2
+            ? 'MARGINAL'
+            : 'PASS'}
         </h2>
 
         <progress
           className={`${
-            gameScore < 0
+            mappedGameScore < 1
               ? 'progress-error'
-              : gameScore < 3
+              : mappedGameScore < 2
               ? 'progress-warning'
               : 'progress-success'
           } progress w-56`}
-          value={gameScore + 12}
-          max="18"
+          value={mappedGameScore}
+          max="3"
         ></progress>
+        <p>{mappedGameScore.toFixed(2)} / 3</p>
         <div className="card-actions justify-end">
           <Link className="btn-primary btn" to={routes.sortingGameSetup()}>
             Play again
