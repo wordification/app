@@ -118,7 +118,7 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
     })
   }
 
-  if (studentId) {
+  if (studentId && studentId > 0) {
     return [
       db.gameSetup.upsert({
         where: { userId: studentId },
@@ -151,30 +151,61 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
 
     const upsertPromises = (teacher?.students ?? []).map((student) => {
       const { id: userId } = student
+      const shouldUpsert = determineShouldUpsert(
+        studentId ?? 0,
+        student.gpa ?? -1
+      )
 
-      return db.gameSetup.upsert({
-        create: {
-          wordsPerUnit,
-          matchingBoardSize,
-          matchingGameType,
-          phonemes,
-          graphemes,
-          userId,
-        },
-        update: {
-          wordsPerUnit,
-          matchingBoardSize,
-          matchingGameType,
-          phonemes,
-          graphemes,
-        },
-        where: { userId },
-      })
+      if (shouldUpsert) {
+        return db.gameSetup.upsert({
+          create: {
+            wordsPerUnit,
+            matchingBoardSize,
+            matchingGameType,
+            phonemes,
+            graphemes,
+            userId,
+          },
+          update: {
+            wordsPerUnit,
+            matchingBoardSize,
+            matchingGameType,
+            phonemes,
+            graphemes,
+          },
+          where: { userId },
+        })
+      }
+      return null
     })
 
     const upsertResults = await Promise.all(upsertPromises)
-    return upsertResults
+    const filterResults = upsertResults.filter((res) => res !== null) as {
+      id: number
+      createdAt: Date
+      updatedAt: Date
+      wordsPerUnit: number
+      phonemes: number[]
+      graphemes: string[]
+      matchingBoardSize: number
+      matchingGameType: MatchingGameType
+      userId: number
+    }[]
+    return filterResults
   }
+}
+
+function determineShouldUpsert(studentId: number, studentGpa: number) {
+  if (studentId === -1 && studentGpa >= 0 && studentGpa < 1) {
+    return true
+  } else if (studentId === -2 && studentGpa >= 1 && studentGpa < 2) {
+    return true
+  } else if (studentId === -3 && studentGpa >= 2) {
+    return true
+  } else if (studentId === 0) {
+    return true
+  }
+  return false
 }
 
 export const deleteGameSetup: MutationResolvers['deleteGameSetup'] = ({

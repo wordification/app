@@ -38,8 +38,9 @@ const DashboardClassGameSetupPage = ({ id }: ClassGameSetupPageProps) => {
       },
     })
 
-  const onSave = (input: UpsertGameSetupInput) => {
-    const studentId = parseInt(id ?? '0')
+  const onSave = (input: UpsertGameSetupInput, studentSelect?: number) => {
+    const studentId =
+      studentSelect !== undefined ? studentSelect : parseInt(id ?? '0')
     upsertGameSetup({
       variables: {
         input: {
@@ -62,7 +63,12 @@ const DashboardClassGameSetupPage = ({ id }: ClassGameSetupPageProps) => {
             </h1>
           </header>
 
-          <ClassGameSetupForm onSave={onSave} loading={loading} error={error} />
+          <ClassGameSetupForm
+            onSave={onSave}
+            loading={loading}
+            error={error}
+            idProvided={id ? true : false}
+          />
         </div>
       </div>
     </>
