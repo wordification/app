@@ -35,6 +35,8 @@ model User {
   roles               Role      @default(STUDENT)
   /// The ID of the user's teacher if they are a student.
   teacherId           Int?
+  /// The grade point average of the user if they are a student. This value will range 0-3.
+  gpa                 Float?
   /// The user's first name.
   firstName           String
   /// The user's last name.
@@ -112,6 +114,8 @@ model Game {
   score            Int?
   /// The score calculated when a game is complete. Calculated by the current score divided by the number of words per phoneme.
   finalScore       Float?
+  /// The grade of a game when a game is compelete. This is on a 0-3 scale.
+  grade            Float?
 
   // RELATIONSHIP INFO
   /// The user who is playing the game.

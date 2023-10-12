@@ -74,6 +74,9 @@ export const schema = gql`
     current score divided by the number of words per phoneme.
     """
     finalScore: Float
+
+    "The grade of a game when a game is compelete. This is on a 0-3 scale."
+    grade: Float
   }
 
   """
