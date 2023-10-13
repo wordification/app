@@ -47,6 +47,49 @@ export const selectNextWord = async (gameId: number) => {
   )
 
   if (incompleteWords.length === 0) {
+    // Map final score on a 3 point grade scale.
+    //  -12 - 0 ->  0.0 - 1.0  ->  RED
+    //  0 - 3   ->  1.0 - 2.0  ->  YELLOW
+    //  3 - 6   ->  2.0 - 3.0  ->  GREEN
+    const shiftFinalScore = finalScore + 12.0
+    const grade =
+      shiftFinalScore >= 0 && shiftFinalScore <= 12
+        ? (shiftFinalScore - 0) / (12 - 0)
+        : shiftFinalScore > 12 && shiftFinalScore <= 15
+        ? 1 + (shiftFinalScore - 12) / (15 - 12)
+        : shiftFinalScore > 15 && shiftFinalScore <= 18
+        ? 2 + (shiftFinalScore - 15) / (18 - 15)
+        : 0
+
+    const user = await db.user.findFirst({
+      where: {
+        id: game.userId,
+      },
+      include: {
+        games: true,
+      },
+    })
+
+    const completeGamesCount =
+      user?.games.reduce((sum, game) => {
+        if (game.complete === true && game.grade !== null) {
+          return sum + 1
+        } else {
+          return sum
+        }
+      }, 0) ?? 0
+
+    // Calculate new gpa from existing gpa
+    const gpa =
+      ((user?.gpa ?? 0) * completeGamesCount + grade) / (completeGamesCount + 1)
+
+    await db.user.update({
+      data: {
+        gpa: parseFloat(gpa.toFixed(2)),
+      },
+      where: { id: game.userId },
+    })
+
     return db.game.update({
       data: {
         level: 4,
@@ -54,6 +97,7 @@ export const selectNextWord = async (gameId: number) => {
         incorrectGuesses: 0,
         currentWordId: null,
         finalScore,
+        grade: parseFloat(grade.toFixed(2)),
         score: null,
       },
       where: { id: gameId },

@@ -41,6 +41,9 @@ export const schema = gql`
     "The user's teacher if they are a student."
     teacher: User
 
+    "The grade point average of the user if they are a student. This value will range 0-3."
+    gpa: Float
+
     "All of the user's students if they are a teacher."
     students: [User!]
 

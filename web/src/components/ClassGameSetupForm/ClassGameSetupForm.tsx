@@ -20,12 +20,15 @@ type FormGame = NonNullable<Omit<Omit<GameSetup, 'phonemes'>, 'graphemes'>> & {
   first_phoneme?: Array<Scalars['Int']>
   second_phoneme?: Array<Scalars['Int']>
   game_graphemes?: string
+  /** Input field to select a group of students to set this game setup for. */
+  student_group?: number
 }
 
 type ClassGameSetupFormProps = {
-  onSave: (data: UpsertGameSetupInput) => void
+  onSave: (data: UpsertGameSetupInput, studentSelect?: number) => void
   error?: RWGqlError
   loading: boolean
+  idProvided: boolean
 }
 
 type Phoneme = {
@@ -43,6 +46,14 @@ const PHONEME_OPTIONS = gql`
     }
   }
 `
+
+const STUDENT_GROUP_OPTIONS = [
+  { id: 0, name: 'All Students' },
+  { id: 1, name: 'Red Group' },
+  { id: 2, name: 'Yellow Group' },
+  { id: 3, name: 'Green Group' },
+] as const
+
 /** Current Options for demo version */
 const GRAPHEME_GAME_OPTIONS = [
   { id: 0, name: `Initial Consonants - 'w', 'wh'`, value: ['w', 'wh'] },
@@ -116,8 +127,11 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
       second_phoneme = 0,
       game_graphemes = '',
       phoneme_grapheme_selection = 0,
+      student_group = 0,
       ...restData
     } = data
+
+    const studentSelect = student_group * -1
 
     const selection = [
       ...(Array.isArray(phoneme_grapheme_selection)
@@ -139,11 +153,14 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
       graphemes = JSON.parse(game_graphemes)
     }
 
-    props.onSave({
-      ...restData,
-      phonemes,
-      graphemes,
-    })
+    props.onSave(
+      {
+        ...restData,
+        phonemes,
+        graphemes,
+      },
+      studentSelect
+    )
   }
 
   return (
@@ -154,6 +171,36 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
         titleClassName="font-bold text-error"
         listClassName="list-disc list-inside text-sm"
       />
+
+      {!props.idProvided && (
+        <>
+          <h2 className="text-lg">Select Students</h2>
+          <div className="form-control mb-2 w-full max-w-xs">
+            <Label
+              name="student_group"
+              className="label"
+              errorClassName="label text-error"
+            >
+              <span className="label-text">Student Group</span>
+            </Label>
+            <SelectField
+              name="student_group"
+              defaultValue={0}
+              className="input-bordered select mb-2 w-full"
+              validation={{ required: true, valueAsNumber: true }}
+            >
+              {STUDENT_GROUP_OPTIONS.map((g) => (
+                <option key={g.id} value={g.id}>
+                  {g.name}
+                </option>
+              ))}
+            </SelectField>
+          </div>
+          <div className="flex flex-col">
+            <FieldError name="student_group" className="text-error" />
+          </div>
+        </>
+      )}
 
       <h2 className="text-lg">All Games</h2>
 

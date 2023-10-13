@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "Game" ADD COLUMN     "grade" DOUBLE PRECISION;
+
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN     "gpa" DOUBLE PRECISION;
