@@ -95,6 +95,9 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
       },
     })
   }
+  else {
+    throw new Error('You must select exactly two phonemes!')
+  }
 
   const graphemes = input.graphemes?.filter(
     (grapheme) => !!grapheme
