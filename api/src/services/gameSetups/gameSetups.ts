@@ -72,13 +72,26 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
   })
 
   const phonemes = input.phonemes?.filter((phoneme) => !!phoneme) as number[]
-  if (phonemes.length !== 0) {
+  const graphemes = input.graphemes?.filter(
+    (grapheme) => !!grapheme
+  ) as string[]
+  const selected = phonemes.length > 0 || graphemes.length > 0
+  validate(selected, {
+    acceptance: {
+      in: [true],
+      message: 'You must select exactly two phonemes or some graphemes!',
+    },
+  })
+  if (phonemes.length > 0) {
+    validate(phonemes.length, 'phoneme length', {
+      numericality: {
+        equal: 2,
+        message: 'You must select exactly two phonemes!',
+      },
+    })
     validate(phonemes, 'phonemes', {
       custom: {
         with: async () => {
-          if (phonemes.length !== 2) {
-            throw new Error('You must select exactly two phonemes!')
-          }
           const dbPhonemes = await db.phoneme.findMany()
           const allowedPhonemes = dbPhonemes.flatMap((p) => p.id)
           phonemes.forEach((phoneme) => {
@@ -96,9 +109,6 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
     })
   }
 
-  const graphemes = input.graphemes?.filter(
-    (grapheme) => !!grapheme
-  ) as string[]
   if (graphemes.length !== 0) {
     validate(graphemes, 'graphemes', {
       custom: {
