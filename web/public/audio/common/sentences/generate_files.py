@@ -47,6 +47,7 @@ def generate_files(num_words):
         try:
             current_line = lines[line_count]
             current_line = current_line[:-1]
+            current_line = current_line[:-1] if current_line[-1] == "." else current_line
             if (line_count % 5 == 0):
                 if (line_count != 0): os.chdir("..")
                 os.system("mkdir " + current_line.lower())
