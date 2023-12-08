@@ -2,6 +2,12 @@ import { MetaTags } from '@redwoodjs/web'
 
 const UPDATES = [
   {
+    title: 'New Game: Building',
+    date: '2023-12-06',
+    content:
+      "We've added a new game to the site: Building. In this game, you'll be given part of a word and you'll see which words you can build with it.",
+  },
+  {
     title: 'New Game: Matching',
     date: '2022-10-23',
     content:

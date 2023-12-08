@@ -49,6 +49,13 @@ const Routes = () => {
             <Route path="/games/sorting/setup" page={SortingGameSetupGamePage} name="sortingGameSetup" />
             <Route path="/games/sorting" page={SortingGameMenuPage} name="sortingGame" />
           </Set>
+          <Set>
+            <Route path="/games/building/{id:Int}" page={BuildingGameIndividualGamePage} name="buildingGameIndividual" />
+            <Route path="/games/building/resume" page={BuildingGameIncompleteGamesPage} name="buildingGameIncomplete" />
+            <Route path="/games/building/scores" page={BuildingGameCompleteGamesPage} name="buildingGameComplete" />
+            <Route path="/games/building/setup" page={BuildingGameSetupGamePage} name="buildingGameSetup" />
+            <Route path="/games/building" page={BuildingGameMenuPage} name="buildingGame" />
+          </Set>
           <Route path="/games" page={GamesPage} name="games" />
           <Route path="/profile" page={ProfilePage} name="profile" />
         </Set>
