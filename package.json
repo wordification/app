@@ -12,7 +12,8 @@
     "@redwoodjs/core": "6.3.1",
     "@redwoodjs/studio": "6.3.1",
     "husky": "^8.0.0",
-    "prettier-plugin-tailwindcss": "^0.2.8"
+    "prettier-plugin-tailwindcss": "^0.2.8",
+    "prisma": "^5.5.2"
   },
   "engines": {
     "node": "=18.x",
