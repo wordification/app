@@ -50,6 +50,23 @@ const StudentList = ({ currentStudents }: GetCurrentStudents) => {
           )
         )
         break
+      case 'GPA':
+        setDisplayStudents(
+          currentStudents?.filter((student) =>
+            student.gpa == Number(data.searchString)
+          )
+        )
+        break
+      case 'Group':
+        setDisplayStudents(
+          currentStudents?.filter((student) =>
+          ((student.gpa ?? 0) < 1
+            ? 'RED'
+            : (student.gpa ?? 0) < 2
+            ? 'YELLOW'
+            : 'GREEN').toLowerCase().includes(data.searchString.toLowerCase()))
+        )
+        break
       default:
         setDisplayStudents(
           currentStudents?.filter(
@@ -57,7 +74,13 @@ const StudentList = ({ currentStudents }: GetCurrentStudents) => {
               student.id.toString().includes(data.searchString) ||
               student.email.toLowerCase().includes(data.searchString) ||
               student.firstName.toLowerCase().includes(data.searchString) ||
-              student.lastName.toLowerCase().includes(data.searchString)
+              student.lastName.toLowerCase().includes(data.searchString) ||
+              student.gpa == Number(data.searchString) ||
+              ((student.gpa ?? 0) < 1
+                ? 'RED'
+                : (student.gpa ?? 0) < 2
+                ? 'YELLOW'
+                : 'GREEN').toLowerCase().includes(data.searchString)
           )
         )
     }
@@ -102,6 +125,8 @@ const StudentList = ({ currentStudents }: GetCurrentStudents) => {
               <option>Email</option>
               <option>Last Name</option>
               <option>First Name</option>
+              <option>GPA</option>
+              <option>Group</option>
             </SelectField>
           </div>
           <Submit className="btn-primary btn mt-6">Sumbit</Submit>
