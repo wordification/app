@@ -45,7 +45,7 @@ export const Success = ({
           ))}
         </ul>
         <div className="card-actions justify-end">
-          <Link className="btn-primary btn" to={routes.matchingGameSetup()}>
+          <Link className="btn-primary btn" to={routes.buildingGameSetup()}>
             Play again
           </Link>
         </div>

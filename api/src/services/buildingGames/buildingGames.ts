@@ -49,18 +49,37 @@ export const buildingGamePlayLevel: QueryResolvers['buildingGamePlayLevel'] =
       throw new Error('Current word not selected')
     }
 
-    const onsIdx = currentWord?.syllables.findIndex((syl) => syl === 'ons') ?? 0
-    const onsGrapheme = currentWord?.graphemes.at(onsIdx) ?? ''
-    const choppedWord = currentWord?.word.substring(onsGrapheme.length)
+    const currentOnsIdx =
+      currentWord?.syllables.findIndex((syl) => syl === 'ons') ?? 0
+    const currentOnsGrapheme = currentWord?.graphemes.at(currentOnsIdx) ?? ''
+    const currentChoppedWord = currentWord?.word.substring(
+      currentOnsGrapheme.length
+    )
 
     // if (!incompleteWords) {
     //   throw new Error('No words selected for building')
     // }
 
+    console.log(currentWord)
+
     const onsList = game.allWords.map((word) => {
       const onsIdx = word.syllables.findIndex((syl) => syl === 'ons')
       return word.graphemes.at(onsIdx) ?? ''
     })
+    // Filter out onsGrapheme from onsList
+    const filteredList = onsList.filter(
+      (grapheme) => grapheme !== currentOnsGrapheme
+    )
+    const uniqueSet = new Set(filteredList)
+    // Shuffle the filteredList randomly
+    const uniqueArr = Array.from(uniqueSet)
+    // Select three random elements from shuffledList
+    const shuffledList = uniqueArr.sort(() => Math.random() - 0.5)
+    const selectedGraphemes = shuffledList.slice(0, 3)
+    // Concatenate onsGrapheme with the selectedGraphemes
+    const gameOnsList = [currentOnsGrapheme, ...selectedGraphemes].sort(
+      () => Math.random() - 0.5
+    )
 
     const audio: string[] = [
       // let's build the word
@@ -77,7 +96,12 @@ export const buildingGamePlayLevel: QueryResolvers['buildingGamePlayLevel'] =
       getWord(currentWord.word),
     ]
 
-    return { game, audio, choppedWord, onsList }
+    return {
+      game,
+      audio,
+      choppedWord: currentChoppedWord,
+      onsList: gameOnsList,
+    }
   }
 
 export const selectNextWord = async (gameId: number) => {

@@ -106,7 +106,6 @@ export const Success = ({
 
   const handleComplete = useCallback(async () => {
     setPlayingAudio(false)
-    console.log(typeof buildingGamePlayLevel.game.id)
     const gameId = buildingGamePlayLevel.game.id // Extract the game ID
     await client.query({
       query: LEVEL_QUERY,
@@ -114,8 +113,11 @@ export const Success = ({
       notifyOnNetworkStatusChange: true,
       // fetchPolicy: 'network-only',
     })
+
     setFiles(buildingGamePlayLevel.audio)
   }, [buildingGamePlayLevel.game.id, buildingGamePlayLevel.audio, client])
+
+  console.log(buildingGamePlayLevel.onsList)
 
   return (
     <>
@@ -139,9 +141,19 @@ export const Success = ({
             )
           )}
         </div>
-        <div className="card-title mt-5">
-          {`__${buildingGamePlayLevel.choppedWord}`}
-        </div>
+        {buildingGamePlayLevel.choppedWord === 'Complete' ? (
+          <div className="card-title mt-5">
+            {`${buildingGamePlayLevel.choppedWord}! Good job!`}
+          </div>
+        ) : (
+          <div
+            className={`card-title mt-5 ${
+              playingAudio ? 'text-transparent' : ''
+            }`}
+          >
+            {`__${buildingGamePlayLevel.choppedWord}`}
+          </div>
+        )}
       </GameCard>
     </>
   )

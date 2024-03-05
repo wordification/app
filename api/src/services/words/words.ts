@@ -10,7 +10,7 @@ export const gameWordsByRime = async ({
   rime,
   numSyllables,
 }: {
-  rime: string
+  rime: string[]
   numSyllables: number
 }) => {
   validate(numSyllables, 'numSyllables', {
@@ -22,7 +22,11 @@ export const gameWordsByRime = async ({
     },
   })
 
-  return oneSyllWords.filter((word) => word.word.endsWith(rime))
+  return oneSyllWords.filter((word) =>
+    rime.some(
+      (ending) => word.word.endsWith(ending) && word.syllables.at(0) === 'ons'
+    )
+  )
 }
 
 export const filterWordsByPhoneme = async ({

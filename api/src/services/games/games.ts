@@ -96,9 +96,9 @@ export const createGame: MutationResolvers['createGame'] = async ({
           phonemes: phonemes,
           graphemes: graphemes,
         })
-      : await gameWordsByRime({ numSyllables: 1, rime: 'ake' })
+      : await gameWordsByRime({ numSyllables: 1, rime: ['ake', 'ight', 'ite'] })
 
-  // gameWords?.forEach((wrd) => console.log(wrd.word))
+  gameWords?.forEach((wrd) => console.log(wrd.word))
 
   if (input.type === 'SORTING') {
     const [currentWord, ...incompleteWords] = gameWords ?? []
@@ -147,7 +147,13 @@ export const createGame: MutationResolvers['createGame'] = async ({
     })
   } else {
     // input.type === 'BUILDING'
-    const [currentWord, ...incompleteWords] = gameWords ?? []
+    const useGameWords = (gameWords ?? [])
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 5)
+    const [currentWord, ...incompleteWords] = useGameWords
+
+    console.log(useGameWords)
+
     return db.game.create({
       data: {
         ...input,
@@ -156,7 +162,7 @@ export const createGame: MutationResolvers['createGame'] = async ({
         graphemes: [],
         userId: context.currentUser.id,
         allWords: {
-          connect: gameWords?.map((word) => ({ id: word.id })),
+          connect: useGameWords?.map((word) => ({ id: word.id })),
         },
         incompleteWords: {
           connect: incompleteWords.map((word) => ({ id: word.id })),
