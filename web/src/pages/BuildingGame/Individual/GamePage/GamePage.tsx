@@ -1,13 +1,13 @@
-import BuildingGamesCell from 'src/components/BuildingGame/BuildingGamesCell'
+import BuildingGameCell from 'src/components/BuildingGame/BuildingGameCell'
 
 type BuildingGameIndividualGamePageProps = {
   id: number
 }
 
-const BuildingGameIndividualGamePageProps = ({
+const BuildingGameIndividualGamePage = ({
   id,
 }: BuildingGameIndividualGamePageProps) => {
-  return <SortingGameCell id={id} />
+  return <BuildingGameCell id={id} />
 }
 
-export default BuildingGameIndividualGamePageProps
+export default BuildingGameIndividualGamePage

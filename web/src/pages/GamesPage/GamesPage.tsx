@@ -15,7 +15,7 @@ const GAME_CHOICES = [
   {
     title: 'Building',
     content: 'Build words!',
-    // to:
+    to: routes.buildingGame(),
   },
 ] as const
 
