@@ -27,6 +27,11 @@ export const QUERY = gql`
     sortingGameThirdLevel: sortingGameThirdLevel(gameId: $gameId) {
       game {
         id
+        score
+        currentWord {
+          word
+          sentences
+        }
       }
       audio
     }
@@ -58,6 +63,7 @@ export const Success = ({
   FindSortingGameThirdLevelQuery,
   FindSortingGameThirdLevelQueryVariables
 >) => {
+  console.log('score ------------------- '+sortingGameThirdLevel.game.currentWord.word)
   const [playingAudio, setPlayingAudio] = useState(false)
   const [files, setFiles] = useState(sortingGameThirdLevel.audio)
   const [gradeLevel, { loading, client, error }] =
@@ -115,17 +121,24 @@ export const Success = ({
     })
   }
 
+  var sentence = sortingGameThirdLevel.game.currentWord.sentences[0];
+  var word = sortingGameThirdLevel.game.currentWord.word;
+  const fillInTheBlank = sentence.split(word);
+  const blankedOutSentence = fillInTheBlank[0] + "_____" + fillInTheBlank[1];
+
   return (
     <GameCard
-      title="Spell the word."
+      title={blankedOutSentence}
       files={files}
       onComplete={() => handleComplete()}
     >
+
       <SortingGameThirdLevelForm
         onSubmit={handleSubmit}
         loading={loading || playingAudio}
         error={error}
       />
+      
     </GameCard>
   )
 }
