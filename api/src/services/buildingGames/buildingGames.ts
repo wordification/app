@@ -2,7 +2,7 @@ import { GameType } from '@prisma/client'
 
 import { db } from 'src/lib/db'
 
-import { getBuildingGamePhrase, getLetter, getWord } from '../audio'
+import { getBuildingGamePhrase, getLetter, getPhoneme, getWord } from '../audio'
 
 import type { MutationResolvers, QueryResolvers } from 'types/graphql'
 
@@ -55,6 +55,8 @@ export const buildingGamePlayLevel: QueryResolvers['buildingGamePlayLevel'] =
     const currentChoppedWord = currentWord?.word.substring(
       currentOnsGrapheme.length
     )
+    // Get current word phoneme for onset position
+    const currentOnsPhoneme = currentWord?.phonemes.at(currentOnsIdx) ?? ''
 
     // if (!incompleteWords) {
     //   throw new Error('No words selected for building')
@@ -66,6 +68,7 @@ export const buildingGamePlayLevel: QueryResolvers['buildingGamePlayLevel'] =
       const onsIdx = word.syllables.findIndex((syl) => syl === 'ons')
       return word.graphemes.at(onsIdx) ?? ''
     })
+
     // Filter out onsGrapheme from onsList
     const filteredList = onsList.filter(
       (grapheme) => grapheme !== currentOnsGrapheme
@@ -89,7 +92,7 @@ export const buildingGamePlayLevel: QueryResolvers['buildingGamePlayLevel'] =
       // spell the
       getBuildingGamePhrase('spell_the'),
       // ons sound
-      /// ADD ONSET SOUNDS
+      getPhoneme(currentOnsPhoneme),
       // sound in
       getBuildingGamePhrase('sound_in'),
       // [WORD]
@@ -153,7 +156,8 @@ export const buildingGameGrade: MutationResolvers['buildingGameGrade'] =
 
     const onsIdx =
       game.currentWord?.syllables.findIndex((syl) => syl === 'ons') ?? 0
-    const onsGrapheme = game.currentWord?.graphemes.at(onsIdx) ?? ''
+    const onsGrapheme = currentWord?.graphemes.at(onsIdx) ?? ''
+    const onsPhoneme = currentWord?.phonemes.at(onsIdx) ?? ''
 
     const correct = onsGrapheme === ons
     const onsLetters = ons.split('')
@@ -164,7 +168,7 @@ export const buildingGameGrade: MutationResolvers['buildingGameGrade'] =
       // that's right, the
       getBuildingGamePhrase('thats_right_the'),
       // ons sound
-      // ADD ONSET SOUNDS
+      getPhoneme(onsPhoneme),
       // sound in
       getBuildingGamePhrase('sound_in'),
       // [WORD]
@@ -178,7 +182,7 @@ export const buildingGameGrade: MutationResolvers['buildingGameGrade'] =
       // that's right, the
       getBuildingGamePhrase('thats_not_right_the'),
       // ons sound
-      // ADD ONSET SOUNDS
+      getPhoneme(onsPhoneme),
       // sound in
       getBuildingGamePhrase('sound_in'),
       // [WORD]
