@@ -2,9 +2,9 @@ import { Link, routes } from '@redwoodjs/router'
 
 import { timeTag, truncate } from 'src/lib/formatters'
 
-import type { FindMatchingGames } from 'types/graphql'
+import type { FindBuildingGames } from 'types/graphql'
 
-const MatchingGamesList = ({ matchingGames }: FindMatchingGames) => {
+const BuildingGamesList = ({ buildingGames }: FindBuildingGames) => {
   return (
     <>
       <h1 className="text-xl font-bold">Matching Games</h1>
@@ -23,7 +23,7 @@ const MatchingGamesList = ({ matchingGames }: FindMatchingGames) => {
             </tr>
           </thead>
           <tbody>
-            {matchingGames.map((game) => (
+            {buildingGames.map((game) => (
               <tr key={game.id}>
                 <td>{truncate(game.id)}</td>
                 <td>{truncate(game.user?.email)}</td>
@@ -49,4 +49,4 @@ const MatchingGamesList = ({ matchingGames }: FindMatchingGames) => {
   )
 }
 
-export default MatchingGamesList
+export default BuildingGamesList
