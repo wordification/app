@@ -107,7 +107,7 @@ const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
           </ul>
         </div>
         <Link
-          className="btn-ghost btn mr-10 rounded-none text-xl normal-case text-base-content"
+          className="btn-ghost btn mr-10 rounded-none text-xl normal-case text-base-content font-gabarito"
           to={roleRoute}
         >
           Wordification
