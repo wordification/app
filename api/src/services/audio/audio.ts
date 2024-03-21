@@ -14,6 +14,13 @@ function cleanText(word: string): string {
 export const getSWEWord = (word: string) => {
   return `${STATIC_PATH}/common/SWE_words/${cleanText(word)}.mp3`
 }
+// Default sentence 0 -- replace with fix for choosing 1/4 sentence as in sorting game sentence
+//  Only sentence 0 exists right now. Will generate rest later
+export const getSWESentence = (sentence: string) => {
+  return `${STATIC_PATH}/common/SWE_sentences/${cleanText(
+    sentence
+  )}_sentence_0.mp3`
+}
 
 // Common files
 export const getPhoneme = (phoneme: string | number) => {
