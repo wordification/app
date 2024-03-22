@@ -412,6 +412,28 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
       </div>
       <FieldError name="matchingGameType" className="text-sm text-error" />
 
+      <div className="divider w-full max-w-xs"></div>
+      <h2 className="text-lg">Building Game</h2>
+
+      <div className="form-control w-full max-w-xs">
+        <Label
+          name="wordsPerUnit"
+          className="label"
+          errorClassName="label text-error"
+        >
+          <span className="label-text">Words per game</span>
+        </Label>
+
+        <NumberField
+          name="wordsPerUnit"
+          defaultValue={3}
+          className="input-bordered input mb-2 w-full max-w-xs"
+          errorClassName="input input-bordered border-error w-full max-w-xs"
+          validation={{ required: true }}
+        />
+      </div>
+      <FieldError name="wordsPerUnit" className="text-sm text-error" />
+
       <div className="mt-2">
         <Submit disabled={props.loading} className="btn-primary btn">
           Submit

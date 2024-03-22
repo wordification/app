@@ -2,7 +2,7 @@ import { validate } from '@redwoodjs/api'
 
 import { db } from 'src/lib/db'
 
-import { selectGameWords } from '../words/words'
+import { gameWordsByRime, selectGameWords } from '../words/words'
 
 import type { User, Word } from '@prisma/client'
 import type { MakeRelationsOptional } from '@redwoodjs/api'
@@ -18,7 +18,7 @@ export const games: QueryResolvers['games'] = ({ complete, type }) => {
     return db.game.findMany({
       where: {
         userId: context.currentUser?.id,
-        type: type ?? { in: ['SORTING', 'MATCHING'] },
+        type: type ?? { in: ['SORTING', 'MATCHING', 'BUILDING'] },
       },
       orderBy: {
         updatedAt: 'desc',
@@ -32,12 +32,13 @@ export const games: QueryResolvers['games'] = ({ complete, type }) => {
     where: {
       userId: context.currentUser?.id,
       complete,
-      type: type ?? { in: ['SORTING', 'MATCHING'] },
+      type: type ?? { in: ['SORTING', 'MATCHING', 'BUILDING'] },
     },
   })
 }
 
 export const game: QueryResolvers['game'] = ({ id }) => {
+  console.log(id)
   return db.game.findFirst({
     where: { id, userId: context.currentUser?.id },
   })
@@ -75,7 +76,7 @@ export const createGame: MutationResolvers['createGame'] = async ({
 
   const pg = phonemes?.length !== 0 ? phonemes : graphemes
   let wordsPerUnit = gameSetup?.wordsPerUnit ?? 0
-  if (input.type !== 'SORTING') {
+  if (input.type === 'MATCHING') {
     wordsPerUnit =
       gameSetup?.matchingBoardSize === 0
         ? 12 / (pg?.length ?? 0) // A 3x4 is currently the only option for graphemes. No need for this elsewhere.
@@ -86,14 +87,18 @@ export const createGame: MutationResolvers['createGame'] = async ({
         : 12
   }
 
-  const gameWords = await selectGameWords({
-    count: wordsPerUnit,
-    numSyllables: 1,
-    phonemes: phonemes,
-    graphemes: graphemes,
-  })
+  // SORTING or MATCHING  -- else BUILDING
+  const gameWords =
+    input.type === 'SORTING' || input.type === 'MATCHING'
+      ? await selectGameWords({
+          count: wordsPerUnit,
+          numSyllables: 1,
+          phonemes: phonemes,
+          graphemes: graphemes,
+        })
+      : await gameWordsByRime({ numSyllables: 1, rime: ['ake', 'ight', 'ite'] })
 
-  console.log(gameWords)
+  gameWords?.forEach((wrd) => console.log(wrd.word))
 
   if (input.type === 'SORTING') {
     const [currentWord, ...incompleteWords] = gameWords ?? []
@@ -118,29 +123,57 @@ export const createGame: MutationResolvers['createGame'] = async ({
         allWords: true,
       },
     })
+  } else if (input.type === 'MATCHING') {
+    return db.game.create({
+      data: {
+        ...input,
+        wordsPerUnit,
+        matchingGameType: gameSetup?.matchingGameType,
+        phonemes,
+        graphemes,
+        currentUnitIndex:
+          gameSetup?.matchingGameType === 'GROUPING' ? 0 : undefined,
+        userId: context.currentUser.id,
+        allWords: {
+          connect: gameWords?.map((word) => ({ id: word.id })),
+        },
+        incompleteWords: {
+          connect: gameWords?.map((word) => ({ id: word.id })),
+        },
+      },
+      include: {
+        allWords: true,
+      },
+    })
+  } else {
+    // input.type === 'BUILDING'
+    const useGameWords = (gameWords ?? [])
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 5)
+    const [currentWord, ...incompleteWords] = useGameWords
+
+    console.log(useGameWords)
+
+    return db.game.create({
+      data: {
+        ...input,
+        wordsPerUnit,
+        phonemes: [],
+        graphemes: [],
+        userId: context.currentUser.id,
+        allWords: {
+          connect: useGameWords?.map((word) => ({ id: word.id })),
+        },
+        incompleteWords: {
+          connect: incompleteWords.map((word) => ({ id: word.id })),
+        },
+        currentWordId: currentWord.id,
+      },
+      include: {
+        allWords: true,
+      },
+    })
   }
-  // input.type === 'MATCHING'
-  return db.game.create({
-    data: {
-      ...input,
-      wordsPerUnit,
-      matchingGameType: gameSetup?.matchingGameType,
-      phonemes,
-      graphemes,
-      currentUnitIndex:
-        gameSetup?.matchingGameType === 'GROUPING' ? 0 : undefined,
-      userId: context.currentUser.id,
-      allWords: {
-        connect: gameWords?.map((word) => ({ id: word.id })),
-      },
-      incompleteWords: {
-        connect: gameWords?.map((word) => ({ id: word.id })),
-      },
-    },
-    include: {
-      allWords: true,
-    },
-  })
 }
 
 export const deleteGame: MutationResolvers['deleteGame'] = ({ id }) => {

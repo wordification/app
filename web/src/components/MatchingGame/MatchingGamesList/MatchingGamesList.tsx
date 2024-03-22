@@ -28,7 +28,7 @@ const MatchingGamesList = ({ matchingGames }: FindMatchingGames) => {
                 <td>{truncate(game.id)}</td>
                 <td>{truncate(game.user?.email)}</td>
                 <td>{timeTag(game.updatedAt)}</td>
-                <td>{truncate(game.wordsPerPhoneme * game.phonemes.length)}</td>
+                <td>{truncate(game.wordsPerUnit * game.phonemes.length)}</td>
                 <td>{truncate(game.phonemes.join(' & '))}</td>
                 <td>{truncate(game.level)}</td>
                 <td>

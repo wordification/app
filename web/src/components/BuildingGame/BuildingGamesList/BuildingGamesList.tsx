@@ -2,12 +2,12 @@ import { Link, routes } from '@redwoodjs/router'
 
 import { timeTag, truncate } from 'src/lib/formatters'
 
-import type { FindSortingGames } from 'types/graphql'
+import type { FindBuildingGames } from 'types/graphql'
 
-const SortingGamesList = ({ sortingGames }: FindSortingGames) => {
+const BuildingGamesList = ({ buildingGames }: FindBuildingGames) => {
   return (
     <>
-      <h1 className="text-xl font-bold">Sorting Games</h1>
+      <h1 className="text-xl font-bold">Matching Games</h1>
 
       <div className="overflow-x-auto">
         <table className="table-zebra table w-full">
@@ -23,7 +23,7 @@ const SortingGamesList = ({ sortingGames }: FindSortingGames) => {
             </tr>
           </thead>
           <tbody>
-            {sortingGames.map((game) => (
+            {buildingGames.map((game) => (
               <tr key={game.id}>
                 <td>{truncate(game.id)}</td>
                 <td>{truncate(game.user?.email)}</td>
@@ -33,7 +33,7 @@ const SortingGamesList = ({ sortingGames }: FindSortingGames) => {
                 <td>{truncate(game.level)}</td>
                 <td>
                   <Link
-                    to={routes.sortingGameIndividual({ id: game.id })}
+                    to={routes.matchingGameIndividual({ id: game.id })}
                     title={'Resume game ' + game.id}
                     className="btn-primary btn-outline btn-xs btn"
                   >
@@ -49,4 +49,4 @@ const SortingGamesList = ({ sortingGames }: FindSortingGames) => {
   )
 }
 
-export default SortingGamesList
+export default BuildingGamesList

@@ -67,6 +67,8 @@ enum GameType {
   SORTING
   /// A game where a user must match words with the same phoneme.
   MATCHING
+  /// A game where a user must build words.
+  BUILDING
 }
 
 /// Possible matching game types.
