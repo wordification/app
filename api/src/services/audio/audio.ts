@@ -40,8 +40,11 @@ export const getWord = (word: string) => {
 }
 
 // Sorting game specific files
+// export const getSortingGameSentence = (sentence: string) => {
+//   return `${STATIC_PATH}/sorting/sentences/${cleanText(sentence)}_sentence.mp3`
+// } // Sorting game sound files generated and added to /common/sentences/, however, files still exist in sorting/sentences
 export const getSortingGameSentence = (sentence: string) => {
-  return `${STATIC_PATH}/sorting/sentences/${cleanText(sentence)}_sentence.mp3`
+  return `${STATIC_PATH}/common/sentences/${cleanText(sentence)}_sentence_0.mp3`
 }
 
 export const getSortingGamePhrase = (phrase: string) => {
