@@ -6,6 +6,7 @@ import {
   getGrapheme,
   getLetter,
   getPhoneme,
+  getSWESentence,
   getSWEWord,
   getSortingGamePhrase,
   getSortingGameSentence,
@@ -203,7 +204,7 @@ export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] =
       getSortingGamePhrase('introvsound'),
       // [ WORD ]
       getWord(currentWord.word),
-      // SWE example test
+      // SWE word example test
       getSortingGamePhrase('also_pronounced'),
       getSWEWord(currentWord.word),
       ///
@@ -213,6 +214,10 @@ export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] =
       getWord(currentWord.word),
       // [ SENTENCE ]
       getSortingGameSentence(currentWord.word),
+      // also pronounced
+      getSortingGamePhrase('also_pronounced'),
+      // [ SWE SENTENCE ]
+      getSWESentence(currentWord.word),
       // the sounds that make
       getSortingGamePhrase('intro_sounds'),
       // [ WORD ]
