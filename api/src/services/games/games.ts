@@ -38,7 +38,7 @@ export const games: QueryResolvers['games'] = ({ complete, type }) => {
 }
 
 export const game: QueryResolvers['game'] = ({ id }) => {
-  console.log(id)
+  // console.log(id)
   return db.game.findFirst({
     where: { id, userId: context.currentUser?.id },
   })
@@ -98,7 +98,7 @@ export const createGame: MutationResolvers['createGame'] = async ({
         })
       : await gameWordsByRime({ numSyllables: 1, rime: ['ake', 'ight', 'ite'] })
 
-  gameWords?.forEach((wrd) => console.log(wrd.word))
+  // gameWords?.forEach((wrd) => console.log(wrd.word))
 
   if (input.type === 'SORTING') {
     const [currentWord, ...incompleteWords] = gameWords ?? []
@@ -152,7 +152,7 @@ export const createGame: MutationResolvers['createGame'] = async ({
       .slice(0, 5)
     const [currentWord, ...incompleteWords] = useGameWords
 
-    console.log(useGameWords)
+    // console.log(useGameWords)
 
     return db.game.create({
       data: {
