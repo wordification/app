@@ -49,30 +49,42 @@ export const buildingGamePlayLevel: QueryResolvers['buildingGamePlayLevel'] =
       throw new Error('Current word not selected')
     }
 
-    const currentOnsIdx =
-      currentWord?.syllables.findIndex((syl) => syl === 'ons') ?? 0
-    const currentOnsGrapheme = currentWord?.graphemes.at(currentOnsIdx) ?? ''
+    // A list of onset indexes
+    const currentOnsIdxList = (currentWord?.syllables || [])
+      .map((syl, index) => (syl === 'ons' ? index : null))
+      .filter((index) => index !== null) // Remove null values
+      .map((index) => index as number)
+    const currentOnsGraphemeList = currentOnsIdxList.map(
+      (idx) => currentWord?.graphemes[idx]
+    )
+    const currentOnsGraphemeString = currentOnsGraphemeList.join('')
     const currentChoppedWord = currentWord?.word.substring(
-      currentOnsGrapheme.length
+      currentOnsGraphemeString.length
     )
     // Get current word phoneme for onset position
-    const currentOnsPhoneme = currentWord?.phonemes.at(currentOnsIdx) ?? ''
+    const currentOnsPhonemeList = currentOnsIdxList.map(
+      (idx) => currentWord?.phonemes[idx]
+    )
 
     // if (!incompleteWords) {
     //   throw new Error('No words selected for building')
     // }
 
-    console.log(currentWord)
-
-    const onsList = game.allWords.map((word) => {
-      const onsIdx = word.syllables.findIndex((syl) => syl === 'ons')
-      return word.graphemes.at(onsIdx) ?? ''
+    // Choose list of onsets from all words in the game
+    const allOnsList = game.allWords.map((word) => {
+      const onsIdxList = (word.syllables || [])
+        .map((syl, index) => (syl === 'ons' ? index : null))
+        .filter((index) => index !== null) // Remove null values
+        .map((index) => index as number)
+      const onsGraphemeList = onsIdxList.map((idx) => word.graphemes[idx])
+      return onsGraphemeList.join('')
     })
 
     // Filter out onsGrapheme from onsList
-    const filteredList = onsList.filter(
-      (grapheme) => grapheme !== currentOnsGrapheme
+    const filteredList = allOnsList.filter(
+      (grapheme) => grapheme !== currentOnsGraphemeString
     )
+
     const uniqueSet = new Set(filteredList)
     // Shuffle the filteredList randomly
     const uniqueArr = Array.from(uniqueSet)
@@ -80,10 +92,13 @@ export const buildingGamePlayLevel: QueryResolvers['buildingGamePlayLevel'] =
     const shuffledList = uniqueArr.sort(() => Math.random() - 0.5)
     const selectedGraphemes = shuffledList.slice(0, 3)
     // Concatenate onsGrapheme with the selectedGraphemes
-    const gameOnsList = [currentOnsGrapheme, ...selectedGraphemes].sort(
+    const gameOnsList = [currentOnsGraphemeString, ...selectedGraphemes].sort(
       () => Math.random() - 0.5
     )
 
+    const onsPhonemeAudios = currentOnsPhonemeList.map((phoneme) =>
+      getPhoneme(phoneme)
+    )
     const audio: string[] = [
       // let's build the word
       getBuildingGamePhrase('build_intro'),
@@ -92,7 +107,7 @@ export const buildingGamePlayLevel: QueryResolvers['buildingGamePlayLevel'] =
       // spell the
       getBuildingGamePhrase('spell_the'),
       // ons sound
-      getPhoneme(currentOnsPhoneme),
+      ...onsPhonemeAudios,
       // sound in
       getBuildingGamePhrase('sound_in'),
       // [WORD]
@@ -154,21 +169,28 @@ export const buildingGameGrade: MutationResolvers['buildingGameGrade'] =
       throw new Error('Current word not selected')
     }
 
-    const onsIdx =
-      game.currentWord?.syllables.findIndex((syl) => syl === 'ons') ?? 0
-    const onsGrapheme = currentWord?.graphemes.at(onsIdx) ?? ''
-    const onsPhoneme = currentWord?.phonemes.at(onsIdx) ?? ''
+    // A list of onset indexes
+    const onsIdxList = (currentWord?.syllables || [])
+      .map((syl, index) => (syl === 'ons' ? index : null))
+      .filter((index) => index !== null) // Remove null values
+      .map((index) => index as number)
+    const onsGraphemeList = onsIdxList.map((idx) => currentWord?.graphemes[idx])
+    const onsGraphemeString = onsGraphemeList.join('')
+    const onsPhonemeList = onsIdxList.map((idx) => currentWord?.phonemes[idx])
 
-    const correct = onsGrapheme === ons
+    const correct = onsGraphemeString === ons
     const onsLetters = ons.split('')
 
     const onsLetterAudios = onsLetters.map((letter) => getLetter(letter))
+    const onsPhonemeAudios = onsPhonemeList.map((phoneme) =>
+      getPhoneme(phoneme)
+    )
 
     const correctAudio: string[] = [
       // that's right, the
       getBuildingGamePhrase('thats_right_the'),
       // ons sound
-      getPhoneme(onsPhoneme),
+      ...onsPhonemeAudios,
       // sound in
       getBuildingGamePhrase('sound_in'),
       // [WORD]
@@ -182,7 +204,7 @@ export const buildingGameGrade: MutationResolvers['buildingGameGrade'] =
       // that's right, the
       getBuildingGamePhrase('thats_not_right_the'),
       // ons sound
-      getPhoneme(onsPhoneme),
+      ...onsPhonemeAudios,
       // sound in
       getBuildingGamePhrase('sound_in'),
       // [WORD]
