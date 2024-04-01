@@ -65,6 +65,18 @@ export const schema = gql`
 
     "All of the words that have not been played in the game."
     incompleteWords: [Word!]!
+
+    "The current score of a phoneme based game."
+    score: Int
+
+    """
+    The score calculated when a game is complete. Calculated by the
+    current score divided by the number of words per phoneme.
+    """
+    finalScore: Float
+
+    "The grade of a game when a game is compelete. This is on a 0-3 scale."
+    grade: Float
   }
 
   """
@@ -79,6 +91,10 @@ export const schema = gql`
     A game where a user must match two words with the same phoneme.
     """
     MATCHING
+    """
+    A game where a user must build words.
+    """
+    BUILDING
   }
 
   """

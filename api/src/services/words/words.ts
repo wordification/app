@@ -5,6 +5,30 @@ import { db } from 'src/lib/db'
 import type { Game } from '@prisma/client'
 import type { QueryResolvers, WordRelationResolvers } from 'types/graphql'
 
+// select all words ending with (eg. -ake)
+export const gameWordsByRime = async ({
+  rime,
+  numSyllables,
+}: {
+  rime: string[]
+  numSyllables: number
+}) => {
+  validate(numSyllables, 'numSyllables', {
+    numericality: { onlyInteger: true, positive: true },
+  })
+  const oneSyllWords = await db.word.findMany({
+    where: {
+      numSyllables,
+    },
+  })
+
+  return oneSyllWords.filter((word) =>
+    rime.some(
+      (ending) => word.word.endsWith(ending) && word.syllables.at(0) === 'ons'
+    )
+  )
+}
+
 export const filterWordsByPhoneme = async ({
   phonemes,
   numSyllables,

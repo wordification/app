@@ -10,6 +10,7 @@ export const QUERY = gql`
       firstName
       lastName
       email
+      gpa
     }
   }
 `

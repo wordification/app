@@ -117,6 +117,8 @@ const StudentList = ({ currentStudents }: GetCurrentStudents) => {
               <th>First Name</th>
               <th>Last Name</th>
               <th>Email</th>
+              <th>Group</th>
+              <th>GPA - 3.0 Scale</th>
             </tr>
           </thead>
           <tbody>
@@ -130,21 +132,21 @@ const StudentList = ({ currentStudents }: GetCurrentStudents) => {
                         name: student.lastName + ', ' + student.firstName,
                       })}
                       title={'Reset Password - User ' + student.id}
-                      className="btn-outline btn-error join-item btn-xs btn mb-1"
+                      className="btn-error btn-outline btn-xs join-item btn mb-1"
                     >
                       Reset Password
                     </Link>
                     <Link
                       to={routes.studentProfile({ id: student.id })}
                       title={'Student Profile ' + student.id}
-                      className="btn-primary btn-outline join-item btn-xs btn mb-1"
+                      className="btn-primary btn-outline btn-xs join-item btn mb-1"
                     >
                       View Student
                     </Link>
                     <Link
                       to={routes.classGameSetup({ id: student.id })}
                       title={'Game Setup ' + student.id}
-                      className="btn-accent btn-outline join-item btn-xs btn"
+                      className="btn-accent btn-outline btn-xs join-item btn"
                     >
                       Edit Game Setup
                     </Link>
@@ -154,6 +156,22 @@ const StudentList = ({ currentStudents }: GetCurrentStudents) => {
                 <td>{student.firstName}</td>
                 <td>{student.lastName}</td>
                 <td>{student.email}</td>
+                <td
+                  className={
+                    (student.gpa ?? 0) < 1
+                      ? 'text-error'
+                      : (student.gpa ?? 0) < 2
+                      ? 'text-warning'
+                      : 'text-success'
+                  }
+                >
+                  {(student.gpa ?? 0) < 1
+                    ? 'RED'
+                    : (student.gpa ?? 0) < 2
+                    ? 'YELLOW'
+                    : 'GREEN'}
+                </td>
+                <td>{student.gpa}</td>
               </tr>
             ))}
           </tbody>

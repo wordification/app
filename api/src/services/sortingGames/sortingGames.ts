@@ -6,6 +6,7 @@ import {
   getGrapheme,
   getLetter,
   getPhoneme,
+  getSWESentence,
   getSWEWord,
   getSortingGamePhrase,
   getSortingGameSentence,
@@ -42,13 +43,63 @@ export const selectNextWord = async (gameId: number) => {
 
   const { incompleteWords } = game
 
+  const finalScore = parseFloat(
+    ((game.score ?? 0) / game.wordsPerUnit).toFixed(2)
+  )
+
   if (incompleteWords.length === 0) {
+    // Map final score on a 3 point grade scale.
+    //  -12 - 0 ->  0.0 - 1.0  ->  RED
+    //  0 - 3   ->  1.0 - 2.0  ->  YELLOW
+    //  3 - 6   ->  2.0 - 3.0  ->  GREEN
+    const shiftFinalScore = finalScore + 12.0
+    const grade =
+      shiftFinalScore >= 0 && shiftFinalScore <= 12
+        ? (shiftFinalScore - 0) / (12 - 0)
+        : shiftFinalScore > 12 && shiftFinalScore <= 15
+        ? 1 + (shiftFinalScore - 12) / (15 - 12)
+        : shiftFinalScore > 15 && shiftFinalScore <= 18
+        ? 2 + (shiftFinalScore - 15) / (18 - 15)
+        : 0
+
+    const user = await db.user.findFirst({
+      where: {
+        id: game.userId,
+      },
+      include: {
+        games: true,
+      },
+    })
+
+    const completeGamesCount =
+      user?.games.reduce((sum, game) => {
+        if (game.complete === true && game.grade !== null) {
+          return sum + 1
+        } else {
+          return sum
+        }
+      }, 0) ?? 0
+
+    // Calculate new gpa from existing gpa
+    const gpa =
+      ((user?.gpa ?? 0) * completeGamesCount + grade) / (completeGamesCount + 1)
+
+    await db.user.update({
+      data: {
+        gpa: parseFloat(gpa.toFixed(2)),
+      },
+      where: { id: game.userId },
+    })
+
     return db.game.update({
       data: {
         level: 4,
         complete: true,
         incorrectGuesses: 0,
         currentWordId: null,
+        finalScore,
+        grade: parseFloat(grade.toFixed(2)),
+        score: null,
       },
       where: { id: gameId },
     })
@@ -153,7 +204,7 @@ export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] =
       getSortingGamePhrase('introvsound'),
       // [ WORD ]
       getWord(currentWord.word),
-      // SWE example test
+      // SWE word example test
       getSortingGamePhrase('also_pronounced'),
       getSWEWord(currentWord.word),
       ///
@@ -163,6 +214,10 @@ export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] =
       getWord(currentWord.word),
       // [ SENTENCE ]
       getSortingGameSentence(currentWord.word),
+      // also pronounced
+      getSortingGamePhrase('also_pronounced'),
+      // [ SWE SENTENCE ]
+      getSWESentence(currentWord.word),
       // the sounds that make
       getSortingGamePhrase('intro_sounds'),
       // [ WORD ]
@@ -266,6 +321,15 @@ export const sortingGameThirdLevel: QueryResolvers['sortingGameThirdLevel'] =
     }
   }
 
+const updateScore = async (gameId: number, correct: boolean) => {
+  return db.game.update({
+    data: {
+      score: correct ? { increment: 1 } : { decrement: 1 },
+    },
+    where: { id: gameId },
+  })
+}
+
 const handleGrade = async ({
   gameId,
   gameLevel,
@@ -281,6 +345,7 @@ const handleGrade = async ({
   incorrectAudio: string[] | undefined
   correctAudio: string[] | undefined
 }) => {
+  await updateScore(gameId, correct)
   if (correct) {
     await advanceLevel(gameId, gameLevel)
 
