@@ -3,13 +3,13 @@ import { GameType } from '@prisma/client'
 import { db } from 'src/lib/db'
 
 import {
+  getBritishSentence,
+  getBritishWord,
   getGrapheme,
   getLetter,
   getPhoneme,
-  getSWESentence,
-  getSWEWord,
+  getSentence,
   getSortingGamePhrase,
-  getSortingGameSentence,
   getWord,
 } from '../audio'
 
@@ -204,20 +204,20 @@ export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] =
       getSortingGamePhrase('introvsound'),
       // [ WORD ]
       getWord(currentWord.word),
-      // SWE word example test
+      // British word example test
       getSortingGamePhrase('also_pronounced'),
-      getSWEWord(currentWord.word),
+      getBritishWord(currentWord.word),
       ///
       // a sentence that has
       getSortingGamePhrase('intro_sentence'),
       // [ WORD ]
       getWord(currentWord.word),
       // [ SENTENCE ]
-      getSortingGameSentence(currentWord.word),
+      getSentence(currentWord.word),
       // also pronounced
       getSortingGamePhrase('also_pronounced'),
-      // [ SWE SENTENCE ]
-      getSWESentence(currentWord.word),
+      // [ Brit SENTENCE ]
+      getBritishSentence(currentWord.word),
       // the sounds that make
       getSortingGamePhrase('intro_sounds'),
       // [ WORD ]
