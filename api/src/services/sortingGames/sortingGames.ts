@@ -8,8 +8,8 @@ import {
   getPhoneme,
   getSWESentence,
   getSWEWord,
+  getSentence,
   getSortingGamePhrase,
-  getSortingGameSentence,
   getWord,
 } from '../audio'
 
@@ -213,7 +213,7 @@ export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] =
       // [ WORD ]
       getWord(currentWord.word),
       // [ SENTENCE ]
-      getSortingGameSentence(currentWord.word),
+      getSentence(currentWord.word),
       // also pronounced
       getSortingGamePhrase('also_pronounced'),
       // [ SWE SENTENCE ]

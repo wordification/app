@@ -2,7 +2,14 @@ import { GameType } from '@prisma/client'
 
 import { db } from 'src/lib/db'
 
-import { getBuildingGamePhrase, getLetter, getPhoneme, getWord } from '../audio'
+import {
+  getBuildingGamePhrase,
+  getLetter,
+  getPhoneme,
+  getSentence,
+  getSortingGamePhrase,
+  getWord,
+} from '../audio'
 
 import type { MutationResolvers, QueryResolvers } from 'types/graphql'
 
@@ -104,6 +111,12 @@ export const buildingGamePlayLevel: QueryResolvers['buildingGamePlayLevel'] =
       getBuildingGamePhrase('build_intro'),
       // [WORD]
       getWord(currentWord.word),
+      // a sentence that has
+      getSortingGamePhrase('intro_sentence'),
+      // [ WORD ]
+      getWord(currentWord.word),
+      // [ SENTENCE ]
+      getSentence(currentWord.word),
       // spell the
       getBuildingGamePhrase('spell_the'),
       // ons sound

@@ -43,7 +43,7 @@ export const getWord = (word: string) => {
 // export const getSortingGameSentence = (sentence: string) => {
 //   return `${STATIC_PATH}/sorting/sentences/${cleanText(sentence)}_sentence.mp3`
 // } // Sorting game sound files generated and added to /common/sentences/, however, files still exist in sorting/sentences
-export const getSortingGameSentence = (sentence: string) => {
+export const getSentence = (sentence: string) => {
   return `${STATIC_PATH}/common/sentences/${cleanText(sentence)}_sentence_0.mp3`
 }
 
