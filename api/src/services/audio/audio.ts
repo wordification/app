@@ -22,6 +22,18 @@ export const getSWESentence = (sentence: string) => {
   )}_sentence_0.mp3`
 }
 
+// British Example Audio
+export const getBritishWord = (word: string) => {
+  return `${STATIC_PATH}/common/Brit_words/${cleanText(word)}.mp3`
+}
+// Default sentence 0 -- replace with fix for choosing 1/4 sentence as in sorting game sentence
+//  Only sentence 0 exists right now. Will generate rest later
+export const getBritishSentence = (sentence: string) => {
+  return `${STATIC_PATH}/common/Brit_sentences/${cleanText(
+    sentence
+  )}_sentence_0.mp3`
+}
+
 // Common files
 export const getPhoneme = (phoneme: string | number) => {
   return `${STATIC_PATH}/common/phonemes/${phoneme}.mp3`
