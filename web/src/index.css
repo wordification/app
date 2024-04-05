@@ -1,3 +1,18 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+.bg-kelly-green{
+  @apply bg-[rgb(118,176,65)];
+}
+/* Background Example usage */
+/* <div className="bg-kelly-green card shadow-xl"> */
+
+.text-kelly-green{
+  @apply text-[rgb(118,176,65)];
+}
+/* Text Example usage */
+/* <h2 className="text-kelly-green text-xl font-bold">Updates</h2> */
+
+/* Copy this process for any other application and color, use in className="" as normal */
+/* TODO: read up on tailwind @apply stuff to format these commands better possibly */
