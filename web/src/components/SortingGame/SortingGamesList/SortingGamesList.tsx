@@ -28,7 +28,7 @@ const SortingGamesList = ({ sortingGames }: FindSortingGames) => {
                 <td className="text-xl">{truncate(game.id)}</td>
                 <td className="text-xl">{truncate(game.user?.email)}</td>
                 <td className="text-xl">{timeTag(game.updatedAt)}</td>
-                <td className="text-xl">{truncate(game.wordsPerPhoneme * game.phonemes.length)}</td>
+                <td className="text-xl">{truncate(game.wordsPerUnit * game.phonemes.length)}</td>
                 <td className="text-xl">{truncate(game.phonemes.join(' & '))}</td>
                 <td className="text-xl">{truncate(game.level)}</td>
                 <td className="text-xl">

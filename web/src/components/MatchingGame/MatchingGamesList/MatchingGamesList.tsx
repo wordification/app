@@ -28,10 +28,10 @@ const MatchingGamesList = ({ matchingGames }: FindMatchingGames) => {
                 <td className="text-xl">{truncate(game.id)}</td>
                 <td className="text-xl">{truncate(game.user?.email)}</td>
                 <td className="text-xl">{timeTag(game.updatedAt)}</td>
-                <td className="text-xl">{truncate(game.wordsPerPhoneme * game.phonemes.length)}</td>
+                <td className="text-xl">{truncate(game.wordsPerUnit * game.phonemes.length)}</td>
                 <td className="text-xl">{truncate(game.phonemes.join(' & '))}</td>
                 <td className="text-xl">{truncate(game.level)}</td>
-                <td>
+                <td className="text-xl">
                   <Link
                     to={routes.matchingGameIndividual({ id: game.id })}
                     title={'Resume game ' + game.id}

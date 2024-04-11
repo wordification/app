@@ -6,6 +6,13 @@
 @import 'tailwindcss/utilities';
 
 @layer base {
+  /* Text Example usage */
+  /* <h2 className="text-w-yellow text-xl font-bold">Updates</h2> */
+
+  /* Copy this process for any other application and color, use in className="" as normal */
+  /* TODO: read up on tailwind @apply stuff to format these commands better possibly */
+
+
   html {
       font-family: Gabarito;
   }
@@ -45,7 +52,6 @@
   .bg-w-dark-blue {
     @apply bg-[rgb(69,105,144)];
   }
-
 }
 
 @layer components {

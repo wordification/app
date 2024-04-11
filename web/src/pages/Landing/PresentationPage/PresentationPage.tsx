@@ -10,27 +10,18 @@ const LandingPresentationPage = () => {
       </div>
       <div className="hero mb-10 mt-10 rounded-lg bg-base-200">
         <div className="hero-content flex-col-reverse lg:flex-row-reverse">
-          {/** --vvv-- INSERT DOC LINK HERE WHE PUBLISHED --vvv-- */}
-          {/* <Link to="">
-            <div className="card image-full w-72 flex-shrink-0 bg-base-100 shadow-xl transition hover:shadow-2xl">
-              <figure>
-
+          <div className="flex flex-col">
+            <a href="https://american-cse.org/csce2023-ieee/pdfs/CSCE2023-5LlpKs7cpb4k2UysbLCuOx/275900b151/275900b151.pdf">
+              <div className="card w-72 flex-shrink-0 bg-base-100 shadow-xl transition hover:shadow-2xl">
                 <img
-                  src="https://placehold.co/560x560"
-                  alt="Wordification Paper"
+                  className="h-auto w-full max-w-sm rounded-lg"
+                  src="CSCE2023_paper.png"
+                  alt="Wordification CSCE 2023 Conference Paper"
                 />
-              </figure>
-            </div>
-          </Link> */}
-          {/** --^^^-- INSERT DOC LINK HERE WHE PUBLISHED --^^^-- */}
-
-          {/** --vvv-- REMOVE WHEN INSERTING DOC --vvv-- */}
-          <div className="card flex h-72 w-72 items-center justify-center bg-base-100 shadow-xl transition hover:shadow-2xl">
-            <p className="text-center text-xl font-semibold">
-              Link to Publication Coming Soon!
-            </p>
+              </div>
+            </a>
+            <p className="ml-2 italic">Click to view!</p>
           </div>
-          {/** --^^^-- REMOVE WHEN INSERTING DOC --^^^-- */}
 
           <div className="py-6 text-center lg:text-left">
             <h1 className="text-5xl font-semibold">Wordification:</h1>

@@ -36,6 +36,13 @@ const Routes = () => {
       <Private unauthenticated="login">
         <Set wrap={GlobalLayout}>
           <Set>
+            <Route path="/games/building/{id:Int}" page={BuildingGameIndividualGamePage} name="buildingGameIndividual" />
+            <Route path="/games/building/resume" page={BuildingGameIncompleteGamesPage} name="buildingGameIncomplete" />
+            <Route path="/games/building/scores" page={BuildingGameCompleteGamesPage} name="buildingGameComplete" />
+            <Route path="/games/building/setup" page={BuildingGameSetupGamePage} name="buildingGameSetup" />
+            <Route path="/games/building" page={BuildingGameMenuPage} name="buildingGame" />
+          </Set>
+          <Set>
             <Route path="/games/matching/{id:Int}" page={MatchingGameIndividualGamePage} name="matchingGameIndividual" />
             <Route path="/games/matching/resume" page={MatchingGameIncompleteGamesPage} name="matchingGameIncomplete" />
             <Route path="/games/matching/scores" page={MatchingGameCompleteGamesPage} name="matchingGameComplete" />

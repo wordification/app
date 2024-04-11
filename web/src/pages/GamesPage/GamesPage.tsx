@@ -16,6 +16,11 @@ const GAME_CHOICES = [
     to: routes.matchingGame(),
     icon: MatchingGameIcon,
   },
+  {
+    title: 'Building',
+    content: 'Build words!',
+    to: routes.buildingGame(),
+  },
 ] as const
 
 const GamesPage = () => {

@@ -14,6 +14,25 @@ function cleanText(word: string): string {
 export const getSWEWord = (word: string) => {
   return `${STATIC_PATH}/common/SWE_words/${cleanText(word)}.mp3`
 }
+// Default sentence 0 -- replace with fix for choosing 1/4 sentence as in sorting game sentence
+//  Only sentence 0 exists right now. Will generate rest later
+export const getSWESentence = (sentence: string) => {
+  return `${STATIC_PATH}/common/SWE_sentences/${cleanText(
+    sentence
+  )}_sentence_0.mp3`
+}
+
+// British Example Audio
+export const getBritishWord = (word: string) => {
+  return `${STATIC_PATH}/common/Brit_words/${cleanText(word)}.mp3`
+}
+// Default sentence 0 -- replace with fix for choosing 1/4 sentence as in sorting game sentence
+//  Only sentence 0 exists right now. Will generate rest later
+export const getBritishSentence = (sentence: string) => {
+  return `${STATIC_PATH}/common/Brit_sentences/${cleanText(
+    sentence
+  )}_sentence_0.mp3`
+}
 
 // Common files
 export const getPhoneme = (phoneme: string | number) => {
@@ -33,8 +52,11 @@ export const getWord = (word: string) => {
 }
 
 // Sorting game specific files
-export const getSortingGameSentence = (sentence: string) => {
-  return `${STATIC_PATH}/sorting/sentences/${cleanText(sentence)}_sentence.mp3`
+// export const getSortingGameSentence = (sentence: string) => {
+//   return `${STATIC_PATH}/sorting/sentences/${cleanText(sentence)}_sentence.mp3`
+// } // Sorting game sound files generated and added to /common/sentences/, however, files still exist in sorting/sentences
+export const getSentence = (sentence: string) => {
+  return `${STATIC_PATH}/common/sentences/${cleanText(sentence)}_sentence_0.mp3`
 }
 
 export const getSortingGamePhrase = (phrase: string) => {
@@ -44,4 +66,9 @@ export const getSortingGamePhrase = (phrase: string) => {
 // Matching game specific files
 export const getMatchingGamePhrase = (phrase: string) => {
   return `${STATIC_PATH}/matching/phrases/${phrase}.mp3`
+}
+
+// Building game specific files
+export const getBuildingGamePhrase = (phrase: string) => {
+  return `${STATIC_PATH}/building/phrases/${phrase}.mp3`
 }
