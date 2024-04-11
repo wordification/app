@@ -2,6 +2,7 @@ import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 import SortingGameIcon from '../../../../static/SortingGameIcon.svg'
 import MatchingGameIcon from '../../../../static/MatchingGameIcon.svg'
+import BuildingGameIcons from '../../../../static/WordBuildingGameIcon.svg'
 
 const GAME_CHOICES = [
   {
@@ -20,6 +21,7 @@ const GAME_CHOICES = [
     title: 'Building',
     content: 'Build words!',
     to: routes.buildingGame(),
+    icon: BuildingGameIcons,
   },
 ] as const
 
