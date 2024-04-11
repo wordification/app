@@ -203,7 +203,7 @@ const UserList = ({ users }: FindExistingUsers) => {
               <option>Teacher ID</option>
             </SelectField>
           </div>
-          <Submit className="btn-primary btn mt-6">Sumbit</Submit>
+          <Submit className="btn-primary btn mt-6">Submit</Submit>
         </div>
       </Form>
       <div className="overflow-x-auto">

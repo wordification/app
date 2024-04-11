@@ -6,7 +6,7 @@ const AdminCreateUserPage = () => {
   return (
     <>
       <MetaTags title="CreateUser" description="CreateUser page" />
-      <h1 className="text-2xl font-bold">Create New User</h1>
+      <h1 className="text-5xl font-bold">Create New User</h1>
       <CreateUserForm />
     </>
   )

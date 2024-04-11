@@ -7,7 +7,7 @@ const DashboardStudentsPage = () => {
     <>
       <MetaTags title="Students" description="Students page" />
 
-      <h1 className="text-2xl font-bold">My Class</h1>
+      <h1 className="text-5xl font-bold pb-3">My Class</h1>
 
       <TeacherCell />
     </>

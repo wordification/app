@@ -4,12 +4,12 @@ import { MetaTags } from '@redwoodjs/web'
 const DASHBOARD_ITEMS = [
   {
     title: 'Add User',
-    content: 'Fill out a `create new user` form.',
+    content: "Fill out a 'create new user' form.",
     to: routes.createUser(),
   },
   {
     title: 'Modify User',
-    content: 'Delete or Update information for an existing user.',
+    content: 'Delete or update information for an existing user.',
     to: routes.modifyUser(),
   },
   {
@@ -24,17 +24,17 @@ const AdminDashboardPage = () => {
     <>
       <MetaTags title="AdminDashboard" description="AdminDashboard page" />
 
-      <h1 className="text-xl font-bold">Administrator Dashboard</h1>
+      <h1 className="text-5xl font-bold pb-3">Administrator Dashboard</h1>
       <ul className="grid gap-4 sm:grid-cols-3">
         {DASHBOARD_ITEMS.map((item) => (
           <Link
             to={item.to}
             key={item.to}
-            className="card shadow-lg hover:shadow-xl"
+            className="card shadow-lg hover:shadow-xl bg-off-black"
           >
             <li className="card-body">
-              <h3 className="card-title">{item.title}</h3>
-              <p>{item.content}</p>
+              <h3 className="card-title text-white text-5xl">{item.title}</h3>
+              <p className="text-gray text-2xl">{item.content}</p>
             </li>
           </Link>
         ))}
