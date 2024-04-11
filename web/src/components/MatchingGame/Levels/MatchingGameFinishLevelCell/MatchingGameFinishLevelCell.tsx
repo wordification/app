@@ -37,15 +37,15 @@ export const Success = ({
   return (
     <div className="card bg-base-300 text-base-content shadow-xl">
       <div className="card-body">
-        <h2 className="card-title">Game complete!</h2>
-        <p>Here are the words you practiced:</p>
-        <ul className="list-inside list-disc">
+        <h2 className="card-title text-4xl pb-3">Game complete!</h2>
+        <h3 className="text-xl">Here are the words you practiced:</h3>
+        <ul className="list-inside list-disc text-lg">
           {matchingGameFinishLevel.allWords.map((word) => (
             <li key={word.id}>{word.word}</li>
           ))}
         </ul>
         <div className="card-actions justify-end">
-          <Link className="btn-primary btn" to={routes.matchingGameSetup()}>
+          <Link className="btn-game-yellow btn" to={routes.matchingGameSetup()}>
             Play again
           </Link>
         </div>

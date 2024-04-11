@@ -54,7 +54,7 @@ const MatchingGameCard = ({
         <div
           className={`card relative h-full w-full rounded-xl text-primary-content shadow-xl transition-all duration-500 [transform-style:preserve-3d] ${
             isFlipped || flipped ? '[transform:rotateY(180deg)]' : ''
-          } ${flipped ? 'bg-green-500' : 'bg-primary'}`}
+          } ${flipped ? 'bg-green-500' : 'bg-w-yellow'}`}
         >
           <div
             className={`align-center card-body absolute inset-0 justify-center text-center ${
@@ -64,7 +64,7 @@ const MatchingGameCard = ({
           <div
             className={`align-center ${
               grouping ? '' : '[transform:rotateY(180deg)]'
-            } card-body absolute inset-0 justify-center text-center [backface-visibility:hidden]`}
+            } card-body absolute inset-0 justify-center text-center text-3xl [backface-visibility:hidden]`}
           >
             {word}
           </div>

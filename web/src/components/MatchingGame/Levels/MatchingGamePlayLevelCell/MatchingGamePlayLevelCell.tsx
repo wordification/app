@@ -177,7 +177,7 @@ export const Success = ({
 
   return (
     <>
-      <div className="card bg-base-100 text-base-content shadow-2xl">
+      <div className="card bg-w-dark-blue text-base-content shadow-2xl">
         <div className="card-body items-center justify-center">
           <ul
             className={`grid grid-cols-2 gap-4 ${

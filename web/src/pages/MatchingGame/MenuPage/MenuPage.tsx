@@ -21,17 +21,17 @@ const MATCHING_MENU_ITEMS = [
 const MatchingGameMenuPage = () => {
   return (
     <>
-      <h1 className="text-xl font-bold">Matching Game</h1>
+      <h1 className="text-5xl font-bold pb-3">Matching Game</h1>
       <ul className="grid gap-4 sm:grid-cols-3">
         {MATCHING_MENU_ITEMS.map((item) => (
           <Link
             to={item.to}
             key={item.to}
-            className="card shadow-lg hover:shadow-xl"
+            className="card shadow-lg hover:shadow-xl bg-off-black"
           >
             <li className="card-body">
-              <h3 className="card-title">{item.title}</h3>
-              <p>{item.content}</p>
+              <h3 className="card-title text-white text-5xl">{item.title}</h3>
+              <p className="text-gray text-2xl">{item.content}</p>
             </li>
           </Link>
         ))}
