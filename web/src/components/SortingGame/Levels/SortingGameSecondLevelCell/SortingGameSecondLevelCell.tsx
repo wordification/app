@@ -123,7 +123,7 @@ export const Success = ({
       <div className="grid grid-cols-2 gap-4">
         {sortingGameSecondLevel.graphemes.map((grapheme) => (
           <button
-            className="btn-secondary btn normal-case"
+            className="btn-game-yellow btn-lg btn normal-case"
             type="button"
             onClick={() => handleClick(grapheme)}
             disabled={loading || playingAudio}

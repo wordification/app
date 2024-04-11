@@ -7,31 +7,31 @@ import type { FindSortingGames } from 'types/graphql'
 const SortingGamesList = ({ sortingGames }: FindSortingGames) => {
   return (
     <>
-      <h1 className="text-xl font-bold">Sorting Games</h1>
+      <h1 className="text-5xl font-bold pb-3">Sorting Games</h1>
 
       <div className="overflow-x-auto">
         <table className="table-zebra table w-full">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>User</th>
-              <th>Last Played</th>
-              <th># of Words</th>
-              <th>Phonemes</th>
-              <th>Level</th>
-              <th>&nbsp;</th>
+              <th className="text-2xl">ID</th>
+              <th className="text-2xl">User</th>
+              <th className="text-2xl">Last Played</th>
+              <th className="text-2xl"># of Words</th>
+              <th className="text-2xl">Phonemes</th>
+              <th className="text-2xl">Level</th>
+              <th className="text-2xl">&nbsp;</th>
             </tr>
           </thead>
           <tbody>
             {sortingGames.map((game) => (
               <tr key={game.id}>
-                <td>{truncate(game.id)}</td>
-                <td>{truncate(game.user?.email)}</td>
-                <td>{timeTag(game.updatedAt)}</td>
-                <td>{truncate(game.wordsPerPhoneme * game.phonemes.length)}</td>
-                <td>{truncate(game.phonemes.join(' & '))}</td>
-                <td>{truncate(game.level)}</td>
-                <td>
+                <td className="text-xl">{truncate(game.id)}</td>
+                <td className="text-xl">{truncate(game.user?.email)}</td>
+                <td className="text-xl">{timeTag(game.updatedAt)}</td>
+                <td className="text-xl">{truncate(game.wordsPerPhoneme * game.phonemes.length)}</td>
+                <td className="text-xl">{truncate(game.phonemes.join(' & '))}</td>
+                <td className="text-xl">{truncate(game.level)}</td>
+                <td className="text-xl">
                   <Link
                     to={routes.sortingGameIndividual({ id: game.id })}
                     title={'Resume game ' + game.id}

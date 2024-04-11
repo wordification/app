@@ -9,4 +9,43 @@
   html {
       font-family: Gabarito;
   }
+
+  .bg-kelly-green{
+    @apply bg-[rgb(118,176,65)];
+  }
+
+  /* used in cards, navbar, headings, dark text */
+  .bg-off-black{
+    @apply bg-[rgb(30,30,36)];
+  }
+
+  /* used in subheadings */
+  .text-gray {
+    @apply text-[rgb(185,185,185)];
+  }
+
+  .bg-w-red {
+    @apply bg-[rgb(228,87,46)];
+  }
+
+  .bg-w-yellow {
+    @apply bg-[rgb(255,201,20)];
+  }
+
+  .bg-w-dark-yellow {
+    @apply bg-[rgb(191,150,15)];
+  }
+
+  /* used in the "mat" the buttons sit on during a game */
+  .bg-w-dark-blue {
+    @apply bg-[rgb(69,105,144)];
+  }
+
+}
+
+@layer components {
+  /* used in games */
+  .btn-game-yellow {
+    @apply bg-w-yellow text-4xl hover:outline-dashed hover:bg-w-dark-yellow;
+  }
 }

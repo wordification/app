@@ -19,17 +19,17 @@ const GamesPage = () => {
     <>
       <MetaTags title="Games" description="Games page" />
 
-      <h1 className="text-2xl font-bold">Games</h1>
+      <h1 className="text-5xl font-bold pb-3">Games</h1>
       <ul className="grid gap-4 sm:grid-cols-2">
         {GAME_CHOICES.map((game) => (
           <Link
             to={game.to}
             key={game.to}
-            className="card shadow-lg hover:shadow-xl"
+            className="card shadow-lg hover:shadow-xl  bg-off-black"
           >
             <li className="card-body">
-              <h3 className="card-title">{game.title}</h3>
-              <p>{game.content}</p>
+              <h3 className="card-title text-white text-5xl">{game.title}</h3>
+              <p className="text-gray text-2xl">{game.content}</p>
             </li>
           </Link>
         ))}

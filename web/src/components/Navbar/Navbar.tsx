@@ -2,7 +2,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { Link, navigate, routes, useLocation } from '@redwoodjs/router'
 import { toast } from '@redwoodjs/web/toast'
-
 import { useAuth } from 'src/auth'
 
 import SuperuserViewSelector from '../SuperuserViewSelector/SuperuserViewSelector'
@@ -75,7 +74,8 @@ const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
     ? routes.games()
     : routes.landing()
   return (
-    <nav className="navbar">
+    <div>
+      <nav className="navbar">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn-ghost btn lg:hidden">
@@ -107,16 +107,16 @@ const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
           </ul>
         </div>
         <Link
-          className="btn-ghost btn mr-10 rounded-none text-xl normal-case text-base-content font-gabarito"
+          className="btn-ghost btn mr-10 rounded-none text-xl normal-case font-gabarito"
           to={roleRoute}
         >
-          Wordification
+          <div className='text-xl text-base-100'>Wordification</div>
         </Link>
         {hasRole('SUPERUSER') && !isRootPath && <SuperuserViewSelector />}
       </div>
       <div className="navbar-end">
         <div className="hidden lg:flex">
-          <ul className="menu menu-horizontal ">
+          <ul className="menu menu-horizontal text-base-100">
             {items.map((item) => (
               <NavbarItem
                 item={item}
@@ -127,6 +127,7 @@ const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
         </div>
       </div>
     </nav>
+    </div>
   )
 }
 

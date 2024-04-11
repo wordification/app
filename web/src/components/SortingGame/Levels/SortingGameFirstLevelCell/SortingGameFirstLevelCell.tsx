@@ -117,14 +117,14 @@ export const Success = ({
 
   return (
     <GameCard
-      title="Click on the correct vowel sound."
+      title="Click on the correct vowel sound!"
       files={files}
       onComplete={() => handleComplete()}
     >
       <div className="grid grid-cols-2 gap-4">
         {sortingGameFirstLevel.phonemes.map((option) => (
           <button
-            className="btn-secondary btn normal-case"
+            className="btn-game-yellow btn-lg btn normal-case"
             type="button"
             onClick={() => handleClick(option.id)}
             disabled={loading || playingAudio}

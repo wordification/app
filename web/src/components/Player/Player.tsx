@@ -52,7 +52,7 @@ const Player = ({
 
   if (!buttonLabel) return null
   return (
-    <button className="btn-primary btn" type="button" onClick={handleRestart}>
+    <button className="btn-game-yellow btn btn-lg text-lg" type="button" onClick={handleRestart}>
       {buttonLabel}
     </button>
   )

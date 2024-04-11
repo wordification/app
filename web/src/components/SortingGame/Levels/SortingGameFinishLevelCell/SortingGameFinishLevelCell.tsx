@@ -41,33 +41,39 @@ export const Success = ({
 
   return (
     <div className="card bg-base-300 text-base-content shadow-xl">
-      <div className="card-body">
-        <h2 className="card-title">Game complete!</h2>
-        <p>Here are the words you practiced:</p>
-        <ul className="list-inside list-disc">
-          {sortingGameFinishLevel.allWords.map((word) => (
-            <li key={word.id}>{word.word}</li>
-          ))}
-        </ul>
-        <h2 className="card-title">
-          Score: {gameScore} —{' '}
-          {grade < 1 ? 'FAIL' : grade < 2 ? 'MARGINAL' : 'PASS'}
-        </h2>
+      <div className="card-body flex flex-nowrap">
+        <div>
+          <h2 className="card-title text-4xl pb-3">Game complete!</h2>
+          <h3 className="text-xl">Here are the words you practiced:</h3>
+          <ul className="list-inside list-disc text-lg">
+            {sortingGameFinishLevel.allWords.map((word) => (
+              <li key={word.id}>{word.word}</li>
+            ))}
+          </ul>
+        </div>
 
-        <progress
-          className={`${
-            grade < 1
-              ? 'progress-error'
-              : grade < 2
-              ? 'progress-warning'
-              : 'progress-success'
-          } progress w-56`}
-          value={grade}
-          max="3"
-        ></progress>
-        <p>{grade} / 3</p>
+        <div>
+          <h2 className="card-title">
+            Score: {gameScore} —{' '}
+            {grade < 1 ? 'FAIL' : grade < 2 ? 'MARGINAL' : 'PASS'}
+          </h2>
+
+          <progress
+            className={`${
+              grade < 1
+                ? 'progress-error'
+                : grade < 2
+                ? 'progress-warning'
+                : 'progress-success'
+            } progress w-56`}
+            value={grade}
+            max="3"
+          ></progress>
+          <p>{grade} / 3</p>
+        </div>
+
         <div className="card-actions justify-end">
-          <Link className="btn-primary btn" to={routes.sortingGameSetup()}>
+          <Link className="btn-game-yellow btn" to={routes.sortingGameSetup()}>
             Play again
           </Link>
         </div>
