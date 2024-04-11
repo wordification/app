@@ -14,6 +14,9 @@ type MatchingGameCardProps = {
  * @see https://www.youtube.com/watch?v=SJnRnQdjR0w
  * @see https://play.tailwindcss.com/gt4tkNCFyA
  */
+
+// Note that flipped means the card is permanently turned over,
+// whereas isFlipped means the card is turned over temporarily.
 const MatchingGameCard = ({
   word,
   flipped,
@@ -24,6 +27,7 @@ const MatchingGameCard = ({
 }: MatchingGameCardProps) => {
   const [isFlipped, setIsFlipped] = useState<boolean>(flipped)
   const [oldCheck, setOldCheck] = useState<boolean>(check)
+  const [color, setColor] = useState('bg-primary')
 
   useEffect(() => {
     setIsFlipped(flipped)
@@ -36,10 +40,15 @@ const MatchingGameCard = ({
   }
 
   if (check !== oldCheck) {
+    // Set cards to red temporarily if they are flipped over and wrong
+    if (flipped !== isFlipped) {
+      setColor('bg-red-500')
+    }
     setTimeout(() => {
       if (flipped !== isFlipped) {
         setIsFlipped(flipped)
       }
+      setColor('bg-primary')
     }, 2000)
     setOldCheck(check)
   }
@@ -54,7 +63,7 @@ const MatchingGameCard = ({
         <div
           className={`card relative h-full w-full rounded-xl text-primary-content shadow-xl transition-all duration-500 [transform-style:preserve-3d] ${
             isFlipped || flipped ? '[transform:rotateY(180deg)]' : ''
-          } ${flipped ? 'bg-green-500' : 'bg-primary'}`}
+          } ${flipped ? 'bg-green-500' : color}`}
         >
           <div
             className={`align-center card-body absolute inset-0 justify-center text-center ${
