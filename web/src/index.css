@@ -24,6 +24,11 @@
     @apply text-[rgb(185,185,185)];
   }
 
+  .text-w-yellow {
+    @apply text-[rgb(255,201,20)];
+  }
+
+  /* accent colors used in buttons */
   .bg-w-red {
     @apply bg-[rgb(228,87,46)];
   }
