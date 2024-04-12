@@ -1,27 +1,24 @@
 import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
-import SortingGameIcon from '../../../../static/SortingGameIcon.svg'
-import MatchingGameIcon from '../../../../static/MatchingGameIcon.svg'
-import BuildingGameIcons from '../../../../static/WordBuildingGameIcon.svg'
 
 const GAME_CHOICES = [
   {
     title: 'Sorting',
     content: 'Sort the cards to win!',
     to: routes.sortingGame(),
-    icon: SortingGameIcon,
+    icon: 'game-icons/SortingGameIcon.svg',
   },
   {
     title: 'Matching',
     content: 'Match the cards to win!',
     to: routes.matchingGame(),
-    icon: MatchingGameIcon,
+    icon: 'game-icons/MatchingGameIcon.svg',
   },
   {
     title: 'Building',
     content: 'Build words!',
     to: routes.buildingGame(),
-    icon: BuildingGameIcons,
+    icon: 'game-icons/WordBuildingGameIcon.svg',
   },
 ] as const
 
@@ -44,7 +41,7 @@ const GamesPage = () => {
                 <p className="text-gray text-2xl">{game.content}</p>
               </div>
 
-              <object data={game.icon} type="image/svg+xml" className="w-1/4 pr-5"> </object>
+              <img src={game.icon} alt={`${game.icon} icon`} className="w-1/4 pr-5" />
             </li>
           </Link>
         ))}

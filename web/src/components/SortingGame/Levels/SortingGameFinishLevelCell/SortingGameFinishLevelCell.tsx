@@ -54,7 +54,7 @@ export const Success = ({
 
         <div>
           <h2 className="card-title">
-            Score: {gameScore} —{' '}
+            Score: {grade} / 3 —{' '}
             {grade < 1 ? 'FAIL' : grade < 2 ? 'MARGINAL' : 'PASS'}
           </h2>
 
@@ -69,7 +69,7 @@ export const Success = ({
             value={grade}
             max="3"
           ></progress>
-          <p>{grade} / 3</p>
+          <p></p>
         </div>
 
         <div className="card-actions justify-end">
