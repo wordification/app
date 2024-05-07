@@ -27,25 +27,31 @@ const GamesPage = () => {
     <>
       <MetaTags title="Games" description="Games page" />
 
-      <h1 className="text-5xl font-bold pb-3">Games</h1>
-      <ul className="grid gap-4 sm:grid-cols-2">
+      <h1 className="pb-3 text-5xl font-bold">Games</h1>
+      <div className="grid gap-4 sm:grid-cols-2">
         {GAME_CHOICES.map((game) => (
           <Link
             to={game.to}
             key={game.to}
-            className="card shadow-lg hover:shadow-xl  bg-off-black"
+            className="bg-off-black h-50 card shadow-lg hover:shadow-xl"
           >
-            <li className="card-body flex flex-row justify-between">
-              <div className="">
-                <h3 className="card-title text-white text-5xl">{game.title}</h3>
-                <p className="text-gray text-2xl">{game.content}</p>
+            <div className="card-body flex flex-col justify-between">
+              <div className="flex h-full w-full flex-col items-center justify-center">
+                <h3 className="card-title text-8xl text-white">{game.title}</h3>
+                <p className="text-gray text-3xl">{game.content}</p>
               </div>
 
-              <img src={game.icon} alt={`${game.icon} icon`} className="w-1/4 pr-5" />
-            </li>
+              <div className="flex h-auto w-full justify-center">
+                <img
+                  src={game.icon}
+                  alt={`${game.icon} icon`}
+                  className="w-1/2"
+                />
+              </div>
+            </div>
           </Link>
         ))}
-      </ul>
+      </div>
     </>
   )
 }
