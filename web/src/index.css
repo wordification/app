@@ -50,7 +50,7 @@
 
   /* used in the "mat" the buttons sit on during a game */
   .bg-w-dark-blue {
-    @apply bg-[rgb(69,105,144)];
+    @apply bg-[rgb(135,203,254)];
   }
 }
 
@@ -58,5 +58,14 @@
   /* used in games */
   .btn-game-yellow {
     @apply bg-w-yellow text-4xl hover:outline-dashed hover:bg-w-dark-yellow;
+  }
+  .btn-game-wait {
+    @apply bg-w-yellow text-4xl opacity-90 pointer-events-none;
+  }
+  .btn-game-correct {
+    @apply bg-success text-4xl pointer-events-none;
+  }
+  .btn-game-incorrect {
+    @apply bg-error text-4xl pointer-events-none;
   }
 }

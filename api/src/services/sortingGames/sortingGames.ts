@@ -4,7 +4,6 @@ import { db } from 'src/lib/db'
 
 import {
   getBritishSentence,
-  getBritishWord,
   getGrapheme,
   getLetter,
   getPhoneme,
@@ -204,10 +203,6 @@ export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] =
       getSortingGamePhrase('introvsound'),
       // [ WORD ]
       getWord(currentWord.word),
-      // British word example test
-      getSortingGamePhrase('also_pronounced'),
-      getBritishWord(currentWord.word),
-      ///
       // a sentence that has
       getSortingGamePhrase('intro_sentence'),
       // [ WORD ]
