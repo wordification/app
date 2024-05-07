@@ -63,9 +63,9 @@
     @apply bg-w-yellow text-4xl opacity-90 pointer-events-none;
   }
   .btn-game-correct {
-    @apply bg-success text-4xl pointer-events-none;
+    @apply bg-green-500 text-4xl pointer-events-none;
   }
   .btn-game-incorrect {
-    @apply bg-error text-4xl pointer-events-none;
+    @apply bg-red-500 text-4xl pointer-events-none;
   }
 }

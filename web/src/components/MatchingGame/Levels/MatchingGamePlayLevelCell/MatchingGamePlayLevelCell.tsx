@@ -177,8 +177,11 @@ export const Success = ({
 
   return (
     <>
-      <div className="card bg-w-dark-blue text-base-content shadow-2xl">
+      <div className="bg-w-dark-blue card shadow-2xl">
         <div className="card-body items-center justify-center">
+          <div className="card-title pb-3 text-6xl">
+            Flip over cards to match words!
+          </div>
           <ul
             className={`grid grid-cols-2 gap-4 ${
               matchingGamePlayLevel.game.allWords.length === 24
