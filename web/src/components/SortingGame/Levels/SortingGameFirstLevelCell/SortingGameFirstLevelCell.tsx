@@ -86,9 +86,7 @@ export const Success = ({
             break
         }
         if (sortingGameGradeFirstLevel.audio) {
-          console.log('HIT')
           setFiles(sortingGameGradeFirstLevel.audio)
-          console.log(sortingGameGradeFirstLevel.audio)
         }
       },
       onError: (error) => {
