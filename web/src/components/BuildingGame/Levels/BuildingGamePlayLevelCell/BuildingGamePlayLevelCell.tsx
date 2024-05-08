@@ -134,28 +134,27 @@ export const Success = ({
               playingAudio ? 'text-transparent' : ''
             }`}
           >
-            <div className="text-center text-3xl">
-              {`__${buildingGamePlayLevel.choppedWord}`}
+            <div className="text-center text-5xl">
+              {`_${buildingGamePlayLevel.choppedWord}`}
             </div>
           </div>
         )}
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid gap-4 sm:grid-cols-2">
           {buildingGamePlayLevel.onsList.map(
             (option: string, index: number) => (
               <button
-                className="btn-game-yellow btn normal-case"
+                className="btn-game-yellow btn-lg btn h-32 normal-case"
                 type="button"
                 onClick={() => handleClick(option)}
                 disabled={playingAudio}
                 key={index}
               >
-                {option}
+                <div className="text-6xl">{option}</div>
               </button>
             )
           )}
         </div>
-
       </GameCard>
     </>
   )
