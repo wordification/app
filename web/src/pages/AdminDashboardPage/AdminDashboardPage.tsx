@@ -24,16 +24,16 @@ const AdminDashboardPage = () => {
     <>
       <MetaTags title="AdminDashboard" description="AdminDashboard page" />
 
-      <h1 className="text-5xl font-bold pb-3">Administrator Dashboard</h1>
+      <h1 className="pb-3 text-5xl font-bold">Administrator Dashboard</h1>
       <ul className="grid gap-4 sm:grid-cols-3">
         {DASHBOARD_ITEMS.map((item) => (
           <Link
             to={item.to}
             key={item.to}
-            className="card shadow-lg hover:shadow-xl bg-off-black"
+            className="bg-off-black card shadow-lg hover:shadow-xl"
           >
             <li className="card-body">
-              <h3 className="card-title text-white text-5xl">{item.title}</h3>
+              <h3 className="card-title text-5xl text-white">{item.title}</h3>
               <p className="text-gray text-2xl">{item.content}</p>
             </li>
           </Link>

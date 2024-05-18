@@ -7,7 +7,7 @@ const ProgressBar = ({
 }) => {
   return (
     <div className="pb-2">
-      <progress className="progress progress-primary" value={value} max={max} />
+      <progress className="progress-primary progress" value={value} max={max} />
     </div>
   )
 }

@@ -50,18 +50,24 @@ const SuperuserViewSelector = () => {
             </Link>
           </li>
           <li>
-            <Link className="font-bold normal-case text-base-100" to={routes.dashboard()}>
+            <Link
+              className="font-bold normal-case text-base-100"
+              to={routes.dashboard()}
+            >
               TEACHER
             </Link>
           </li>
           <li>
-            <Link className="font-bold normal-case text-base-100" to={routes.games()}>
+            <Link
+              className="font-bold normal-case text-base-100"
+              to={routes.games()}
+            >
               STUDENT
             </Link>
           </li>
         </ul>
       </div>
-      <h1 className="ml-2 hidden font-bold normal-case lg:block text-base-100">
+      <h1 className="ml-2 hidden font-bold normal-case text-base-100 lg:block">
         CURRENT ROLE: {'\u00A0\u00A0'}
         {role}
       </h1>

@@ -37,7 +37,7 @@ export const Success = ({
   return (
     <div className="card bg-base-300 text-base-content shadow-xl">
       <div className="card-body">
-        <h2 className="card-title text-4xl pb-3">Game complete!</h2>
+        <h2 className="card-title pb-3 text-4xl">Game complete!</h2>
         <h3 className="text-xl">Here are the words you practiced:</h3>
         <ul className="list-inside list-disc text-lg">
           {matchingGameFinishLevel.allWords.map((word) => (

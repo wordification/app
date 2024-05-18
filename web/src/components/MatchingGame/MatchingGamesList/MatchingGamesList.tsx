@@ -7,7 +7,7 @@ import type { FindMatchingGames } from 'types/graphql'
 const MatchingGamesList = ({ matchingGames }: FindMatchingGames) => {
   return (
     <>
-      <h1 className="text-5xl font-bold pb-3">Matching Games</h1>
+      <h1 className="pb-3 text-5xl font-bold">Matching Games</h1>
 
       <div className="overflow-x-auto">
         <table className="table-zebra table w-full">
