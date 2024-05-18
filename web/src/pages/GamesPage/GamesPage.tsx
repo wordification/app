@@ -33,7 +33,7 @@ const GamesPage = () => {
           <Link
             to={game.to}
             key={game.to}
-            className="bg-off-black h-auto card shadow-lg hover:shadow-xl"
+            className="bg-off-black h-auto card shadow-lg hover:bg-secondary-focus hover:shadow-2xl"
           >
             <div className="card-body flex flex-col justify-between">
               <div className="flex h-full w-full flex-col items-center justify-center">
