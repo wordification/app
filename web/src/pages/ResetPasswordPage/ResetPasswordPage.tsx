@@ -18,8 +18,11 @@ const ResetPasswordPage = ({ id, name }: ResetPasswordPageProps) => {
   return (
     <>
       <MetaTags title="ResetPassword" description="ResetPassword page" />
-      <h1 className="text-2xl font-bold">
-        Reset Password —— {userName} — ID# {userId}
+      <h1 className="pb-2 text-5xl font-bold">
+        Reset Password
+        <h2 className="pb-2 text-2xl">
+          for {userName} — ID# {userId}
+        </h2>
       </h1>
 
       {userId ? <DirectPasswordReset id={userId} /> : null}

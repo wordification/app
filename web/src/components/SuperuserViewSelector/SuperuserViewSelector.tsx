@@ -26,7 +26,7 @@ const SuperuserViewSelector = () => {
   return (
     <>
       <div className="dropdown-end dropdown z-50">
-        <label tabIndex={0} className="btn-primary rounded-btn btn m-1">
+        <label tabIndex={0} className="btn-accent rounded-btn btn m-1">
           Select Role
         </label>
         <ul
@@ -35,7 +35,7 @@ const SuperuserViewSelector = () => {
         >
           <li>
             <Link
-              className="font-bold normal-case"
+              className="font-bold normal-case text-base-100"
               to={routes.superuserDashboard()}
             >
               SUPERUSER
@@ -43,25 +43,31 @@ const SuperuserViewSelector = () => {
           </li>
           <li>
             <Link
-              className="font-bold normal-case"
+              className="font-bold normal-case text-base-100"
               to={routes.adminDashboard()}
             >
               ADMINISTRATOR
             </Link>
           </li>
           <li>
-            <Link className="font-bold normal-case" to={routes.dashboard()}>
+            <Link
+              className="font-bold normal-case text-base-100"
+              to={routes.dashboard()}
+            >
               TEACHER
             </Link>
           </li>
           <li>
-            <Link className="font-bold normal-case" to={routes.games()}>
+            <Link
+              className="font-bold normal-case text-base-100"
+              to={routes.games()}
+            >
               STUDENT
             </Link>
           </li>
         </ul>
       </div>
-      <h1 className="ml-2 hidden font-bold normal-case lg:block">
+      <h1 className="ml-2 hidden font-bold normal-case text-base-100 lg:block">
         CURRENT ROLE: {'\u00A0\u00A0'}
         {role}
       </h1>

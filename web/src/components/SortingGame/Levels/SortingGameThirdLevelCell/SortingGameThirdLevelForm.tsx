@@ -45,13 +45,13 @@ const SortingGameThirdLevelForm = (props: SortingGameThirdLevelFormProps) => {
           <TextField
             name="entry"
             placeholder="Type your answer here."
-            className="input-bordered input w-full max-w-xs"
+            className="input-bordered input h-32 w-auto text-5xl"
             errorClassName="input input-bordered border-error w-full max-w-xs"
             autoComplete="off"
             validation={{ required: true }}
           />
 
-          <Submit disabled={props.loading} className="btn-primary btn">
+          <Submit disabled={props.loading} className="btn-primary btn h-32">
             Submit
           </Submit>
         </div>

@@ -59,21 +59,29 @@ export const Success = ({
   FindSortingGameFirstLevelQuery,
   FindSortingGameFirstLevelQueryVariables
 >) => {
-  const [playingAudio, setPlayingAudio] = useState(false)
+  // const [playingAudio, setPlayingAudio] = useState(false)
   const [files, setFiles] = useState(sortingGameFirstLevel.audio)
+  const [selectedBtn, setSelectedBtn] = useState<undefined | number>(undefined)
+  const [correctClick, setCorrectClick] = useState<undefined | boolean>(
+    undefined
+  )
   const [gradeLevel, { loading, client }] = useMutation<GradeLevelOneMutation>(
     GRADE_LEVEL_ONE_MUTATION,
     {
       onCompleted: ({ sortingGameGradeFirstLevel }) => {
         switch (sortingGameGradeFirstLevel.status) {
           case 'CORRECT':
-            setPlayingAudio(true)
+            setCorrectClick(true)
+            // setPlayingAudio(true)
             toast.success('Correct!')
             break
           case 'INCORRECT':
+            // setPlayingAudio(true)
+            setCorrectClick(false)
             toast.error('Incorrect!')
             break
           case 'TOO_MANY_INCORRECT_GUESSES':
+            setCorrectClick(false)
             toast.error('Too many incorrect guesses!')
             break
         }
@@ -98,6 +106,7 @@ export const Success = ({
   )
 
   const handleClick = (selectedPhoneme: number) => {
+    setSelectedBtn(selectedPhoneme)
     return gradeLevel({
       variables: {
         phoneme: selectedPhoneme,
@@ -107,6 +116,8 @@ export const Success = ({
   }
 
   const handleComplete = async () => {
+    setCorrectClick(undefined)
+    setSelectedBtn(undefined)
     await client.query({
       query: LEVEL_QUERY,
       variables: { id: sortingGameFirstLevel.game.id },
@@ -115,22 +126,40 @@ export const Success = ({
     })
   }
 
+  const btnState = (optionId: number) => {
+    if (selectedBtn != undefined) {
+      if (selectedBtn == optionId) {
+        if (correctClick == true) {
+          return 'btn-game-correct'
+        } else if (correctClick == false) {
+          return 'btn-game-incorrect'
+        }
+      } else {
+        return 'btn-game-wait'
+      }
+    } else {
+      return 'btn-game-yellow'
+    }
+  }
+
+  // BUG - says "try again" twice. Maybe gets reloaded
+
   return (
     <GameCard
-      title="Click on the correct vowel sound."
+      title="Click on the correct vowel sound!"
       files={files}
       onComplete={() => handleComplete()}
     >
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid gap-4 sm:grid-cols-2">
         {sortingGameFirstLevel.phonemes.map((option) => (
           <button
-            className="btn-secondary btn normal-case"
+            className={`btn-lg btn h-32 normal-case ${btnState(option.id)} `}
             type="button"
             onClick={() => handleClick(option.id)}
-            disabled={loading || playingAudio}
+            disabled={loading}
             key={option.id}
           >
-            {option.name}
+            <div className="text-6xl">{option.name}</div>
           </button>
         ))}
       </div>

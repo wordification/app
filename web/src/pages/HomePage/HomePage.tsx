@@ -20,18 +20,18 @@ const HomePage = () => {
     <>
       <MetaTags title="Home" />
       <h1 className="hidden">Wordification</h1>
-      <h2 className="text-xl font-bold">Updates</h2>
+      <h2 className="pb-3 text-5xl font-bold">Updates</h2>
       <div className="grid gap-4 sm:grid-cols-2">
         {UPDATES.map((update) => (
           <div
-            className="card shadow-xl"
+            className="bg-off-black card shadow-xl"
             key={`${update.title}-${update.date}`}
           >
             <div className="card-body">
-              <h4 className="card-title">{update.title}</h4>
-              <p>{update.content}</p>
-              <div className="card-actions justify-end">
-                <div className="badge-outline badge">{update.date}</div>
+              <h4 className="card-title text-5xl text-white">{update.title}</h4>
+              <p className="text-gray text-2xl">{update.content}</p>
+              <div className="text-w-yellow card-actions justify-end">
+                <div className="badge badge-outline">{update.date}</div>
               </div>
             </div>
           </div>

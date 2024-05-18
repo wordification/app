@@ -1,6 +1,7 @@
 .idea
 .DS_Store
 .env
+.vscode
 .netlify
 .redwood
 dev.db*

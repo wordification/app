@@ -7,12 +7,12 @@ import type { FindMatchingGames } from 'types/graphql'
 const MatchingGamesList = ({ matchingGames }: FindMatchingGames) => {
   return (
     <>
-      <h1 className="text-xl font-bold">Matching Games</h1>
+      <h1 className="pb-3 text-5xl font-bold">Matching Games</h1>
 
       <div className="overflow-x-auto">
         <table className="table-zebra table w-full">
           <thead>
-            <tr>
+            <tr className="text-2xl">
               <th>ID</th>
               <th>User</th>
               <th>Last Played</th>
@@ -24,7 +24,7 @@ const MatchingGamesList = ({ matchingGames }: FindMatchingGames) => {
           </thead>
           <tbody>
             {matchingGames.map((game) => (
-              <tr key={game.id}>
+              <tr className="text-xl" key={game.id}>
                 <td>{truncate(game.id)}</td>
                 <td>{truncate(game.user?.email)}</td>
                 <td>{timeTag(game.updatedAt)}</td>

@@ -174,18 +174,22 @@ export const Success = ({
 
   const currentSoundLabel =
     matchingGameGroupingLevel.game.phonemes.length !== 0
-      ? matchingGameGroupingLevel.game.phonemes[
-          matchingGameGroupingLevel.game.currentUnitIndex ?? -1
-        ]
+      ? matchingGameGroupingLevel.phonemes.find(
+          (p) =>
+            p.id ===
+            matchingGameGroupingLevel.game.phonemes[
+              matchingGameGroupingLevel.game.currentUnitIndex ?? -1
+            ]
+        )?.name ?? 'ERROR'
       : matchingGameGroupingLevel.game.graphemes[
           matchingGameGroupingLevel.game.currentUnitIndex ?? -1
         ]
 
   return (
     <>
-      <div className="card bg-base-100 text-base-content shadow-2xl">
+      <div className="bg-w-dark-blue card shadow-2xl">
         <div className="card-body items-center justify-center">
-          <h2 className="card-title">
+          <h2 className="card-title pb-3 text-6xl">
             Click all the words that have the &apos;{currentSoundLabel}&apos;
             sound
           </h2>

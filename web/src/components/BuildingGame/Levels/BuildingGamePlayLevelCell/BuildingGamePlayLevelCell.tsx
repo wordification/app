@@ -117,8 +117,6 @@ export const Success = ({
     setFiles(buildingGamePlayLevel.audio)
   }, [buildingGamePlayLevel.game.id, buildingGamePlayLevel.audio, client])
 
-  console.log(buildingGamePlayLevel.onsList)
-
   return (
     <>
       <GameCard
@@ -126,21 +124,6 @@ export const Success = ({
         files={files}
         onComplete={() => handleComplete()}
       >
-        <div className="grid grid-cols-2 gap-4">
-          {buildingGamePlayLevel.onsList.map(
-            (option: string, index: number) => (
-              <button
-                className="btn-secondary btn normal-case"
-                type="button"
-                onClick={() => handleClick(option)}
-                disabled={playingAudio}
-                key={index}
-              >
-                {option}
-              </button>
-            )
-          )}
-        </div>
         {buildingGamePlayLevel.choppedWord === 'Complete' ? (
           <div className="card-title mt-5">
             {`${buildingGamePlayLevel.choppedWord}! Good job!`}
@@ -151,9 +134,27 @@ export const Success = ({
               playingAudio ? 'text-transparent' : ''
             }`}
           >
-            {`__${buildingGamePlayLevel.choppedWord}`}
+            <div className="text-center text-5xl">
+              {`_${buildingGamePlayLevel.choppedWord}`}
+            </div>
           </div>
         )}
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          {buildingGamePlayLevel.onsList.map(
+            (option: string, index: number) => (
+              <button
+                className="btn-game-yellow btn-lg btn h-32 normal-case"
+                type="button"
+                onClick={() => handleClick(option)}
+                disabled={playingAudio}
+                key={index}
+              >
+                <div className="text-6xl">{option}</div>
+              </button>
+            )
+          )}
+        </div>
       </GameCard>
     </>
   )

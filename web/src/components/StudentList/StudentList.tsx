@@ -132,7 +132,7 @@ const StudentList = ({ currentStudents }: GetCurrentStudents) => {
                         name: student.lastName + ', ' + student.firstName,
                       })}
                       title={'Reset Password - User ' + student.id}
-                      className="btn-error btn-outline btn-xs join-item btn mb-1"
+                      className="btn-outline btn-error btn-xs join-item btn mb-1"
                     >
                       Reset Password
                     </Link>

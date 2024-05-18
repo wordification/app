@@ -1,18 +1,71 @@
+/* Gabarito Font */
+@import url('https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&display=swap');
+
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-.bg-kelly-green{
-  @apply bg-[rgb(118,176,65)];
-}
-/* Background Example usage */
-/* <div className="bg-kelly-green card shadow-xl"> */
+@layer base {
+  /* Text Example usage */
+  /* <h2 className="text-w-yellow text-xl font-bold">Updates</h2> */
 
-.text-kelly-green{
-  @apply text-[rgb(118,176,65)];
-}
-/* Text Example usage */
-/* <h2 className="text-kelly-green text-xl font-bold">Updates</h2> */
+  /* Copy this process for any other application and color, use in className="" as normal */
+  /* TODO: read up on tailwind @apply stuff to format these commands better possibly */
 
-/* Copy this process for any other application and color, use in className="" as normal */
-/* TODO: read up on tailwind @apply stuff to format these commands better possibly */
+
+  html {
+      font-family: Gabarito;
+  }
+
+  .bg-kelly-green{
+    @apply bg-[rgb(118,176,65)];
+  }
+
+  /* used in cards, navbar, headings, dark text */
+  .bg-off-black{
+    @apply bg-[rgb(30,30,36)];
+  }
+
+  /* used in subheadings */
+  .text-gray {
+    @apply text-[rgb(185,185,185)];
+  }
+
+  .text-w-yellow {
+    @apply text-[rgb(255,201,20)];
+  }
+
+  /* accent colors used in buttons */
+  .bg-w-red {
+    @apply bg-[rgb(228,87,46)];
+  }
+
+  .bg-w-yellow {
+    @apply bg-[rgb(255,201,20)];
+  }
+
+  .bg-w-dark-yellow {
+    @apply bg-[rgb(191,150,15)];
+  }
+
+  /* used in the "mat" the buttons sit on during a game */
+  .bg-w-dark-blue {
+    @apply bg-[rgb(135,203,254)];
+  }
+}
+
+@layer components {
+  /* used in games */
+  .btn-game-yellow {
+    @apply bg-w-yellow text-4xl hover:outline-dashed hover:bg-w-dark-yellow;
+  }
+  .btn-game-wait {
+    @apply bg-w-yellow text-4xl opacity-90 pointer-events-none;
+  }
+  .btn-game-correct {
+    @apply bg-green-500 text-4xl pointer-events-none;
+  }
+  .btn-game-incorrect {
+    @apply bg-red-500 text-4xl pointer-events-none;
+  }
+}
