@@ -59,7 +59,7 @@ export const Success = ({
   FindSortingGameFirstLevelQuery,
   FindSortingGameFirstLevelQueryVariables
 >) => {
-  // const [playingAudio, setPlayingAudio] = useState(false)
+  const [playingAudio, setPlayingAudio] = useState(true)
   const [files, setFiles] = useState(sortingGameFirstLevel.audio)
   const [selectedBtn, setSelectedBtn] = useState<undefined | number>(undefined)
   const [correctClick, setCorrectClick] = useState<undefined | boolean>(
@@ -72,11 +72,11 @@ export const Success = ({
         switch (sortingGameGradeFirstLevel.status) {
           case 'CORRECT':
             setCorrectClick(true)
-            // setPlayingAudio(true)
+            setPlayingAudio(true)
             toast.success('Correct!')
             break
           case 'INCORRECT':
-            // setPlayingAudio(true)
+            setPlayingAudio(true)
             setCorrectClick(false)
             toast.error('Incorrect!')
             break
@@ -124,6 +124,7 @@ export const Success = ({
       notifyOnNetworkStatusChange: true,
       // fetchPolicy: 'network-only',
     })
+    setPlayingAudio(false)
   }
 
   const btnState = (optionId: number) => {
@@ -142,18 +143,17 @@ export const Success = ({
     }
   }
 
-  // BUG - says "try again" twice. Maybe gets reloaded
-
   return (
     <GameCard
       title="Click on the correct vowel sound!"
       files={files}
+      playingAudio={playingAudio}
       onComplete={() => handleComplete()}
     >
       <div className="grid gap-4 sm:grid-cols-2">
         {sortingGameFirstLevel.phonemes.map((option) => (
           <button
-            className={`btn-lg btn h-32 normal-case ${btnState(option.id)} `}
+            className={`btn-lg btn h-32 normal-case ${btnState(option.id)}`}
             type="button"
             onClick={() => handleClick(option.id)}
             disabled={loading}

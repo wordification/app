@@ -58,7 +58,7 @@ export const Success = ({
   FindSortingGameSecondLevelQuery,
   FindSortingGameSecondLevelQueryVariables
 >) => {
-  // const [playingAudio, setPlayingAudio] = useState(false)
+  const [playingAudio, setPlayingAudio] = useState(true)
   const [files, setFiles] = useState(sortingGameSecondLevel.audio)
   const [selectedBtn, setSelectedBtn] = useState<undefined | string>(undefined)
   const [correctClick, setCorrectClick] = useState<undefined | boolean>(
@@ -71,11 +71,12 @@ export const Success = ({
         switch (sortingGameGradeSecondLevel.status) {
           case 'CORRECT':
             setCorrectClick(true)
-            // setPlayingAudio(true)
+            setPlayingAudio(true)
             toast.success('Correct!')
             break
           case 'INCORRECT':
             setCorrectClick(false)
+            setPlayingAudio(true)
             toast.error('Incorrect!')
             break
           case 'TOO_MANY_INCORRECT_GUESSES':
@@ -85,7 +86,6 @@ export const Success = ({
         }
         if (sortingGameGradeSecondLevel.audio) {
           setFiles(sortingGameGradeSecondLevel.audio)
-          console.log('HIT')
         }
       },
       onError: (error) => {
@@ -123,6 +123,7 @@ export const Success = ({
       notifyOnNetworkStatusChange: true,
       // fetchPolicy: 'network-only',
     })
+    setPlayingAudio(false)
   }
 
   const btnState = (grapheme: string) => {
@@ -145,6 +146,7 @@ export const Success = ({
     <GameCard
       title="Click on the correct spelling pattern."
       files={files}
+      playingAudio={playingAudio}
       onComplete={() => handleComplete()}
     >
       <div className="grid grid-cols-2 gap-4">
