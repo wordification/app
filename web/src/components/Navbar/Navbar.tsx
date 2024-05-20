@@ -39,11 +39,11 @@ const NavbarItem = ({ item }: { item: MenuItem }) => (
   <li>
     {'to' in item ? (
       item.to === '/#about' ? (
-        <a className="font-bold normal-case" href="/#about">
+        <a className="font-bold normal-case hover:text-customAccentOrange" href="/#about">
           {item.label}
         </a>
       ) : (
-        <Link className="font-bold normal-case" to={item.to}>
+        <Link className="font-bold normal-case hover:text-customAccentOrange" to={item.to}>
           {item.label}
         </Link>
       )

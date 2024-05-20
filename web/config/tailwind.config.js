@@ -2,6 +2,14 @@
 
 module.exports = {
   content: ['src/**/*.{js,jsx,ts,tsx}'],
+  theme: {
+    extend: {},
+      colors: {
+        customAccentOrange: '#ffbc21',
+        'green-500': '#76B041',
+        'red-500': '#ff4a21',
+      },
+  },
   plugins: [require('daisyui')],
   daisyui: {
     themes: [
@@ -23,4 +31,9 @@ module.exports = {
     // darkTheme: 'dark',
     logs: false,
   },
+  variants: {
+    extend: {
+      textColor: ['hover'], // Enable hover variant for textColor utility
+}
+  }
 }
