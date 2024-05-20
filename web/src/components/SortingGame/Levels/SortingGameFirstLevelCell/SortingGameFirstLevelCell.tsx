@@ -81,6 +81,7 @@ export const Success = ({
             toast.error('Incorrect!')
             break
           case 'TOO_MANY_INCORRECT_GUESSES':
+            setPlayingAudio(true)
             setCorrectClick(false)
             toast.error('Too many incorrect guesses!')
             break
