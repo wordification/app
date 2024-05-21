@@ -4,10 +4,12 @@ import { useState, useMemo, useEffect, memo } from 'react'
 const Player = ({
   files,
   buttonLabel,
+  playingAudio,
   onComplete,
 }: {
   files: readonly string[]
   buttonLabel?: string
+  playingAudio?: boolean
   onComplete?: () => void
 }) => {
   const [currentFileIndex, setCurrentFileIndex] = useState(0)
@@ -28,11 +30,17 @@ const Player = ({
 
   // handle autoplay
   useEffect(() => {
-    sound?.play()
+    if (
+      (playingAudio !== undefined && playingAudio === true) ||
+      playingAudio === undefined
+    ) {
+      sound?.play()
+    } // else don't play audio
+
     return () => {
       sound?.stop()
     }
-  }, [sound])
+  }, [sound, playingAudio])
 
   // handle reset when files change
   useEffect(() => {
@@ -47,7 +55,12 @@ const Player = ({
       setCurrentFileIndex(0)
     }
 
-    sound?.play()
+    if (
+      (playingAudio !== undefined && playingAudio === true) ||
+      playingAudio === undefined
+    ) {
+      sound?.play()
+    } // else don't play audio
   }
 
   if (!buttonLabel) return null

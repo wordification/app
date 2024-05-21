@@ -46,7 +46,7 @@ const SortingGameThirdLevelForm = (props: SortingGameThirdLevelFormProps) => {
             name="entry"
             placeholder="Type your answer here."
             className="input-bordered input h-32 w-auto text-5xl"
-            errorClassName="input input-bordered border-error w-full max-w-xs"
+            errorClassName="input input-bordered border-error h-32 w-auto text-5xl"
             autoComplete="off"
             validation={{ required: true }}
           />
