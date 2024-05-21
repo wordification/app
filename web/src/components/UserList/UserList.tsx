@@ -203,7 +203,7 @@ const UserList = ({ users }: FindExistingUsers) => {
               <option>Teacher ID</option>
             </SelectField>
           </div>
-          <Submit className="btn-primary btn mt-6">Sumbit</Submit>
+          <Submit className="btn-primary btn mt-6">Submit</Submit>
         </div>
       </Form>
       <div className="overflow-x-auto">
@@ -228,7 +228,7 @@ const UserList = ({ users }: FindExistingUsers) => {
                       <button
                         type="button"
                         title={'Reset Password - User ' + user.id}
-                        className="btn-accent btn-outline join-item btn-xs btn mb-1"
+                        className="btn-accent btn-outline btn-xs join-item btn mb-1"
                         onClick={() => onEmailClick(user)}
                       >
                         Reset Password
@@ -238,7 +238,7 @@ const UserList = ({ users }: FindExistingUsers) => {
                       <Link
                         to={routes.updateUser({ id: user.id })}
                         title={'Update User ' + user.id}
-                        className="btn-primary btn-outline join-item btn-xs btn mb-1"
+                        className="btn-primary btn-outline btn-xs join-item btn mb-1"
                       >
                         Update
                       </Link>
@@ -247,7 +247,7 @@ const UserList = ({ users }: FindExistingUsers) => {
                       <button
                         type="button"
                         title={'Delete User ' + user.id}
-                        className="btn-outline btn-error join-item btn-xs btn"
+                        className="btn-outline btn-error btn-xs join-item btn"
                         onClick={() => onDeleteClick(user)}
                       >
                         Delete

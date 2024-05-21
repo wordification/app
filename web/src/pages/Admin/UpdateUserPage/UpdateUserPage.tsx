@@ -10,7 +10,7 @@ const AdminUpdateUserPage = ({ id }: UpdateUserPageProps) => {
   return (
     <>
       <MetaTags title="UpdateUser" description="UpdateUser page" />
-      <h1 className="text-2xl font-bold">Modify Existing User</h1>
+      <h1 className="pb-3 text-5xl font-bold">Modify Existing User</h1>
 
       <UpdateUserForm id={id} />
     </>

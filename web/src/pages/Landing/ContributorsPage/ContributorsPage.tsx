@@ -12,11 +12,6 @@ const PI_INFO = [
     link: 'https://sc.edu/study/colleges_schools/education/faculty-staff/irvin_matt.php',
   },
   {
-    name: 'Dr. Jason Porter',
-    info: 'College of Information and Communications, USC',
-    link: 'https://sc.edu/study/colleges_schools/cic/faculty-staff/porter_jason.php',
-  },
-  {
     name: 'Dr. Lucy Spence',
     info: 'College of Education, USC',
     link: 'https://sc.edu/study/colleges_schools/education/faculty-staff/spence_lucy.php',
@@ -41,6 +36,11 @@ const PI_INFO = [
     info: 'Boys Town National Research Hospital',
     link: 'https://www.boystownhospital.org/research/faculty/krystal-werfel',
   },
+  {
+    name: 'Sabrina Habib Williams',
+    info: '',
+    link: '',
+  },
 ] as const
 
 const KEY_PERSONNEL_INFO = [
@@ -55,42 +55,27 @@ const KEY_PERSONNEL_INFO = [
     link: 'https://www.linkedin.com/in/tracey-weldon-b7784134/',
   },
   {
-    name: 'Dr. Taylor (Jing) Wen',
-    info: 'College of Information and Communications, USC',
-    link: 'https://sc.edu/study/colleges_schools/cic/faculty-staff/wen_taylor.php',
-  },
-  {
-    name: 'Jun Zhou',
-    info: 'Research Computing, USC',
-    link: 'https://www.linkedin.com/in/zhou-jun-45356271/',
+    name: 'Lex Whalen',
+    info: 'USC MS Computer Science, 2024',
+    link: 'https://www.linkedin.com/in/lxaw/',
   },
 ] as const
 
 const DEV_INFO = [
   {
-    name: 'Nathan Bickel',
-    info: 'USC BS Computer Science, 2025',
-    link: 'https://www.linkedin.com/in/nathan-bickel/',
-  },
-  {
     name: 'Clay Crews',
-    info: 'USC BS Computer Engineering, 2024',
+    info: 'USC MS Computer Engineering, 2024',
     link: 'https://www.linkedin.com/in/jccrews/',
   },
   {
-    name: 'Shashank Comandur',
-    info: 'USC BS Computer Science, 2024',
-    link: 'https://www.linkedin.com/in/shashank-comandur-94a2191b9/',
+    name: 'Jillian Brown',
+    info: 'USC BA Global Studies - Minor in Linguistics, 2024',
+    link: 'https://www.linkedin.com/in/jillian-brown-372585264/',
   },
   {
-    name: 'Jackson Ginn',
+    name: 'Thien Le',
     info: 'USC BS Computer Science, 2025',
-    link: 'https://www.linkedin.com/in/jacksonginn/',
-  },
-  {
-    name: 'Lex Whalen',
-    info: 'USC BS Computer Science, 2024',
-    link: 'https://www.linkedin.com/in/lxaw/',
+    link: 'https://www.linkedin.com/in/thienle210303/',
   },
 ] as const
 
@@ -116,6 +101,11 @@ const PROJECT_ALUMNI_INFO = [
     link: 'https://www.linkedin.com/in/benjamin-beaver-4b7677227/',
   },
   {
+    name: 'Nathan Bickel',
+    info: 'USC BS Computer Science, 2025',
+    link: 'https://www.linkedin.com/in/nathan-bickel/',
+  },
+  {
     name: 'Dr. Duncan Buell',
     info: 'USC Professor Emeritus Computer Science',
     link: 'https://www.linkedin.com/in/duncan-buell-7a5a7a/',
@@ -124,6 +114,11 @@ const PROJECT_ALUMNI_INFO = [
     name: 'Samyu Comandur',
     info: 'USC BS Computer Science and Statistics, 2021',
     link: 'https://www.linkedin.com/in/samyu-comandur/',
+  },
+  {
+    name: 'Shashank Comandur',
+    info: 'USC BS Computer Science, 2024',
+    link: 'https://www.linkedin.com/in/shashank-comandur-94a2191b9/',
   },
   {
     name: 'Dalton Craven',
@@ -136,6 +131,11 @@ const PROJECT_ALUMNI_INFO = [
     link: 'https://sc.edu/study/colleges_schools/public_health/faculty-staff/fitton_lisa.php',
   },
   {
+    name: 'Jackson Ginn',
+    info: 'USC BS Computer Science, 2025',
+    link: 'https://www.linkedin.com/in/jacksonginn/',
+  },
+  {
     name: 'Lindsey Hudson',
     info: 'USC MA Linguistics, 2011',
     link: 'https://www.linkedin.com/in/lindseyahudson/',
@@ -144,6 +144,11 @@ const PROJECT_ALUMNI_INFO = [
     name: 'Dhruv Pai',
     info: 'USC BS Computer Science, 2022',
     link: 'https://www.linkedin.com/in/dhruv-pai-2226881a2/',
+  },
+  {
+    name: 'Jun Zhou',
+    info: 'Research Computing, USC',
+    link: 'https://www.linkedin.com/in/zhou-jun-45356271/',
   },
 ] as const
 

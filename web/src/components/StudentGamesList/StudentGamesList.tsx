@@ -97,7 +97,7 @@ const StudentGamesList = ({
                 <td>{truncate(game.user?.email)}</td>
                 <td>{timeTag(game.updatedAt)}</td>
                 <td>{truncate(game.type)}</td>
-                <td>{truncate(game.wordsPerPhoneme * game.phonemes.length)}</td>
+                <td>{truncate(game.wordsPerUnit * game.phonemes.length)}</td>
                 <td>{truncate(game.phonemes.join(' & '))}</td>
                 <td>{truncate(game.level)}</td>
                 <td>{game.complete ? 'Y' : 'N'}</td>
@@ -106,7 +106,7 @@ const StudentGamesList = ({
                     <button
                       type="button"
                       title={'Delete game ' + game.id}
-                      className="btn-error btn-outline btn-xs btn"
+                      className="btn-outline btn-error btn-xs btn"
                       onClick={() => onDeleteClick(game.id)}
                     >
                       Delete

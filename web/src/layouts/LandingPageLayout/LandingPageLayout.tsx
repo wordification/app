@@ -49,7 +49,7 @@ const LandingPageLayout = ({ children }: LandingPageLayoutProps) => {
       <main className="container mx-auto flex-grow p-4 md:px-8">
         {children}
       </main>
-      <footer className="mx-auto w-full bg-base-300 p-4 text-center">
+      <footer className="mx-auto w-full bg-base-100 p-4 text-center">
         <p>&copy; 2023 Wordification</p>
       </footer>
     </div>

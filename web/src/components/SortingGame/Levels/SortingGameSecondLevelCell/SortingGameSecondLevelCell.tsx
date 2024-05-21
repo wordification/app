@@ -58,21 +58,30 @@ export const Success = ({
   FindSortingGameSecondLevelQuery,
   FindSortingGameSecondLevelQueryVariables
 >) => {
-  const [playingAudio, setPlayingAudio] = useState(false)
+  const [playingAudio, setPlayingAudio] = useState(true)
   const [files, setFiles] = useState(sortingGameSecondLevel.audio)
+  const [selectedBtn, setSelectedBtn] = useState<undefined | string>(undefined)
+  const [correctClick, setCorrectClick] = useState<undefined | boolean>(
+    undefined
+  )
   const [gradeLevel, { loading, client }] = useMutation<GradeLevelTwoMutation>(
     GRADE_LEVEL_TWO_MUTATION,
     {
       onCompleted: ({ sortingGameGradeSecondLevel }) => {
         switch (sortingGameGradeSecondLevel.status) {
           case 'CORRECT':
+            setCorrectClick(true)
             setPlayingAudio(true)
             toast.success('Correct!')
             break
           case 'INCORRECT':
+            setCorrectClick(false)
+            setPlayingAudio(true)
             toast.error('Incorrect!')
             break
           case 'TOO_MANY_INCORRECT_GUESSES':
+            setPlayingAudio(true)
+            setCorrectClick(false)
             toast.error('Too many incorrect guesses!')
             break
         }
@@ -97,6 +106,7 @@ export const Success = ({
   )
 
   const handleClick = (selectedGrapheme: string) => {
+    setSelectedBtn(selectedGrapheme)
     return gradeLevel({
       variables: {
         grapheme: selectedGrapheme,
@@ -106,30 +116,50 @@ export const Success = ({
   }
 
   const handleComplete = async () => {
+    setCorrectClick(undefined)
+    setSelectedBtn(undefined)
     await client.query({
       query: LEVEL_QUERY,
       variables: { id: sortingGameSecondLevel.game.id },
       notifyOnNetworkStatusChange: true,
       // fetchPolicy: 'network-only',
     })
+    setPlayingAudio(false)
+  }
+
+  const btnState = (grapheme: string) => {
+    if (selectedBtn != undefined) {
+      if (selectedBtn == grapheme) {
+        if (correctClick == true) {
+          return 'btn-game-correct'
+        } else if (correctClick == false) {
+          return 'btn-game-incorrect'
+        }
+      } else {
+        return 'btn-game-wait'
+      }
+    } else {
+      return 'btn-game-yellow'
+    }
   }
 
   return (
     <GameCard
       title="Click on the correct spelling pattern."
       files={files}
+      playingAudio={playingAudio}
       onComplete={() => handleComplete()}
     >
       <div className="grid grid-cols-2 gap-4">
         {sortingGameSecondLevel.graphemes.map((grapheme) => (
           <button
-            className="btn-secondary btn normal-case"
+            className={`btn-lg btn h-32 normal-case ${btnState(grapheme)} `}
             type="button"
             onClick={() => handleClick(grapheme)}
-            disabled={loading || playingAudio}
+            disabled={loading}
             key={grapheme}
           >
-            {grapheme}
+            <div className="text-6xl">{grapheme}</div>
           </button>
         ))}
       </div>

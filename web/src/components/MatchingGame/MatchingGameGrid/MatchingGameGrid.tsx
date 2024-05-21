@@ -43,6 +43,8 @@ const MatchingGameGrid = () => {
                 word={word}
                 flipped
                 onClick={() => {}}
+                check={false}
+                disabled={false}
               />
             )
           })}

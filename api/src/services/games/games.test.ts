@@ -26,13 +26,13 @@ describe('games', () => {
     const result = await createGame({
       input: {
         type: 'SORTING',
-        wordsPerPhoneme: 1,
+        wordsPerUnit: 1,
         phonemes,
       },
     })
 
     expect(result.userId).toEqual(scenario.user.one.id)
-    expect(result.wordsPerPhoneme).toEqual(1)
+    expect(result.wordsPerUnit).toEqual(1)
     expect(result.phonemes[0]).toEqual(phonemes[0])
     expect(result.phonemes[1]).toEqual(phonemes[1])
     expect(result.level).toEqual(1)
@@ -56,7 +56,7 @@ describe('games', () => {
       createGame({
         input: {
           type: 'SORTING',
-          wordsPerPhoneme: 1,
+          wordsPerUnit: 1,
           phonemes: [49, 50],
         },
       })
@@ -65,7 +65,7 @@ describe('games', () => {
       createGame({
         input: {
           type: 'SORTING',
-          wordsPerPhoneme: 100,
+          wordsPerUnit: 100,
           phonemes: [49, 53],
         },
       })
@@ -74,7 +74,7 @@ describe('games', () => {
       createGame({
         input: {
           type: 'abc' as GameType,
-          wordsPerPhoneme: 1,
+          wordsPerUnit: 1,
           phonemes: [49, 53],
         },
       })

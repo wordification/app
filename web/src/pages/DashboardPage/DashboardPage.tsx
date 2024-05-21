@@ -24,17 +24,17 @@ const DashboardPage = () => {
     <>
       <MetaTags title="Dashboard" description="Dashboard page" />
 
-      <h1 className="text-xl font-bold">Teacher Dashboard</h1>
+      <h1 className="pb-3 text-5xl font-bold">Teacher Dashboard</h1>
       <ul className="grid gap-4 sm:grid-cols-3">
         {DASHBOARD_ITEMS.map((item) => (
           <Link
             to={item.to}
             key={item.to}
-            className="card shadow-lg hover:shadow-xl"
+            className="bg-off-black card shadow-lg hover:shadow-xl"
           >
             <li className="card-body">
-              <h3 className="card-title">{item.title}</h3>
-              <p>{item.content}</p>
+              <h3 className="card-title text-5xl text-white">{item.title}</h3>
+              <p className="text-gray text-2xl">{item.content}</p>
             </li>
           </Link>
         ))}

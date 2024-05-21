@@ -12,7 +12,7 @@ const BuildingGamesList = ({ buildingGames }: FindBuildingGames) => {
       <div className="overflow-x-auto">
         <table className="table-zebra table w-full">
           <thead>
-            <tr>
+            <tr className="text-2xl">
               <th>ID</th>
               <th>User</th>
               <th>Last Played</th>
@@ -24,7 +24,7 @@ const BuildingGamesList = ({ buildingGames }: FindBuildingGames) => {
           </thead>
           <tbody>
             {buildingGames.map((game) => (
-              <tr key={game.id}>
+              <tr className="text-xl" key={game.id}>
                 <td>{truncate(game.id)}</td>
                 <td>{truncate(game.user?.email)}</td>
                 <td>{timeTag(game.updatedAt)}</td>

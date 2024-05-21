@@ -3,6 +3,7 @@ import { GameType } from '@prisma/client'
 import { db } from 'src/lib/db'
 
 import {
+  getBritishSentence,
   getBuildingGamePhrase,
   getLetter,
   getPhoneme,
@@ -117,6 +118,10 @@ export const buildingGamePlayLevel: QueryResolvers['buildingGamePlayLevel'] =
       getWord(currentWord.word),
       // [ SENTENCE ]
       getSentence(currentWord.word),
+      // also pronounced
+      getSortingGamePhrase('also_pronounced'),
+      // [ Brit SENTENCE ]
+      getBritishSentence(currentWord.word),
       // spell the
       getBuildingGamePhrase('spell_the'),
       // ons sound
@@ -212,6 +217,7 @@ export const buildingGameGrade: MutationResolvers['buildingGameGrade'] =
       getBuildingGamePhrase('is_spelled_with_letter'),
       // [LETTER](s)
       ...onsLetterAudios,
+      getSortingGamePhrase('good_job'),
     ]
     const incorrectAudio: string[] = [
       // that's right, the
@@ -226,6 +232,7 @@ export const buildingGameGrade: MutationResolvers['buildingGameGrade'] =
       getBuildingGamePhrase('not_spelled_with_letter'),
       // [LETTER](s)
       ...onsLetterAudios,
+      getSortingGamePhrase('tryagain'),
     ]
 
     if (correct) {
