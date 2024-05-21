@@ -217,6 +217,7 @@ export const buildingGameGrade: MutationResolvers['buildingGameGrade'] =
       getBuildingGamePhrase('is_spelled_with_letter'),
       // [LETTER](s)
       ...onsLetterAudios,
+      getSortingGamePhrase('good_job'),
     ]
     const incorrectAudio: string[] = [
       // that's right, the
@@ -231,6 +232,7 @@ export const buildingGameGrade: MutationResolvers['buildingGameGrade'] =
       getBuildingGamePhrase('not_spelled_with_letter'),
       // [LETTER](s)
       ...onsLetterAudios,
+      getSortingGamePhrase('tryagain'),
     ]
 
     if (correct) {

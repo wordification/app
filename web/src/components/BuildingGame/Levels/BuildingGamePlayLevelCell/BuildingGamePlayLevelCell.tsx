@@ -1,6 +1,6 @@
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 
 import { QUERY as LEVEL_QUERY } from 'src/components/BuildingGame/BuildingGameCell/BuildingGameCell'
 import GameCard from 'src/components/GameCard/GameCard'
@@ -59,19 +59,27 @@ export const Success = ({
   FindBuildingGamePlayLevelQuery,
   FindBuildingGamePlayLevelQueryVariables
 >) => {
-  const [playingAudio, setPlayingAudio] = useState(false)
+  const [playingAudio, setPlayingAudio] = useState(true)
   const [files, setFiles] = useState(buildingGamePlayLevel.audio)
+  const [selectedBtn, setSelectedBtn] = useState<undefined | string>(undefined)
+  const [correctClick, setCorrectClick] = useState<undefined | boolean>(
+    undefined
+  )
+  const [useOns, setUseOns] = useState<string[]>([])
+  const [useChopWord, setUseChopWord] = useState<string>('')
 
-  const [gradeLevel, { client }] = useMutation<GradeBuildingGameMutation>(
-    GRADE_BUILDING_GAME_MUTATION,
-    {
+  const [gradeLevel, { loading, client }] =
+    useMutation<GradeBuildingGameMutation>(GRADE_BUILDING_GAME_MUTATION, {
       onCompleted: ({ buildingGameGrade }) => {
         switch (buildingGameGrade.correct) {
           case true:
+            setCorrectClick(true)
             setPlayingAudio(true)
             toast.success('Correct!')
             break
           case false:
+            setCorrectClick(false)
+            setPlayingAudio(true)
             toast.error('Incorrect!')
         }
         if (buildingGameGrade.audio) {
@@ -92,10 +100,10 @@ export const Success = ({
       awaitRefetchQueries: true,
       notifyOnNetworkStatusChange: true,
       // fetchPolicy: 'no-cache',
-    }
-  )
+    })
 
   const handleClick = (selectedOns: string) => {
+    setSelectedBtn(selectedOns)
     return gradeLevel({
       variables: {
         ons: selectedOns,
@@ -104,8 +112,16 @@ export const Success = ({
     })
   }
 
-  const handleComplete = useCallback(async () => {
-    setPlayingAudio(false)
+  if (useOns.length === 0) {
+    setUseOns(buildingGamePlayLevel.onsList)
+    setUseChopWord(buildingGamePlayLevel.choppedWord)
+  }
+
+  const handleComplete = async () => {
+    const tmpCorrect = correctClick
+    setCorrectClick(undefined)
+    setSelectedBtn(undefined)
+
     const gameId = buildingGamePlayLevel.game.id // Extract the game ID
     await client.query({
       query: LEVEL_QUERY,
@@ -114,46 +130,64 @@ export const Success = ({
       // fetchPolicy: 'network-only',
     })
 
+    setUseOns(buildingGamePlayLevel.onsList)
+    setUseChopWord(buildingGamePlayLevel.choppedWord)
+    setPlayingAudio(false)
+
     setFiles(buildingGamePlayLevel.audio)
-  }, [buildingGamePlayLevel.game.id, buildingGamePlayLevel.audio, client])
+    if (tmpCorrect === true) {
+      setPlayingAudio(true)
+    }
+  }
+
+  console.log(playingAudio)
+
+  const btnState = (ons: string) => {
+    if (selectedBtn != undefined) {
+      if (selectedBtn == ons) {
+        if (correctClick == true) {
+          return 'btn-game-correct'
+        } else if (correctClick == false) {
+          return 'btn-game-incorrect'
+        }
+      } else {
+        return 'btn-game-wait'
+      }
+    } else {
+      return 'btn-game-yellow'
+    }
+  }
 
   return (
     <>
       <GameCard
         title="Select a letter to build the word!"
         files={files}
+        playingAudio={playingAudio}
         onComplete={() => handleComplete()}
       >
-        {buildingGamePlayLevel.choppedWord === 'Complete' ? (
-          <div className="card-title mt-5">
-            {`${buildingGamePlayLevel.choppedWord}! Good job!`}
-          </div>
+        {useChopWord === 'Complete' ? (
+          <div className="card-title mt-5">Good job!</div>
         ) : (
-          <div
-            className={`card-title mt-5 ${
-              playingAudio ? 'text-transparent' : ''
-            }`}
-          >
-            <div className="text-center text-5xl">
-              {`_${buildingGamePlayLevel.choppedWord}`}
-            </div>
+          <div className="card-title mb-5 ml-10 mt-5">
+            <div className="text-center text-5xl">{`_${useChopWord}`}</div>
           </div>
         )}
 
         <div className="grid gap-4 sm:grid-cols-2">
-          {buildingGamePlayLevel.onsList.map(
-            (option: string, index: number) => (
-              <button
-                className="btn-game-yellow btn-lg btn h-32 normal-case"
-                type="button"
-                onClick={() => handleClick(option)}
-                disabled={playingAudio}
-                key={index}
-              >
-                <div className="text-6xl">{option}</div>
-              </button>
-            )
-          )}
+          {useOns.map((option: string, index: number) => (
+            <button
+              className={`btn-game-yellow btn-lg btn h-32 normal-case ${btnState(
+                option
+              )}`}
+              type="button"
+              onClick={() => handleClick(option)}
+              disabled={loading}
+              key={index}
+            >
+              <div className="text-6xl">{option}</div>
+            </button>
+          ))}
         </div>
       </GameCard>
     </>
