@@ -4,11 +4,6 @@ module.exports = {
   content: ['src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {},
-      colors: {
-        customAccentOrange: '#ffbc21',
-        'green-500': '#76B041',
-        'red-500': '#ff4a21',
-      },
   },
   plugins: [require('daisyui')],
   daisyui: {
@@ -23,17 +18,13 @@ module.exports = {
           'base-100': '#f0ead6',
           'my-color': '#44FF00',
           '.navbar': {
-            'background-color': '#1E1E24',
+            'background-color': '#1E1E24', // This is the black header for the navbar.
+            },
           },
         },
-      },
+      ,
     ],
     // darkTheme: 'dark',
     logs: false,
   },
-  variants: {
-    extend: {
-      textColor: ['hover'], // Enable hover variant for textColor utility
-}
-  }
 }

@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 /* eslint-disable jsx-a11y/label-has-associated-control */
+import React, { useState } from 'react'
 import { Link, navigate, routes, useLocation } from '@redwoodjs/router'
 import { toast } from '@redwoodjs/web/toast'
 
@@ -35,23 +36,44 @@ const SignoutButton = () => {
   )
 }
 
-const NavbarItem = ({ item }: { item: MenuItem }) => (
-  <li>
-    {'to' in item ? (
-      item.to === '/#about' ? (
-        <a className="font-bold normal-case hover:text-customAccentOrange" href="/#about">
-          {item.label}
-        </a>
+const NavbarItem = ({ item }: { item: MenuItem }) => {
+  const [hover, setHover] = useState(false)
+
+  const handleMouseEnter = () => setHover(true)
+  const handleMouseLeave = () => setHover(false)
+
+  const hoverStyle = hover ? { color: 'rgb(217, 182, 122)' } : {}
+
+  return (
+    <li>
+      {'to' in item ? (
+        item.to === '/#about' ? (
+          <a
+            className="font-bold normal-case"
+            href="/#about"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            style={hoverStyle}
+          >
+            {item.label}
+          </a>
+        ) : (
+          <Link
+            className="font-bold normal-case"
+            to={item.to}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            style={hoverStyle}
+          >
+            {item.label}
+          </Link>
+        )
       ) : (
-        <Link className="font-bold normal-case hover:text-customAccentOrange" to={item.to}>
-          {item.label}
-        </Link>
-      )
-    ) : (
-      <SignoutButton />
-    )}
-  </li>
-)
+        <SignoutButton />
+      )}
+    </li>
+  )
+}
 
 const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
   const { hasRole } = useAuth()
