@@ -3,11 +3,13 @@ import Player from 'src/components/Player'
 const GameCard = ({
   title,
   files,
+  playingAudio,
   children,
   onComplete,
 }: {
   title: string
   files: string[] | null | undefined
+  playingAudio?: boolean
   children: React.ReactNode
   onComplete?: () => void
 }) => (
@@ -20,6 +22,7 @@ const GameCard = ({
       <div className="card-actions justify-end p-4">
         <Player
           files={files}
+          playingAudio={playingAudio}
           buttonLabel="Play audio again"
           onComplete={onComplete}
         />
