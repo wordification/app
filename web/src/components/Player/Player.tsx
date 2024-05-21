@@ -12,6 +12,7 @@ const Player = ({
   playingAudio?: boolean
   onComplete?: () => void
 }) => {
+  const [btnPlay, setBtnPlay] = useState(false)
   const [currentFileIndex, setCurrentFileIndex] = useState(0)
   const sound = useMemo(
     () =>
@@ -21,6 +22,7 @@ const Player = ({
           if (currentFileIndex < files.length - 1) {
             setCurrentFileIndex(currentFileIndex + 1)
           } else {
+            setBtnPlay(false)
             onComplete?.()
           }
         },
@@ -32,7 +34,8 @@ const Player = ({
   useEffect(() => {
     if (
       (playingAudio !== undefined && playingAudio === true) ||
-      playingAudio === undefined
+      playingAudio === undefined ||
+      btnPlay === true
     ) {
       sound?.play()
     } // else don't play audio
@@ -40,7 +43,7 @@ const Player = ({
     return () => {
       sound?.stop()
     }
-  }, [sound, playingAudio])
+  }, [sound, playingAudio, btnPlay])
 
   // handle reset when files change
   useEffect(() => {
@@ -48,6 +51,8 @@ const Player = ({
   }, [files])
 
   const handleRestart = () => {
+    setBtnPlay(true)
+
     if (currentFileIndex === 0) {
       sound?.stop()
     } else {
@@ -57,7 +62,8 @@ const Player = ({
 
     if (
       (playingAudio !== undefined && playingAudio === true) ||
-      playingAudio === undefined
+      playingAudio === undefined ||
+      btnPlay === true
     ) {
       sound?.play()
     } // else don't play audio
