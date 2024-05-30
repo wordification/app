@@ -52,6 +52,10 @@
   .bg-w-dark-blue {
     @apply bg-[rgb(135,203,254)];
   }
+
+  .text-amber {
+    @apply text-[rgb(217,182,122)];
+  }
 }
 
 @layer components {
@@ -68,8 +72,4 @@
   .btn-game-incorrect {
     @apply bg-red-500 text-4xl pointer-events-none;
   }
-}
-
-.hover-amber:hover {
-  color: rgb(217, 182, 122);
 }

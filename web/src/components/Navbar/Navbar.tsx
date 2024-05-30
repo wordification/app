@@ -20,7 +20,48 @@ export type MenuItem =
       type: 'signout'
     }
 
-const SignoutButton = () => {
+    const SignoutButton = () => {
+      const { logOut } = useAuth()
+
+      const handleSignout = () => {
+        logOut()
+        toast.success('Goodbye!')
+        navigate(routes.landing())
+      }
+
+      return (
+        <button
+          onClick={handleSignout}
+          className="group-hover:text-amber font-bold normal-case"
+        >
+          Sign Out
+        </button>
+      )
+    }
+
+    const NavbarItem = ({ item }: { item: MenuItem }) => {
+      return (
+        <li className="group">
+          {'to' in item ? (
+            item.to === '/#about' ? (
+              <a className="group-hover:text-amber font-bold normal-case" href="/#about">
+                {item.label}
+              </a>
+            ) : (
+              <Link
+                className="group-hover:text-amber font-bold normal-case"
+                to={item.to}
+              >
+                {item.label}
+              </Link>
+            )
+          ) : (
+            <SignoutButton />
+          )}
+        </li>
+      )
+    }
+/*const SignoutButton = () => {
   const { logOut } = useAuth()
 
   const handleSignout = () => {
@@ -36,7 +77,7 @@ const SignoutButton = () => {
   )
 }
 
-const NavbarItem = ({ item }: { item: MenuItem }) => {
+ const NavbarItem = ({ item }: { item: MenuItem }) => {
   const [hover, setHover] = useState(false)
 
   const handleMouseEnter = () => setHover(true)
@@ -75,6 +116,10 @@ const NavbarItem = ({ item }: { item: MenuItem }) => {
   )
 }
 
+*/
+
+
+
 const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
   const { hasRole } = useAuth()
   const location = useLocation()
@@ -96,11 +141,13 @@ const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
     : hasRole('STUDENT')
     ? routes.games()
     : routes.landing()
+
+
   return (
     <div>
       <nav className="navbar">
         <div className="navbar-start">
-          <div className="dropdown">
+          <div className="dropdown group">
             <label tabIndex={0} className="btn-ghost btn lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -129,12 +176,16 @@ const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
               ))}
             </ul>
           </div>
-          <Link
-            className="font-gabarito btn-ghost btn mr-10 rounded-none text-xl normal-case"
-            to={roleRoute}
-          >
-            <div className="text-xl text-base-100">Wordification</div>
-          </Link>
+          <div>
+            <Link
+              className="font-gabarito btn-ghost btn mr-10 rounded-none text-xl normal-case"
+              to={roleRoute}
+            >
+              <div className="text-xl text-base-100 hover:text-amber">
+                Wordification
+              </div>
+            </Link>
+          </div>
           {hasRole('SUPERUSER') && !isRootPath && <SuperuserViewSelector />}
         </div>
         <div className="navbar-end">
@@ -152,6 +203,8 @@ const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
       </nav>
     </div>
   )
+
+
 }
 
 export default Navbar
