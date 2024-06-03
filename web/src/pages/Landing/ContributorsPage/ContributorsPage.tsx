@@ -26,20 +26,16 @@ const PI_INFO = [
     info: 'College of Education, USC',
     link: 'https://sc.edu/study/colleges_schools/education/faculty-staff/starrett_angie.php',
   },
-  {
-    name: 'Dr. Homayoun Valafar',
-    info: 'Computer Science & Engineering, USC',
-    link: 'https://sc.edu/study/colleges_schools/engineering_and_computing/faculty-staff/homayounvalafar.php',
-  },
+
   {
     name: 'Dr. Krystal Werfel',
     info: 'Boys Town National Research Hospital',
     link: 'https://www.boystownhospital.org/research/faculty/krystal-werfel',
   },
   {
-    name: 'Sabrina Habib Williams',
-    info: '',
-    link: '',
+    name: 'Dr. Sabrina Habib',
+    info: 'College of Information and Communications, USC',
+    link: 'https://sc.edu/study/colleges_schools/cic/faculty-staff/habib_sabrina.php',
   },
 ] as const
 
@@ -145,6 +141,13 @@ const PROJECT_ALUMNI_INFO = [
     info: 'USC BS Computer Science, 2022',
     link: 'https://www.linkedin.com/in/dhruv-pai-2226881a2/',
   },
+
+  {
+    name: 'Dr. Homayoun Valafar',
+    info: 'Computer Science & Engineering, USC',
+    link: 'https://sc.edu/study/colleges_schools/engineering_and_computing/faculty-staff/homayounvalafar.php',
+  },
+
   {
     name: 'Jun Zhou',
     info: 'Research Computing, USC',
@@ -163,7 +166,7 @@ const LandingContributorsPage = () => {
             <div className="card mx-auto mb-10 max-w-2xl bg-base-300 text-center">
               <div className="card-body">
                 <h2 className="text-3xl font-bold tracking-tight text-secondary sm:text-4xl">
-                  PI/Co-PIs
+                  PI/Co-PIs/Co-Is
                 </h2>
               </div>
             </div>

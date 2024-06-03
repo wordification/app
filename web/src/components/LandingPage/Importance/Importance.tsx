@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+
 const ITEMS = [
   {
     title: 'The educational and societal cost of illiteracy is enormous',
@@ -46,27 +48,41 @@ const ITEMS = [
       </p>
     ),
   },
-] as const
+] as const;
 
 const Importance = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const toggleSection = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
   return (
     <div className="flex flex-col items-center bg-base-200 py-10">
       <div className="container mx-auto">
         <div className="flex flex-col">
-          {ITEMS.map(({ title, body }) => (
-            <div
-              key={title}
-              className="collapse-plus collapse mb-1 bg-base-100"
-            >
-              <input type="radio" name="importance-accordion" />
-              <div className="collapse-title text-xl font-medium">{title}</div>
-              <div className="collapse-content">{body}</div>
+          {ITEMS.map(({ title, body }, index) => (
+            <div key={title} className="mb-5">
+              <div
+                className={`collapse mb-1 ${openIndex === index ? 'collapse-open' : 'collapse-close'} bg-base-100`}
+              >
+                <div
+                  className="collapse-title text-xl font-medium cursor-pointer flex justify-between items-center"
+                  onClick={() => toggleSection(index)}
+                >
+                  <span>{title}</span>
+                  <span>{openIndex === index ? '-' : '+'}</span>
+                </div>
+                <div className="collapse-content">
+                  {body}
+                </div>
+              </div>
             </div>
           ))}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Importance
+export default Importance;

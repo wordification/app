@@ -32,7 +32,7 @@ export type MenuItem =
       return (
         <button
           onClick={handleSignout}
-          className="group-hover:text-amber font-bold normal-case"
+          className="text-l group-hover:text-amber font-bold normal-case"
         >
           Sign Out
         </button>
@@ -44,12 +44,12 @@ export type MenuItem =
         <li className="group">
           {'to' in item ? (
             item.to === '/#about' ? (
-              <a className="group-hover:text-amber font-bold normal-case" href="/#about">
+              <a className="text-l group-hover:text-amber font-bold normal-case" href="/#about">
                 {item.label}
               </a>
             ) : (
               <Link
-                className="group-hover:text-amber font-bold normal-case"
+                className="text-l group-hover:text-amber font-bold normal-case"
                 to={item.to}
               >
                 {item.label}
@@ -61,62 +61,8 @@ export type MenuItem =
         </li>
       )
     }
-/*const SignoutButton = () => {
-  const { logOut } = useAuth()
 
-  const handleSignout = () => {
-    logOut()
-    toast.success('Goodbye!')
-    navigate(routes.landing())
-  }
 
-  return (
-    <button onClick={handleSignout} className="font-bold normal-case">
-      Sign Out
-    </button>
-  )
-}
-
- const NavbarItem = ({ item }: { item: MenuItem }) => {
-  const [hover, setHover] = useState(false)
-
-  const handleMouseEnter = () => setHover(true)
-  const handleMouseLeave = () => setHover(false)
-
-  const hoverStyle = hover ? { color: 'rgb(217, 182, 122)' } : {}
-
-  return (
-    <li>
-      {'to' in item ? (
-        item.to === '/#about' ? (
-          <a
-            className="font-bold normal-case"
-            href="/#about"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            style={hoverStyle}
-          >
-            {item.label}
-          </a>
-        ) : (
-          <Link
-            className="font-bold normal-case"
-            to={item.to}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            style={hoverStyle}
-          >
-            {item.label}
-          </Link>
-        )
-      ) : (
-        <SignoutButton />
-      )}
-    </li>
-  )
-}
-
-*/
 
 
 
@@ -181,7 +127,7 @@ const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
               className="font-gabarito btn-ghost btn mr-10 rounded-none text-xl normal-case"
               to={roleRoute}
             >
-              <div className="text-xl text-base-100 hover:text-amber">
+              <div className="text-3xl text-base-100 hover:text-amber">
                 Wordification
               </div>
             </Link>

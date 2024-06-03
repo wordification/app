@@ -1,6 +1,12 @@
 import { MetaTags } from '@redwoodjs/web'
 
-const SUPPORTER_INFO = [
+// Define a type that includes an optional link property
+type SupporterInfo = {
+  name: string
+  link: string
+}
+
+const SUPPORTER_INFO: SupporterInfo[] = [
   {
     name: 'College of Arts and Sciences, USC',
     link: 'https://www.sc.edu/study/colleges_schools/artsandsciences/index.php',
@@ -19,9 +25,9 @@ const SUPPORTER_INFO = [
   },
   {
     name: 'ScholasTech, LLC',
-    link: '',
+    link: 'https://wordification.scholastechnology.com/',
   },
-] as const
+]
 
 const LandingSupportersPage = () => {
   return (
@@ -45,14 +51,15 @@ const LandingSupportersPage = () => {
                 key={name}
                 className="card card-side card-compact bg-base-300 shadow-lg transition hover:shadow-2xl"
               >
-                {link === '' ? (
+                {!link ? (
                   <div className="card-body items-center">
                     <h3 className="card-title">{name}</h3>
                   </div>
                 ) : (
                   <a
                     href={link}
-                    target="blank"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="card-body items-center"
                   >
                     <h3 className="card-title">{name}</h3>

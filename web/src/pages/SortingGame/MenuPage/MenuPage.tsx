@@ -2,6 +2,11 @@ import { Link, routes } from '@redwoodjs/router'
 
 const SORTING_MENU_ITEMS = [
   {
+    title: 'Learn',
+    content: 'Practice spelling',
+    to: routes.about(), //placeholder -- no learn mode yet
+  },
+  {
     title: 'New Game',
     content: 'Start a new game',
     to: routes.sortingGameSetup(),

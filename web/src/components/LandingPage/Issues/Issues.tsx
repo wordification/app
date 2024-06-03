@@ -1,7 +1,8 @@
+import React, { useState } from 'react';
+
 const CARDS = [
   {
-    title:
-      'Spelling is a linguistic skill, but spelling instruction is memory-based',
+    title: 'Spelling is a linguistic skill, but spelling instruction is memory-based',
     body: (
       <p>
         The most common instructional approach used by teachers is memorization,
@@ -16,8 +17,7 @@ const CARDS = [
     ),
   },
   {
-    title:
-      'Teachers don’t often have training in linguistic spelling principles',
+    title: 'Teachers don’t often have training in linguistic spelling principles',
     body: (
       <p>
         Most primary school teachers have little linguistic training, training
@@ -34,8 +34,7 @@ const CARDS = [
     ),
   },
   {
-    title:
-      'Teachers are unable to provide adaptations for struggling or dialect learners',
+    title: 'Teachers are unable to provide adaptations for struggling or dialect learners',
     body: (
       <p>
         Adapting instruction to each student’s unique needs is a primary
@@ -47,13 +46,19 @@ const CARDS = [
       </p>
     ),
   },
-] as const
+] as const;
 
 const Issues = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const toggleSection = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
   return (
     <div className="flex flex-col items-center bg-base-100 py-10">
       <div className="container mx-auto">
-        <div className="card mb-8 w-auto bg-base-200 shadow-xl transition hover:shadow-2xl">
+        <div className="card mb-8 w-auto bg-base-200">
           <div className="card-body">
             <p>
               Current methodologies for classroom spelling instruction are
@@ -71,20 +76,28 @@ const Issues = () => {
           </div>
         </div>
         <div className="flex flex-col">
-          {CARDS.map(({ title, body }) => (
-            <div
-              key={title}
-              className="collapse-plus collapse mb-1 bg-base-200"
-            >
-              <input type="radio" name="issues-accordion" />
-              <div className="collapse-title text-xl font-medium">{title}</div>
-              <div className="collapse-content">{body}</div>
+          {CARDS.map(({ title, body }, index) => (
+            <div key={title} className="mb-5">
+              <div
+                className={`collapse mb-1 ${openIndex === index ? 'collapse-open' : 'collapse-close'} bg-base-200`}
+              >
+                <div
+                  className="collapse-title text-xl font-medium cursor-pointer flex justify-between items-center"
+                  onClick={() => toggleSection(index)}
+                >
+                  <span>{title}</span>
+                  <span>{openIndex === index ? '-' : '+'}</span>
+                </div>
+                <div className="collapse-content">
+                  {body}
+                </div>
+              </div>
             </div>
           ))}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Issues
+export default Issues;
