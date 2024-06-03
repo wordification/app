@@ -34,7 +34,6 @@ export const Failure = ({
 export const Success = ({
   buildingGame,
 }: CellSuccessProps<FindBuildingGameById, FindBuildingGameByIdVariables>) => {
-  console.log(buildingGame.level)
   return (
     <BuildingGameLevelManager
       gameId={buildingGame.id}

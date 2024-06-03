@@ -58,7 +58,7 @@ export const Success = ({
   FindSortingGameThirdLevelQuery,
   FindSortingGameThirdLevelQueryVariables
 >) => {
-  const [playingAudio, setPlayingAudio] = useState(false)
+  const [playingAudio, setPlayingAudio] = useState(true)
   const [files, setFiles] = useState(sortingGameThirdLevel.audio)
   const [gradeLevel, { loading, client, error }] =
     useMutation<GradeLevelThreeMutation>(GRADE_LEVEL_THREE_MUTATION, {
@@ -69,9 +69,11 @@ export const Success = ({
             toast.success('Correct!')
             break
           case 'INCORRECT':
+            setPlayingAudio(true)
             toast.error('Incorrect!')
             break
           case 'TOO_MANY_INCORRECT_GUESSES':
+            setPlayingAudio(true)
             toast.error('Too many incorrect guesses!')
             break
         }
@@ -97,7 +99,6 @@ export const Success = ({
   const handleSubmit = (
     input: Omit<GradeLevelThreeMutationVariables, 'gameId'>
   ) => {
-    console.log(input)
     gradeLevel({
       variables: {
         gameId: sortingGameThirdLevel.game.id,
@@ -113,17 +114,19 @@ export const Success = ({
       notifyOnNetworkStatusChange: true,
       // fetchPolicy: 'network-only',
     })
+    setPlayingAudio(false)
   }
 
   return (
     <GameCard
       title="Spell the word."
       files={files}
+      playingAudio={playingAudio}
       onComplete={() => handleComplete()}
     >
       <SortingGameThirdLevelForm
         onSubmit={handleSubmit}
-        loading={loading || playingAudio}
+        loading={loading}
         error={error}
       />
     </GameCard>
