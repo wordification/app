@@ -172,7 +172,7 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
         listClassName="list-disc list-inside text-sm"
       />
 
-      {!props.idProvided && (
+      {/* {!props.idProvided && (
         <>
           <h2 className="text-lg">Select Students</h2>
           <div className="form-control mb-2 w-full max-w-xs">
@@ -200,7 +200,7 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
             <FieldError name="student_group" className="text-error" />
           </div>
         </>
-      )}
+      )} */}
 
       <h2 className="text-lg">All Games</h2>
 
