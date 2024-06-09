@@ -1,5 +1,3 @@
-import React, { useState } from 'react';
-
 const ITEMS = [
   {
     title: 'The educational and societal cost of illiteracy is enormous',
@@ -48,32 +46,24 @@ const ITEMS = [
       </p>
     ),
   },
-] as const;
+] as const
 
 const Importance = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  const toggleSection = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
-
   return (
     <div className="flex flex-col items-center bg-base-200 py-10">
       <div className="container mx-auto">
         <div className="flex flex-col">
-          {ITEMS.map(({ title, body }, index) => (
+          {ITEMS.map(({ title, body }) => (
             <div key={title} className="mb-5">
-              <div
-                className={`collapse mb-1 ${openIndex === index ? 'collapse-open' : 'collapse-close'} bg-base-100`}
-              >
-                <div
-                  className="collapse-title text-xl font-medium cursor-pointer flex justify-between items-center"
-                  onClick={() => toggleSection(index)}
-                >
-                  <span>{title}</span>
-                  <span>{openIndex === index ? '-' : '+'}</span>
+              <div className="collapse mb-1 bg-base-100">
+                <input type="checkbox" className="peer" />
+                <div className="collapse-title flex cursor-pointer items-center justify-between text-xl font-medium peer-checked:bg-base-300 peer-checked:text-base-content">
+                  {title}
+                  <span className="transform transition-transform duration-300 peer-checked:rotate-180">
+                    +
+                  </span>
                 </div>
-                <div className="collapse-content">
+                <div className="collapse-content peer-checked:bg-base-300 peer-checked:text-base-content">
                   {body}
                 </div>
               </div>
@@ -82,7 +72,7 @@ const Importance = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Importance;
+export default Importance

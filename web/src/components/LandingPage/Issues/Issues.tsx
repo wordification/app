@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-
 const CARDS = [
   {
-    title: 'Spelling is a linguistic skill, but spelling instruction is memory-based',
+    title:
+      'Spelling is a linguistic skill, but spelling instruction is memory-based',
     body: (
       <p>
         The most common instructional approach used by teachers is memorization,
@@ -17,7 +16,8 @@ const CARDS = [
     ),
   },
   {
-    title: 'Teachers don’t often have training in linguistic spelling principles',
+    title:
+      'Teachers don’t often have training in linguistic spelling principles',
     body: (
       <p>
         Most primary school teachers have little linguistic training, training
@@ -34,7 +34,8 @@ const CARDS = [
     ),
   },
   {
-    title: 'Teachers are unable to provide adaptations for struggling or dialect learners',
+    title:
+      'Teachers are unable to provide adaptations for struggling or dialect learners',
     body: (
       <p>
         Adapting instruction to each student’s unique needs is a primary
@@ -46,15 +47,9 @@ const CARDS = [
       </p>
     ),
   },
-] as const;
+] as const
 
 const Issues = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  const toggleSection = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
-
   return (
     <div className="flex flex-col items-center bg-base-100 py-10">
       <div className="container mx-auto">
@@ -76,19 +71,14 @@ const Issues = () => {
           </div>
         </div>
         <div className="flex flex-col">
-          {CARDS.map(({ title, body }, index) => (
+          {CARDS.map(({ title, body }) => (
             <div key={title} className="mb-5">
-              <div
-                className={`collapse mb-1 ${openIndex === index ? 'collapse-open' : 'collapse-close'} bg-base-200`}
-              >
-                <div
-                  className="collapse-title text-xl font-medium cursor-pointer flex justify-between items-center"
-                  onClick={() => toggleSection(index)}
-                >
-                  <span>{title}</span>
-                  <span>{openIndex === index ? '-' : '+'}</span>
+              <div className="collapse mb-1 bg-base-200">
+                <input type="checkbox" className="peer" />
+                <div className="collapse-title text-xl font-medium peer-checked:bg-base-300 peer-checked:text-base-content">
+                  {title}
                 </div>
-                <div className="collapse-content">
+                <div className="collapse-content peer-checked:bg-base-300 peer-checked:text-base-content">
                   {body}
                 </div>
               </div>
@@ -97,7 +87,7 @@ const Issues = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Issues;
+export default Issues

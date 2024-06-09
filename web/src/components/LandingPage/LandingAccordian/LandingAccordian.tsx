@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
 import Description from '../Description/Description'
 import Importance from '../Importance/Importance'
@@ -27,39 +27,37 @@ const PAGES = [
     title: 'Computerized Spelling Instruction: A Solution',
     body: <Solution />,
   },
-] as const;
+] as const
 
 const LandingAccordian = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   const toggleSection = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
+    setOpenIndex(openIndex === index ? null : index)
+  }
 
   return (
     <div id="about" className="flex flex-col">
       {PAGES.map(({ title, body }, index) => (
         <div key={title} className="container mx-auto mb-5">
           <div
-            className={`collapse mb-1 ${openIndex === index ? 'collapse-open' : 'collapse-close'} ${
-              index % 2 === 0 ? 'bg-base-100' : 'bg-base-200'
-            } shadow-lg` }
+            className={`collapse mb-1 ${
+              openIndex === index ? 'collapse-open' : 'collapse-close'
+            } ${index % 2 === 0 ? 'bg-base-100' : 'bg-base-200'} shadow-lg`}
           >
-            <div
-              className="collapse-title mb-5 text-2xl font-semibold cursor-pointer flex justify-between items-center"
+            <button
+              className="collapse-title mb-5 flex cursor-pointer items-center justify-between text-2xl font-semibold"
               onClick={() => toggleSection(index)}
             >
               <span>{title}</span>
               <span>{openIndex === index ? '-' : '+'}</span>
-            </div>
-            <div className="collapse-content">
-              {body}
-            </div>
+            </button>
+            <div className="collapse-content">{body}</div>
           </div>
         </div>
       ))}
     </div>
-  );
-};
+  )
+}
 
 export default LandingAccordian
