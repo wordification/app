@@ -1,6 +1,3 @@
-/* eslint-disable jsx-a11y/no-noninteractive-tabindex */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react'
 import { Link, navigate, routes, useLocation } from '@redwoodjs/router'
 import { toast } from '@redwoodjs/web/toast'
 
@@ -20,48 +17,7 @@ export type MenuItem =
       type: 'signout'
     }
 
-    const SignoutButton = () => {
-      const { logOut } = useAuth()
-
-      const handleSignout = () => {
-        logOut()
-        toast.success('Goodbye!')
-        navigate(routes.landing())
-      }
-
-      return (
-        <button
-          onClick={handleSignout}
-          className="group-hover:text-amber font-bold normal-case"
-        >
-          Sign Out
-        </button>
-      )
-    }
-
-    const NavbarItem = ({ item }: { item: MenuItem }) => {
-      return (
-        <li className="group">
-          {'to' in item ? (
-            item.to === '/#about' ? (
-              <a className="group-hover:text-amber font-bold normal-case" href="/#about">
-                {item.label}
-              </a>
-            ) : (
-              <Link
-                className="group-hover:text-amber font-bold normal-case"
-                to={item.to}
-              >
-                {item.label}
-              </Link>
-            )
-          ) : (
-            <SignoutButton />
-          )}
-        </li>
-      )
-    }
-/*const SignoutButton = () => {
+const SignoutButton = () => {
   const { logOut } = useAuth()
 
   const handleSignout = () => {
@@ -71,40 +27,30 @@ export type MenuItem =
   }
 
   return (
-    <button onClick={handleSignout} className="font-bold normal-case">
+    <button
+      onClick={handleSignout}
+      className="text-l group-hover:text-amber font-bold normal-case"
+    >
       Sign Out
     </button>
   )
 }
 
- const NavbarItem = ({ item }: { item: MenuItem }) => {
-  const [hover, setHover] = useState(false)
-
-  const handleMouseEnter = () => setHover(true)
-  const handleMouseLeave = () => setHover(false)
-
-  const hoverStyle = hover ? { color: 'rgb(217, 182, 122)' } : {}
-
+const NavbarItem = ({ item }: { item: MenuItem }) => {
   return (
-    <li>
+    <li className="group">
       {'to' in item ? (
         item.to === '/#about' ? (
           <a
-            className="font-bold normal-case"
+            className="text-l group-hover:text-amber font-bold normal-case"
             href="/#about"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            style={hoverStyle}
           >
             {item.label}
           </a>
         ) : (
           <Link
-            className="font-bold normal-case"
+            className="text-l group-hover:text-amber font-bold normal-case"
             to={item.to}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            style={hoverStyle}
           >
             {item.label}
           </Link>
@@ -115,10 +61,6 @@ export type MenuItem =
     </li>
   )
 }
-
-*/
-
-
 
 const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
   const { hasRole } = useAuth()
@@ -142,46 +84,47 @@ const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
     ? routes.games()
     : routes.landing()
 
-
   return (
     <div>
       <nav className="navbar">
         <div className="navbar-start">
-          <div className="dropdown group">
-            <label tabIndex={0} className="btn-ghost btn lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+          <div className="group dropdown">
+            <div className="group dropdown">
+              <button
+                className="btn-ghost btn lg:hidden"
+                aria-label="Toggle Dropdown"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />
-              </svg>
-            </label>
-            <ul
-              tabIndex={0}
-              className="dropdown-content menu rounded-box menu-sm z-50 mt-3 w-52 bg-secondary p-2 shadow"
-            >
-              {items.map((item) => (
-                <NavbarItem
-                  item={item}
-                  key={'to' in item ? item.to : item.type}
-                />
-              ))}
-            </ul>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h8m-8 6h16"
+                  />
+                </svg>
+              </button>
+              <ul className="dropdown-content menu rounded-box menu-sm z-50 mt-3 w-52 bg-secondary p-2 shadow">
+                {items.map((item) => (
+                  <NavbarItem
+                    item={item}
+                    key={'to' in item ? item.to : item.type}
+                  />
+                ))}
+              </ul>
+            </div>
           </div>
           <div>
             <Link
               className="font-gabarito btn-ghost btn mr-10 rounded-none text-xl normal-case"
               to={roleRoute}
             >
-              <div className="text-xl text-base-100 hover:text-amber">
+              <div className="hover:text-amber text-3xl text-base-100">
                 Wordification
               </div>
             </Link>
@@ -203,8 +146,6 @@ const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
       </nav>
     </div>
   )
-
-
 }
 
 export default Navbar
