@@ -53,7 +53,7 @@ const Issues = () => {
   return (
     <div className="flex flex-col items-center bg-base-100 py-10">
       <div className="container mx-auto">
-        <div className="card mb-8 w-auto bg-base-200 shadow-xl transition hover:shadow-2xl">
+        <div className="card mb-8 w-auto bg-base-200">
           <div className="card-body">
             <p>
               Current methodologies for classroom spelling instruction are
@@ -72,13 +72,16 @@ const Issues = () => {
         </div>
         <div className="flex flex-col">
           {CARDS.map(({ title, body }) => (
-            <div
-              key={title}
-              className="collapse-plus collapse mb-1 bg-base-200"
-            >
-              <input type="radio" name="issues-accordion" />
-              <div className="collapse-title text-xl font-medium">{title}</div>
-              <div className="collapse-content">{body}</div>
+            <div key={title} className="mb-5">
+              <div className="collapse mb-1 bg-base-200">
+                <input type="checkbox" className="peer" />
+                <div className="collapse-title text-xl font-medium peer-checked:bg-base-300 peer-checked:text-base-content">
+                  {title}
+                </div>
+                <div className="collapse-content peer-checked:bg-base-300 peer-checked:text-base-content">
+                  {body}
+                </div>
+              </div>
             </div>
           ))}
         </div>
