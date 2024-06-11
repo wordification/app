@@ -2,6 +2,9 @@
 
 module.exports = {
   content: ['src/**/*.{js,jsx,ts,tsx}'],
+  theme: {
+    extend: {},
+  },
   plugins: [require('daisyui')],
   daisyui: {
     themes: [
@@ -15,10 +18,11 @@ module.exports = {
           'base-100': '#f0ead6',
           'my-color': '#44FF00',
           '.navbar': {
-            'background-color': '#1E1E24',
+            'background-color': '#1E1E24', // This is the black header for the navbar.
+            },
           },
         },
-      },
+      ,
     ],
     // darkTheme: 'dark',
     logs: false,
