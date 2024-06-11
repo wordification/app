@@ -54,13 +54,19 @@ const Importance = () => {
       <div className="container mx-auto">
         <div className="flex flex-col">
           {ITEMS.map(({ title, body }) => (
-            <div
-              key={title}
-              className="collapse-plus collapse mb-1 bg-base-100"
-            >
-              <input type="radio" name="importance-accordion" />
-              <div className="collapse-title text-xl font-medium">{title}</div>
-              <div className="collapse-content">{body}</div>
+            <div key={title} className="mb-5">
+              <div className="collapse mb-1 bg-base-100">
+                <input type="checkbox" className="peer" />
+                <div className="collapse-title flex cursor-pointer items-center justify-between text-xl font-medium peer-checked:bg-base-300 peer-checked:text-base-content">
+                  {title}
+                  <span className="transform transition-transform duration-300 peer-checked:rotate-180">
+                    +
+                  </span>
+                </div>
+                <div className="collapse-content peer-checked:bg-base-300 peer-checked:text-base-content">
+                  {body}
+                </div>
+              </div>
             </div>
           ))}
         </div>

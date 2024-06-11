@@ -124,11 +124,12 @@ export const completeWords = async (
       game.currentUnitIndex !== null &&
       game.currentUnitIndex < testedSpeechSounds.length - 1
     ) {
+      // add next phoneme/grapheme intro audio to this update as the current phoneme/grapheme is changing
       return db.game.update({
         where: { id: gameId },
         data: {
           level: 1,
-          currentUnitIndex: game.currentUnitIndex + 1,
+          currentUnitIndex: game.currentUnitIndex + 1, // this index provides which phoneme/grapheme we are playing on
           incompleteWords: {
             set: game.allWords.map((word) => ({ id: word.id })),
           },
