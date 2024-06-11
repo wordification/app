@@ -3,7 +3,7 @@ import { GameType } from '@prisma/client'
 import { db } from 'src/lib/db'
 
 import {
-  getBritishSentence,
+  getMaribethSentence,
   getGrapheme,
   getLetter,
   getPhoneme,
@@ -211,8 +211,8 @@ export const sortingGameFirstLevel: QueryResolvers['sortingGameFirstLevel'] =
       getSentence(currentWord.word),
       // also pronounced
       getSortingGamePhrase('also_pronounced'),
-      // [ Brit SENTENCE ]
-      getBritishSentence(currentWord.word),
+      // [ Maribeth SENTENCE ]
+      getMaribethSentence(currentWord.word),
       // the sounds that make
       getSortingGamePhrase('intro_sounds'),
       // [ WORD ]
