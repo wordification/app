@@ -19,15 +19,16 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      if (hasRole('SUPERUSER')) {
-        navigate(routes.superuserDashboard())
-      } else if (hasRole('ADMINISTRATOR')) {
-        navigate(routes.adminDashboard())
-      } else if (hasRole('TEACHER')) {
-        navigate(routes.dashboard())
-      } else {
-        navigate(routes.games())
-      }
+      // if (hasRole('SUPERUSER')) {
+      //   navigate(routes.superuserDashboard())
+      // } else if (hasRole('ADMINISTRATOR')) {
+      //   navigate(routes.adminDashboard())
+      // } else if (hasRole('TEACHER')) {
+      //   navigate(routes.dashboard())
+      // } else {
+      //   navigate(routes.games())
+      // }
+      navigate(routes.games())
     }
   }, [isAuthenticated, hasRole])
 
