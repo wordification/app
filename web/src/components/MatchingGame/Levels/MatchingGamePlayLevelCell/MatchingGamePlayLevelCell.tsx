@@ -95,20 +95,22 @@ export const Success = ({
     {
       fetchPolicy: 'no-cache',
       onCompleted: ({ matchingGameGrade }) => {
+        setCheck(!check)
         if (matchingGameGrade.correct) {
           toast.success('Correct!')
         } else {
           toast.error('Incorrect!')
         }
 
-        setCheck(!check)
-        setFlippedWords([])
 
         setTimeout(() => {
           if (matchingGameGrade.audio) {
             setPlayingAudio(true)
             setFiles(matchingGameGrade.audio)
           }
+
+          setFlippedWords([])
+          setTwoCardFlipped(false)
         }, 1500)
       },
       onError: (error) => {
@@ -131,6 +133,7 @@ export const Success = ({
   )
 
   const [flippedWords, setFlippedWords] = useState<MatchingCard[]>([])
+  const [twoCardFlipped, setTwoCardFlipped] = useState<boolean>(false)
   const [check, setCheck] = useState<boolean>(false)
 
   const handleGradeLevel = async (
@@ -161,6 +164,7 @@ export const Success = ({
     setPlayingAudio(true)
 
     if (updatedFlippedWords.length === 2) {
+      setTwoCardFlipped(true)
       await handleGradeLevel(updatedFlippedWords[0], updatedFlippedWords[1])
     }
   }
@@ -206,7 +210,7 @@ export const Success = ({
                   word={word.word}
                   flipped={!isIncompleteWord}
                   check={check}
-                  disabled={playingAudio || selected}
+                  disabled={playingAudio || selected || twoCardFlipped}
                   onClick={() => flipCard(word)}
                 />
               )

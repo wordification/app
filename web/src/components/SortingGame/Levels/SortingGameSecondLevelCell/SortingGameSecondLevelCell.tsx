@@ -71,20 +71,18 @@ export const Success = ({
         switch (sortingGameGradeSecondLevel.status) {
           case 'CORRECT':
             setCorrectClick(true)
-            setPlayingAudio(true)
             toast.success('Correct!')
             break
           case 'INCORRECT':
             setCorrectClick(false)
-            setPlayingAudio(true)
             toast.error('Incorrect!')
             break
           case 'TOO_MANY_INCORRECT_GUESSES':
-            setPlayingAudio(true)
             setCorrectClick(false)
             toast.error('Too many incorrect guesses!')
             break
         }
+        setPlayingAudio(true)
         if (sortingGameGradeSecondLevel.audio) {
           setFiles(sortingGameGradeSecondLevel.audio)
         }
