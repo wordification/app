@@ -63,7 +63,7 @@ const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
     location.pathname === routes.demonstration() ||
     location.pathname === routes.presentation()
 
-  const roleRoute = isRootPath ? routes.games() : routes.landing()
+  const roleRoute = isRootPath ? routes.landing() : routes.games()
     // ? routes.landing()
     // : hasRole('SUPERUSER')
     // ? routes.superuserDashboard()
