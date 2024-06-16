@@ -18,7 +18,8 @@ export const schema = gql`
     number times the number of phonemes or graphemes, or less
     if there are not enough words.
     """
-    wordsPerUnit: Int!
+    wordsPerUnitSorting: Int!
+    wordsPerUnitBuilding: Int!
 
     "The phonemes to test the user on."
     phonemes: [Int!]!
@@ -70,7 +71,8 @@ export const schema = gql`
   """
   input CreateGameSetupInput {
     "The number of words per phoneme or grapheme in a game."
-    wordsPerUnit: Int!
+    wordsPerUnitSorting: Int!
+    wordsPerUnitBuilding: Int!
 
     "The size of a board for matching game."
     matchingBoardSize: Int!
@@ -93,7 +95,8 @@ export const schema = gql`
   """
   input UpdateGameSetupInput {
     "The number of words per phoneme or grapheme in a game."
-    wordsPerUnit: Int!
+    wordsPerUnitSorting: Int!
+    wordsPerUnitBuilding: Int!
 
     "The size of a board for matching game."
     matchingBoardSize: Int!
@@ -116,7 +119,8 @@ export const schema = gql`
   """
   input UpsertGameSetupInput {
     "The number of words per phoneme or grapheme in a game."
-    wordsPerUnit: Int
+    wordsPerUnitSorting: Int
+    wordsPerUnitBuilding: Int
 
     "The size of a board for matching game."
     matchingBoardSize: Int

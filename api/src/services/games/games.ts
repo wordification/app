@@ -73,10 +73,12 @@ export const createGame: MutationResolvers['createGame'] = async ({
 
   const phonemes = gameSetup?.phonemes
   const graphemes = gameSetup?.graphemes
-
   const pg = phonemes?.length !== 0 ? phonemes : graphemes
-  let wordsPerUnit = gameSetup?.wordsPerUnit ?? 0
-  if (input.type === 'MATCHING') {
+
+  let wordsPerUnit: number
+  if (input.type === 'SORTING') {
+    wordsPerUnit = gameSetup?.wordsPerUnitSorting ?? 0
+  } else if (input.type === 'MATCHING') {
     wordsPerUnit =
       gameSetup?.matchingBoardSize === 0
         ? 12 / (pg?.length ?? 0) // A 3x4 is currently the only option for graphemes. No need for this elsewhere.
@@ -85,6 +87,10 @@ export const createGame: MutationResolvers['createGame'] = async ({
         : gameSetup?.matchingBoardSize === 2
         ? 10
         : 12
+  } else if (input.type === 'BUILDING') {
+    wordsPerUnit = gameSetup?.wordsPerUnitBuilding ?? 0
+  } else {
+    wordsPerUnit = 0
   }
 
   // SORTING or MATCHING  -- else BUILDING

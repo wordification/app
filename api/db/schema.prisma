@@ -52,13 +52,13 @@ model User {
 
   // RELATIONSHIP INFO
   /// All of the user's games.
-  games             Game[]
+  games     Game[]
   // The user's teacher if they are a student.
-  teacher           User?             @relation("teacher", fields: [teacherId], references: [id])
+  teacher   User?      @relation("teacher", fields: [teacherId], references: [id])
   /// All of the user's students if they are a teacher.
-  students          User[]            @relation("teacher")
+  students  User[]     @relation("teacher")
   /// The user's game setup.
-  gameSetup         GameSetup?       @relation("gameSetup")
+  gameSetup GameSetup? @relation("gameSetup")
 }
 
 /// Possible game types.
@@ -83,17 +83,17 @@ enum MatchingGameType {
 model Game {
   // BASIC INFO
   /// The unique identifier of a game.
-  id        Int      @id @default(autoincrement())
+  id               Int               @id @default(autoincrement())
   /// The ID of the user who is playing the game.
-  userId    Int
+  userId           Int
   /// The time at which the game was created.
-  createdAt DateTime @default(now())
+  createdAt        DateTime          @default(now())
   /// The time at which the game was last updated.
-  updatedAt DateTime @default(now()) @updatedAt
+  updatedAt        DateTime          @default(now()) @updatedAt
   /// The type of game.
-  type      GameType
+  type             GameType
   /// The style of matching game.
-  matchingGameType  MatchingGameType?
+  matchingGameType MatchingGameType?
 
   // GAMEPLAY INFO
   /// The number of words played per phoneme or grapheme. The actual number of words played will be this number times the number of phonemes or graphemes, or less if there are not enough words.
@@ -103,13 +103,13 @@ model Game {
   /// The graphemes to test the user on.
   graphemes        String[]
   /// The current level of the game. Levels are unique to each game type, but all phoneme games start at 1. Grapheme games start at 2.
-  level            Int     @default(1)
+  level            Int      @default(1)
   /// If the game is complete.
-  complete         Boolean @default(false)
+  complete         Boolean  @default(false)
   /// The current word being played.
   currentWordId    Int?
   /// The number of incorrect guesses the user has made.
-  incorrectGuesses Int     @default(0)
+  incorrectGuesses Int      @default(0)
   /// The current index of a phoneme or grapheme for a grouping matching game.
   currentUnitIndex Int?
   /// The current score of a phoneme based game.
@@ -134,27 +134,29 @@ model Game {
 model GameSetup {
   // BASIC INFO
   /// The unique identifier of the game rules for a user.
-  id                Int       @id @default(autoincrement())
+  id                   Int              @id @default(autoincrement())
   /// The time at which the game was created.
-  createdAt         DateTime  @default(now())
+  createdAt            DateTime         @default(now())
   /// The time at which the game was last updated.
-  updatedAt         DateTime  @default(now()) @updatedAt
-  /// The number of words played per phoneme or grapheme. The actual number of words played will be this number times the number of phonemes or graphemes, or less if there are not enough words.
-  wordsPerUnit      Int
+  updatedAt            DateTime         @default(now()) @updatedAt
   /// The phonemes to test the user on.
-  phonemes          Int[]
+  phonemes             Int[]
   /// The graphemes to test the user on.
-  graphemes         String[]
+  graphemes            String[]
+  /// The number of words played per Phoneme for sorting game
+  wordsPerUnitSorting  Int
   /// The size and configuration of the cards for a matching game.
-  matchingBoardSize Int       @default(0)
+  matchingBoardSize    Int              @default(0)
   /// The style of matching game.
-  matchingGameType  MatchingGameType  @default(MEMORY)
+  matchingGameType     MatchingGameType @default(MEMORY)
+  /// The number of words played per Phoneme for sorting game
+  wordsPerUnitBuilding Int
   /// The unique identifier of the user the game rules are associated with.
-  userId            Int       @unique
+  userId               Int              @unique
 
   // RELATIONSHIP INFO
   /// The user who is associated with the game rules set by a teacher.
-  user              User      @relation("gameSetup", fields: [userId], references: [id])
+  user User @relation("gameSetup", fields: [userId], references: [id])
 }
 
 /// A word.
@@ -198,13 +200,13 @@ model Word {
 model Phoneme {
   // BASIC INFO
   /// The unique identifier of a word.
-  id              Int       @id @unique
+  id        Int      @id @unique
   /// The name of the phoneme that corresponds to an ID.
-  name            String
+  name      String
   /// The graphemes to be tested on for that phoneme.
-  graphemes       String[]
+  graphemes String[]
   /// The time at which the word was created.
-  createdAt       DateTime  @default(now())
+  createdAt DateTime @default(now())
   /// The time at which the word was last updated.
-  updatedAt       DateTime  @default(now()) @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
 }

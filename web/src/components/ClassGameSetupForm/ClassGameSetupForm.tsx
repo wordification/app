@@ -336,7 +336,7 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
 
       <div className="form-control w-full max-w-xs">
         <Label
-          name="wordsPerUnit"
+          name="wordsPerUnitSorting"
           className="label"
           errorClassName="label text-error"
         >
@@ -346,14 +346,14 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
         </Label>
 
         <NumberField
-          name="wordsPerUnit"
-          defaultValue={3}
+          name="wordsPerUnitSorting"
+          defaultValue={2}
           className="input-bordered input mb-2 w-full max-w-xs"
           errorClassName="input input-bordered border-error w-full max-w-xs"
           validation={{ required: true }}
         />
       </div>
-      <FieldError name="wordsPerUnit" className="text-sm text-error" />
+      <FieldError name="wordsPerUnitSorting" className="text-sm text-error" />
 
       <div className="divider w-full max-w-xs"></div>
       <h2 className="text-lg">Matching Game</h2>
@@ -417,7 +417,7 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
 
       <div className="form-control w-full max-w-xs">
         <Label
-          name="wordsPerUnit"
+          name="wordsPerUnitBuilding"
           className="label"
           errorClassName="label text-error"
         >
@@ -425,14 +425,14 @@ const ClassGameSetupForm = (props: ClassGameSetupFormProps) => {
         </Label>
 
         <NumberField
-          name="wordsPerUnit"
-          defaultValue={3}
+          name="wordsPerUnitBuilding"
+          defaultValue={5}
           className="input-bordered input mb-2 w-full max-w-xs"
           errorClassName="input input-bordered border-error w-full max-w-xs"
           validation={{ required: true }}
         />
       </div>
-      <FieldError name="wordsPerUnit" className="text-sm text-error" />
+      <FieldError name="wordsPerUnitBuilding" className="text-sm text-error" />
 
       <div className="mt-2">
         <Submit disabled={props.loading} className="btn-primary btn">
