@@ -61,15 +61,27 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
     },
   })
 
-  const wordsPerUnit = input.wordsPerUnit as number
-  validate(wordsPerUnit, 'words per phoneme', {
+  const wordsPerUnitSorting = input.wordsPerUnitSorting as number
+  validate(wordsPerUnitSorting, 'words per phoneme for sorting game', {
     numericality: {
-      lessThanOrEqual: 10,
+      greaterThanOrEqual: 2,
+      lessThan: 6,
       positive: true,
       integer: true,
-      message: 'Must be a positive number less than or equal to 10!',
+      message: 'Words per Phoneme must be greater than 1 and less than 6',
     },
   })
+
+  const wordsPerUnitBuilding = input.wordsPerUnitBuilding as number
+  validate(wordsPerUnitBuilding, 'words per phoneme for building game', {
+    numericality: {
+      equal: 5,
+      positive: true,
+      integer: true,
+      message: 'Words per game must be equal to 5',
+    },
+  })
+
 
   const phonemes = input.phonemes?.filter((phoneme) => !!phoneme) as number[]
   const graphemes = input.graphemes?.filter(
@@ -133,7 +145,8 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
       db.gameSetup.upsert({
         where: { userId: studentId },
         create: {
-          wordsPerUnit,
+          wordsPerUnitSorting,
+          wordsPerUnitBuilding,
           matchingBoardSize,
           matchingGameType,
           phonemes,
@@ -141,7 +154,8 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
           userId: studentId,
         },
         update: {
-          wordsPerUnit,
+          wordsPerUnitSorting,
+          wordsPerUnitBuilding,
           matchingBoardSize,
           matchingGameType,
           phonemes,
@@ -169,7 +183,8 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
       if (shouldUpsert) {
         return db.gameSetup.upsert({
           create: {
-            wordsPerUnit,
+            wordsPerUnitSorting,
+            wordsPerUnitBuilding,
             matchingBoardSize,
             matchingGameType,
             phonemes,
@@ -177,7 +192,8 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
             userId,
           },
           update: {
-            wordsPerUnit,
+            wordsPerUnitSorting,
+            wordsPerUnitBuilding,
             matchingBoardSize,
             matchingGameType,
             phonemes,
@@ -194,7 +210,8 @@ export const upsertGameSetup: MutationResolvers['upsertGameSetup'] = async ({
       id: number
       createdAt: Date
       updatedAt: Date
-      wordsPerUnit: number
+      wordsPerUnitSorting:number,
+      wordsPerUnitBuilding:number,
       phonemes: number[]
       graphemes: string[]
       matchingBoardSize: number
