@@ -37,7 +37,7 @@ const SuperuserLayout = ({ children }: SuperuserLayoutProps) => {
         {children}
       </main>
       <footer className="mx-auto w-full bg-base-100 p-4 text-center">
-        <p>&copy; 2023 Wordification</p>
+        <p>&copy; 2024 ScholasTech, LLC</p>
       </footer>
     </div>
   )

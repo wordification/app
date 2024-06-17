@@ -33,33 +33,33 @@ const SuperuserViewSelector = () => {
           tabIndex={0}
           className="dropdown-content menu rounded-box z-50 mt-4 w-52 bg-secondary p-2 shadow"
         >
-          {/* <li>
+          {/*<li className="group">
             <Link
-              className="font-bold normal-case text-base-100"
+              className="font-bold normal-case text-base-100 group-hover:text-amber"
               to={routes.superuserDashboard()}
             >
               SUPERUSER
             </Link>
           </li>
-          <li>
+          <li className="group">
             <Link
-              className="font-bold normal-case text-base-100"
+              className="font-bold normal-case text-base-100 group-hover:text-amber"
               to={routes.adminDashboard()}
             >
               ADMINISTRATOR
             </Link>
           </li> */}
-          <li>
+          <li className="group">
             <Link
-              className="font-bold normal-case text-base-100"
+              className="font-bold normal-case text-base-100 group-hover:text-amber"
               to={routes.dashboard()}
             >
               TEACHER
             </Link>
           </li>
-          <li>
+          <li className="group">
             <Link
-              className="font-bold normal-case text-base-100"
+              className="font-bold normal-case text-base-100 group-hover:text-amber"
               to={routes.games()}
             >
               STUDENT
@@ -69,7 +69,9 @@ const SuperuserViewSelector = () => {
       </div>
       <h1 className="ml-2 hidden font-bold normal-case text-base-100 lg:block">
         CURRENT ROLE: {'\u00A0\u00A0'}
-        {role}
+        <span className="text-amber">
+          {role}
+        </span>
       </h1>
     </>
   )

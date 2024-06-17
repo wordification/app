@@ -1,3 +1,5 @@
+import React, { useState } from 'react'
+
 import Description from '../Description/Description'
 import Importance from '../Importance/Importance'
 import Issues from '../Issues/Issues'
@@ -28,37 +30,32 @@ const PAGES = [
 ] as const
 
 const LandingAccordian = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
+
+  const toggleSection = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index)
+  }
+
   return (
     <div id="about" className="flex flex-col">
-      {PAGES.map(({ title, body }, index) => {
-        if (title === 'Transition') {
-          return (
-            <div key={title} className="mb-5">
-              {body}
-            </div>
-          )
-        } else {
-          return (
-            <div key={title} className="container mx-auto">
-              <div
-                className={`collapse-plus collapse mb-1 ${
-                  index % 2 === 0 ? 'bg-base-100' : 'bg-base-200'
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="landing-accordion"
-                  checked={index === 0 ? true : undefined}
-                />
-                <div className="collapse-title mb-5 text-2xl font-semibold">
-                  {title}
-                </div>
-                <div className="collapse-content">{body}</div>
-              </div>
-            </div>
-          )
-        }
-      })}
+      {PAGES.map(({ title, body }, index) => (
+        <div key={title} className="container mx-auto mb-5">
+          <div
+            className={`collapse mb-1 ${
+              openIndex === index ? 'collapse-open' : 'collapse-close'
+            } ${index % 2 === 0 ? 'bg-base-100' : 'bg-base-200'} shadow-lg`}
+          >
+            <button
+              className="collapse-title mb-5 flex cursor-pointer items-center justify-between text-2xl font-semibold"
+              onClick={() => toggleSection(index)}
+            >
+              <span>{title}</span>
+              <span>{openIndex === index ? '-' : '+'}</span>
+            </button>
+            <div className="collapse-content">{body}</div>
+          </div>
+        </div>
+      ))}
     </div>
   )
 }

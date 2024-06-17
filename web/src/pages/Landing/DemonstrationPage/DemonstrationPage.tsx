@@ -13,10 +13,10 @@ const LandingDemonstrationPage = () => {
               <h1 className="card-title text-3xl font-bold md:text-5xl">
                 Try Wordification
               </h1>
-              <p className="py-6">Watch our demo video or sign in!</p>
+              <p className="text-xl py-6">Watch our demo video or sign in!</p>
 
               <Link className="font-bold normal-case" to={routes.login()}>
-                <button className="btn-primary btn w-full md:w-96">
+                <button className="text-xl btn-primary btn w-full md:w-96">
                   Sign In
                 </button>
               </Link>
@@ -31,13 +31,14 @@ const LandingDemonstrationPage = () => {
               dubinsky@sc.edu
               <br />
               <br />
-              Or just watch our demo!
+              Updated demo video coming soon!
             </p>
           </div>
         </div>
       </div>
 
-      <div className="rounded-box mx-auto mt-20 bg-neutral p-4 shadow-inner">
+
+      {/*<div className="rounded-box mx-auto mt-20 bg-neutral p-4 shadow-inner">
         <iframe
           className="md:w-1120 h-630 w-full"
           width="1120"
@@ -48,7 +49,7 @@ const LandingDemonstrationPage = () => {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
         ></iframe>
-      </div>
+  </div> */}
     </>
   )
 }
