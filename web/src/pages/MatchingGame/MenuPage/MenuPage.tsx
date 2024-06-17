@@ -6,16 +6,16 @@ const MATCHING_MENU_ITEMS = [
     content: 'Start a new game',
     to: routes.matchingGameSetup(),
   },
-  {
-    title: 'Resume Game',
-    content: 'Resume a game in progress',
-    to: routes.matchingGameIncomplete(),
-  },
-  {
-    title: 'Completed Games',
-    content: 'View completed games',
-    to: routes.matchingGameComplete(),
-  },
+  // {
+  //   title: 'Resume Game',
+  //   content: 'Resume a game in progress',
+  //   to: routes.matchingGameIncomplete(),
+  // },
+  // {
+  //   title: 'Completed Games',
+  //   content: 'View completed games',
+  //   to: routes.matchingGameComplete(),
+  // },
 ] as const
 
 const MatchingGameMenuPage = () => {

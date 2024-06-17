@@ -33,7 +33,7 @@ const SuperuserViewSelector = () => {
           tabIndex={0}
           className="dropdown-content menu rounded-box z-50 mt-4 w-52 bg-secondary p-2 shadow"
         >
-          <li className="group">
+          {/*<li className="group">
             <Link
               className="font-bold normal-case text-base-100 group-hover:text-amber"
               to={routes.superuserDashboard()}
@@ -48,7 +48,7 @@ const SuperuserViewSelector = () => {
             >
               ADMINISTRATOR
             </Link>
-          </li>
+          </li> */}
           <li className="group">
             <Link
               className="font-bold normal-case text-base-100 group-hover:text-amber"

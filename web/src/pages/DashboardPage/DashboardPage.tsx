@@ -2,21 +2,21 @@ import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
 const DASHBOARD_ITEMS = [
-  {
-    title: 'My Class',
-    content: 'View my students and information',
-    to: routes.students(),
-  },
+  // {
+  //   title: 'My Class',
+  //   content: 'View my students and information',
+  //   to: routes.students(),
+  // },
   {
     title: 'Class Game Setup',
     content: 'Set game rules/specifications for your entire class',
     to: routes.classGameSetup(),
   },
-  {
-    title: 'Change Password',
-    content: 'Change your current password.',
-    to: routes.resetPasswordTeacher(),
-  },
+  // {
+  //   title: 'Change Password',
+  //   content: 'Change your current password.',
+  //   to: routes.resetPasswordTeacher(),
+  // },
 ] as const
 
 const DashboardPage = () => {
