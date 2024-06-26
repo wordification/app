@@ -6,16 +6,16 @@ const BUILDING_MENU_ITEMS = [
     content: 'Start a new game',
     to: routes.buildingGameSetup(),
   },
-  {
-    title: 'Resume Game',
-    content: 'Resume a game in progress',
-    to: routes.buildingGameIncomplete(),
-  },
-  {
-    title: 'Completed Games',
-    content: 'View completed games',
-    to: routes.buildingGameComplete(),
-  },
+  // {
+  //   title: 'Resume Game',
+  //   content: 'Resume a game in progress',
+  //   to: routes.buildingGameIncomplete(),
+  // },
+  // {
+  //   title: 'Completed Games',
+  //   content: 'View completed games',
+  //   to: routes.buildingGameComplete(),
+  // },
 ] as const
 
 const BuildingGameMenuPage = () => {

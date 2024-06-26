@@ -6,16 +6,16 @@ const SORTING_MENU_ITEMS = [
     content: 'Start a new game',
     to: routes.sortingGameSetup(),
   },
-  {
-    title: 'Resume Game',
-    content: 'Resume a game in progress',
-    to: routes.sortingGameIncomplete(),
-  },
-  {
-    title: 'Completed Games',
-    content: 'View completed games',
-    to: routes.sortingGameComplete(),
-  },
+  // {
+  //   title: 'Resume Game',
+  //   content: 'Resume a game in progress',
+  //   to: routes.sortingGameIncomplete(),
+  // },
+  // {
+  //   title: 'Completed Games',
+  //   content: 'View completed games',
+  //   to: routes.sortingGameComplete(),
+  // },
 ] as const
 
 const SortingMenuPage = () => {

@@ -71,19 +71,17 @@ const Navbar = ({ items }: { items: readonly MenuItem[] }) => {
     location.pathname === routes.contributors() ||
     location.pathname === routes.demonstration() ||
     location.pathname === routes.presentation()
-
-  const roleRoute = isRootPath
-    ? routes.landing()
-    : hasRole('SUPERUSER')
-    ? routes.superuserDashboard()
-    : hasRole('ADMINISTRATOR')
-    ? routes.adminDashboard()
-    : hasRole('TEACHER')
-    ? routes.dashboard()
-    : hasRole('STUDENT')
-    ? routes.games()
-    : routes.landing()
-
+  const roleRoute = isRootPath ? routes.landing() : routes.games()
+    // ? routes.landing()
+    // : hasRole('SUPERUSER')
+    // ? routes.superuserDashboard()
+    // : hasRole('ADMINISTRATOR')
+    // ? routes.adminDashboard()
+    // : hasRole('TEACHER')
+    // ? routes.dashboard()
+    // : hasRole('STUDENT')
+    // ? routes.games()
+    // : routes.landing()
   return (
     <div>
       <nav className="navbar">

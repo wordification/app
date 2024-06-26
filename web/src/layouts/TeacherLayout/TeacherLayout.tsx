@@ -13,10 +13,10 @@ const MENU_ITEMS = [
     to: '/dashboard',
     label: 'Dashboard',
   },
-  {
-    to: '/dashboard/students',
-    label: 'My Class',
-  },
+  // {
+  //   to: '/dashboard/students',
+  //   label: 'My Class',
+  // },
   {
     to: '/dashboard/class-game-setup',
     label: 'Class Game Setup',
