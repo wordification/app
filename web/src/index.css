@@ -73,3 +73,16 @@
     @apply bg-red-500 text-4xl pointer-events-none;
   }
 }
+
+.chopword-box {
+  background-color: #ffd700; /* Yellow background */
+  border-radius: 0.375rem;   /* Rounded corners */
+  padding: 3rem;            /* Padding inside the box */
+  display: flex;            /* Flexbox layout */
+  justify-content: center;  /* Center horizontally */
+  align-items: center;      /* Center vertically */
+  width: fit-content;       /* Fit box width to content */
+  margin: 0 auto;           /* Center the box horizontally */
+  text-align: center;       /* Center text inside the box */
+  font-size: 5rem;
+}

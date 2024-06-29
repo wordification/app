@@ -170,14 +170,14 @@ export const Success = ({
           <div className="card-title mt-5">Good job!</div>
         ) : (
           <div className="card-title mb-5 ml-10 mt-5">
-            <div className="text-center text-5xl">{`_${useChopWord}`}</div>
+            <div className="chopword-box">{`_${useChopWord}`}</div>
           </div>
         )}
 
         <div className="grid gap-4 sm:grid-cols-2">
           {useOns.map((option: string, index: number) => (
             <button
-              className={`btn-game-yellow btn-lg btn h-32 normal-case ${btnState(
+              className={`btn-game-yellow h-25 btn-lg btn normal-case ${btnState(
                 option
               )}`}
               type="button"
@@ -185,7 +185,7 @@ export const Success = ({
               disabled={loading}
               key={index}
             >
-              <div className="text-6xl">{option}</div>
+              <div className="small-answer-text">{option}</div>
             </button>
           ))}
         </div>
