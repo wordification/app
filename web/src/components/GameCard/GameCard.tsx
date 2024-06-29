@@ -15,19 +15,19 @@ const GameCard = ({
 }) => (
   <div className="bg-w-dark-blue card w-full shadow-xl">
     <div className="card-body">
-      <h3 className="card-title pb-3 text-6xl">{title}</h3>
+      <div className="mb-4 flex items-center justify-between">
+        <h3 style={{ fontSize: '3.5rem', marginRight: 'auto' }}>{title}</h3>
+        {files && (
+          <Player
+            files={files}
+            playingAudio={playingAudio}
+            buttonLabel="Play audio again"
+            onComplete={onComplete}
+          />
+        )}
+      </div>
       {children}
     </div>
-    {files && (
-      <div className="card-actions justify-end p-4">
-        <Player
-          files={files}
-          playingAudio={playingAudio}
-          buttonLabel="Play audio again"
-          onComplete={onComplete}
-        />
-      </div>
-    )}
   </div>
 )
 
