@@ -32,11 +32,7 @@ const Player = ({
 
   // handle autoplay
   useEffect(() => {
-    if (
-      (playingAudio !== undefined && playingAudio === true) ||
-      playingAudio === undefined ||
-      btnPlay === true
-    ) {
+    if (playingAudio !== false || btnPlay === true) {
       sound?.play()
     } // else don't play audio
 
@@ -60,11 +56,7 @@ const Player = ({
       setCurrentFileIndex(0)
     }
 
-    if (
-      (playingAudio !== undefined && playingAudio === true) ||
-      playingAudio === undefined ||
-      btnPlay === true
-    ) {
+    if (playingAudio !== false || btnPlay === true) {
       sound?.play()
     } // else don't play audio
   }
